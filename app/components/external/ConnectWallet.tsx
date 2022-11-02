@@ -1,3 +1,7 @@
+// BFF components
+import { useSubmit } from "@remix-run/react";
+
+// UI components
 import {
   Box,
   Button,
@@ -13,7 +17,28 @@ import {
 import { TbHeartHandshake } from "react-icons/tb";
 import { MdVerifiedUser, MdVisibility } from "react-icons/md";
 
+// methods
+import { loginWithMetamask } from "~/web3/metamask";
+
 const ConnectWallet = () => {
+  const submit = useSubmit();
+
+  const handleLogin = async () => {
+    const address = await loginWithMetamask();
+
+    const formData = new FormData();
+
+    formData.append("address", address);
+    formData.append("connected", "true");
+
+    submit(formData, {
+      action: "/login/?index",
+      method: "post",
+      encType: "application/x-www-form-urlencoded",
+      replace: true,
+    });
+  };
+
   return (
     <Box
       display="flex"
@@ -49,7 +74,7 @@ const ConnectWallet = () => {
                 bg="third"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                // onClick={handleLoginWalletConnect}
+                onClick={handleLogin}
               >
                 <Text
                   fontWeight="500"
