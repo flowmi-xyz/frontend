@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 
 import { Flex, Text, Button } from "@chakra-ui/react";
 
-function NavbarLanding() {
+const NavbarLanding = () => {
   return (
     <Flex
       justify="space-around"
@@ -40,6 +40,6 @@ function NavbarLanding() {
       </Flex>
     </Flex>
   );
-}
+};
 
 export default NavbarLanding;
