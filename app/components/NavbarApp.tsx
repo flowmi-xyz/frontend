@@ -32,7 +32,7 @@ const NavbarApp = () => {
                 lineHeight="120%"
                 color="black"
               >
-                Launch App
+                Connect your wallet
               </Text>
             </Button>
           </Link>
