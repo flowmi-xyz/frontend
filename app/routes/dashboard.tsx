@@ -2,11 +2,14 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
+import { getSession } from "~/bff/session";
+
 // UI components
 import { Box } from "@chakra-ui/react";
 
-import { getSession } from "~/bff/session";
+// components
 import NavbarConnected from "~/components/NavbarConnected";
+import HotProfiles from "~/components/HotProfiles";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -23,6 +26,8 @@ export default function Dashboard() {
   return (
     <Box>
       <NavbarConnected address={address} />
+
+      <HotProfiles />
     </Box>
   );
 }
