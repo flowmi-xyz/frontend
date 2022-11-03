@@ -7,6 +7,7 @@ type PostProps = {
   profileImage?: string;
   content?: string;
   image?: string;
+  index?: number;
 };
 
 const LensterPost = ({
@@ -16,13 +17,14 @@ const LensterPost = ({
   profileImage,
   content,
   image,
+  index,
 }: PostProps) => {
   return (
     <Box
       bg="white"
       border="1px"
       borderColor="#E0E0E3"
-      borderRadius="10px"
+      borderRadius={index === 0 ? "10px 10px 0 0" : "0"}
       width="924px"
       _hover={{ bg: "#F4F4F5" }}
     >

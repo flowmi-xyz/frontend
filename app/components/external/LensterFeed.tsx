@@ -3,16 +3,28 @@ import { Box, Center } from "@chakra-ui/react";
 // components
 import LensterPost from "./LensterPost";
 
-const LensterFeed = () => {
+type LensterFeedProps = {
+  Posts: any;
+};
+
+const LensterFeed = ({ Posts }: LensterFeedProps) => {
+  console.log(Posts);
+
   return (
     <Center>
       <Box>
-        <LensterPost
-          id="1"
-          name="Cristian Valdivia"
-          handle="cristianvaldivia"
-          content="This is a test post"
-        />
+        {Posts.map((post: any, index: number) => {
+          return (
+            <LensterPost
+              key={post.id}
+              id={post.id}
+              name={post.profile.name}
+              handle={post.profile.handle}
+              content={post.metadata.content}
+              index={index}
+            />
+          );
+        })}
       </Box>
     </Center>
   );

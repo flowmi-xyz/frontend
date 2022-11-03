@@ -17,15 +17,17 @@ export const loader: LoaderFunction = async () => {
 
   const responsePublications = await lens.request(ExplorePublications);
 
-  const recentsPosts = responsePublications.explorePublications;
+  const recentsPostsResponse = responsePublications.explorePublications;
 
-  return recentsPosts.items;
+  const recentPosts = recentsPostsResponse.items.filter((item: any) => {
+    return item.__typename === "Post";
+  });
+
+  return recentPosts;
 };
 
 export default function Feed() {
-  const recentsPosts = useLoaderData();
+  const recentPosts = useLoaderData();
 
-  console.log("[dashboard/feed] Feed data: ", recentsPosts);
-
-  return <LensterFeed />;
+  return <LensterFeed Posts={recentPosts} />;
 }
