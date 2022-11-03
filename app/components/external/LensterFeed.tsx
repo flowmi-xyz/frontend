@@ -25,6 +25,7 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
               createdAt={post.createdAt}
               comments={post.stats.totalAmountOfComments}
               mirrors={post.stats.totalAmountOfMirrors}
+              collects={post.stats.totalAmountOfCollects}
               index={index}
             />
           );

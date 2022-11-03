@@ -1,11 +1,12 @@
-import { Avatar, Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Icon, Image, Text } from "@chakra-ui/react";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
 import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 
-import { GoCommentDiscussion, GoHeart } from "react-icons/go";
+import { GoCommentDiscussion } from "react-icons/go";
 import { TbArrowsLeftRight } from "react-icons/tb";
+import { VscLibrary } from "react-icons/vsc";
 
 type PostProps = {
   id: string;
@@ -17,6 +18,7 @@ type PostProps = {
   createdAt: string;
   comments: number;
   mirrors: number;
+  collects: number;
   index?: number;
 };
 
@@ -27,6 +29,9 @@ const LensterPost = ({
   profileImage,
   content,
   createdAt,
+  comments,
+  mirrors,
+  collects,
   index,
 }: PostProps) => {
   return (
@@ -119,7 +124,7 @@ const LensterPost = ({
               my="auto"
               pl="3"
             >
-              3
+              {comments}
             </Text>
           </Flex>
 
@@ -134,12 +139,12 @@ const LensterPost = ({
               my="auto"
               pl="3"
             >
-              3
+              {mirrors}
             </Text>
           </Flex>
 
           <Flex>
-            <Icon as={GoHeart} color="third" w={6} h={6} />
+            <Icon as={VscLibrary} color="third" w={6} h={6} />
             <Text
               fontWeight="700"
               fontSize="15px"
@@ -149,7 +154,7 @@ const LensterPost = ({
               my="auto"
               pl="3"
             >
-              3
+              {collects}
             </Text>
           </Flex>
         </HStack>
