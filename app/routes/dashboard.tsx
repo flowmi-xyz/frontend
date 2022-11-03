@@ -24,7 +24,7 @@ export default function Dashboard() {
   const address = useLoaderData();
 
   return (
-    <Box>
+    <Box bg="#FAFAF9" height="100vh">
       <NavbarConnected address={address} />
 
       <HotProfiles />

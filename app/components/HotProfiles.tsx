@@ -1,4 +1,15 @@
-import { Avatar, Box, Center, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Center,
+  Divider,
+  Flex,
+  Icon,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+
+import { CiSquareMore } from "react-icons/ci";
 
 const HotProfilesArr = [
   {
@@ -42,81 +53,105 @@ const HotProfiles = () => {
       </Center>
 
       <Center>
-        <Flex
+        <Box
           bg="white"
           border="1px"
           borderColor="#E0E0E3"
           boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
           borderRadius="10px"
-          p="2"
         >
-          {HotProfilesArr.map((item) => {
-            return (
-              <Box
-                bg="#F2F4F6"
-                width="200px"
-                borderRadius="10px"
-                p="3"
-                m="3"
-                key={item.handle}
-              >
-                <Flex>
-                  <Avatar size="md" name={item.handle} src={item.image} />
+          <Flex>
+            {HotProfilesArr.map((item) => {
+              return (
+                <Box
+                  bg="#F2F4F6"
+                  width="200px"
+                  borderRadius="10px"
+                  p="3"
+                  m="3"
+                  key={item.handle}
+                >
+                  <Flex>
+                    <Avatar size="md" name={item.handle} src={item.image} />
 
-                  <Box my="auto" pl="2">
+                    <Box my="auto" pl="2">
+                      <Text
+                        fontWeight="700"
+                        fontSize="16px"
+                        lineHeight="120%"
+                        letterSpacing="-0.03em"
+                        color="black"
+                      >
+                        @{item.handle}
+                      </Text>
+
+                      <Text
+                        fontWeight="400"
+                        fontSize="12px"
+                        lineHeight="100%"
+                        letterSpacing="-0.03em"
+                        color="black"
+                        pt="2"
+                      >
+                        {item.followers} followers
+                      </Text>
+                    </Box>
+                  </Flex>
+
+                  <Flex pt="3" pb="3" justifyContent="space-between">
                     <Text
                       fontWeight="700"
                       fontSize="16px"
-                      lineHeight="120%"
                       letterSpacing="-0.03em"
-                      color="black"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                      my="auto"
                     >
-                      @{item.handle}
+                      {item.accumulatedTokens} MATIC
                     </Text>
 
-                    <Text
-                      fontWeight="400"
-                      fontSize="12px"
-                      lineHeight="100%"
-                      letterSpacing="-0.03em"
-                      color="black"
-                      pt="2"
+                    <Box
+                      bg="lens"
+                      borderRadius="10px"
+                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                      w="40px"
+                      h="40px"
                     >
-                      {item.followers} followers
-                    </Text>
-                  </Box>
-                </Flex>
+                      <Image
+                        src="./assets/LOGO__lens_ultra small icon.png"
+                        alt="lens"
+                        my="-3px"
+                      />
+                    </Box>
+                  </Flex>
+                </Box>
+              );
+            })}
+          </Flex>
 
-                <Flex pt="3" pb="3" justifyContent="space-between">
-                  <Text
-                    fontWeight="700"
-                    fontSize="16px"
-                    letterSpacing="-0.03em"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                    my="auto"
-                  >
-                    {item.accumulatedTokens} MATIC
-                  </Text>
+          <Divider />
 
-                  <Box
-                    bg="lens"
-                    borderRadius="10px"
-                    boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                    w="40px"
-                    h="40px"
-                  >
-                    <Image
-                      src="./assets/LOGO__lens_ultra small icon.png"
-                      alt="lens"
-                      my="-3px"
-                    />
-                  </Box>
-                </Flex>
-              </Box>
-            );
-          })}
-        </Flex>
+          <Box bg="#F9FAFA" borderBottomRadius="10px">
+            <Flex>
+              <Icon
+                as={CiSquareMore}
+                margin="4"
+                color="grayLetter"
+                w="7"
+                h="7"
+              />
+
+              <Text
+                fontWeight="700"
+                fontSize="14px"
+                color="grayLetter"
+                my="auto"
+              >
+                Show more
+              </Text>
+            </Flex>
+          </Box>
+        </Box>
       </Center>
     </>
   );
