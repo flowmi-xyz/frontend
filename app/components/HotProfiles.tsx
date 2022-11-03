@@ -35,7 +35,7 @@ const HotProfilesArr = [
 const HotProfiles = () => {
   return (
     <>
-      <Center>
+      <Box width="924px" m="auto" p="3">
         <Flex>
           <Text fontSize="32">🥇🥈🥉 </Text>
 
@@ -50,17 +50,18 @@ const HotProfiles = () => {
             Profiles with more tokens accumulated
           </Text>
         </Flex>
-      </Center>
+      </Box>
 
-      <Center>
+      <Center pb="10">
         <Box
           bg="white"
           border="1px"
           borderColor="#E0E0E3"
           boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
           borderRadius="10px"
+          width="924px"
         >
-          <Flex>
+          <Flex justify="space-between">
             {HotProfilesArr.map((item) => {
               return (
                 <Box
