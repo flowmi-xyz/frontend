@@ -120,7 +120,7 @@ const HotProfiles = () => {
                       h="40px"
                     >
                       <Image
-                        src="./assets/LOGO__lens_ultra small icon.png"
+                        src="../assets/LOGO__lens_ultra small icon.png"
                         alt="lens"
                         my="-3px"
                       />

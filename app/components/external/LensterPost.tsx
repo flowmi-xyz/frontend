@@ -1,4 +1,8 @@
-import { Avatar, Box, HStack, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, HStack, Text } from "@chakra-ui/react";
+
+import { transformToIpfsUrl } from "~/web3/ipfs";
+
+import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 
 type PostProps = {
   id: string;
@@ -7,6 +11,7 @@ type PostProps = {
   profileImage?: string;
   content?: string;
   image?: string;
+  createdAt: string;
   index?: number;
 };
 
@@ -16,7 +21,7 @@ const LensterPost = ({
   handle,
   profileImage,
   content,
-  image,
+  createdAt,
   index,
 }: PostProps) => {
   return (
@@ -30,11 +35,13 @@ const LensterPost = ({
     >
       <HStack p="5" justifyContent="space-between">
         <HStack>
-          <Avatar
-            size="sm"
-            name="nader"
-            src="https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/QmVBfhfgfhGsRVxTNURVUgceqyzjdVe11ic5rCghmePuKX"
-          />
+          {profileImage && (
+            <Avatar
+              size="sm"
+              name="nader"
+              src={transformToIpfsUrl(profileImage)}
+            />
+          )}
 
           <Box my="auto" pl="1">
             <Text
@@ -69,7 +76,7 @@ const LensterPost = ({
             letterSpacing="-0.03em"
             color="grayLetter"
           >
-            6 hours ago
+            {calculateHoursBetweenNowAndDate(createdAt)} hours ago
           </Text>
         </Box>
       </HStack>
@@ -82,14 +89,16 @@ const LensterPost = ({
           letterSpacing="-0.03em"
           color="black"
           pl="10"
-          pr="2"
+          pr="10"
+          pb="3"
+          textAlign="justify"
         >
           {content}
         </Text>
 
-        <Box pl="10" pt="3" pb="3" width="70%">
-          <Image src="./assets/test1.png" borderRadius="lg" />
-        </Box>
+        {/* <Box pl="10" pt="3" pb="3" width="70%">
+          <Image src="../assets/test1.png" borderRadius="lg" />
+        </Box> */}
       </Box>
     </Box>
   );

@@ -13,7 +13,7 @@ export const loader: LoaderFunction = async () => {
   // Get feed from Lens protocol
   const lens = new GraphQLClient("https://api.lens.dev/playground");
 
-  console.log("[dashboard/friends] Fetching feed from Lens API ...");
+  console.log("[dashboard/feed] Fetching feed from Lens API ...");
 
   const responsePublications = await lens.request(ExplorePublications);
 

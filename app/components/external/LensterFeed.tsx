@@ -20,7 +20,9 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
               id={post.id}
               name={post.profile.name}
               handle={post.profile.handle}
+              profileImage={post.profile.picture?.original?.url}
               content={post.metadata.content}
+              createdAt={post.createdAt}
               index={index}
             />
           );
