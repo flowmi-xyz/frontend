@@ -1,6 +1,6 @@
 // BFF components
 import type { LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 
 import { getSession } from "~/bff/session";
 
@@ -11,7 +11,6 @@ import { Box } from "@chakra-ui/react";
 import NavbarConnected from "~/components/NavbarConnected";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
-import LensterFeed from "~/components/external/LensterFeed";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -33,7 +32,7 @@ export default function Dashboard() {
 
       <HotProfiles />
 
-      <LensterFeed />
+      <Outlet />
     </Box>
   );
 }
