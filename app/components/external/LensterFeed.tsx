@@ -23,6 +23,8 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
               profileImage={post.profile.picture?.original?.url}
               content={post.metadata.content}
               createdAt={post.createdAt}
+              comments={post.stats.totalAmountOfComments}
+              mirrors={post.stats.totalAmountOfMirrors}
               index={index}
             />
           );

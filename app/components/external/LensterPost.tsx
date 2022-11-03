@@ -1,8 +1,11 @@
-import { Avatar, Box, HStack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
 import { calculateHoursBetweenNowAndDate } from "~/utils/time";
+
+import { GoCommentDiscussion, GoHeart } from "react-icons/go";
+import { TbArrowsLeftRight } from "react-icons/tb";
 
 type PostProps = {
   id: string;
@@ -12,6 +15,8 @@ type PostProps = {
   content?: string;
   image?: string;
   createdAt: string;
+  comments: number;
+  mirrors: number;
   index?: number;
 };
 
@@ -90,7 +95,7 @@ const LensterPost = ({
           color="black"
           pl="10"
           pr="10"
-          pb="3"
+          pb="5"
           textAlign="justify"
         >
           {content}
@@ -99,6 +104,55 @@ const LensterPost = ({
         {/* <Box pl="10" pt="3" pb="3" width="70%">
           <Image src="../assets/test1.png" borderRadius="lg" />
         </Box> */}
+      </Box>
+
+      <Box pl="6" pb="5">
+        <HStack pl="10" justifyContent="space-evenly">
+          <Flex>
+            <Icon as={GoCommentDiscussion} color="first" w={6} h={6} />
+            <Text
+              fontWeight="700"
+              fontSize="15px"
+              lineHeight="120%"
+              letterSpacing="-0.03em"
+              color="first"
+              my="auto"
+              pl="3"
+            >
+              3
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Icon as={TbArrowsLeftRight} color="fourth" w={6} h={6} />
+            <Text
+              fontWeight="700"
+              fontSize="15px"
+              lineHeight="120%"
+              letterSpacing="-0.03em"
+              color="fourth"
+              my="auto"
+              pl="3"
+            >
+              3
+            </Text>
+          </Flex>
+
+          <Flex>
+            <Icon as={GoHeart} color="third" w={6} h={6} />
+            <Text
+              fontWeight="700"
+              fontSize="15px"
+              lineHeight="120%"
+              letterSpacing="-0.03em"
+              color="third"
+              my="auto"
+              pl="3"
+            >
+              3
+            </Text>
+          </Flex>
+        </HStack>
       </Box>
     </Box>
   );
