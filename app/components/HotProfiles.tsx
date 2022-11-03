@@ -33,6 +33,7 @@ const HotProfilesArr = [
 ];
 
 const HotProfiles = () => {
+  // TODO: me tira un error CiSquareMore
   return (
     <>
       <Box width="924px" m="auto" p="3">
