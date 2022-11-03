@@ -3,7 +3,7 @@ import { Box, Center, Flex, Text } from "@chakra-ui/react";
 const ProfileParticipation = () => {
   return (
     <>
-      <Box width="924px" m="auto" p="3">
+      <Box width="924px" m="auto" p="3" mt="5">
         <Text
           fontWeight="700"
           fontSize="18"
