@@ -1,45 +1,34 @@
-import {
-  Avatar,
-  Box,
-  Center,
-  Divider,
-  Flex,
-  Icon,
-  Image,
-  Text,
-} from "@chakra-ui/react";
-
-import { CgMoreR } from "react-icons/cg";
+import { Avatar, Box, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 const HotProfilesArr = [
   {
-    handle: "dan_abramov",
+    name: "fabri.lens",
+    handle: "fabri.lens",
     image: "https://bit.ly/dan-abramov",
-    followers: "47k",
     accumulatedTokens: 9,
   },
   {
-    handle: "fabri",
+    name: "Cris Valdivia",
+    handle: "crisvaldivia.lens",
     image: "https://bit.ly/dan-abramov",
-    followers: "12",
     accumulatedTokens: 5,
   },
-  {
-    handle: "cristianvaldivia",
-    image: "https://bit.ly/dan-abramov",
-    followers: "24",
-    accumulatedTokens: 2,
-  },
+  // {
+  //   handle: "cristianvaldivia",
+  //   image: "https://bit.ly/dan-abramov",
+  //   followers: "24",
+  //   accumulatedTokens: 2,
+  // },
 ];
 
 const HotProfiles = () => {
   return (
     <>
-      <Box width="924px" m="auto" pb="3">
+      <Box m="auto" pb="3">
         <Flex>
           <Text
-            fontWeight="700"
-            fontSize="18"
+            fontWeight="600"
+            fontSize="15px"
             lineHeight="120%"
             color="black"
             my="auto"
@@ -55,21 +44,20 @@ const HotProfiles = () => {
           border="1px"
           borderColor="#E0E0E3"
           borderRadius="10px"
-          width="924px"
+          width="400px"
+          p="3"
         >
-          <Flex justify="space-between">
-            {HotProfilesArr.map((item) => {
-              return (
-                <Box
-                  bg="#F2F4F6"
-                  width="200px"
-                  borderRadius="10px"
-                  p="3"
-                  m="3"
-                  key={item.handle}
-                >
+          {HotProfilesArr.map((item) => {
+            return (
+              <>
+                <Flex justifyContent="space-around">
                   <Flex>
-                    <Avatar size="md" name={item.handle} src={item.image} />
+                    <Avatar
+                      size="md"
+                      name={item.handle}
+                      src={item.image}
+                      my="auto"
+                    />
 
                     <Box my="auto" pl="2">
                       <Text
@@ -79,7 +67,7 @@ const HotProfiles = () => {
                         letterSpacing="-0.03em"
                         color="black"
                       >
-                        @{item.handle}
+                        {item.name}
                       </Text>
 
                       <Text
@@ -87,55 +75,46 @@ const HotProfiles = () => {
                         fontSize="12px"
                         lineHeight="100%"
                         letterSpacing="-0.03em"
-                        color="black"
-                        pt="2"
+                        bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                        bgClip="text"
+                        pt="1"
                       >
-                        {item.followers} followers
+                        @{item.handle}
                       </Text>
                     </Box>
                   </Flex>
 
-                  <Flex pt="3" pb="3" justifyContent="space-between">
-                    <Text
-                      fontWeight="700"
-                      fontSize="16px"
-                      letterSpacing="-0.03em"
-                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                      bgClip="text"
-                      my="auto"
-                    >
-                      {item.accumulatedTokens} MATIC
+                  <Text
+                    fontWeight="700"
+                    fontSize="16px"
+                    letterSpacing="-0.03em"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                    my="auto"
+                  >
+                    {item.accumulatedTokens} MATIC{" "}
+                    <Text as="span" color="black">
+                      accumulated
                     </Text>
+                  </Text>
 
-                    <Box bg="lens" borderRadius="10px" w="40px" h="40px">
-                      <Image
-                        src="../assets/LOGO__lens_ultra small icon.png"
-                        alt="lens"
-                        my="-3px"
-                      />
-                    </Box>
-                  </Flex>
-                </Box>
-              );
-            })}
-          </Flex>
-
-          <Divider />
-
-          <Box bg="#F9FAFA" borderBottomRadius="10px">
-            <Flex>
-              <Icon as={CgMoreR} margin="4" color="grayLetter" w="5" h="5" />
-
-              <Text
-                fontWeight="700"
-                fontSize="14px"
-                color="grayLetter"
-                my="auto"
-              >
-                Show more
-              </Text>
-            </Flex>
-          </Box>
+                  <Box
+                    bg="lens"
+                    borderRadius="10px"
+                    w="35px"
+                    h="35px"
+                    my="auto"
+                  >
+                    <Image
+                      src="../assets/LOGO__lens_ultra small icon.png"
+                      alt="lens"
+                      my="-5px"
+                    />
+                  </Box>
+                </Flex>
+              </>
+            );
+          })}
         </Box>
       </Center>
     </>
