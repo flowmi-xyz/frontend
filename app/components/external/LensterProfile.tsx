@@ -7,20 +7,14 @@ import { BiWorld } from "react-icons/bi";
 
 const LensterProfile = () => {
   return (
-    <Box
-      m="5"
-      p="10"
-      //   border="1px"
-      //   borderColor="#E0E0E3"
-      //   borderRadius="10px"
-      width="300px"
-    >
-      <Image
-        src="https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreib75vvqtckmck6zs7v7lntc7pan45jbugmcc6633z3aflvprryr4i"
-        w="40"
-        h="40"
-        borderRadius="md"
-      />
+    <Box m="5" p="10" width="300px">
+      <Box p="2" borderRadius="2xl" bg="#FAFAF9">
+        <Image
+          src="https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreib75vvqtckmck6zs7v7lntc7pan45jbugmcc6633z3aflvprryr4i"
+          w="300px"
+          borderRadius="md"
+        />
+      </Box>
 
       <Text
         fontWeight="600"

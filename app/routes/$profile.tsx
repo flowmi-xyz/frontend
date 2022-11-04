@@ -63,7 +63,7 @@ export default function Profile() {
       />
 
       <Grid templateColumns="repeat(3, 1fr)">
-        <GridItem colSpan={2}>
+        <GridItem colSpan={2} mt="-160px">
           <LensterProfile />
         </GridItem>
 
