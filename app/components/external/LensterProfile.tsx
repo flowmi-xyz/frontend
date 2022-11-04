@@ -113,19 +113,23 @@ const LensterProfile = ({
           {id}
         </Text>
       </Flex>
-      <Flex pt="3">
-        <Icon as={TbLocation} color="third" w="4" h="4" />
-        <Text
-          fontWeight="600"
-          fontSize="14px"
-          lineHeight="120%"
-          color="black"
-          pl="3"
-          my="auto"
-        >
-          Chile
-        </Text>
-      </Flex>
+
+      {location && (
+        <Flex pt="3">
+          <Icon as={TbLocation} color="third" w="4" h="4" />
+          <Text
+            fontWeight="600"
+            fontSize="14px"
+            lineHeight="120%"
+            color="black"
+            pl="3"
+            my="auto"
+          >
+            {location}
+          </Text>
+        </Flex>
+      )}
+
       <Flex pt="3">
         <Image src="../assets/ens.png" w="4" h="4" />
         <Text

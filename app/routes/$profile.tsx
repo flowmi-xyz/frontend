@@ -42,13 +42,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const pageProfile = response.profile;
 
-  return { address, accessToken, profile, pageProfile };
+  const location = pageProfile.attributes.filter((attribute: any) => {
+    return attribute.key === "location";
+  });
+
+  const locationValue = location[0]?.value;
+
+  return { address, accessToken, profile, pageProfile, locationValue };
 };
 
 export default function Profile() {
-  const { address, profile, pageProfile } = useLoaderData();
+  const { address, profile, pageProfile, locationValue } = useLoaderData();
 
-  console.log(pageProfile);
+  // console.log(pageProfile);
 
   return (
     <Box bg="#FAFAF9">
@@ -73,6 +79,7 @@ export default function Profile() {
             id={pageProfile.id}
             followers={pageProfile.stats.totalFollowers}
             following={pageProfile.stats.totalFollowing}
+            location={locationValue}
           />
         </GridItem>
 
