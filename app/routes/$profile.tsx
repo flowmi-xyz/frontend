@@ -48,13 +48,40 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const locationValue = location[0]?.value;
 
-  return { address, accessToken, profile, pageProfile, locationValue };
+  const ens = pageProfile.attributes.filter((attribute: any) => {
+    return attribute.key === "ens";
+  });
+
+  const ensValue = ens[0]?.value;
+
+  const website = pageProfile.attributes.filter((attribute: any) => {
+    return attribute.key === "website";
+  });
+
+  const websiteValue = website[0]?.value;
+
+  return {
+    address,
+    accessToken,
+    profile,
+    pageProfile,
+    locationValue,
+    ensValue,
+    websiteValue,
+  };
 };
 
 export default function Profile() {
-  const { address, profile, pageProfile, locationValue } = useLoaderData();
+  const {
+    address,
+    profile,
+    pageProfile,
+    locationValue,
+    ensValue,
+    websiteValue,
+  } = useLoaderData();
 
-  // console.log(pageProfile);
+  console.log(pageProfile);
 
   return (
     <Box bg="#FAFAF9">
@@ -80,6 +107,8 @@ export default function Profile() {
             followers={pageProfile.stats.totalFollowers}
             following={pageProfile.stats.totalFollowing}
             location={locationValue}
+            ens={ensValue}
+            website={websiteValue}
           />
         </GridItem>
 

@@ -146,19 +146,22 @@ const LensterProfile = ({
         </Flex>
       )}
 
-      <Flex pt="3">
-        <Icon as={BiWorld} color="second" w="4" h="4" />
-        <Text
-          fontWeight="600"
-          fontSize="14px"
-          lineHeight="120%"
-          color="black"
-          pl="3"
-          my="auto"
-        >
-          www.cristianvaldivia.cl
-        </Text>
-      </Flex>
+      {website && (
+        <Flex pt="3">
+          <Icon as={BiWorld} color="second" w="4" h="4" />
+          <Text
+            fontWeight="600"
+            fontSize="14px"
+            lineHeight="120%"
+            color="black"
+            pl="3"
+            my="auto"
+          >
+            {website}
+          </Text>
+        </Flex>
+      )}
+
       <Flex pt="3">
         <Icon as={FaTwitter} color="twitter" w="4" h="4" />
 
