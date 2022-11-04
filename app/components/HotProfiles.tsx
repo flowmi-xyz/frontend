@@ -1,4 +1,5 @@
 import { Avatar, Box, Center, Flex, Image, Text } from "@chakra-ui/react";
+import LensterFooter from "./external/LensterFooter";
 
 const HotProfilesArr = [
   {
@@ -15,12 +16,13 @@ const HotProfilesArr = [
       "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreichwq6umgahyohbekflyclq7o7y2u46jatkhwqueqfl2koortgeve",
     accumulatedTokens: 5,
   },
-  // {
-  //   handle: "cristianvaldivia",
-  //   image: "https://bit.ly/dan-abramov",
-  //   followers: "24",
-  //   accumulatedTokens: 2,
-  // },
+  {
+    name: "Guty",
+    handle: "gutybv.lens",
+    image:
+      "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreidbnm4dapoitvrl52urbnzursub4jy4ncw2q4zpoptlfalruqvdau",
+    accumulatedTokens: 2,
+  },
 ];
 
 const HotProfiles = () => {
@@ -40,7 +42,7 @@ const HotProfiles = () => {
         </Flex>
       </Box>
 
-      <Center pb="10">
+      <Center>
         <Box
           bg="white"
           border="1px"
@@ -119,6 +121,8 @@ const HotProfiles = () => {
           })}
         </Box>
       </Center>
+
+      <LensterFooter />
     </>
   );
 };
