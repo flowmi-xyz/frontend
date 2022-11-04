@@ -33,22 +33,18 @@ const HotProfilesArr = [
 ];
 
 const HotProfiles = () => {
-  // TODO: me tira un error CiCircleMore
   return (
     <>
-      <Box width="924px" m="auto" p="3">
+      <Box width="924px" m="auto" pb="3">
         <Flex>
-          <Text fontSize="32">🥇🥈🥉 </Text>
-
           <Text
             fontWeight="700"
             fontSize="18"
             lineHeight="120%"
             color="black"
             my="auto"
-            ml="2"
           >
-            Profiles with more tokens accumulated
+            💰 Who to follow in Social DeFi
           </Text>
         </Flex>
       </Box>
@@ -58,7 +54,6 @@ const HotProfiles = () => {
           bg="white"
           border="1px"
           borderColor="#E0E0E3"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
           borderRadius="10px"
           width="924px"
         >
@@ -112,13 +107,7 @@ const HotProfiles = () => {
                       {item.accumulatedTokens} MATIC
                     </Text>
 
-                    <Box
-                      bg="lens"
-                      borderRadius="10px"
-                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                      w="40px"
-                      h="40px"
-                    >
+                    <Box bg="lens" borderRadius="10px" w="40px" h="40px">
                       <Image
                         src="../assets/LOGO__lens_ultra small icon.png"
                         alt="lens"
