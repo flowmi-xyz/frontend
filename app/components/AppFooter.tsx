@@ -1,8 +1,8 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 const AppFooter = () => {
   return (
-    <Center p="3" position="fixed" bottom="0">
+    <Box p="3" position="fixed" bottom="0" right="10">
       <Text
         fontWeight="500"
         fontSize="14px"
@@ -13,7 +13,7 @@ const AppFooter = () => {
       >
         Make with ❤️ for Chainlink Hackathon Fall 2022
       </Text>
-    </Center>
+    </Box>
   );
 };
 

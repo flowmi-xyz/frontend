@@ -36,7 +36,7 @@ const NavbarConnected = ({
               borderRadius="10px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             >
-              <Text fontWeight="700" fontSize="14px" color="lensDark">
+              <Text fontWeight="600" fontSize="14px" color="lensDark">
                 @{handle}
               </Text>
             </Button>
