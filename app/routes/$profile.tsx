@@ -12,6 +12,7 @@ import { Box, Divider, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import ProfileParticipation from "~/components/ProfileParticipation";
+import LensterProfile from "~/components/external/LensterProfile";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -48,49 +49,10 @@ export default function Profile() {
 
       <Grid templateColumns="repeat(3, 1fr)">
         <GridItem colSpan={2}>
-          <Box p="10">
-            Image
-            <Text>Cristian Valdivia</Text>
-            <Text>@cristianvaldivia.lens</Text>
-            <Flex>
-              <Box>
-                <Text>24</Text>
-                <Text>Followers</Text>
-              </Box>
-
-              <Box>
-                <Text>34</Text>
-                <Text>Following</Text>
-              </Box>
-            </Flex>
-            <Text>Building web3</Text>
-            <Divider />
-            <Flex>
-              <Text>#</Text>
-              <Text>0x01</Text>
-            </Flex>
-            <Flex>
-              <Text>9</Text>
-              <Text>Chile</Text>
-            </Flex>
-            <Flex>
-              <Text>#</Text>
-              <Text>cristianvaldivia.eth</Text>
-            </Flex>
-            <Flex>
-              <Text>#</Text>
-              <Text>www.cristianvaldivia.cl</Text>
-            </Flex>
-            <Flex>
-              <Text>#</Text>
-              <Text>cris___stark</Text>
-            </Flex>
-          </Box>
+          <LensterProfile />
         </GridItem>
 
-        <GridItem colSpan={1}>
-          <ProfileParticipation />
-        </GridItem>
+        <GridItem colSpan={1}>aldkjf alj</GridItem>
       </Grid>
     </Box>
   );
