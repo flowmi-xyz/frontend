@@ -9,8 +9,6 @@ import { Box } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
-import HotProfiles from "~/components/HotProfiles";
-import ProfileParticipation from "~/components/ProfileParticipation";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -21,16 +19,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   return address;
 };
 
-export default function Dashboard() {
+export default function AuthLens() {
   const address = useLoaderData();
 
   return (
     <Box bg="#FAFAF9" height="100vh">
-      <NavbarConnected address={address} />
-
-      <ProfileParticipation />
-
-      <HotProfiles />
+      <NavbarConnected address={address} authenticatedInLens={false} />
     </Box>
   );
 }
