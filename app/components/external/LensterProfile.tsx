@@ -65,21 +65,19 @@ const LensterProfile = ({
 
     console.log(typedData);
 
-    // const followNFTContract = new ethers.Contract(
-    //   unfollowTypedData.domain.verifyingContract,
-    //   LENS_HUB_ABI,
-    //   getSigner()
-    // );
+    const followNFTContract = new ethers.Contract(
+      typedData.domain.verifyingContract,
+      LENS_HUB_ABI,
+      getSigner()
+    );
 
-    // try {
-    //   const burnTx = await followNFTContract.burn(
-    //     unfollowTypedData.value.tokenId
-    //   );
+    try {
+      const burnTx = await followNFTContract.burn(typedData.value.tokenId);
 
-    //   await burnTx.wait();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      await burnTx.wait();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
