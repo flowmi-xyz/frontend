@@ -4,13 +4,15 @@ const HotProfilesArr = [
   {
     name: "fabri.lens",
     handle: "fabri.lens",
-    image: "https://bit.ly/dan-abramov",
-    accumulatedTokens: 9,
+    image:
+      "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreifflpxyheb2bzqeygz7c3h3ytvpxcfobg5gl3liozawj64ph2jafu",
+    accumulatedTokens: 12,
   },
   {
     name: "Cris Valdivia",
     handle: "crisvaldivia.lens",
-    image: "https://bit.ly/dan-abramov",
+    image:
+      "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreichwq6umgahyohbekflyclq7o7y2u46jatkhwqueqfl2koortgeve",
     accumulatedTokens: 5,
   },
   // {
@@ -24,7 +26,7 @@ const HotProfilesArr = [
 const HotProfiles = () => {
   return (
     <>
-      <Box m="auto" pb="3">
+      <Box m="auto" pb="3" width="420px">
         <Flex>
           <Text
             fontWeight="600"
@@ -44,16 +46,15 @@ const HotProfiles = () => {
           border="1px"
           borderColor="#E0E0E3"
           borderRadius="10px"
-          width="400px"
-          p="3"
+          width="420px"
         >
           {HotProfilesArr.map((item) => {
             return (
               <>
-                <Flex justifyContent="space-around">
-                  <Flex>
+                <Flex justifyContent="space-around" p="4">
+                  <Flex width="40%">
                     <Avatar
-                      size="md"
+                      size="sm"
                       name={item.handle}
                       src={item.image}
                       my="auto"
@@ -61,8 +62,8 @@ const HotProfiles = () => {
 
                     <Box my="auto" pl="2">
                       <Text
-                        fontWeight="700"
-                        fontSize="16px"
+                        fontWeight="600"
+                        fontSize="14px"
                         lineHeight="120%"
                         letterSpacing="-0.03em"
                         color="black"
@@ -71,7 +72,7 @@ const HotProfiles = () => {
                       </Text>
 
                       <Text
-                        fontWeight="400"
+                        fontWeight="600"
                         fontSize="12px"
                         lineHeight="100%"
                         letterSpacing="-0.03em"
@@ -84,19 +85,20 @@ const HotProfiles = () => {
                     </Box>
                   </Flex>
 
-                  <Text
-                    fontWeight="700"
-                    fontSize="16px"
-                    letterSpacing="-0.03em"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                    my="auto"
-                  >
-                    {item.accumulatedTokens} MATIC{" "}
-                    <Text as="span" color="black">
-                      accumulated
+                  <Box width="40%" my="auto">
+                    <Text
+                      fontWeight="700"
+                      fontSize="14px"
+                      letterSpacing="-0.03em"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                    >
+                      {item.accumulatedTokens} MATIC{" "}
+                      <Text as="span" fontWeight="400" color="black">
+                        accumulated
+                      </Text>
                     </Text>
-                  </Text>
+                  </Box>
 
                   <Box
                     bg="lens"
