@@ -84,6 +84,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function Profile() {
   const {
     address,
+    accessToken,
     profile,
     pageProfile,
     locationValue,
@@ -119,6 +120,7 @@ export default function Profile() {
               website={websiteValue}
               twitter={twitterValue}
               isFollowed={true}
+              accessToken={accessToken}
             />
           </GridItem>
 

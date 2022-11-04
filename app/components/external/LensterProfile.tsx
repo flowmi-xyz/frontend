@@ -19,7 +19,9 @@ import { transformToIpfsUrl } from "~/web3/ipfs";
 
 import { getSigner } from "~/web3/etherservice";
 import { LENS_HUB_ABI } from "~/web3/lens/lens-hub";
+
 import { createUnfollowTypedData } from "~/web3/lens/unfollow";
+import { changeHeaders } from "~/web3/lens/lens-client";
 
 type LensterProfileProps = {
   name: string;
@@ -33,6 +35,7 @@ type LensterProfileProps = {
   website?: string;
   twitter?: string;
   isFollowed: boolean;
+  accessToken: string;
 };
 
 const LensterProfile = ({
@@ -47,9 +50,12 @@ const LensterProfile = ({
   website,
   twitter,
   isFollowed,
+  accessToken,
 }: LensterProfileProps) => {
   const handleUnfollow = async () => {
     console.log("unfollow");
+
+    changeHeaders(accessToken);
 
     const unfollowTypedData = await createUnfollowTypedData({
       request: { profile: id },
