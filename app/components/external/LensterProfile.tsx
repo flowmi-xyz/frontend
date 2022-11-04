@@ -130,19 +130,22 @@ const LensterProfile = ({
         </Flex>
       )}
 
-      <Flex pt="3">
-        <Image src="../assets/ens.png" w="4" h="4" />
-        <Text
-          fontWeight="600"
-          fontSize="14px"
-          lineHeight="120%"
-          color="black"
-          pl="3"
-          my="auto"
-        >
-          cristianvaldivia.eth
-        </Text>
-      </Flex>
+      {ens && (
+        <Flex pt="3">
+          <Image src="../assets/ens.png" w="4" h="4" />
+          <Text
+            fontWeight="600"
+            fontSize="14px"
+            lineHeight="120%"
+            color="black"
+            pl="3"
+            my="auto"
+          >
+            {ens}
+          </Text>
+        </Flex>
+      )}
+
       <Flex pt="3">
         <Icon as={BiWorld} color="second" w="4" h="4" />
         <Text
