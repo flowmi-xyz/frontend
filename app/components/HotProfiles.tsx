@@ -29,17 +29,15 @@ const HotProfiles = () => {
   return (
     <>
       <Box m="auto" pb="3" width="420px">
-        <Flex>
-          <Text
-            fontWeight="600"
-            fontSize="15px"
-            lineHeight="120%"
-            color="black"
-            my="auto"
-          >
-            💰 Who to follow in Social DeFi
-          </Text>
-        </Flex>
+        <Text
+          fontWeight="600"
+          fontSize="15px"
+          lineHeight="120%"
+          color="black"
+          my="auto"
+        >
+          💰 Who to follow in Social DeFi
+        </Text>
       </Box>
 
       <Center>

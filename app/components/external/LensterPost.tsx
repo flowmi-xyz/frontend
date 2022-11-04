@@ -7,6 +7,7 @@ import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 import { GoCommentDiscussion } from "react-icons/go";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import { VscLibrary } from "react-icons/vsc";
+import { WIDTH_FEED } from "~/style/theme";
 
 type PostProps = {
   id: string;
@@ -41,7 +42,7 @@ const LensterPost = ({
       borderBottom="0px"
       borderColor="#E0E0E3"
       borderRadius={index === 0 ? "10px 10px 0 0" : "0"}
-      width="924px"
+      width={WIDTH_FEED}
       _hover={{ bg: "#F4F4F5" }}
     >
       <HStack p="5" justifyContent="space-between">

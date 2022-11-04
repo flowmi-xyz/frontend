@@ -1,17 +1,17 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 
+import { WIDTH_FEED } from "~/style/theme";
+
 const ProfileParticipation = () => {
   return (
     <>
-      <Box width="924px" m="auto" p="3" mt="5">
+      <Box m="auto" pt="3" pb="3" width={WIDTH_FEED}>
         <Text
-          fontWeight="700"
-          fontSize="18"
+          fontWeight="600"
+          fontSize="15px"
           lineHeight="120%"
           color="black"
           my="auto"
-          ml="2"
-          textAlign={"start"}
         >
           Your participation in Social DeFi
         </Text>
@@ -23,7 +23,7 @@ const ProfileParticipation = () => {
           border="1px"
           borderColor="#824EF0"
           borderRadius="10px"
-          width="924px"
+          width={WIDTH_FEED}
         >
           <Flex justifyContent="space-around" p="12">
             <Box>

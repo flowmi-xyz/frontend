@@ -5,7 +5,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/bff/session";
 
 // UI components
-import { Box } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
@@ -40,18 +40,28 @@ export default function Dashboard() {
   const { address, accessToken, profile } = useLoaderData();
 
   return (
-    <Box bg="#FAFAF9" height="100vh">
+    <Box bg="#FAFAF9">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
         handler={profile.handle}
       />
 
-      <ProfileParticipation />
+      <Grid templateColumns="repeat(3, 1fr)">
+        <GridItem colSpan={2}>
+          <ProfileParticipation />
+        </GridItem>
 
-      <HotProfiles />
+        <GridItem colSpan={2}>
+          <Outlet />
+        </GridItem>
 
-      <Outlet />
+        <GridItem colSpan={1}>
+          <HotProfiles />
+        </GridItem>
+      </Grid>
+
+      {/* <Outlet /> */}
     </Box>
   );
 }

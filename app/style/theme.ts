@@ -12,3 +12,5 @@ export const theme = extendTheme({
     lensDark: "#00501E",
   },
 });
+
+export const WIDTH_FEED = 700;
