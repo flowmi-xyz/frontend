@@ -5,6 +5,8 @@ import { TbHash, TbLocation } from "react-icons/tb";
 import { FaTwitter } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 
+import { transformToIpfsUrl } from "~/web3/ipfs";
+
 type LensterProfileProps = {
   name: string;
   handle: string;
@@ -33,11 +35,7 @@ const LensterProfile = ({
   return (
     <Box m="5" p="10" width="300px">
       <Box p="2" borderRadius="2xl" bg="#FAFAF9">
-        <Image
-          src="https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreib75vvqtckmck6zs7v7lntc7pan45jbugmcc6633z3aflvprryr4i"
-          w="300px"
-          borderRadius="md"
-        />
+        <Image src={transformToIpfsUrl(avatar)} w="300px" borderRadius="md" />
       </Box>
 
       <Text
@@ -162,20 +160,22 @@ const LensterProfile = ({
         </Flex>
       )}
 
-      <Flex pt="3">
-        <Icon as={FaTwitter} color="twitter" w="4" h="4" />
+      {twitter && (
+        <Flex pt="3">
+          <Icon as={FaTwitter} color="twitter" w="4" h="4" />
 
-        <Text
-          fontWeight="600"
-          fontSize="14px"
-          lineHeight="120%"
-          color="black"
-          pl="3"
-          my="auto"
-        >
-          cris___stark
-        </Text>
-      </Flex>
+          <Text
+            fontWeight="600"
+            fontSize="14px"
+            lineHeight="120%"
+            color="black"
+            pl="3"
+            my="auto"
+          >
+            {twitter}
+          </Text>
+        </Flex>
+      )}
     </Box>
   );
 };

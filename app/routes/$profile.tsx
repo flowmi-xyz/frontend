@@ -60,6 +60,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const websiteValue = website[0]?.value;
 
+  const twitter = pageProfile.attributes.filter((attribute: any) => {
+    return attribute.key === "twitter";
+  });
+
+  const twitterValue = twitter[0]?.value;
+
   return {
     address,
     accessToken,
@@ -68,6 +74,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     locationValue,
     ensValue,
     websiteValue,
+    twitterValue,
   };
 };
 
@@ -79,6 +86,7 @@ export default function Profile() {
     locationValue,
     ensValue,
     websiteValue,
+    twitterValue,
   } = useLoaderData();
 
   console.log(pageProfile);
@@ -104,11 +112,13 @@ export default function Profile() {
             name={pageProfile.name}
             handle={pageProfile.handle}
             id={pageProfile.id}
+            avatar={pageProfile.picture?.original?.url}
             followers={pageProfile.stats.totalFollowers}
             following={pageProfile.stats.totalFollowing}
             location={locationValue}
             ens={ensValue}
             website={websiteValue}
+            twitter={twitterValue}
           />
         </GridItem>
 
