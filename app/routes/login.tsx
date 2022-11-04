@@ -61,9 +61,19 @@ export const action: ActionFunction = async ({ request }) => {
     });
   }
 
+  const accessToken = session.get("accessToken");
+
   session.set("address", address);
 
-  return redirect(`/dashboard`, {
+  if (!accessToken) {
+    return redirect(`/lens`, {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+
+  return redirect(`/dashboard/feed`, {
     headers: {
       "Set-Cookie": await commitSession(session),
     },
