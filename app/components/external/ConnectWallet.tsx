@@ -20,7 +20,11 @@ import { MdVerifiedUser, MdVisibility } from "react-icons/md";
 // methods
 import { loginWithMetamask } from "~/web3/metamask";
 
-const ConnectWallet = () => {
+type ConnectWalletProps = {
+  users: number;
+};
+
+const ConnectWallet = ({ users }: ConnectWalletProps) => {
   const submit = useSubmit();
 
   const handleLogin = async () => {
@@ -106,7 +110,7 @@ const ConnectWallet = () => {
               />
 
               <Text color="grayLetter" fontSize="14">
-                Trusted by 0 users
+                Trusted by {users} users
               </Text>
             </HStack>
 

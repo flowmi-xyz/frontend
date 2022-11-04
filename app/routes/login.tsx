@@ -1,6 +1,7 @@
 // BFF components
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
 import { db } from "~/bff/db.server";
 import { commitSession, getSession } from "~/bff/session";
@@ -11,6 +12,13 @@ import { Box } from "@chakra-ui/react";
 // components
 import NavbarApp from "~/components/NavbarApp";
 import ConnectWallet from "~/components/external/ConnectWallet";
+
+export const loader: LoaderFunction = async () => {
+  // Get the number of connected users
+  const users = await db.user.count();
+
+  return users;
+};
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -81,10 +89,12 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Login() {
+  const users = useLoaderData();
+
   return (
     <Box>
       <NavbarApp />
-      <ConnectWallet />
+      <ConnectWallet users={users} />
     </Box>
   );
 }
