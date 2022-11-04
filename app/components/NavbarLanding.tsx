@@ -6,7 +6,7 @@ const NavbarLanding = () => {
   return (
     <Flex
       justify="space-around"
-      bgGradient="linear(to-r, #4E84F7, #7A3CE3, #EA336F, #E8622C, #F5C144)"
+      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
       height="76px"
       align="center"
       alignItems="center"
@@ -20,7 +20,7 @@ const NavbarLanding = () => {
 
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Flex display="flex" align="center">
-          <Link to="/app">
+          <Link to="/login">
             <Button
               bg="white"
               borderRadius="10px"

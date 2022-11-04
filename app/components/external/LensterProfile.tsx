@@ -1,4 +1,12 @@
-import { Box, Divider, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Icon,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
 // icons
 import { TbHash, TbLocation } from "react-icons/tb";
@@ -18,6 +26,7 @@ type LensterProfileProps = {
   ens?: string;
   website?: string;
   twitter?: string;
+  isFollowed: boolean;
 };
 
 const LensterProfile = ({
@@ -31,6 +40,7 @@ const LensterProfile = ({
   ens,
   website,
   twitter,
+  isFollowed,
 }: LensterProfileProps) => {
   return (
     <Box m="5" p="10" width="300px">
@@ -104,6 +114,53 @@ const LensterProfile = ({
           </Text>
         </Box>
       </Flex>
+
+      {!isFollowed ? (
+        <Button
+          bg="lens"
+          borderRadius="10px"
+          boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+          mt="5"
+        >
+          <Flex>
+            <Box w="40px" h="40px">
+              <Image
+                src="../assets/LOGO__lens_ultra small icon.png"
+                alt="lens"
+                my="-5px"
+                mx="-5px"
+              />
+            </Box>
+
+            <Text
+              fontWeight="500"
+              fontSize="18px"
+              lineHeight="21.6px"
+              color="lensDark"
+              m="auto"
+            >
+              DeFi follow
+            </Text>
+          </Flex>
+        </Button>
+      ) : (
+        <Button
+          bg="third"
+          borderRadius="10px"
+          boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+          mt="5"
+        >
+          <Text
+            fontWeight="500"
+            fontSize="18px"
+            lineHeight="21.6px"
+            color="white"
+          >
+            Unfollow
+          </Text>
+        </Button>
+      )}
+
       <Divider pt="3" />
       <Flex pt="3">
         <Icon as={TbHash} color="first" w="4" h="4" />

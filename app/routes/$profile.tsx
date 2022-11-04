@@ -14,6 +14,7 @@ import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
 import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
+import AppFooter from "~/components/AppFooter";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -97,7 +98,7 @@ export default function Profile() {
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
-        handler={profile.handle}
+        handle={profile.handle}
       />
 
       <Image src="./assets/2.png" w="100%" h="320px" objectFit="cover" />
@@ -116,6 +117,7 @@ export default function Profile() {
               ens={ensValue}
               website={websiteValue}
               twitter={twitterValue}
+              isFollowed={true}
             />
           </GridItem>
 
@@ -124,6 +126,7 @@ export default function Profile() {
           </GridItem>
         </Grid>
       </Box>
+      <AppFooter />
     </Box>
   );
 }

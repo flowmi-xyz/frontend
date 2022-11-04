@@ -44,7 +44,7 @@ export default function Dashboard() {
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
-        handler={profile.handle}
+        handle={profile.handle}
       />
 
       <Box maxWidth="1200px" m="auto">
