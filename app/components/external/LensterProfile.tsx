@@ -1,22 +1,34 @@
-import { Box, Divider, Flex, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Icon, Image, Text } from "@chakra-ui/react";
+
+// icons
+import { TbHash, TbLocation } from "react-icons/tb";
+import { FaTwitter } from "react-icons/fa";
+import { BiWorld } from "react-icons/bi";
 
 const LensterProfile = () => {
   return (
     <Box
       m="5"
       p="10"
-      border="1px"
-      borderColor="#E0E0E3"
-      borderRadius="10px"
+      //   border="1px"
+      //   borderColor="#E0E0E3"
+      //   borderRadius="10px"
       width="300px"
     >
-      Image
+      <Image
+        src="https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreib75vvqtckmck6zs7v7lntc7pan45jbugmcc6633z3aflvprryr4i"
+        w="40"
+        h="40"
+        borderRadius="md"
+      />
+
       <Text
         fontWeight="600"
         fontSize="24px"
         lineHeight="120%"
         letterSpacing="-0.03em"
         color="black"
+        pt="4"
       >
         Cristian Valdivia
       </Text>
@@ -35,7 +47,6 @@ const LensterProfile = () => {
             fontWeight="700"
             fontSize="20px"
             lineHeight="120%"
-            letterSpacing="-0.03em"
             color="black"
           >
             24
@@ -44,7 +55,6 @@ const LensterProfile = () => {
             fontWeight="600"
             fontSize="14px"
             lineHeight="120%"
-            letterSpacing="-0.03em"
             color="grayLetter"
           >
             Followers
@@ -56,7 +66,6 @@ const LensterProfile = () => {
             fontWeight="700"
             fontSize="20px"
             lineHeight="120%"
-            letterSpacing="-0.03em"
             color="black"
           >
             34
@@ -65,7 +74,6 @@ const LensterProfile = () => {
             fontWeight="600"
             fontSize="14px"
             lineHeight="120%"
-            letterSpacing="-0.03em"
             color="grayLetter"
           >
             Following
@@ -74,24 +82,71 @@ const LensterProfile = () => {
       </Flex>
       <Divider pt="3" />
       <Flex pt="3">
-        <Text>#</Text>
-        <Text>0x01</Text>
+        <Icon as={TbHash} color="first" w="4" h="4" />
+
+        <Text
+          fontWeight="600"
+          fontSize="14px"
+          lineHeight="120%"
+          color="black"
+          pl="3"
+          my="auto"
+        >
+          0x01
+        </Text>
       </Flex>
-      <Flex>
-        <Text>9</Text>
-        <Text>Chile</Text>
+      <Flex pt="3">
+        <Icon as={TbLocation} color="third" w="4" h="4" />
+        <Text
+          fontWeight="600"
+          fontSize="14px"
+          lineHeight="120%"
+          color="black"
+          pl="3"
+          my="auto"
+        >
+          Chile
+        </Text>
       </Flex>
-      <Flex>
-        <Text>#</Text>
-        <Text>cristianvaldivia.eth</Text>
+      <Flex pt="3">
+        <Image src="../assets/ens.png" w="4" h="4" />
+        <Text
+          fontWeight="600"
+          fontSize="14px"
+          lineHeight="120%"
+          color="black"
+          pl="3"
+          my="auto"
+        >
+          cristianvaldivia.eth
+        </Text>
       </Flex>
-      <Flex>
-        <Text>#</Text>
-        <Text>www.cristianvaldivia.cl</Text>
+      <Flex pt="3">
+        <Icon as={BiWorld} color="second" w="4" h="4" />
+        <Text
+          fontWeight="600"
+          fontSize="14px"
+          lineHeight="120%"
+          color="black"
+          pl="3"
+          my="auto"
+        >
+          www.cristianvaldivia.cl
+        </Text>
       </Flex>
-      <Flex>
-        <Text>#</Text>
-        <Text>cris___stark</Text>
+      <Flex pt="3">
+        <Icon as={FaTwitter} color="twitter" w="4" h="4" />
+
+        <Text
+          fontWeight="600"
+          fontSize="14px"
+          lineHeight="120%"
+          color="black"
+          pl="3"
+          my="auto"
+        >
+          cris___stark
+        </Text>
       </Flex>
     </Box>
   );

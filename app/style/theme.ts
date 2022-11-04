@@ -10,6 +10,7 @@ export const theme = extendTheme({
     grayLetter: "#757575",
     lens: "#BDFC5A",
     lensDark: "#00501E",
+    twitter: "#1DA1F2",
   },
 });
 

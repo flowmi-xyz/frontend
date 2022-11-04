@@ -7,7 +7,15 @@ import { GetDefaultProfile } from "~/web3/lens/lens-api";
 
 import { getSession } from "~/bff/session";
 // UI components
-import { Box, Divider, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
@@ -45,6 +53,13 @@ export default function Profile() {
         address={address}
         authenticatedInLens={true}
         handler={profile.handle}
+      />
+
+      <Image
+        src="https://www.xtrafondos.com/descargar.php?id=4599&resolucion=5120x2880"
+        w="100%"
+        h="320px"
+        objectFit="fill"
       />
 
       <Grid templateColumns="repeat(3, 1fr)">
