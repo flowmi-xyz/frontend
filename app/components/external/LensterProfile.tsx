@@ -5,7 +5,31 @@ import { TbHash, TbLocation } from "react-icons/tb";
 import { FaTwitter } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 
-const LensterProfile = () => {
+type LensterProfileProps = {
+  name: string;
+  handle: string;
+  id: string;
+  avatar?: string;
+  followers?: number;
+  following?: number;
+  location?: string;
+  ens?: string;
+  website?: string;
+  twitter?: string;
+};
+
+const LensterProfile = ({
+  name,
+  handle,
+  avatar,
+  followers,
+  following,
+  id,
+  location,
+  ens,
+  website,
+  twitter,
+}: LensterProfileProps) => {
   return (
     <Box m="5" p="10" width="300px">
       <Box p="2" borderRadius="2xl" bg="#FAFAF9">
@@ -24,7 +48,7 @@ const LensterProfile = () => {
         color="black"
         pt="4"
       >
-        Cristian Valdivia
+        {name}
       </Text>
       <Text
         fontWeight="700"
@@ -33,7 +57,7 @@ const LensterProfile = () => {
         bgClip="text"
         pt="1"
       >
-        @cristianvaldivia.lens
+        @{handle}
       </Text>
       <Flex pt="5" justifyContent="space-between">
         <Box>
@@ -43,7 +67,7 @@ const LensterProfile = () => {
             lineHeight="120%"
             color="black"
           >
-            24
+            {followers}
           </Text>
           <Text
             fontWeight="600"
@@ -62,7 +86,7 @@ const LensterProfile = () => {
             lineHeight="120%"
             color="black"
           >
-            34
+            {following}
           </Text>
           <Text
             fontWeight="600"
@@ -86,7 +110,7 @@ const LensterProfile = () => {
           pl="3"
           my="auto"
         >
-          0x01
+          {id}
         </Text>
       </Flex>
       <Flex pt="3">
