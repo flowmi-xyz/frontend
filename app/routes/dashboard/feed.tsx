@@ -39,8 +39,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Dashboard() {
   const { address, accessToken, profile } = useLoaderData();
 
-  console.log(profile);
-
   return (
     <Box bg="#FAFAF9" height="100vh">
       <NavbarConnected
