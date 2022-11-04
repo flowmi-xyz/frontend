@@ -5,11 +5,13 @@ import { Flex, Text, Button } from "@chakra-ui/react";
 type NavbarConnectedProps = {
   address: string;
   authenticatedInLens: boolean;
+  handler?: string;
 };
 
 const NavbarConnected = ({
   address,
   authenticatedInLens,
+  handler,
 }: NavbarConnectedProps) => {
   return (
     <Flex
@@ -34,8 +36,8 @@ const NavbarConnected = ({
               borderRadius="10px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             >
-              <Text fontWeight="600" fontSize="18" color="lensDark">
-                @cristianvaldivia.lens
+              <Text fontWeight="700" fontSize="14px" color="lensDark">
+                @{handler}
               </Text>
             </Button>
           )}
@@ -46,7 +48,7 @@ const NavbarConnected = ({
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             ml="20px"
           >
-            <Text fontSize="15" color="grayLetter">
+            <Text fontSize="14px" color="grayLetter">
               {`${address.slice(0, 6)} ... ${address.slice(
                 address.length - 4,
                 address.length
