@@ -13,6 +13,7 @@ import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
+import ProfileParticipation from "~/components/ProfileParticipation";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -99,31 +100,30 @@ export default function Profile() {
         handler={profile.handle}
       />
 
-      <Image
-        src="https://www.xtrafondos.com/descargar.php?id=4599&resolucion=5120x2880"
-        w="100%"
-        h="320px"
-        objectFit="fill"
-      />
+      <Image src="./assets/2.png" w="100%" h="320px" objectFit="cover" />
 
-      <Grid templateColumns="repeat(3, 1fr)">
-        <GridItem colSpan={2} mt="-170px">
-          <LensterProfile
-            name={pageProfile.name}
-            handle={pageProfile.handle}
-            id={pageProfile.id}
-            avatar={pageProfile.picture?.original?.url}
-            followers={pageProfile.stats.totalFollowers}
-            following={pageProfile.stats.totalFollowing}
-            location={locationValue}
-            ens={ensValue}
-            website={websiteValue}
-            twitter={twitterValue}
-          />
-        </GridItem>
+      <Box maxWidth="1200px" m="auto">
+        <Grid templateColumns="repeat(3, 1fr)">
+          <GridItem colSpan={1} mt="-170px">
+            <LensterProfile
+              name={pageProfile.name}
+              handle={pageProfile.handle}
+              id={pageProfile.id}
+              avatar={pageProfile.picture?.original?.url}
+              followers={pageProfile.stats.totalFollowers}
+              following={pageProfile.stats.totalFollowing}
+              location={locationValue}
+              ens={ensValue}
+              website={websiteValue}
+              twitter={twitterValue}
+            />
+          </GridItem>
 
-        <GridItem colSpan={1}>aldkjf alj</GridItem>
-      </Grid>
+          <GridItem colSpan={2}>
+            <ProfileParticipation />
+          </GridItem>
+        </Grid>
+      </Box>
     </Box>
   );
 }

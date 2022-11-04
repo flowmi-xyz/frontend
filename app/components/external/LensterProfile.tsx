@@ -35,7 +35,13 @@ const LensterProfile = ({
   return (
     <Box m="5" p="10" width="300px">
       <Box p="2" borderRadius="2xl" bg="#FAFAF9">
-        <Image src={transformToIpfsUrl(avatar)} w="300px" borderRadius="md" />
+        <Image
+          src={transformToIpfsUrl(avatar as string)}
+          w="300px"
+          h="200px"
+          objectFit="cover"
+          borderRadius="md"
+        />
       </Box>
 
       <Text
