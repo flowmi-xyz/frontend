@@ -1,4 +1,13 @@
-import { Avatar, Box, Center, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+import { Link } from "@remix-run/react";
 import LensterFooter from "./external/LensterFooter";
 
 const HotProfilesArr = [
@@ -11,7 +20,7 @@ const HotProfilesArr = [
   },
   {
     name: "Cris Valdivia",
-    handle: "crisvaldivia.lens",
+    handle: "cristianvaldivia.lens",
     image:
       "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreichwq6umgahyohbekflyclq7o7y2u46jatkhwqueqfl2koortgeve",
     accumulatedTokens: 5,
@@ -40,26 +49,28 @@ const HotProfiles = () => {
         </Text>
       </Box>
 
-      <Center>
-        <Box
-          bg="white"
-          border="1px"
-          borderColor="#E0E0E3"
-          borderRadius="10px"
-          width="420px"
-        >
-          {HotProfilesArr.map((item) => {
-            return (
-              <>
-                <Flex justifyContent="space-around" p="4">
-                  <Flex width="40%">
+      <Box
+        bg="white"
+        border="1px"
+        borderColor="#E0E0E3"
+        borderRadius="10px"
+        width="420px"
+      >
+        {HotProfilesArr.map((item) => {
+          return (
+            <>
+              <Flex justifyContent="space-around" p="4">
+                <Flex width="50%">
+                  <Link to={`/${item.handle}`} prefetch="intent">
                     <Avatar
                       size="sm"
                       name={item.handle}
                       src={item.image}
                       my="auto"
                     />
+                  </Link>
 
+                  <Link to={`/${item.handle}`} prefetch="intent">
                     <Box my="auto" pl="2">
                       <Text
                         fontWeight="600"
@@ -83,42 +94,36 @@ const HotProfiles = () => {
                         @{item.handle}
                       </Text>
                     </Box>
-                  </Flex>
-
-                  <Box width="40%" my="auto">
-                    <Text
-                      fontWeight="700"
-                      fontSize="14px"
-                      letterSpacing="-0.03em"
-                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                      bgClip="text"
-                    >
-                      {item.accumulatedTokens} MATIC{" "}
-                      <Text as="span" fontWeight="400" color="black">
-                        accumulated
-                      </Text>
-                    </Text>
-                  </Box>
-
-                  <Box
-                    bg="lens"
-                    borderRadius="10px"
-                    w="35px"
-                    h="35px"
-                    my="auto"
-                  >
-                    <Image
-                      src="../assets/LOGO__lens_ultra small icon.png"
-                      alt="lens"
-                      my="-5px"
-                    />
-                  </Box>
+                  </Link>
                 </Flex>
-              </>
-            );
-          })}
-        </Box>
-      </Center>
+
+                <Box width="50%" my="auto">
+                  <Text
+                    fontWeight="700"
+                    fontSize="14px"
+                    letterSpacing="-0.03em"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                  >
+                    {item.accumulatedTokens} MATIC{" "}
+                    <Text as="span" fontWeight="400" color="black">
+                      accumulated
+                    </Text>
+                  </Text>
+                </Box>
+
+                <Box bg="lens" borderRadius="10px" w="35px" h="35px" my="auto">
+                  <Image
+                    src="../assets/LOGO__lens_ultra small icon.png"
+                    alt="lens"
+                    my="-5px"
+                  />
+                </Box>
+              </Flex>
+            </>
+          );
+        })}
+      </Box>
 
       <LensterFooter />
     </>
