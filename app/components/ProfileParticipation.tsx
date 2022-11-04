@@ -40,8 +40,8 @@ const ProfileParticipation = () => {
 
               <Text
                 textAlign="center"
-                fontWeight="700"
-                fontSize="16px"
+                fontWeight="500"
+                fontSize="15px"
                 letterSpacing="-0.03em"
                 color="black"
               >
@@ -63,12 +63,12 @@ const ProfileParticipation = () => {
 
               <Text
                 textAlign="center"
-                fontWeight="700"
-                fontSize="16px"
+                fontWeight="500"
+                fontSize="15px"
                 letterSpacing="-0.03em"
                 color="black"
               >
-                Followers
+                DeFi Followers
               </Text>
             </Box>
 
@@ -86,8 +86,8 @@ const ProfileParticipation = () => {
 
               <Text
                 textAlign="center"
-                fontWeight="700"
-                fontSize="16px"
+                fontWeight="500"
+                fontSize="15px"
                 letterSpacing="-0.03em"
                 color="black"
               >

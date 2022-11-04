@@ -37,7 +37,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const { address, accessToken, profile } = useLoaderData();
+  const { address, profile } = useLoaderData();
 
   return (
     <Box bg="#FAFAF9">
@@ -47,19 +47,21 @@ export default function Dashboard() {
         handler={profile.handle}
       />
 
-      <Grid templateColumns="repeat(3, 1fr)">
-        <GridItem colSpan={2}>
-          <ProfileParticipation />
-        </GridItem>
+      <Box maxWidth="1200px" m="auto">
+        <Grid templateColumns="repeat(3, 1fr)">
+          <GridItem colSpan={2}>
+            <ProfileParticipation />
+          </GridItem>
 
-        <GridItem colSpan={2}>
-          <Outlet />
-        </GridItem>
+          <GridItem colSpan={2}>
+            <Outlet />
+          </GridItem>
 
-        <GridItem colSpan={1}>
-          <HotProfiles />
-        </GridItem>
-      </Grid>
+          <GridItem colSpan={1}>
+            <HotProfiles />
+          </GridItem>
+        </Grid>
+      </Box>
 
       {/* <Outlet /> */}
     </Box>

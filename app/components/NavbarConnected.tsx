@@ -43,12 +43,12 @@ const NavbarConnected = ({
           )}
 
           <Button
-            bg="white"
+            bg="first"
             borderRadius="10px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             ml="20px"
           >
-            <Text fontSize="14px" color="grayLetter">
+            <Text fontSize="14px" color="white">
               {`${address.slice(0, 6)} ... ${address.slice(
                 address.length - 4,
                 address.length

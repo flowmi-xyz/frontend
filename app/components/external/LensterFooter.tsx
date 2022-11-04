@@ -21,7 +21,7 @@ const LensterFooter = () => {
         color="black"
         pt="2"
       >
-        Make with love for Chainlink Hackathon Fall 2022
+        Make with ❤️ for Chainlink Hackathon Fall 2022
       </Text>
     </Box>
   );
