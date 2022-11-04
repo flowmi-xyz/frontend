@@ -1,10 +1,17 @@
-import { Box, Text } from "@chakra-ui/react";
-import { LoaderFunction } from "@remix-run/node";
+// BFF components
+import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+
 import { GraphQLClient } from "graphql-request";
-import { getSession } from "~/bff/session";
-import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile } from "~/web3/lens/lens-api";
+
+import { getSession } from "~/bff/session";
+// UI components
+import { Box, Divider, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+
+// components
+import NavbarConnected from "~/components/NavbarConnected";
+import ProfileParticipation from "~/components/ProfileParticipation";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -39,7 +46,52 @@ export default function Profile() {
         handler={profile.handle}
       />
 
-      <Text>Cris Valdivia</Text>
+      <Grid templateColumns="repeat(3, 1fr)">
+        <GridItem colSpan={2}>
+          <Box p="10">
+            Image
+            <Text>Cristian Valdivia</Text>
+            <Text>@cristianvaldivia.lens</Text>
+            <Flex>
+              <Box>
+                <Text>24</Text>
+                <Text>Followers</Text>
+              </Box>
+
+              <Box>
+                <Text>34</Text>
+                <Text>Following</Text>
+              </Box>
+            </Flex>
+            <Text>Building web3</Text>
+            <Divider />
+            <Flex>
+              <Text>#</Text>
+              <Text>0x01</Text>
+            </Flex>
+            <Flex>
+              <Text>9</Text>
+              <Text>Chile</Text>
+            </Flex>
+            <Flex>
+              <Text>#</Text>
+              <Text>cristianvaldivia.eth</Text>
+            </Flex>
+            <Flex>
+              <Text>#</Text>
+              <Text>www.cristianvaldivia.cl</Text>
+            </Flex>
+            <Flex>
+              <Text>#</Text>
+              <Text>cris___stark</Text>
+            </Flex>
+          </Box>
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <ProfileParticipation />
+        </GridItem>
+      </Grid>
     </Box>
   );
 }
