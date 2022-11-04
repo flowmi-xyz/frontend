@@ -13,7 +13,7 @@ import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
-import ProfileParticipation from "~/components/ProfileParticipation";
+import TokenAccumulated from "~/components/TokensAccumulated";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -93,7 +93,7 @@ export default function Profile() {
   console.log(pageProfile);
 
   return (
-    <Box bg="#FAFAF9">
+    <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
@@ -120,7 +120,7 @@ export default function Profile() {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <ProfileParticipation />
+            <TokenAccumulated />
           </GridItem>
         </Grid>
       </Box>

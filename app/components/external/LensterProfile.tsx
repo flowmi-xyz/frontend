@@ -70,6 +70,7 @@ const LensterProfile = ({
             fontSize="20px"
             lineHeight="120%"
             color="black"
+            textAlign="center"
           >
             {followers}
           </Text>
@@ -89,6 +90,7 @@ const LensterProfile = ({
             fontSize="20px"
             lineHeight="120%"
             color="black"
+            textAlign="center"
           >
             {following}
           </Text>
