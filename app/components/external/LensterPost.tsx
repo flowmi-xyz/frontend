@@ -8,6 +8,7 @@ import { GoCommentDiscussion } from "react-icons/go";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import { VscLibrary } from "react-icons/vsc";
 import { WIDTH_FEED } from "~/style/theme";
+import { Link } from "@remix-run/react";
 
 type PostProps = {
   id: string;
@@ -46,39 +47,41 @@ const LensterPost = ({
       _hover={{ bg: "#F4F4F5" }}
     >
       <HStack p="5" justifyContent="space-between">
-        <HStack>
-          {profileImage && (
-            <Avatar
-              size="sm"
-              name="nader"
-              src={transformToIpfsUrl(profileImage)}
-            />
-          )}
+        <Link to={`/${handle}`} prefetch="intent">
+          <HStack>
+            {profileImage && (
+              <Avatar
+                size="sm"
+                name="nader"
+                src={transformToIpfsUrl(profileImage)}
+              />
+            )}
 
-          <Box my="auto" pl="1">
-            <Text
-              fontWeight="600"
-              fontSize="14px"
-              lineHeight="120%"
-              letterSpacing="-0.03em"
-              color="black"
-            >
-              {name}
-            </Text>
+            <Box my="auto" pl="1">
+              <Text
+                fontWeight="600"
+                fontSize="14px"
+                lineHeight="120%"
+                letterSpacing="-0.03em"
+                color="black"
+              >
+                {name}
+              </Text>
 
-            <Text
-              fontWeight="700"
-              fontSize="12px"
-              lineHeight="100%"
-              letterSpacing="-0.03em"
-              bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-              bgClip="text"
-              pt="1"
-            >
-              @{handle}
-            </Text>
-          </Box>
-        </HStack>
+              <Text
+                fontWeight="700"
+                fontSize="12px"
+                lineHeight="100%"
+                letterSpacing="-0.03em"
+                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                bgClip="text"
+                pt="1"
+              >
+                @{handle}
+              </Text>
+            </Box>
+          </HStack>
+        </Link>
 
         <Box>
           <Text
