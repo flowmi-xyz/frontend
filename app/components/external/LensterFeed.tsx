@@ -8,8 +8,6 @@ type LensterFeedProps = {
 };
 
 const LensterFeed = ({ Posts }: LensterFeedProps) => {
-  console.log(Posts);
-
   return (
     <Center>
       <Box>

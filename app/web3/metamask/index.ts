@@ -1,3 +1,5 @@
+import { ethers } from "ethers";
+
 declare global {
   interface Window {
     ethereum: any;
@@ -27,4 +29,18 @@ async function loginWithMetamask() {
   return address;
 }
 
-export { loginWithMetamask };
+async function signWithMetamask(text: string) {
+  checkMetamaskAvailability();
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+  await provider.send("eth_requestAccounts", []);
+
+  const signer = provider.getSigner();
+
+  const signature = await signer.signMessage(text);
+
+  return signature;
+}
+
+export { loginWithMetamask, signWithMetamask };

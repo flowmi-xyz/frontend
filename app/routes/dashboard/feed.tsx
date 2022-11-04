@@ -18,15 +18,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const address = session.get("address");
 
-  return address;
+  const accessToken = session.get("accessToken");
+
+  return { address, accessToken };
 };
 
 export default function Dashboard() {
-  const address = useLoaderData();
+  const { address, accessToken } = useLoaderData();
 
   return (
     <Box bg="#FAFAF9" height="100vh">
-      <NavbarConnected address={address} />
+      <NavbarConnected address={address} authenticatedInLens={true} />
 
       <ProfileParticipation />
 

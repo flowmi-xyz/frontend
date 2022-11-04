@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { CiSquareMore } from "react-icons/ci";
+import { CgMoreR } from "react-icons/cg";
 
 const HotProfilesArr = [
   {
@@ -33,7 +33,7 @@ const HotProfilesArr = [
 ];
 
 const HotProfiles = () => {
-  // TODO: me tira un error CiSquareMore
+  // TODO: me tira un error CiCircleMore
   return (
     <>
       <Box width="924px" m="auto" p="3">
@@ -135,13 +135,7 @@ const HotProfiles = () => {
 
           <Box bg="#F9FAFA" borderBottomRadius="10px">
             <Flex>
-              <Icon
-                as={CiSquareMore}
-                margin="4"
-                color="grayLetter"
-                w="7"
-                h="7"
-              />
+              <Icon as={CgMoreR} margin="4" color="grayLetter" w="5" h="5" />
 
               <Text
                 fontWeight="700"
