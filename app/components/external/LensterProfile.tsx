@@ -1,3 +1,5 @@
+import { ethers } from "ethers";
+
 import {
   Box,
   Button,
@@ -14,6 +16,10 @@ import { FaTwitter } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
+
+import { getSigner } from "~/web3/etherservice";
+import { LENS_HUB_ABI } from "~/web3/lens/lens-hub";
+import { createUnfollowTypedData } from "~/web3/lens/unfollow";
 
 type LensterProfileProps = {
   name: string;
@@ -42,6 +48,34 @@ const LensterProfile = ({
   twitter,
   isFollowed,
 }: LensterProfileProps) => {
+  const handleUnfollow = async () => {
+    console.log("unfollow");
+
+    const unfollowTypedData = await createUnfollowTypedData({
+      request: { profile: id },
+    });
+
+    const typedData = unfollowTypedData.typedData;
+
+    console.log(typedData);
+
+    // const followNFTContract = new ethers.Contract(
+    //   unfollowTypedData.domain.verifyingContract,
+    //   LENS_HUB_ABI,
+    //   getSigner()
+    // );
+
+    // try {
+    //   const burnTx = await followNFTContract.burn(
+    //     unfollowTypedData.value.tokenId
+    //   );
+
+    //   await burnTx.wait();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
   return (
     <Box m="5" p="10" width="300px">
       <Box p="2" borderRadius="2xl" bg="#FAFAF9">
@@ -149,6 +183,7 @@ const LensterProfile = ({
           borderRadius="10px"
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
           mt="5"
+          onClick={handleUnfollow}
         >
           <Text
             fontWeight="500"

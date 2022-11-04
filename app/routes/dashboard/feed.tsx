@@ -4,6 +4,9 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 
 import { getSession } from "~/bff/session";
 
+import { lensClient } from "~/web3/lens/lens-client";
+import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+
 // UI components
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 
@@ -11,8 +14,6 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import NavbarConnected from "~/components/NavbarConnected";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
-import { GraphQLClient } from "graphql-request";
-import { GetDefaultProfile } from "~/web3/lens/lens-api";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -23,13 +24,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const accessToken = session.get("accessToken");
 
   // Get default profile from Lens
-  const lens = new GraphQLClient("https://api.lens.dev/playground");
-
   const variables: any = {
     request: { ethereumAddress: address },
   };
 
-  const responseProfile = await lens.request(GetDefaultProfile, variables);
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variables
+  );
 
   const profile = responseProfile.defaultProfile;
 

@@ -1,16 +1,14 @@
-import { GraphQLClient } from "graphql-request";
+import { lensClient } from "./lens-client";
 
-import { Authenticate } from "./lens-api";
+import { Authenticate } from "./graphql/generated";
+
 import type { AuthenticationResult } from "./lens-api.response";
-
-import type { SignedAuthChallenge } from "./lens-api.types";
+import type { SignedAuthChallenge } from "./graphql/lens.types";
 
 export default async function authenticateInLens(
   address: string,
   signature: string
 ) {
-  const lens = new GraphQLClient("https://api.lens.dev/playground");
-
   const variables: SignedAuthChallenge = {
     request: {
       address: address,
@@ -18,7 +16,7 @@ export default async function authenticateInLens(
     },
   };
 
-  const result: AuthenticationResult = await lens.request(
+  const result: AuthenticationResult = await lensClient.request(
     Authenticate,
     variables
   );

@@ -2,10 +2,10 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { GraphQLClient } from "graphql-request";
-import { GetDefaultProfile, GetProfile } from "~/web3/lens/lens-api";
-
 import { getSession } from "~/bff/session";
+
+import { lensClient } from "~/web3/lens/lens-client";
+import { GetDefaultProfile, GetProfile } from "~/web3/lens/graphql/generated";
 
 // UI components
 import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
@@ -25,13 +25,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const accessToken = session.get("accessToken");
 
   // Get default profile from Lens
-  const lens = new GraphQLClient("https://api.lens.dev/playground");
-
   let variables: any = {
     request: { ethereumAddress: address },
   };
 
-  const responseProfile = await lens.request(GetDefaultProfile, variables);
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variables
+  );
 
   const profile = responseProfile.defaultProfile;
 
@@ -40,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     request: { handle: params.profile },
   };
 
-  const response = await lens.request(GetProfile, variables);
+  const response = await lensClient.request(GetProfile, variables);
 
   const pageProfile = response.profile;
 

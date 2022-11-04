@@ -2,20 +2,17 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { GraphQLClient } from "graphql-request";
-
-import { ExplorePublications } from "~/web3/lens/lens-api";
+import { lensClient } from "~/web3/lens/lens-client";
+import { ExplorePublications } from "~/web3/lens/graphql/generated";
 
 // UI components
 import LensterFeed from "~/components/external/LensterFeed";
 
 export const loader: LoaderFunction = async () => {
   // Get feed from Lens protocol
-  const lens = new GraphQLClient("https://api.lens.dev/playground");
-
   console.log("[dashboard/feed] Fetching feed from Lens API ...");
 
-  const responsePublications = await lens.request(ExplorePublications);
+  const responsePublications = await lensClient.request(ExplorePublications);
 
   const recentsPostsResponse = responsePublications.explorePublications;
 

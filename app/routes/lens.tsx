@@ -3,7 +3,9 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useLoaderData, useSubmit } from "@remix-run/react";
 
-import { GraphQLClient } from "graphql-request";
+import { lensClient } from "~/web3/lens/lens-client";
+import { GetChallengue } from "~/web3/lens/graphql/generated";
+import authenticateInLens from "~/web3/lens/authenticate";
 
 import { commitSession, getSession } from "~/bff/session";
 
@@ -12,8 +14,7 @@ import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
-import { GetChallengue } from "~/web3/lens/lens-api";
-import authenticateInLens from "~/web3/lens/authenticate";
+
 import { signWithMetamask } from "~/web3/metamask";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -23,13 +24,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const address = session.get("address");
 
   // Start challenge with Lens API
-  const lens = new GraphQLClient("https://api.lens.dev/playground");
-
   const variables: any = {
     request: { address: address },
   };
 
-  const challengeResponse = await lens.request(GetChallengue, variables);
+  const challengeResponse = await lensClient.request(GetChallengue, variables);
 
   const challengeText = challengeResponse.challenge.text;
 
