@@ -49,6 +49,7 @@ export const action: ActionFunction = async ({ request }) => {
   const authResponse = await authenticateInLens(address, signature);
 
   session.set("accessToken", authResponse.authenticate.accessToken);
+  session.set("refreshToken", authResponse.authenticate.refreshToken);
 
   return redirect(`/dashboard/feed`, {
     headers: {

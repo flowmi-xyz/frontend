@@ -22,6 +22,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   const address = session.get("address");
 
   const accessToken = session.get("accessToken");
+  const refreshToken = session.get("refreshToken");
+
+  console.log(refreshToken);
 
   // Get default profile from Lens
   const variables: any = {

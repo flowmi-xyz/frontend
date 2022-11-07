@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Center,
-  Flex,
-  HStack,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "@remix-run/react";
 import LensterFooter from "./external/LensterFooter";
 
@@ -58,69 +50,67 @@ const HotProfiles = () => {
       >
         {HotProfilesArr.map((item) => {
           return (
-            <>
-              <Flex justifyContent="space-around" p="4">
-                <Flex width="50%">
-                  <Link to={`/${item.handle}`} prefetch="intent">
-                    <Avatar
-                      size="sm"
-                      name={item.handle}
-                      src={item.image}
-                      my="auto"
-                    />
-                  </Link>
-
-                  <Link to={`/${item.handle}`} prefetch="intent">
-                    <Box my="auto" pl="2">
-                      <Text
-                        fontWeight="600"
-                        fontSize="14px"
-                        lineHeight="120%"
-                        letterSpacing="-0.03em"
-                        color="black"
-                      >
-                        {item.name}
-                      </Text>
-
-                      <Text
-                        fontWeight="600"
-                        fontSize="12px"
-                        lineHeight="100%"
-                        letterSpacing="-0.03em"
-                        bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                        bgClip="text"
-                        pt="1"
-                      >
-                        @{item.handle}
-                      </Text>
-                    </Box>
-                  </Link>
-                </Flex>
-
-                <Box width="50%" my="auto">
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    letterSpacing="-0.03em"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    {item.accumulatedTokens} MATIC{" "}
-                    <Text as="span" fontWeight="400" color="black">
-                      accumulated
-                    </Text>
-                  </Text>
-                </Box>
-
-                <Box bg="lens" borderRadius="10px" w="35px" h="35px" my="auto">
-                  <Image
-                    src="../assets/LOGO__lens_ultra small icon.png"
-                    alt="lens"
-                    my="-5px"
+            <Flex justifyContent="space-around" p="4" key={item.name}>
+              <Flex width="50%">
+                <Link to={`/${item.handle}`} prefetch="intent">
+                  <Avatar
+                    size="sm"
+                    name={item.handle}
+                    src={item.image}
+                    my="auto"
                   />
-                </Box>
+                </Link>
+
+                <Link to={`/${item.handle}`} prefetch="intent">
+                  <Box my="auto" pl="2">
+                    <Text
+                      fontWeight="600"
+                      fontSize="14px"
+                      lineHeight="120%"
+                      letterSpacing="-0.03em"
+                      color="black"
+                    >
+                      {item.name}
+                    </Text>
+
+                    <Text
+                      fontWeight="600"
+                      fontSize="12px"
+                      lineHeight="100%"
+                      letterSpacing="-0.03em"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                      pt="1"
+                    >
+                      @{item.handle}
+                    </Text>
+                  </Box>
+                </Link>
               </Flex>
-            </>
+
+              <Box width="50%" my="auto">
+                <Text
+                  fontWeight="700"
+                  fontSize="14px"
+                  letterSpacing="-0.03em"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  {item.accumulatedTokens} MATIC{" "}
+                  <Text as="span" fontWeight="400" color="black">
+                    accumulated
+                  </Text>
+                </Text>
+              </Box>
+
+              <Box bg="lens" borderRadius="10px" w="35px" h="35px" my="auto">
+                <Image
+                  src="../assets/LOGO__lens_ultra small icon.png"
+                  alt="lens"
+                  my="-5px"
+                />
+              </Box>
+            </Flex>
           );
         })}
       </Box>
