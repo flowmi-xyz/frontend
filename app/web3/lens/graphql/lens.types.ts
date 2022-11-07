@@ -11,6 +11,12 @@ export type SignedAuthChallenge = {
   };
 };
 
+export type RefreshRequest = {
+  request: {
+    refreshToken: string;
+  };
+};
+
 export type FollowRequest = {
   request: {
     follow: [{ profile: string }];

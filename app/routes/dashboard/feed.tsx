@@ -5,7 +5,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
-import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+import { GetDefaultProfile, Refresh } from "~/web3/lens/graphql/generated";
 
 // UI components
 import { Box, Grid, GridItem } from "@chakra-ui/react";
@@ -22,9 +22,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const address = session.get("address");
 
   const accessToken = session.get("accessToken");
-  const refreshToken = session.get("refreshToken");
-
-  console.log(refreshToken);
 
   // Get default profile from Lens
   const variables: any = {

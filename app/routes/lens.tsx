@@ -5,7 +5,7 @@ import { useLoaderData, useSubmit } from "@remix-run/react";
 
 import { lensClient } from "~/web3/lens/lens-client";
 import { GetChallengue } from "~/web3/lens/graphql/generated";
-import authenticateInLens from "~/web3/lens/authenticate";
+import authenticateInLens from "~/web3/lens/authentication/authenticate";
 
 import { commitSession, getSession } from "~/bff/session";
 

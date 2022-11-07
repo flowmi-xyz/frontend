@@ -69,23 +69,29 @@ export const action: ActionFunction = async ({ request }) => {
     });
   }
 
-  const accessToken = session.get("accessToken");
+  // const accessToken = session.get("accessToken");
 
   session.set("address", address);
 
-  if (!accessToken) {
-    return redirect(`/lens`, {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  }
+  // if (!accessToken) {
+  //   return redirect(`/lens`, {
+  //     headers: {
+  //       "Set-Cookie": await commitSession(session),
+  //     },
+  //   });
+  // }
 
-  return redirect(`/dashboard/feed`, {
+  return redirect(`/lens`, {
     headers: {
       "Set-Cookie": await commitSession(session),
     },
   });
+
+  // return redirect(`/dashboard/feed`, {
+  //   headers: {
+  //     "Set-Cookie": await commitSession(session),
+  //   },
+  // });
 };
 
 export default function Login() {

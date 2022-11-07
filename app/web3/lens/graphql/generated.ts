@@ -23,6 +23,15 @@ const Authenticate = gql`
   }
 `;
 
+const Refresh = gql`
+  mutation ($request: RefreshRequest!) {
+    refresh(request: $request) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
+
 const ExplorePublications = gql`
   query ExplorePublications {
     explorePublications(
@@ -753,6 +762,7 @@ export {
   GetPing,
   GetChallengue,
   Authenticate,
+  Refresh,
   ExplorePublications,
   GetProfile,
   GetDefaultProfile,
