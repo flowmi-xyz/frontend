@@ -97,6 +97,8 @@ export default function Profile() {
 
   console.log(pageProfile);
 
+  changeHeaders(accessToken);
+
   return (
     <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
@@ -122,7 +124,6 @@ export default function Profile() {
               website={websiteValue}
               twitter={twitterValue}
               isFollowed={pageProfile.isFollowedByMe}
-              accessToken={accessToken}
             />
           </GridItem>
 

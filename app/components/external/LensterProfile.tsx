@@ -39,7 +39,6 @@ type LensterProfileProps = {
   website?: string;
   twitter?: string;
   isFollowed: boolean;
-  accessToken: string;
 };
 
 const LensterProfile = ({
@@ -54,7 +53,6 @@ const LensterProfile = ({
   website,
   twitter,
   isFollowed,
-  accessToken,
 }: LensterProfileProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -71,34 +69,6 @@ const LensterProfile = ({
       const followTx = await lensContract.follow([id], [0x0]);
 
       await followTx.wait();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleUnfollow = async () => {
-    console.log("unfollow");
-
-    changeHeaders(accessToken);
-
-    const unfollowTypedData = await createUnfollowTypedData({
-      request: { profile: id },
-    });
-
-    const typedData = unfollowTypedData.typedData;
-
-    console.log(typedData);
-
-    const followNFTContract = new ethers.Contract(
-      typedData.domain.verifyingContract,
-      LENS_HUB_ABI,
-      getSigner()
-    );
-
-    try {
-      const burnTx = await followNFTContract.burn(typedData.value.tokenId);
-
-      await burnTx.wait();
     } catch (error) {
       console.log(error);
     }
@@ -226,7 +196,7 @@ const LensterProfile = ({
         </Button>
       )}
 
-      <UnfollowModal isOpen={isOpen} onClose={onClose} />
+      <UnfollowModal isOpen={isOpen} onClose={onClose} profileId={id} />
 
       <Divider pt="3" />
 
