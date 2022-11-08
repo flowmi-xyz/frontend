@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   Alert,
   AlertIcon,
@@ -24,16 +26,22 @@ import { ethers } from "ethers";
 import { createUnfollowTypedData } from "~/web3/lens/follow/unfollow";
 import { LENS_HUB_ABI } from "~/web3/lens/lens-hub";
 import { getSigner } from "~/web3/etherservice";
-import React from "react";
+
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
 type UnFollowModalProps = {
   isOpen: boolean;
   onClose: () => void;
   profileId: string;
+  handle: string;
 };
 
-const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
+const UnfollowModal = ({
+  isOpen,
+  onClose,
+  profileId,
+  handle,
+}: UnFollowModalProps) => {
   const steps = [{ label: "Confirm unfollow" }, { label: "Unfollow complete" }];
 
   const { nextStep, activeStep, reset } = useSteps({
@@ -75,6 +83,12 @@ const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
     }
   };
 
+  const handleClose = () => {
+    reset();
+
+    onClose();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -95,7 +109,16 @@ const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
             </Steps>
           </Box>
 
-          <Text>Are you sure you want to unfollow this user?</Text>
+          <Box>
+            <Text p="10">
+              You are going to stop following the profile @{handle}.
+            </Text>
+
+            <Text>
+              Remember that tokens deposited when making DeFi Follow will not be
+              returned.
+            </Text>
+          </Box>
 
           {isLoading && (
             <HStack paddingLeft="10" paddingTop="10">
@@ -121,7 +144,7 @@ const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
 
                 <HStack paddingLeft="10">
                   <Text fontWeight="700">
-                    Waiting transacctions to be mined...
+                    Waiting transacction to be mined...
                   </Text>
 
                   <Image
@@ -146,6 +169,7 @@ const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
               fontSize="18px"
               lineHeight="21.6px"
               color="first"
+              onClick={handleClose}
             >
               Cancel
             </Text>

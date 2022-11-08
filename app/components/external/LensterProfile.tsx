@@ -195,7 +195,12 @@ const LensterProfile = ({
         </Button>
       )}
 
-      <UnfollowModal isOpen={isOpen} onClose={onClose} profileId={id} />
+      <UnfollowModal
+        isOpen={isOpen}
+        onClose={onClose}
+        profileId={id}
+        handle={handle}
+      />
 
       <Divider pt="3" />
 
