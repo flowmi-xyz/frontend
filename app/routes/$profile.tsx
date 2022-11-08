@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 
 import { getSession } from "~/bff/session";
 
-import { lensClient } from "~/web3/lens/lens-client";
+import { changeHeaders, lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile, GetProfile } from "~/web3/lens/graphql/generated";
 
 // UI components
@@ -23,6 +23,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const address = session.get("address");
 
   const accessToken = session.get("accessToken");
+
+  changeHeaders(accessToken);
 
   // Get default profile from Lens
   let variables: any = {
@@ -119,7 +121,7 @@ export default function Profile() {
               ens={ensValue}
               website={websiteValue}
               twitter={twitterValue}
-              isFollowed={true}
+              isFollowed={pageProfile.isFollowedByMe}
               accessToken={accessToken}
             />
           </GridItem>

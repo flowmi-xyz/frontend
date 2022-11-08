@@ -382,6 +382,7 @@ const GetProfile = gql`
       id
       name
       bio
+      isFollowedByMe
       attributes {
         displayType
         traitType
