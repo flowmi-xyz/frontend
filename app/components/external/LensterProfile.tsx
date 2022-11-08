@@ -1,9 +1,6 @@
-import { ethers } from "ethers";
-
 import {
   Box,
   Button,
-  Center,
   Divider,
   Flex,
   Icon,
@@ -19,12 +16,7 @@ import { BiWorld } from "react-icons/bi";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
-import { getSigner } from "~/web3/etherservice";
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-
-import { createUnfollowTypedData } from "~/web3/lens/follow/unfollow";
-import { changeHeaders } from "~/web3/lens/lens-client";
-import { createFollowTypedData } from "~/web3/lens/follow/follow";
+import FollowModal from "../FollowModal";
 import UnfollowModal from "../UnfollowModal";
 
 type LensterProfileProps = {
@@ -55,24 +47,6 @@ const LensterProfile = ({
   isFollowed,
 }: LensterProfileProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleFollow = async () => {
-    console.log("follow");
-
-    const lensContract = new ethers.Contract(
-      LENS_HUB_CONTRACT_ADDRESS,
-      LENS_HUB_ABI,
-      getSigner()
-    );
-
-    try {
-      const followTx = await lensContract.follow([id], [0x0]);
-
-      await followTx.wait();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Box m="5" p="10" width="300px">
@@ -153,7 +127,7 @@ const LensterProfile = ({
           borderRadius="10px"
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
           mt="5"
-          onClick={handleFollow}
+          onClick={onOpen}
         >
           <Flex>
             <Box w="40px" h="40px">
@@ -194,6 +168,13 @@ const LensterProfile = ({
           </Text>
         </Button>
       )}
+
+      <FollowModal
+        isOpen={isOpen}
+        onClose={onClose}
+        profileId={id}
+        handle={handle}
+      />
 
       <UnfollowModal
         isOpen={isOpen}
