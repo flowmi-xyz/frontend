@@ -67,16 +67,17 @@ const UnfollowModal = ({
       getSigner()
     );
 
-    nextStep();
-
     try {
       const burnTx = await followNFTContract.burn(typedData.value.tokenId);
+
+      nextStep();
 
       setIsLoading(false);
       setSigned(true);
 
       await burnTx.wait();
 
+      nextStep();
       setSigned(false);
     } catch (error) {
       console.log(error);
@@ -84,8 +85,11 @@ const UnfollowModal = ({
   };
 
   const handleClose = () => {
-    reset();
+    setIsLoading(false);
+    setSigned(false);
+    setError(false);
 
+    reset();
     onClose();
   };
 
@@ -110,20 +114,45 @@ const UnfollowModal = ({
           </Box>
 
           <Box>
-            <Text p="10">
-              You are going to stop following the profile @{handle}.
+            <Text
+              fontWeight="600"
+              fontSize="14px"
+              lineHeight="120%"
+              color="black"
+              pt="5"
+              pl="5"
+              pr="5"
+            >
+              You are going to stop following the profile{" "}
+              <Text
+                as="span"
+                fontWeight="700"
+                fontSize="14px"
+                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                bgClip="text"
+              >
+                @{handle}
+              </Text>
             </Text>
 
-            <Text>
+            <Text
+              fontWeight="500"
+              fontSize="12px"
+              lineHeight="120%"
+              color="grayLetter"
+              pt="5"
+              pl="5"
+              pr="5"
+            >
               Remember that tokens deposited when making DeFi Follow will not be
               returned.
             </Text>
           </Box>
 
           {isLoading && (
-            <HStack paddingLeft="10" paddingTop="10">
+            <HStack pt="5" pl="5" pr="5">
               <Text>Waiting for confirmation with your wallet...</Text>
-              <Spinner size={"md"} />
+              <Spinner size="md" color="third" />
             </HStack>
           )}
 
@@ -163,13 +192,13 @@ const UnfollowModal = ({
             borderRadius="10px"
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mr="5"
+            onClick={handleClose}
           >
             <Text
               fontWeight="500"
               fontSize="18px"
               lineHeight="21.6px"
               color="first"
-              onClick={handleClose}
             >
               Cancel
             </Text>
