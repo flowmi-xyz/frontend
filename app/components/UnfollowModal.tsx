@@ -52,6 +52,8 @@ const UnfollowModal = ({
   const [signed, setSigned] = React.useState(false);
   const [error, setError] = React.useState(false);
 
+  const [txHash, setTxHash] = React.useState("");
+
   const handleUnfollow = async () => {
     setIsLoading(true);
 
@@ -68,14 +70,18 @@ const UnfollowModal = ({
     );
 
     try {
-      const burnTx = await followNFTContract.burn(typedData.value.tokenId);
+      const burnNFTFollow = await followNFTContract.burn(
+        typedData.value.tokenId
+      );
 
       nextStep();
 
       setIsLoading(false);
       setSigned(true);
 
-      await burnTx.wait();
+      const burtnTx = await burnNFTFollow.wait();
+
+      setTxHash(burtnTx.transactionHash);
 
       nextStep();
       setSigned(false);
@@ -91,6 +97,10 @@ const UnfollowModal = ({
 
     reset();
     onClose();
+  };
+
+  const handleExploreTx = async () => {
+    window.open(`https://polygonscan.com/tx/${txHash}`, "_blank");
   };
 
   return (
@@ -113,41 +123,70 @@ const UnfollowModal = ({
             </Steps>
           </Box>
 
-          <Box>
-            <Text
-              fontWeight="600"
-              fontSize="14px"
-              lineHeight="120%"
-              color="black"
-              pt="5"
-              pl="5"
-              pr="5"
-            >
-              You are going to stop following the profile{" "}
+          {activeStep === 0 && (
+            <>
               <Text
-                as="span"
-                fontWeight="700"
+                fontWeight="600"
                 fontSize="14px"
-                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                bgClip="text"
+                lineHeight="120%"
+                color="black"
+                pt="5"
+                pl="5"
+                pr="5"
               >
-                @{handle}
+                You are going to stop following the profile{" "}
+                <Text
+                  as="span"
+                  fontWeight="700"
+                  fontSize="14px"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  @{handle}
+                </Text>
               </Text>
-            </Text>
 
-            <Text
-              fontWeight="500"
-              fontSize="12px"
-              lineHeight="120%"
-              color="grayLetter"
-              pt="5"
-              pl="5"
-              pr="5"
-            >
-              Remember that tokens deposited when making DeFi Follow will not be
-              returned.
-            </Text>
-          </Box>
+              <Text
+                fontWeight="500"
+                fontSize="12px"
+                lineHeight="120%"
+                color="grayLetter"
+                pt="5"
+                pl="5"
+                pr="5"
+              >
+                Remember that tokens deposited when making DeFi Follow will not
+                be returned.
+              </Text>
+            </>
+          )}
+
+          {activeStep == 2 && !signed && (
+            <>
+              <>
+                <Center pt="5" pl="5" pr="5">
+                  <Alert status="success" borderRadius={10}>
+                    <AlertIcon />
+                    Unfollow successfully!
+                  </Alert>
+                </Center>
+
+                <Text pt="5" pl="5" pr="5">
+                  Congratulations, you have just unfollow the profile{" "}
+                  <Text
+                    as="span"
+                    fontWeight="700"
+                    fontSize="14px"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                  >
+                    @{handle}
+                  </Text>{" "}
+                  in the Lens protocol.
+                </Text>
+              </>
+            </>
+          )}
 
           {isLoading && (
             <HStack pt="5" pl="5" pr="5">
@@ -158,21 +197,14 @@ const UnfollowModal = ({
 
           {signed && (
             <Center>
-              <VStack paddingTop="10">
-                <Alert
-                  marginBottom="5"
-                  status="info"
-                  borderRadius="15"
-                  width="80%"
-                >
-                  <AlertIcon />
-                  <AlertTitle fontWeight="light">
-                    The transaction is being processed.
-                  </AlertTitle>
-                </Alert>
-
-                <HStack paddingLeft="10">
-                  <Text fontWeight="700">
+              <VStack paddingTop="5" pl="5" pr="5">
+                <HStack>
+                  <Text
+                    fontWeight="700"
+                    fontSize="14px"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                  >
                     Waiting transacction to be mined...
                   </Text>
 
@@ -181,44 +213,97 @@ const UnfollowModal = ({
                     width="50%"
                   />
                 </HStack>
+
+                <Text
+                  textAlign="center"
+                  fontWeight="500"
+                  fontSize="12px"
+                  lineHeight="120%"
+                  color="grayLetter"
+                  pt="5"
+                >
+                  This usually takes 0-1 minutes to complete
+                </Text>
               </VStack>
             </Center>
           )}
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            bg="white"
-            borderRadius="10px"
-            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-            mr="5"
-            onClick={handleClose}
-          >
-            <Text
-              fontWeight="500"
-              fontSize="18px"
-              lineHeight="21.6px"
-              color="first"
-            >
-              Cancel
-            </Text>
-          </Button>
+          {activeStep === 0 && (
+            <>
+              <Button
+                bg="white"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                mr="5"
+                onClick={handleClose}
+              >
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="first"
+                >
+                  Cancel
+                </Text>
+              </Button>
 
-          <Button
-            bg="third"
-            borderRadius="10px"
-            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-            onClick={handleUnfollow}
-          >
-            <Text
-              fontWeight="500"
-              fontSize="18px"
-              lineHeight="21.6px"
-              color="white"
-            >
-              Unfollow
-            </Text>
-          </Button>
+              <Button
+                bg="third"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                onClick={handleUnfollow}
+                disabled={isLoading}
+              >
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="white"
+                >
+                  Unfollow
+                </Text>
+              </Button>
+            </>
+          )}
+
+          {activeStep === 2 && (
+            <>
+              <Button
+                bg="white"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                mr="5"
+                onClick={handleClose}
+              >
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="first"
+                >
+                  Close
+                </Text>
+              </Button>
+
+              <Button
+                bg="second"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                onClick={handleExploreTx}
+              >
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="white"
+                >
+                  View on Explorer
+                </Text>
+              </Button>
+            </>
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>
