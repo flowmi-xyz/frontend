@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Spinner,
@@ -33,11 +34,7 @@ type UnFollowModalProps = {
 };
 
 const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
-  const steps = [
-    { label: "Approve move tokens" },
-    { label: "Deposit tokens in Aave protocol" },
-    { label: "Finish proccess! 🎉" },
-  ];
+  const steps = [{ label: "Confirm unfollow" }, { label: "Unfollow complete" }];
 
   const { nextStep, activeStep, reset } = useSteps({
     initialStep: 0,
@@ -100,8 +97,6 @@ const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
 
           <Text>Are you sure you want to unfollow this user?</Text>
 
-          <Button onClick={handleUnfollow}>Unfollow</Button>
-
           {isLoading && (
             <HStack paddingLeft="10" paddingTop="10">
               <Text>Waiting for confirmation with your wallet...</Text>
@@ -138,6 +133,40 @@ const UnfollowModal = ({ isOpen, onClose, profileId }: UnFollowModalProps) => {
             </Center>
           )}
         </ModalBody>
+
+        <ModalFooter>
+          <Button
+            bg="white"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            mr="5"
+          >
+            <Text
+              fontWeight="500"
+              fontSize="18px"
+              lineHeight="21.6px"
+              color="first"
+            >
+              Cancel
+            </Text>
+          </Button>
+
+          <Button
+            bg="third"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            onClick={handleUnfollow}
+          >
+            <Text
+              fontWeight="500"
+              fontSize="18px"
+              lineHeight="21.6px"
+              color="white"
+            >
+              Unfollow
+            </Text>
+          </Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

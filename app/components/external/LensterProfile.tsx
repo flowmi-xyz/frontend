@@ -182,7 +182,6 @@ const LensterProfile = ({
           borderRadius="10px"
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
           mt="5"
-          // onClick={handleUnfollow}
           onClick={onOpen}
         >
           <Text
