@@ -46,7 +46,17 @@ const LensterProfile = ({
   twitter,
   isFollowed,
 }: LensterProfileProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenUnfollow,
+    onOpen: onOpenUnfollow,
+    onClose: oncloseUnfollow,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenFollow,
+    onOpen: onOpenFollow,
+    onClose: onCloseFollow,
+  } = useDisclosure();
 
   return (
     <Box m="5" p="10" width="300px">
@@ -127,7 +137,7 @@ const LensterProfile = ({
           borderRadius="10px"
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
           mt="5"
-          onClick={onOpen}
+          onClick={onOpenFollow}
         >
           <Flex>
             <Box w="40px" h="40px">
@@ -156,7 +166,7 @@ const LensterProfile = ({
           borderRadius="10px"
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
           mt="5"
-          onClick={onOpen}
+          onClick={onOpenUnfollow}
         >
           <Text
             fontWeight="500"
@@ -170,15 +180,15 @@ const LensterProfile = ({
       )}
 
       <FollowModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenFollow}
+        onClose={onCloseFollow}
         profileId={id}
         handle={handle}
       />
 
       <UnfollowModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenUnfollow}
+        onClose={oncloseUnfollow}
         profileId={id}
         handle={handle}
       />

@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   HStack,
   Image,
   Modal,
@@ -41,7 +42,7 @@ const FollowModal = ({
   profileId,
   handle,
 }: FollowModalProps) => {
-  const steps = [{ label: "Confirm unfollow" }, { label: "Unfollow complete" }];
+  const steps = [{ label: "Confirm follow" }, { label: "Follow complete 🎉" }];
 
   const { nextStep, activeStep, reset } = useSteps({
     initialStep: 0,
@@ -53,44 +54,8 @@ const FollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const handleUnfollow = async () => {
-    setIsLoading(true);
-
-    const unfollowTypedData = await createUnfollowTypedData({
-      request: { profile: profileId },
-    });
-
-    const typedData = unfollowTypedData.typedData;
-
-    const followNFTContract = new ethers.Contract(
-      typedData.domain.verifyingContract,
-      LENS_HUB_ABI,
-      getSigner()
-    );
-
-    try {
-      const burnNFTFollow = await followNFTContract.burn(
-        typedData.value.tokenId
-      );
-
-      nextStep();
-
-      setIsLoading(false);
-      setSigned(true);
-
-      const burtnTx = await burnNFTFollow.wait();
-
-      setTxHash(burtnTx.transactionHash);
-
-      nextStep();
-      setSigned(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleFollow = async () => {
-    console.log("follow");
+    setIsLoading(true);
 
     const lensContract = new ethers.Contract(
       LENS_HUB_CONTRACT_ADDRESS,
@@ -99,9 +64,19 @@ const FollowModal = ({
     );
 
     try {
-      const followTx = await lensContract.follow([profileId], [0x0]);
+      const followProfile = await lensContract.follow([profileId], [0x0]);
 
-      await followTx.wait();
+      nextStep();
+
+      setIsLoading(false);
+      setSigned(true);
+
+      const followTx = await followProfile.wait();
+
+      setTxHash(followTx.transactionHash);
+
+      nextStep();
+      setSigned(false);
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +99,7 @@ const FollowModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
-        <ModalHeader>Unfollow</ModalHeader>
+        <ModalHeader>Follow</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>
@@ -151,7 +126,7 @@ const FollowModal = ({
                 pl="5"
                 pr="5"
               >
-                You are going to stop following the profile{" "}
+                You are going to start following the profile{" "}
                 <Text
                   as="span"
                   fontWeight="700"
@@ -163,8 +138,32 @@ const FollowModal = ({
                 </Text>
               </Text>
 
+              <Box pt="5">
+                <Text
+                  textAlign="center"
+                  fontWeight="500"
+                  fontSize="15px"
+                  letterSpacing="-0.03em"
+                  color="black"
+                >
+                  Social DeFi will charge a fee of
+                </Text>
+
+                <Text
+                  textAlign="center"
+                  fontWeight="700"
+                  fontSize="36px"
+                  letterSpacing="-0.03em"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  $1 USD
+                </Text>
+              </Box>
+
               <Text
-                fontWeight="500"
+                textAlign="justify"
+                fontWeight="600"
                 fontSize="12px"
                 lineHeight="120%"
                 color="grayLetter"
@@ -172,8 +171,10 @@ const FollowModal = ({
                 pl="5"
                 pr="5"
               >
-                Remember that tokens deposited when making DeFi Follow will not
-                be returned.
+                Remember that when you defi follow a profile, you will be
+                charged 1 USD in MATIC and it will be deposited in Aave
+                protocol.When the number of defi followers reaches 10, the
+                accumulated jackpot will be drawn among all the defi followers.
               </Text>
             </>
           )}
@@ -184,12 +185,12 @@ const FollowModal = ({
                 <Center pt="5" pl="5" pr="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
-                    Unfollow successfully!
+                    Follow successfully!
                   </Alert>
                 </Center>
 
                 <Text pt="5" pl="5" pr="5">
-                  Congratulations, you have just unfollow the profile{" "}
+                  Congratulations, you have just follow the profile{" "}
                   <Text
                     as="span"
                     fontWeight="700"
@@ -267,20 +268,32 @@ const FollowModal = ({
               </Button>
 
               <Button
-                bg="third"
+                bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleUnfollow}
+                onClick={handleFollow}
                 disabled={isLoading}
               >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="white"
-                >
-                  Unfollow
-                </Text>
+                <Flex>
+                  <Box w="40px" h="40px">
+                    <Image
+                      src="../assets/LOGO__lens_ultra small icon.png"
+                      alt="lens"
+                      my="-5px"
+                      mx="-5px"
+                    />
+                  </Box>
+
+                  <Text
+                    fontWeight="500"
+                    fontSize="18px"
+                    lineHeight="21.6px"
+                    color="lensDark"
+                    m="auto"
+                  >
+                    DeFi follow
+                  </Text>
+                </Flex>
               </Button>
             </>
           )}
