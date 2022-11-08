@@ -22,7 +22,7 @@ const NavbarConnected = ({
       alignItems="center"
       width="100%"
     >
-      <Link to="/">
+      <Link to="/dashboard/feed">
         <Text fontWeight="700" fontSize="20" color="white">
           Social Defi
         </Text>
