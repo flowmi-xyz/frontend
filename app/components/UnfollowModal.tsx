@@ -1,12 +1,30 @@
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
 
-const UnfollowModal = () => {
+type UnFollowModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const UnfollowModal = ({ isOpen, onClose }: UnFollowModalProps) => {
   return (
-    <Box width="600px">
-      <Text fontSize={"2xl"} fontWeight={"bold"} mb={4}>
-        Unfollow
-      </Text>
-    </Box>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent borderRadius={20}>
+        <ModalHeader>Unfollow</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Text>Are you sure you want to unfollow this user?</Text>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 

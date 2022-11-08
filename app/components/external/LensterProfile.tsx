@@ -3,11 +3,13 @@ import { ethers } from "ethers";
 import {
   Box,
   Button,
+  Center,
   Divider,
   Flex,
   Icon,
   Image,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 // icons
@@ -23,6 +25,7 @@ import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 import { createUnfollowTypedData } from "~/web3/lens/follow/unfollow";
 import { changeHeaders } from "~/web3/lens/lens-client";
 import { createFollowTypedData } from "~/web3/lens/follow/follow";
+import UnfollowModal from "../UnfollowModal";
 
 type LensterProfileProps = {
   name: string;
@@ -53,6 +56,8 @@ const LensterProfile = ({
   isFollowed,
   accessToken,
 }: LensterProfileProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const handleFollow = async () => {
     console.log("follow");
 
@@ -207,7 +212,8 @@ const LensterProfile = ({
           borderRadius="10px"
           boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
           mt="5"
-          onClick={handleUnfollow}
+          // onClick={handleUnfollow}
+          onClick={onOpen}
         >
           <Text
             fontWeight="500"
@@ -220,7 +226,10 @@ const LensterProfile = ({
         </Button>
       )}
 
+      <UnfollowModal isOpen={isOpen} onClose={onClose} />
+
       <Divider pt="3" />
+
       <Flex pt="3">
         <Icon as={TbHash} color="first" w="4" h="4" />
 
