@@ -28,7 +28,7 @@ import { getSigner } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
-type FollowModalProps = {
+type CreateProfileProps = {
   isOpen: boolean;
   onClose: () => void;
   profileId: string;
@@ -40,8 +40,11 @@ const CreateProfileModal = ({
   onClose,
   profileId,
   handle,
-}: FollowModalProps) => {
-  const steps = [{ label: "Confirm follow" }, { label: "Follow complete 🎉" }];
+}: CreateProfileProps) => {
+  const steps = [
+    { label: "Confirm new profile" },
+    { label: "Profile created 🎉" },
+  ];
 
   const { nextStep, activeStep, reset } = useSteps({
     initialStep: 0,
@@ -53,32 +56,33 @@ const CreateProfileModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const handleFollow = async () => {
-    setIsLoading(true);
+  const handleCreateProfile = async () => {
+    console.log("Creating profile ...");
+    // setIsLoading(true);
 
-    const lensContract = new ethers.Contract(
-      LENS_HUB_CONTRACT_ADDRESS,
-      LENS_HUB_ABI,
-      getSigner()
-    );
+    // const lensContract = new ethers.Contract(
+    //   LENS_HUB_CONTRACT_ADDRESS,
+    //   LENS_HUB_ABI,
+    //   getSigner()
+    // );
 
-    try {
-      const followProfile = await lensContract.follow([profileId], [0x0]);
+    // try {
+    //   const followProfile = await lensContract.follow([profileId], [0x0]);
 
-      nextStep();
+    //   nextStep();
 
-      setIsLoading(false);
-      setSigned(true);
+    //   setIsLoading(false);
+    //   setSigned(true);
 
-      const followTx = await followProfile.wait();
+    //   const followTx = await followProfile.wait();
 
-      setTxHash(followTx.transactionHash);
+    //   setTxHash(followTx.transactionHash);
 
-      nextStep();
-      setSigned(false);
-    } catch (error) {
-      console.log(error);
-    }
+    //   nextStep();
+    //   setSigned(false);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const handleClose = () => {
@@ -98,7 +102,7 @@ const CreateProfileModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
-        <ModalHeader>Follow</ModalHeader>
+        <ModalHeader>Create profile</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>
@@ -125,40 +129,29 @@ const CreateProfileModal = ({
                 pl="5"
                 pr="5"
               >
-                You are going to start following the profile{" "}
+                You are going to create the next profile:
+              </Text>
+
+              <Flex pt="5" pl="5" pr="5">
                 <Text
-                  as="span"
+                  fontWeight="600"
+                  fontSize="14px"
+                  color="lensDark"
+                  width="20%"
+                >
+                  handle:
+                </Text>
+
+                <Text
                   fontWeight="700"
                   fontSize="14px"
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
+                  width="20%"
                 >
-                  @{handle}
+                  @{handle}.test
                 </Text>
-              </Text>
-
-              <Box pt="5">
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="15px"
-                  letterSpacing="-0.03em"
-                  color="black"
-                >
-                  Social DeFi will charge a fee of
-                </Text>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="700"
-                  fontSize="36px"
-                  letterSpacing="-0.03em"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  $1 USD
-                </Text>
-              </Box>
+              </Flex>
 
               <Text
                 textAlign="justify"
@@ -170,10 +163,7 @@ const CreateProfileModal = ({
                 pl="5"
                 pr="5"
               >
-                Remember that when you defi follow a profile, you will be
-                charged 1 USD in MATIC and it will be deposited in Aave
-                protocol.When the number of defi followers reaches 10, the
-                accumulated jackpot will be drawn among all the defi followers.
+                Remember this profile is created in the testnet (Polygon Mumbai)
               </Text>
             </>
           )}
@@ -184,12 +174,12 @@ const CreateProfileModal = ({
                 <Center pt="5" pl="5" pr="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
-                    Follow successfully!
+                    Create profile successfully!
                   </Alert>
                 </Center>
 
                 <Text pt="5" pl="5" pr="5">
-                  Congratulations, you have just follow the profile{" "}
+                  Congratulations, you have just create the profile{" "}
                   <Text
                     as="span"
                     fontWeight="700"
@@ -239,7 +229,7 @@ const CreateProfileModal = ({
                   color="grayLetter"
                   pt="5"
                 >
-                  This usually takes 0-1 minutes to complete
+                  This usually takes 1-2 minutes to complete
                 </Text>
               </VStack>
             </Center>
@@ -270,7 +260,7 @@ const CreateProfileModal = ({
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleFollow}
+                onClick={handleCreateProfile}
                 disabled={isLoading}
               >
                 <Flex>
@@ -290,7 +280,7 @@ const CreateProfileModal = ({
                     color="lensDark"
                     m="auto"
                   >
-                    DeFi follow
+                    Create profile
                   </Text>
                 </Flex>
               </Button>
