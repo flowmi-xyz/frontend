@@ -6,8 +6,11 @@ const addIpfsPrefix = (str: string): string =>
   `https://lens.infura-ipfs.io/ipfs/${str}`;
 
 export const transformToIpfsUrl = (str: string): string => {
-  // check if string starts with ipfs://
-  if (str.startsWith("ipfs://")) {
+  if (!str) {
+    return "https://news.bit2me.com/wp-content/uploads/2022/06/Lens.jpeg";
+  }
+
+  if (str?.startsWith("ipfs://")) {
     const ipfsHash = removeIpfsPrefix(str);
 
     return addIpfsPrefix(ipfsHash);
