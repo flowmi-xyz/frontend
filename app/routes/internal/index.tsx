@@ -18,10 +18,12 @@ import {
   InputRightAddon,
   Select,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
+import CreateProfileModal from "~/components/CreateProfileModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -43,6 +45,8 @@ export default function Index() {
   const [profilePicture, setProfilePicture] = React.useState(null);
   const [followNFT, setFollowNFT] = React.useState(null);
   const [followModule, setFollowModule] = React.useState(null);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleChangehandle = (event: any) => {
     setHandle(event.target.value);
@@ -104,7 +108,7 @@ export default function Index() {
             borderRadius="10px"
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mt="10"
-            onClick={handleCreateProfile}
+            onClick={onOpen}
           >
             <Flex>
               <Box w="40px" h="40px">
@@ -128,6 +132,13 @@ export default function Index() {
             </Flex>
           </Button>
         </Center>
+
+        <CreateProfileModal
+          isOpen={isOpen}
+          onClose={onClose}
+          profileId={"2"}
+          handle={handle}
+        />
       </Box>
     </Box>
   );

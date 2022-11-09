@@ -35,7 +35,7 @@ type FollowModalProps = {
   handle: string;
 };
 
-const FollowModal = ({
+const CreateProfileModal = ({
   isOpen,
   onClose,
   profileId,
@@ -339,4 +339,4 @@ const FollowModal = ({
   );
 };
 
-export default FollowModal;
+export default CreateProfileModal;
