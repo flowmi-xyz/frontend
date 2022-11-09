@@ -17,13 +17,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   Text,
   VStack,
 } from "@chakra-ui/react";
-
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-import { getSigner } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { createProfileRequest } from "~/web3/lens/profile/create";
