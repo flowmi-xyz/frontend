@@ -55,15 +55,6 @@ export default function Index() {
     setHandle(event.target.value);
   };
 
-  const handleCreateProfile = async () => {
-    console.log("Create profile");
-
-    console.log(handle);
-    console.log(profilePicture);
-    console.log(followNFT);
-    console.log(followModule);
-  };
-
   changeHeaders(accessToken);
 
   return (
@@ -114,6 +105,7 @@ export default function Index() {
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mt="10"
             onClick={onOpen}
+            disabled={handle === ""}
           >
             <Flex>
               <Box w="40px" h="40px">

@@ -1,4 +1,5 @@
 import React from "react";
+import { BigNumber, utils } from "ethers";
 
 import {
   Alert,
@@ -21,13 +22,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { ethers } from "ethers";
-
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 import { getSigner } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { createProfileRequest } from "~/web3/lens/profile/create";
+import { pollUntilIndexed } from "~/web3/lens/indexer/has-transaction-been-indexed";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -39,7 +39,6 @@ type CreateProfileProps = {
 const CreateProfileModal = ({
   isOpen,
   onClose,
-  profileId,
   handle,
 }: CreateProfileProps) => {
   const steps = [
@@ -56,45 +55,71 @@ const CreateProfileModal = ({
   const [error, setError] = React.useState(false);
 
   const [txHash, setTxHash] = React.useState("");
+  const [profileId, setProfileId] = React.useState("");
 
-  const handleCreateProfile = async () => {
+  const handleConfirmCreateProfile = async () => {
     console.log("Creating profile ...");
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    const createProfileResponse = await createProfileRequest({
-      request: {
-        handle: handle,
-        profilePictureUri: null,
-        followNFTURI: null,
-        followModule: null,
-      },
-    });
+    nextStep();
 
-    console.log("Create profile result: ", createProfileResponse);
+    try {
+      const createProfileResponse = await createProfileRequest({
+        request: {
+          handle: handle,
+          profilePictureUri: null,
+          followNFTURI: null,
+          followModule: null,
+        },
+      });
 
-    // const lensContract = new ethers.Contract(
-    //   LENS_HUB_CONTRACT_ADDRESS,
-    //   LENS_HUB_ABI,
-    //   getSigner()
-    // );
+      if (createProfileResponse.__typename === "RelayError") {
+        console.error("Create profile: failed");
+        return;
+      }
 
-    // try {
-    //   const followProfile = await lensContract.follow([profileId], [0x0]);
+      console.log("txHash: ", createProfileResponse.createProfile.txHash);
 
-    //   nextStep();
+      console.log("Create profile: poll until indexed");
+      const result = await pollUntilIndexed({
+        txHash: createProfileResponse.createProfile.txHash,
+      });
 
-    //   setIsLoading(false);
-    //   setSigned(true);
+      setTxHash(createProfileResponse.createProfile.txHash);
 
-    //   const followTx = await followProfile.wait();
+      console.log("Create profile: profile has been indexed", result);
 
-    //   setTxHash(followTx.transactionHash);
+      const logs = result.txReceipt!.logs;
 
-    //   nextStep();
-    //   setSigned(false);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      console.log("Create profile: logs", logs);
+
+      const topicId = utils.id(
+        "ProfileCreated(uint256,address,address,string,string,address,bytes,string,uint256)"
+      );
+      console.log("Topicid we care about", topicId);
+
+      const profileCreatedLog = logs.find((l: any) => l.topics[0] === topicId);
+      console.log("Profile created log", profileCreatedLog);
+
+      let profileCreatedEventLog = profileCreatedLog!.topics;
+      console.log("Profile created event logs", profileCreatedEventLog);
+
+      const profileId = utils.defaultAbiCoder.decode(
+        ["uint256"],
+        profileCreatedEventLog[1]
+      )[0];
+
+      console.log("Profile id", BigNumber.from(profileId).toHexString());
+
+      setProfileId(BigNumber.from(profileId).toHexString());
+
+      nextStep();
+
+      setIsLoading(false);
+      setSigned(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClose = () => {
@@ -107,7 +132,7 @@ const CreateProfileModal = ({
   };
 
   const handleExploreTx = async () => {
-    window.open(`https://polygonscan.com/tx/${txHash}`, "_blank");
+    window.open(`https://mumbai.polygonscan.com/tx/${txHash}`, "_blank");
   };
 
   return (
@@ -130,7 +155,7 @@ const CreateProfileModal = ({
             </Steps>
           </Box>
 
-          {activeStep === 0 && (
+          {activeStep == 0 && (
             <>
               <Text
                 fontWeight="600"
@@ -179,7 +204,7 @@ const CreateProfileModal = ({
             </>
           )}
 
-          {activeStep == 2 && !signed && (
+          {activeStep == 2 && (
             <>
               <>
                 <Center pt="5" pl="5" pr="5">
@@ -202,18 +227,15 @@ const CreateProfileModal = ({
                   </Text>{" "}
                   in the Lens protocol.
                 </Text>
+
+                <Text pt="5" pl="5" pr="5">
+                  The profile id is: #{profileId}
+                </Text>
               </>
             </>
           )}
 
           {isLoading && (
-            <HStack pt="5" pl="5" pr="5">
-              <Text>Waiting for confirmation with your wallet...</Text>
-              <Spinner size="md" color="third" />
-            </HStack>
-          )}
-
-          {signed && (
             <Center>
               <VStack paddingTop="5" pl="5" pr="5">
                 <HStack>
@@ -223,7 +245,7 @@ const CreateProfileModal = ({
                     bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     bgClip="text"
                   >
-                    Waiting transacction to be mined...
+                    Waiting transacction to be indexed ...
                   </Text>
 
                   <Image
@@ -271,7 +293,7 @@ const CreateProfileModal = ({
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleCreateProfile}
+                onClick={handleConfirmCreateProfile}
                 disabled={isLoading}
               >
                 <Flex>

@@ -44,3 +44,9 @@ export type CreateProfileRequest = {
     followModule: string | null;
   };
 };
+
+export type HasTxHashBeenIndexedRequest = {
+  request: {
+    txHash: string;
+  };
+};
