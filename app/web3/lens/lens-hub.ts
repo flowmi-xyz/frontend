@@ -1,5 +1,13 @@
 import LENS_HUB_ABI from "./abi/lens-hub-contract-abi.json";
 
-const LENS_HUB_CONTRACT_ADDRESS = "0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d";
+// Polygon Mainnet
+// const LENS_HUB_CONTRACT_ADDRESS = "0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d";
 
-export { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS };
+// const LENS_API_URL = "https://api.lens.dev";
+
+// Polygon Mumbai
+const LENS_HUB_CONTRACT_ADDRESS = "0x60Ae865ee4C725cd04353b5AAb364553f56ceF82";
+
+const LENS_API_URL = "https://api-mumbai.lens.dev";
+
+export { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS, LENS_API_URL };

@@ -24,16 +24,20 @@ export const loader: LoaderFunction = async ({ request }) => {
   const accessToken = session.get("accessToken");
 
   // Get default profile from Lens
-  const variables: any = {
-    request: { ethereumAddress: address },
+  // const variables: any = {
+  //   request: { ethereumAddress: address },
+  // };
+
+  // const responseProfile = await lensClient.request(
+  //   GetDefaultProfile,
+  //   variables
+  // );
+
+  // const profile = responseProfile.defaultProfile;
+
+  const profile = {
+    handle: "TODO",
   };
-
-  const responseProfile = await lensClient.request(
-    GetDefaultProfile,
-    variables
-  );
-
-  const profile = responseProfile.defaultProfile;
 
   return { address, accessToken, profile };
 };
@@ -64,8 +68,6 @@ export default function Dashboard() {
           </GridItem>
         </Grid>
       </Box>
-
-      {/* <Outlet /> */}
     </Box>
   );
 }

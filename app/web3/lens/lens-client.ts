@@ -1,6 +1,8 @@
 import { GraphQLClient } from "graphql-request";
 
-const lensClient = new GraphQLClient("https://api.lens.dev/playground");
+import { LENS_API_URL } from "./lens-hub";
+
+const lensClient = new GraphQLClient(LENS_API_URL);
 
 const changeHeaders = (token: string) => {
   lensClient.setHeaders({
