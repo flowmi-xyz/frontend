@@ -27,6 +27,7 @@ import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 import { getSigner } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import { createProfileRequest } from "~/web3/lens/profile/create";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -59,6 +60,17 @@ const CreateProfileModal = ({
   const handleCreateProfile = async () => {
     console.log("Creating profile ...");
     // setIsLoading(true);
+
+    const createProfileResponse = await createProfileRequest({
+      request: {
+        handle: handle,
+        profilePictureUri: null,
+        followNFTURI: null,
+        followModule: null,
+      },
+    });
+
+    console.log("Create profile result: ", createProfileResponse);
 
     // const lensContract = new ethers.Contract(
     //   LENS_HUB_CONTRACT_ADDRESS,
@@ -147,7 +159,6 @@ const CreateProfileModal = ({
                   fontSize="14px"
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
-                  width="20%"
                 >
                   @{handle}.test
                 </Text>

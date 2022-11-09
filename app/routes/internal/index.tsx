@@ -24,6 +24,7 @@ import {
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import CreateProfileModal from "~/components/CreateProfileModal";
+import { changeHeaders } from "~/web3/lens/lens-client";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -31,15 +32,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const address = session.get("address");
 
+  const accessToken = session.get("accessToken");
+
   const profile = {
     handle: "TODO",
   };
 
-  return { address, profile };
+  return { address, profile, accessToken };
 };
 
 export default function Index() {
-  const { address } = useLoaderData();
+  const { address, accessToken } = useLoaderData();
 
   const [handle, setHandle] = React.useState("");
   const [profilePicture, setProfilePicture] = React.useState(null);
@@ -60,6 +63,8 @@ export default function Index() {
     console.log(followNFT);
     console.log(followModule);
   };
+
+  changeHeaders(accessToken);
 
   return (
     <Box>
