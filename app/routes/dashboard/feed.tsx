@@ -24,20 +24,20 @@ export const loader: LoaderFunction = async ({ request }) => {
   const accessToken = session.get("accessToken");
 
   // Get default profile from Lens
-  // const variables: any = {
-  //   request: { ethereumAddress: address },
-  // };
-
-  // const responseProfile = await lensClient.request(
-  //   GetDefaultProfile,
-  //   variables
-  // );
-
-  // const profile = responseProfile.defaultProfile;
-
-  const profile = {
-    handle: "TODO",
+  const variables: any = {
+    request: { ethereumAddress: address },
   };
+
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variables
+  );
+
+  const profile = responseProfile.defaultProfile;
+
+  // const profile = {
+  //   handle: "TODO",
+  // };
 
   return { address, accessToken, profile };
 };
@@ -50,7 +50,7 @@ export default function Dashboard() {
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
-        handle={profile.handle}
+        handle={profile?.handle}
       />
 
       <Box maxWidth="1200px" m="auto">

@@ -18,6 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   return { address };
 };
+
 export default function MenuInternal() {
   const { address } = useLoaderData();
 
@@ -56,6 +57,36 @@ export default function MenuInternal() {
                   m="auto"
                 >
                   Create profile
+                </Text>
+              </Flex>
+            </Button>
+          </Link>
+
+          <Link to="/set-default">
+            <Button
+              bg="lens"
+              borderRadius="10px"
+              boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+              mt="3"
+            >
+              <Flex>
+                <Box w="40px" h="40px">
+                  <Image
+                    src="../assets/LOGO__lens_ultra small icon.png"
+                    alt="lens"
+                    my="-5px"
+                    mx="-5px"
+                  />
+                </Box>
+
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="lensDark"
+                  m="auto"
+                >
+                  Set default profile
                 </Text>
               </Flex>
             </Button>
