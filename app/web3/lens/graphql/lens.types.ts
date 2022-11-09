@@ -35,3 +35,12 @@ export type CreatePublicPostRequest = {
     contentURI: string;
   };
 };
+
+export type CreateProfileRequest = {
+  request: {
+    handle: string;
+    profilePictureUri?: string;
+    followNFTURI?: null;
+    followModule?: null;
+  };
+};

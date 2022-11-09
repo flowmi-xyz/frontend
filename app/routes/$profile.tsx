@@ -27,19 +27,23 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   changeHeaders(accessToken);
 
   // Get default profile from Lens
-  let variables: any = {
-    request: { ethereumAddress: address },
+  // let variables: any = {
+  //   request: { ethereumAddress: address },
+  // };
+
+  // const responseProfile = await lensClient.request(
+  //   GetDefaultProfile,
+  //   variables
+  // );
+
+  // const profile = responseProfile.defaultProfile;
+
+  const profile = {
+    handle: "TODO",
   };
 
-  const responseProfile = await lensClient.request(
-    GetDefaultProfile,
-    variables
-  );
-
-  const profile = responseProfile.defaultProfile;
-
   // Get profile from Lens protocol
-  variables = {
+  let variables = {
     request: { handle: params.profile },
   };
 

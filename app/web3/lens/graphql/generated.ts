@@ -759,6 +759,20 @@ const CreatePostTypedData = gql`
   }
 `;
 
+const CreateProfile = gql`
+  mutation createProfile($request: CreateProfileRequest!) {
+    createProfile(request: $request) {
+      ... on RelayerResult {
+        txHash
+      }
+      ... on RelayError {
+        reason
+      }
+      __typename
+    }
+  }
+`;
+
 export {
   GetPing,
   GetChallengue,
@@ -771,4 +785,5 @@ export {
   CreateFollowDataType,
   CreateUnfollowTypedData,
   CreatePostTypedData,
+  CreateProfile,
 };
