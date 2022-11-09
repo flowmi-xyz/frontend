@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  Image,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -9,8 +10,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-
-import PolygonLogo from "~/components/logos/PolygonLogo";
 
 import type { ChainName } from "~/web3/blockchain.types";
 import { networks } from "~/web3/blockchain.types";
@@ -34,13 +33,13 @@ function ChainButton() {
   return (
     <Flex>
       <Button
-        marginRight={5}
+        marginRight="5"
         leftIcon={<LogoNetwork chainName={network.chainName} />}
-        iconSpacing={3}
+        iconSpacing="3"
         onClick={onOpen}
         bg="grayBg"
         size="md"
-        borderRadius={10}
+        borderRadius="10"
       >
         <ConnectedNetwork networkName={network.name} />
       </Button>
@@ -56,22 +55,24 @@ function ChainButton() {
           <Text
             paddingLeft="6"
             paddingRight="6"
-            paddingBottom={6}
-            fontSize={14}
+            paddingBottom="6"
+            fontSize="14"
             textAlign="center"
           >
-            Select a blockchain
+            Select a network to switch to or change manually in your wallet
           </Text>
 
           <Button
-            leftIcon={<PolygonLogo />}
+            leftIcon={
+              <Image src="./assets/logos/polygon-matic-logo.png" w="6" h="6" />
+            }
             width="75%"
             margin="auto"
-            marginBottom={3}
+            marginBottom="3"
             justifyContent="start"
-            iconSpacing={5}
+            iconSpacing="5"
             isDisabled={network.chainName === "matic"}
-            borderRadius={10}
+            borderRadius="10"
             display={
               networks.matic !== undefined && !showTestnets ? "flex" : "none"
             }
@@ -80,14 +81,16 @@ function ChainButton() {
           </Button>
 
           <Button
-            leftIcon={<PolygonLogo />}
+            leftIcon={
+              <Image src="./assets/logos/polygon-matic-logo.png" w="6" h="6" />
+            }
             width="75%"
             margin="auto"
-            marginBottom={3}
+            marginBottom="3"
             justifyContent="start"
-            iconSpacing={5}
+            iconSpacing="5"
             isDisabled={network.chainName === "maticmum"}
-            borderRadius={10}
+            borderRadius="10"
             display={
               networks.maticmum !== undefined && showTestnets ? "flex" : "none"
             }
@@ -95,7 +98,7 @@ function ChainButton() {
             {networks.maticmum?.name}
           </Button>
 
-          <Text fontSize={12} margin="auto" paddingTop={3} paddingBottom={6}>
+          <Text fontSize="12" margin="auto" pt="3" pb="6">
             Currently connected to
             <Text as="span" color="second" fontWeight={700}>
               &nbsp; {network.name}

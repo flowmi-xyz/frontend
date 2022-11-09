@@ -38,6 +38,7 @@ const NavbarConnected = ({
               bg="lens"
               borderRadius="10px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              mr="5"
             >
               <Text fontWeight="600" fontSize="14px" color="lensDark">
                 @{handle}
@@ -49,7 +50,6 @@ const NavbarConnected = ({
             bg="first"
             borderRadius="10px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            ml="20px"
           >
             <Text fontSize="14px" color="white">
               {`${address.slice(0, 6)} ... ${address.slice(
