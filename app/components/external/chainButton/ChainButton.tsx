@@ -9,6 +9,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+
 import PolygonLogo from "~/components/logos/PolygonLogo";
 
 import type { ChainName } from "~/web3/blockchain.types";
@@ -23,27 +24,12 @@ function ChainButton() {
   const showTestnets = true;
 
   const network = {
-    name: "Polygon",
-    chainName: "matic" as ChainName,
+    name: "Mumbai",
+    chainName: "maticmum" as ChainName,
     chainId: "string",
-    dev: "boolean",
+    dev: true,
     nativeToken: "Token",
   };
-
-  // const changeNetwork = async (networkName: ChainName) => {
-  //     console.log(`Change network to networkName: ${networkName}`);
-
-  //     try {
-  //         await manager.switchNetwork(networkName);
-  //         const networks = manager.listNetworks();
-
-  //         setNetwork(networks[networkName]);
-
-  //         onClose();
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // };
 
   return (
     <Flex>
@@ -110,7 +96,7 @@ function ChainButton() {
           </Button>
 
           <Text fontSize={12} margin="auto" paddingTop={3} paddingBottom={6}>
-            Currently connected to{" "}
+            Currently connected to
             <Text as="span" color="second" fontWeight={700}>
               &nbsp; {network.name}
             </Text>

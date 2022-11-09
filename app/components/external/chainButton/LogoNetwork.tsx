@@ -1,4 +1,5 @@
-import PolygonLogo from "~/components/logos/PolygonLogo";
+import { Image } from "@chakra-ui/react";
+
 import type { ChainName } from "~/web3/blockchain.types";
 
 type LogoNetworkProps = {
@@ -6,30 +7,11 @@ type LogoNetworkProps = {
 };
 
 function LogoNetwork({ chainName }: LogoNetworkProps) {
-  // if (props.chainName === 'eth') {
-  //   return <EthereumLogo width={25} height={25} />;
-  // }
-
   if (chainName === "matic" || chainName === "maticmum") {
-    return <PolygonLogo />;
+    return <Image src="./assets/logos/polygon-matic-logo.png" w="6" h="6" />;
   }
 
-  // if (props.chainName === 'bsc') {
-  //   return <BnbChainLogo width={25} height={25} />;
-  // }
-
-  // if (
-  //   props.chainName === 'avalanche' ||
-  //   props.chainName === 'avalanche testnet'
-  // ) {
-  //   return <AvalancheLogo width={25} height={25} />;
-  // }
-
-  // if (props.chainName === 'fantom') {
-  //   return <FantomLogo width={25} height={25} />;
-  // }
-
-  return <PolygonLogo />;
+  return <Image src="./assets/logos/polygon-matic-logo.png" w="6" h="6" />;
 }
 
 export default LogoNetwork;

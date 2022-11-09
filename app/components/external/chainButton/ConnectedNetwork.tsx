@@ -7,6 +7,7 @@ type ConnectedNetworkProps = {
 };
 
 const ConnectedNetwork = ({ networkName }: ConnectedNetworkProps) => {
+  // TODO: check if network is connected
   const isAuthenticated = true;
 
   return (
