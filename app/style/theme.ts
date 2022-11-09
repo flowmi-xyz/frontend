@@ -59,6 +59,7 @@ export const theme = extendTheme({
     fourth: "#E8622C",
     fifth: "#F5C144",
     grayLetter: "#757575",
+    grayBg: "#F2F4F8",
     lens: "#BDFC5A",
     lensDark: "#00501E",
     twitter: "#1DA1F2",

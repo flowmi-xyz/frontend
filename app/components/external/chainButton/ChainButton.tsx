@@ -9,24 +9,18 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import PolygonLogo from "~/components/logos/PolygonLogo";
 
-import { ReactComponent as BnbChainLogo } from "../../../assets/logos/bnbchain-logo.svg";
-import { ReactComponent as EthereumLogo } from "../../../assets/logos/ethereum-logo.svg";
-import { ReactComponent as PolygonLogo } from "../../../assets/logos/polygon-logo.svg";
-import type { ChainName } from "../../../blockchain/types";
-import { networks } from "../../../blockchain/types";
+import type { ChainName } from "~/web3/blockchain.types";
+import { networks } from "~/web3/blockchain.types";
 
 import ConnectedNetwork from "./ConnectedNetwork";
 import LogoNetwork from "./LogoNetwork";
 
 function ChainButton() {
-  const { t } = useTranslation("ChainButton");
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // const { manager, network, setNetwork } = useNetworkManager();
-
-  const showTestnets = false;
+  const showTestnets = true;
 
   const network = {
     name: "Polygon",
@@ -69,7 +63,7 @@ function ChainButton() {
         <ModalOverlay />
         <ModalContent borderRadius={20}>
           <ModalHeader margin="auto">
-            <Text>{t("title")}</Text>
+            <Text>Select a blockchain</Text>
           </ModalHeader>
           <ModalCloseButton />
 
@@ -80,43 +74,11 @@ function ChainButton() {
             fontSize={14}
             textAlign="center"
           >
-            {t("subtitle")}
+            Select a blockchain
           </Text>
 
           <Button
-            leftIcon={<EthereumLogo width={25} height={25} />}
-            width="75%"
-            margin="auto"
-            marginBottom={3}
-            justifyContent="start"
-            iconSpacing={5}
-            isDisabled={network.chainName === "eth"}
-            borderRadius={10}
-            display={
-              networks.eth !== undefined && !showTestnets ? "flex" : "none"
-            }
-          >
-            {networks.eth?.name}
-          </Button>
-
-          <Button
-            leftIcon={<EthereumLogo width={25} height={25} />}
-            width="75%"
-            margin="auto"
-            marginBottom={3}
-            justifyContent="start"
-            iconSpacing={5}
-            isDisabled={network.chainName === "kovan"}
-            borderRadius={10}
-            display={
-              networks.kovan !== undefined && showTestnets ? "flex" : "none"
-            }
-          >
-            {networks.kovan?.name}
-          </Button>
-
-          <Button
-            leftIcon={<PolygonLogo width={25} height={25} />}
+            leftIcon={<PolygonLogo />}
             width="75%"
             margin="auto"
             marginBottom={3}
@@ -132,7 +94,7 @@ function ChainButton() {
           </Button>
 
           <Button
-            leftIcon={<PolygonLogo width={25} height={25} />}
+            leftIcon={<PolygonLogo />}
             width="75%"
             margin="auto"
             marginBottom={3}
@@ -147,24 +109,8 @@ function ChainButton() {
             {networks.maticmum?.name}
           </Button>
 
-          <Button
-            leftIcon={<BnbChainLogo width={25} height={25} />}
-            width="75%"
-            margin="auto"
-            marginBottom={3}
-            justifyContent="start"
-            iconSpacing={5}
-            isDisabled={network.chainName === "bsc"}
-            borderRadius={10}
-            display={
-              networks.bsc !== undefined && !showTestnets ? "flex" : "none"
-            }
-          >
-            {networks.bsc?.name}
-          </Button>
-
           <Text fontSize={12} margin="auto" paddingTop={3} paddingBottom={6}>
-            {t("connectedTo")}
+            Currently connected to{" "}
             <Text as="span" color="second" fontWeight={700}>
               &nbsp; {network.name}
             </Text>

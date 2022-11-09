@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 
 import { Flex, Text, Button } from "@chakra-ui/react";
+import ChainButton from "./external/chainButton/ChainButton";
 
 type NavbarConnectedProps = {
   address: string;
@@ -30,6 +31,8 @@ const NavbarConnected = ({
 
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Flex display="flex" align="center">
+          <ChainButton />
+
           {authenticatedInLens && (
             <Button
               bg="lens"

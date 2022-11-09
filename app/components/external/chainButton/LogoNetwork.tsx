@@ -1,21 +1,17 @@
-import { ReactComponent as EthereumLogo } from "../../../assets/logos/ethereum-logo.svg";
-import { ReactComponent as PolygonLogo } from "../../../assets/logos/polygon-logo.svg";
-import type { ChainName } from "blockchain/types";
-// import { ReactComponent as BnbChainLogo } from '../../../assets/logos/bnbchain-logo.svg';
-// import { ReactComponent as AvalancheLogo } from '../../../assets/logos/avalanche-logo.svg';
-// import { ReactComponent as FantomLogo } from '../../../assets/logos/fantom-logo.svg';
+import PolygonLogo from "~/components/logos/PolygonLogo";
+import type { ChainName } from "~/web3/blockchain.types";
 
-type Props = {
+type LogoNetworkProps = {
   chainName: ChainName;
 };
 
-function LogoNetwork({ chainName }: Props) {
+function LogoNetwork({ chainName }: LogoNetworkProps) {
   // if (props.chainName === 'eth') {
   //   return <EthereumLogo width={25} height={25} />;
   // }
 
   if (chainName === "matic" || chainName === "maticmum") {
-    return <PolygonLogo width={25} height={25} />;
+    return <PolygonLogo />;
   }
 
   // if (props.chainName === 'bsc') {
@@ -33,7 +29,7 @@ function LogoNetwork({ chainName }: Props) {
   //   return <FantomLogo width={25} height={25} />;
   // }
 
-  return <EthereumLogo width={25} height={25} />;
+  return <PolygonLogo />;
 }
 
 export default LogoNetwork;
