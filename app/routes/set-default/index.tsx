@@ -7,6 +7,7 @@ import { lensClient } from "~/web3/lens/lens-client";
 import { getSession } from "~/bff/session";
 
 // UI components
+import React from "react";
 import {
   Box,
   Button,
@@ -20,7 +21,6 @@ import {
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetProfiles } from "~/web3/lens/graphql/generated";
-import CreateProfileModal from "~/components/CreateProfileModal";
 import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -45,6 +45,17 @@ export default function SetDefault() {
   const { address, profiles } = useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
+
+  const [defaultProfile, setDefaultProfile] = React.useState("");
+  const [defaultHandle, setDefaultHandle] = React.useState("");
+
+  const handleSetDefaultProfile = (index: number) => {
+    console.log("Set default profile", index);
+    setDefaultProfile(profiles[index].id);
+    setDefaultHandle(profiles[index].handle);
+
+    onOpen();
+  };
 
   return (
     <Box bg="#FAFAF9">
@@ -95,7 +106,7 @@ export default function SetDefault() {
         </Text>
 
         <Box mt="3">
-          {profiles.map((profile: any) => {
+          {profiles.map((profile: any, index: number) => {
             return (
               <Box
                 bg="grayBg"
@@ -129,7 +140,7 @@ export default function SetDefault() {
                     bg="lens"
                     borderRadius="10px"
                     boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                    onClick={onOpen}
+                    onClick={() => handleSetDefaultProfile(index)}
                     // disabled={handle === ""}
                   >
                     <Flex>
@@ -157,14 +168,13 @@ export default function SetDefault() {
               </Box>
             );
           })}
+          <SetDefaultProfileModal
+            isOpen={isOpen}
+            onClose={onClose}
+            profileId={defaultProfile}
+            handle={defaultHandle}
+          />
         </Box>
-
-        <SetDefaultProfileModal
-          isOpen={isOpen}
-          onClose={onClose}
-          profileId={"2"}
-          handle={"cris"}
-        />
       </Box>
     </Box>
   );

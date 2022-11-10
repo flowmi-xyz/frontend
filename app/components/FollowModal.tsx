@@ -1,5 +1,12 @@
-import React from "react";
+// logic components
+import { ethers } from "ethers";
 
+import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+
+import { getSigner } from "~/web3/etherservice";
+
+// UI components
+import React from "react";
 import {
   Alert,
   AlertIcon,
@@ -20,11 +27,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-
-import { ethers } from "ethers";
-
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-import { getSigner } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 

@@ -1,6 +1,12 @@
-import React from "react";
-import { BigNumber, utils } from "ethers";
+// logic components
+import { ethers } from "ethers";
 
+import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+
+import { getSigner } from "~/web3/etherservice";
+
+// UI components
+import React from "react";
 import {
   Alert,
   AlertIcon,
@@ -17,13 +23,12 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Text,
   VStack,
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
-import { createProfileRequest } from "~/web3/lens/profile/create";
-import { pollUntilIndexed } from "~/web3/lens/indexer/has-transaction-been-indexed";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -36,10 +41,11 @@ const SetDefaultProfileModal = ({
   isOpen,
   onClose,
   handle,
+  profileId,
 }: CreateProfileProps) => {
   const steps = [
-    { label: "Confirm new profile" },
-    { label: "Profile created 🎉" },
+    { label: "Confirm default profile" },
+    { label: "Set default profile ✅" },
   ];
 
   const { nextStep, activeStep, reset } = useSteps({
@@ -51,68 +57,30 @@ const SetDefaultProfileModal = ({
   const [error, setError] = React.useState(false);
 
   const [txHash, setTxHash] = React.useState("");
-  const [profileId, setProfileId] = React.useState("");
 
-  const handleConfirmCreateProfile = async () => {
-    console.log("Creating profile ...");
+  const handleConfirmSetdefaultProfile = async () => {
     setIsLoading(true);
 
-    nextStep();
+    const lensContract = new ethers.Contract(
+      LENS_HUB_CONTRACT_ADDRESS,
+      LENS_HUB_ABI,
+      getSigner()
+    );
 
     try {
-      const createProfileResponse = await createProfileRequest({
-        request: {
-          handle: handle,
-          profilePictureUri: null,
-          followNFTURI: null,
-          followModule: null,
-        },
-      });
-
-      if (createProfileResponse.__typename === "RelayError") {
-        console.error("Create profile: failed");
-        return;
-      }
-
-      console.log("txHash: ", createProfileResponse.createProfile.txHash);
-
-      console.log("Create profile: poll until indexed");
-      const result = await pollUntilIndexed({
-        txHash: createProfileResponse.createProfile.txHash,
-      });
-
-      setTxHash(createProfileResponse.createProfile.txHash);
-
-      console.log("Create profile: profile has been indexed", result);
-
-      const logs = result.txReceipt!.logs;
-
-      console.log("Create profile: logs", logs);
-
-      const topicId = utils.id(
-        "ProfileCreated(uint256,address,address,string,string,address,bytes,string,uint256)"
-      );
-      console.log("Topicid we care about", topicId);
-
-      const profileCreatedLog = logs.find((l: any) => l.topics[0] === topicId);
-      console.log("Profile created log", profileCreatedLog);
-
-      let profileCreatedEventLog = profileCreatedLog!.topics;
-      console.log("Profile created event logs", profileCreatedEventLog);
-
-      const profileId = utils.defaultAbiCoder.decode(
-        ["uint256"],
-        profileCreatedEventLog[1]
-      )[0];
-
-      console.log("Profile id", BigNumber.from(profileId).toHexString());
-
-      setProfileId(BigNumber.from(profileId).toHexString());
+      const setDefaultProfile = await lensContract.setDefaultProfile(profileId);
 
       nextStep();
 
       setIsLoading(false);
       setSigned(true);
+
+      const setDefaultProfileTx = await setDefaultProfile.wait();
+
+      setTxHash(setDefaultProfileTx.transactionHash);
+
+      nextStep();
+      setSigned(false);
     } catch (error) {
       console.log(error);
     }
@@ -135,7 +103,7 @@ const SetDefaultProfileModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
-        <ModalHeader>Create profile</ModalHeader>
+        <ModalHeader>Set default profile</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>
@@ -162,7 +130,7 @@ const SetDefaultProfileModal = ({
                 pl="5"
                 pr="5"
               >
-                You are going to create the next profile:
+                You are going to set as a default profile the following profile:
               </Text>
 
               <Flex pt="5" pl="5" pr="5">
@@ -181,7 +149,22 @@ const SetDefaultProfileModal = ({
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
                 >
-                  @{handle}.test
+                  @{handle}
+                </Text>
+              </Flex>
+
+              <Flex pt="2" pl="5" pr="5">
+                <Text
+                  fontWeight="600"
+                  fontSize="14px"
+                  color="lensDark"
+                  width="20%"
+                >
+                  #
+                </Text>
+
+                <Text fontWeight="600" fontSize="14px" color="black">
+                  {profileId}
                 </Text>
               </Flex>
 
@@ -206,12 +189,13 @@ const SetDefaultProfileModal = ({
                 <Center pt="5" pl="5" pr="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
-                    Create profile successfully!
+                    Set default profile successfully!
                   </Alert>
                 </Center>
 
                 <Text pt="5" pl="5" pr="5">
-                  Congratulations, you have just create the profile{" "}
+                  Congratulations, you have change to default profile to the
+                  profile{" "}
                   <Text
                     as="span"
                     fontWeight="700"
@@ -223,15 +207,18 @@ const SetDefaultProfileModal = ({
                   </Text>{" "}
                   in the Lens protocol.
                 </Text>
-
-                <Text pt="5" pl="5" pr="5">
-                  The profile id is: #{profileId}
-                </Text>
               </>
             </>
           )}
 
           {isLoading && (
+            <HStack pt="5" pl="5" pr="5">
+              <Text>Waiting for confirmation with your wallet...</Text>
+              <Spinner size="md" color="third" />
+            </HStack>
+          )}
+
+          {signed && (
             <Center>
               <VStack paddingTop="5" pl="5" pr="5">
                 <HStack>
@@ -241,7 +228,7 @@ const SetDefaultProfileModal = ({
                     bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     bgClip="text"
                   >
-                    Waiting transacction to be indexed ...
+                    Waiting transacction to be mined...
                   </Text>
 
                   <Image
@@ -258,7 +245,7 @@ const SetDefaultProfileModal = ({
                   color="grayLetter"
                   pt="5"
                 >
-                  This usually takes 1-2 minutes to complete
+                  This usually takes 0-1 minutes to complete
                 </Text>
               </VStack>
             </Center>
@@ -289,7 +276,7 @@ const SetDefaultProfileModal = ({
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleConfirmCreateProfile}
+                onClick={handleConfirmSetdefaultProfile}
                 disabled={isLoading}
               >
                 <Flex>
@@ -309,7 +296,7 @@ const SetDefaultProfileModal = ({
                     color="lensDark"
                     m="auto"
                   >
-                    Create profile
+                    Set default profile
                   </Text>
                 </Flex>
               </Button>
