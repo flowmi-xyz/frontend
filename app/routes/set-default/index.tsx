@@ -2,6 +2,8 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
+import { lensClient } from "~/web3/lens/lens-client";
+
 import { getSession } from "~/bff/session";
 
 // UI components
@@ -9,6 +11,7 @@ import { Box, Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
+import { GetProfiles } from "~/web3/lens/graphql/generated";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -16,11 +19,22 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const address = session.get("address");
 
-  return { address };
+  // Get default profile from Lens
+  const variables: any = {
+    request: { ownedBy: [address], limit: 20 },
+  };
+
+  const getProfilesResponse = await lensClient.request(GetProfiles, variables);
+
+  const profiles = getProfilesResponse.profiles.items;
+
+  return { address, profiles };
 };
 
 export default function SetDefault() {
-  const { address } = useLoaderData();
+  const { address, profiles } = useLoaderData();
+
+  console.log(profiles);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
