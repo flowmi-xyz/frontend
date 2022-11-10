@@ -11,9 +11,11 @@ import React from "react";
 import {
   Box,
   Button,
+  Center,
   Flex,
   HStack,
   Image,
+  Select,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -53,7 +55,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return { address, profiles, defaultProfile };
 };
 
-export default function SetDefault() {
+export default function SetFollowModule() {
   const { address, profiles, defaultProfile } = useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
@@ -69,7 +71,7 @@ export default function SetDefault() {
   };
 
   return (
-    <Box bg="#FAFAF9">
+    <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
         address={address}
         authenticatedInLens={false}
@@ -94,7 +96,7 @@ export default function SetDefault() {
           color="black"
           my="auto"
         >
-          Select default profile
+          Select follow module
         </Text>
 
         <Text
@@ -105,8 +107,8 @@ export default function SetDefault() {
           my="auto"
           pt="3"
         >
-          Selecting your default account helps to display the selected profile
-          across Lenster, you can change your default profile anytime.
+          Configure the module you want to set in your profile when a user
+          follows you.
         </Text>
 
         <Text
@@ -117,82 +119,47 @@ export default function SetDefault() {
           my="auto"
           pt="6"
         >
-          Select profile
+          Select follow module
         </Text>
 
         <Box mt="3">
-          {profiles.map((profile: any, index: number) => {
-            return (
-              <Box
-                bg="grayBg"
-                borderRadius="lg"
-                boxShadow="0px 4px 10px rgba(0, 0, 0, 0.05)"
-                p="2"
-                key={profile.handle}
-                mb="5"
-              >
-                <Flex align="center" justify="space-between">
-                  <Link to={`/${profile.handle}`}>
-                    <HStack spacing="4">
-                      <Image
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSML8sGOxzk99KfXxskBKcqHiSraQj06axIl4QYw-wu2N3GEMg2eNCBcJZuwIQtwqkiHh8&usqp=CAU"
-                        borderRadius="lg"
-                        boxSize="8"
-                      />
-                      <Box>
-                        <Text
-                          fontWeight="600"
-                          fontSize="16px"
-                          lineHeight="100%"
-                          letterSpacing="-0.03em"
-                          bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                          bgClip="text"
-                        >
-                          @{profile.handle}
-                        </Text>
-                      </Box>
-                    </HStack>
-                  </Link>
-
-                  <Button
-                    bg="lens"
-                    borderRadius="10px"
-                    boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                    onClick={() => handleSetDefaultProfile(index)}
-                    disabled={profile.id === defaultProfile?.id}
-                  >
-                    <Flex>
-                      <Box w="40px" h="40px">
-                        <Image
-                          src="../assets/LOGO__lens_ultra small icon.png"
-                          alt="lens"
-                          my="-5px"
-                          mx="-5px"
-                        />
-                      </Box>
-
-                      <Text
-                        fontWeight="500"
-                        fontSize="18px"
-                        lineHeight="21.6px"
-                        color="lensDark"
-                        m="auto"
-                      >
-                        Set default profile
-                      </Text>
-                    </Flex>
-                  </Button>
-                </Flex>
-              </Box>
-            );
-          })}
-          <SetDefaultProfileModal
-            isOpen={isOpen}
-            onClose={onClose}
-            profileId={defaultProfileSelect}
-            handle={defaultHandle}
-          />
+          <Select placeholder="null">
+            <option value="FlowmiFollowModule">FlowmiFollowModule</option>
+          </Select>
         </Box>
+
+        <Center>
+          <Button
+            bg="lens"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            mt="5"
+
+            //   onClick={onOpen}
+            //   disabled={handle === ""}
+          >
+            <Flex>
+              <Box w="40px" h="40px">
+                <Image
+                  src="../assets/LOGO__lens_ultra small icon.png"
+                  alt="lens"
+                  my="-5px"
+                  mx="-5px"
+                />
+              </Box>
+
+              <Text
+                fontWeight="500"
+                fontSize="18px"
+                lineHeight="21.6px"
+                color="lensDark"
+                m="auto"
+              >
+                Set follow module
+              </Text>
+            </Flex>
+          </Button>
+        </Center>
       </Box>
     </Box>
   );
