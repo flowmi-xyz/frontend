@@ -34,10 +34,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function SetDefault() {
   const { address, profiles } = useLoaderData();
 
-  console.log(profiles);
-
   return (
-    <Box bg="#FAFAF9" h="100vh">
+    <Box bg="#FAFAF9">
       <NavbarConnected address={address} authenticatedInLens={false} />
 
       <Box
@@ -48,7 +46,8 @@ export default function SetDefault() {
         borderColor="#E0E0E3"
         borderRadius="10px"
         p="5"
-        mt="10"
+        mt="5"
+        mb="5"
       >
         <Text
           fontWeight="700"
@@ -82,62 +81,70 @@ export default function SetDefault() {
         >
           Select profile
         </Text>
-        <Box
-          bg="grayBg"
-          borderRadius="lg"
-          boxShadow="0px 4px 10px rgba(0, 0, 0, 0.05)"
-          p="6"
-          mt="1"
-        >
-          <Flex align="center" justify="space-between">
-            <HStack spacing="4">
-              <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSML8sGOxzk99KfXxskBKcqHiSraQj06axIl4QYw-wu2N3GEMg2eNCBcJZuwIQtwqkiHh8&usqp=CAU"
-                borderRadius="full"
-                boxSize="12"
-              />
-              <Box>
-                <Text
-                  fontWeight="600"
-                  fontSize="16px"
-                  lineHeight="100%"
-                  letterSpacing="-0.03em"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  @cristianvaldivia.lens
-                </Text>
-              </Box>
-            </HStack>
-            <Button
-              bg="lens"
-              borderRadius="10px"
-              boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-              // onClick={onOpen}
-              // disabled={handle === ""}
-            >
-              <Flex>
-                <Box w="40px" h="40px">
-                  <Image
-                    src="../assets/LOGO__lens_ultra small icon.png"
-                    alt="lens"
-                    my="-5px"
-                    mx="-5px"
-                  />
-                </Box>
 
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="lensDark"
-                  m="auto"
-                >
-                  Set default profile
-                </Text>
-              </Flex>
-            </Button>
-          </Flex>
+        <Box mt="3">
+          {profiles.map((profile: any) => {
+            return (
+              <Box
+                bg="grayBg"
+                borderRadius="lg"
+                boxShadow="0px 4px 10px rgba(0, 0, 0, 0.05)"
+                p="2"
+                key={profile.handle}
+                mb="5"
+              >
+                <Flex align="center" justify="space-between">
+                  <HStack spacing="4">
+                    <Image
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSML8sGOxzk99KfXxskBKcqHiSraQj06axIl4QYw-wu2N3GEMg2eNCBcJZuwIQtwqkiHh8&usqp=CAU"
+                      borderRadius="lg"
+                      boxSize="8"
+                    />
+                    <Box>
+                      <Text
+                        fontWeight="600"
+                        fontSize="16px"
+                        lineHeight="100%"
+                        letterSpacing="-0.03em"
+                        bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                        bgClip="text"
+                      >
+                        @{profile.handle}
+                      </Text>
+                    </Box>
+                  </HStack>
+                  <Button
+                    bg="lens"
+                    borderRadius="10px"
+                    boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                    // onClick={onOpen}
+                    // disabled={handle === ""}
+                  >
+                    <Flex>
+                      <Box w="40px" h="40px">
+                        <Image
+                          src="../assets/LOGO__lens_ultra small icon.png"
+                          alt="lens"
+                          my="-5px"
+                          mx="-5px"
+                        />
+                      </Box>
+
+                      <Text
+                        fontWeight="500"
+                        fontSize="18px"
+                        lineHeight="21.6px"
+                        color="lensDark"
+                        m="auto"
+                      >
+                        Set default profile
+                      </Text>
+                    </Flex>
+                  </Button>
+                </Flex>
+              </Box>
+            );
+          })}
         </Box>
       </Box>
     </Box>
