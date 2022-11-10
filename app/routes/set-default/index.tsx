@@ -1,6 +1,6 @@
 // BFF components
 import type { LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import { lensClient } from "~/web3/lens/lens-client";
 
@@ -132,25 +132,28 @@ export default function SetDefault() {
                 mb="5"
               >
                 <Flex align="center" justify="space-between">
-                  <HStack spacing="4">
-                    <Image
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSML8sGOxzk99KfXxskBKcqHiSraQj06axIl4QYw-wu2N3GEMg2eNCBcJZuwIQtwqkiHh8&usqp=CAU"
-                      borderRadius="lg"
-                      boxSize="8"
-                    />
-                    <Box>
-                      <Text
-                        fontWeight="600"
-                        fontSize="16px"
-                        lineHeight="100%"
-                        letterSpacing="-0.03em"
-                        bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                        bgClip="text"
-                      >
-                        @{profile.handle}
-                      </Text>
-                    </Box>
-                  </HStack>
+                  <Link to={`/${profile.handle}`}>
+                    <HStack spacing="4">
+                      <Image
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSML8sGOxzk99KfXxskBKcqHiSraQj06axIl4QYw-wu2N3GEMg2eNCBcJZuwIQtwqkiHh8&usqp=CAU"
+                        borderRadius="lg"
+                        boxSize="8"
+                      />
+                      <Box>
+                        <Text
+                          fontWeight="600"
+                          fontSize="16px"
+                          lineHeight="100%"
+                          letterSpacing="-0.03em"
+                          bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                          bgClip="text"
+                        >
+                          @{profile.handle}
+                        </Text>
+                      </Box>
+                    </HStack>
+                  </Link>
+
                   <Button
                     bg="lens"
                     borderRadius="10px"

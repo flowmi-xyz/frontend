@@ -27,23 +27,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   changeHeaders(accessToken);
 
   // Get default profile from Lens
-  // let variables: any = {
-  //   request: { ethereumAddress: address },
-  // };
-
-  // const responseProfile = await lensClient.request(
-  //   GetDefaultProfile,
-  //   variables
-  // );
-
-  // const profile = responseProfile.defaultProfile;
-
-  const profile = {
-    handle: "TODO",
+  let variables: any = {
+    request: { ethereumAddress: address },
   };
 
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variables
+  );
+
+  const defaultProfile = responseProfile.defaultProfile;
+
   // Get profile from Lens protocol
-  let variables = {
+  variables = {
     request: { handle: params.profile },
   };
 
@@ -78,7 +74,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return {
     address,
     accessToken,
-    profile,
+    defaultProfile,
     pageProfile,
     locationValue,
     ensValue,
@@ -91,7 +87,7 @@ export default function Profile() {
   const {
     address,
     accessToken,
-    profile,
+    defaultProfile,
     pageProfile,
     locationValue,
     ensValue,
@@ -99,16 +95,16 @@ export default function Profile() {
     twitterValue,
   } = useLoaderData();
 
-  console.log(pageProfile);
-
   changeHeaders(accessToken);
+
+  console.log(pageProfile);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
-        handle={profile.handle}
+        handle={defaultProfile?.handle}
       />
 
       <Image src="./assets/2.png" w="100%" h="320px" objectFit="cover" />
