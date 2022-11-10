@@ -7,11 +7,21 @@ import { lensClient } from "~/web3/lens/lens-client";
 import { getSession } from "~/bff/session";
 
 // UI components
-import { Box, Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Image,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetProfiles } from "~/web3/lens/graphql/generated";
+import CreateProfileModal from "~/components/CreateProfileModal";
+import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -33,6 +43,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function SetDefault() {
   const { address, profiles } = useLoaderData();
+
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
     <Box bg="#FAFAF9">
@@ -117,7 +129,7 @@ export default function SetDefault() {
                     bg="lens"
                     borderRadius="10px"
                     boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                    // onClick={onOpen}
+                    onClick={onOpen}
                     // disabled={handle === ""}
                   >
                     <Flex>
@@ -146,6 +158,13 @@ export default function SetDefault() {
             );
           })}
         </Box>
+
+        <SetDefaultProfileModal
+          isOpen={isOpen}
+          onClose={onClose}
+          profileId={"2"}
+          handle={"cris"}
+        />
       </Box>
     </Box>
   );
