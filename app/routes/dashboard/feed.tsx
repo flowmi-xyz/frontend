@@ -33,24 +33,20 @@ export const loader: LoaderFunction = async ({ request }) => {
     variables
   );
 
-  const profile = responseProfile.defaultProfile;
+  const defaultProfile = responseProfile.defaultProfile;
 
-  // const profile = {
-  //   handle: "TODO",
-  // };
-
-  return { address, accessToken, profile };
+  return { address, accessToken, defaultProfile };
 };
 
 export default function Dashboard() {
-  const { address, profile } = useLoaderData();
+  const { address, defaultProfile } = useLoaderData();
 
   return (
     <Box bg="#FAFAF9">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
-        handle={profile?.handle}
+        handle={defaultProfile?.handle}
       />
 
       <Box maxWidth="1200px" m="auto">

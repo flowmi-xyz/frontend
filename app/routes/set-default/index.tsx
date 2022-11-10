@@ -20,7 +20,7 @@ import {
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
-import { GetProfiles } from "~/web3/lens/graphql/generated";
+import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -29,7 +29,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const address = session.get("address");
 
-  // Get default profile from Lens
+  // Get profiles from Lens
   const variables: any = {
     request: { ownedBy: [address], limit: 20 },
   };
@@ -38,20 +38,31 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const profiles = getProfilesResponse.profiles.items;
 
-  return { address, profiles };
+  // Get default profile from Lens
+  const variablesForDefault: any = {
+    request: { ethereumAddress: address },
+  };
+
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variablesForDefault
+  );
+
+  const defaultProfile = responseProfile.defaultProfile;
+
+  return { address, profiles, defaultProfile };
 };
 
 export default function SetDefault() {
-  const { address, profiles } = useLoaderData();
+  const { address, profiles, defaultProfile } = useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
-  const [defaultProfile, setDefaultProfile] = React.useState("");
+  const [defaultProfileSelect, setDefaultProfileSelect] = React.useState("");
   const [defaultHandle, setDefaultHandle] = React.useState("");
 
   const handleSetDefaultProfile = (index: number) => {
-    console.log("Set default profile", index);
-    setDefaultProfile(profiles[index].id);
+    setDefaultProfileSelect(profiles[index].id);
     setDefaultHandle(profiles[index].handle);
 
     onOpen();
@@ -59,7 +70,11 @@ export default function SetDefault() {
 
   return (
     <Box bg="#FAFAF9">
-      <NavbarConnected address={address} authenticatedInLens={false} />
+      <NavbarConnected
+        address={address}
+        authenticatedInLens={false}
+        handle={defaultProfile?.handle}
+      />
 
       <Box
         maxWidth="600px"
@@ -141,7 +156,7 @@ export default function SetDefault() {
                     borderRadius="10px"
                     boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                     onClick={() => handleSetDefaultProfile(index)}
-                    // disabled={handle === ""}
+                    disabled={profile.id === defaultProfile?.id}
                   >
                     <Flex>
                       <Box w="40px" h="40px">
@@ -171,7 +186,7 @@ export default function SetDefault() {
           <SetDefaultProfileModal
             isOpen={isOpen}
             onClose={onClose}
-            profileId={defaultProfile}
+            profileId={defaultProfileSelect}
             handle={defaultHandle}
           />
         </Box>
