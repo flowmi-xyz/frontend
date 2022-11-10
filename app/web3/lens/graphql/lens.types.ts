@@ -50,3 +50,10 @@ export type HasTxHashBeenIndexedRequest = {
     txHash: string;
   };
 };
+
+export type ProfileQueryRequest = {
+  request: {
+    ownedBy: [string];
+    limit: number;
+  };
+};
