@@ -4,6 +4,9 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 import { getSession } from "~/bff/session";
 
+import { lensClient } from "~/web3/lens/lens-client";
+import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+
 // UI components
 import { Box, Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 
@@ -16,17 +19,33 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const address = session.get("address");
 
-  return { address };
+  // Get default profile from Lens
+  const variables: any = {
+    request: { ethereumAddress: address },
+  };
+
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variables
+  );
+
+  const defaultProfile = responseProfile.defaultProfile;
+
+  return { address, defaultProfile };
 };
 
 export default function MenuInternal() {
-  const { address } = useLoaderData();
+  const { address, defaultProfile } = useLoaderData();
 
   return (
     <Box>
-      <NavbarConnected address={address} authenticatedInLens={false} />
+      <NavbarConnected
+        address={address}
+        authenticatedInLens={true}
+        handle={defaultProfile.handle}
+      />
 
-      <Box maxWidth="600px" m="auto" pt="3" pb="3">
+      <Box maxWidth="1000px" m="auto" pt="3" pb="3">
         <Text fontWeight="600" fontSize="36px" color="black">
           Configurations
         </Text>

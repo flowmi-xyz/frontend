@@ -15,6 +15,9 @@ import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
 import AppFooter from "~/components/AppFooter";
+import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+import { getSigner } from "~/web3/etherservice";
+import { ethers } from "ethers";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -70,6 +73,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   });
 
   const twitterValue = twitter[0]?.value;
+
+  // const lensContract = new ethers.Contract(
+  //   LENS_HUB_CONTRACT_ADDRESS,
+  //   LENS_HUB_ABI,
+  //   getSigner()
+  // );
+
+  // try {
+  //   const followProfile = await lensContract.getFollowModule(defaultProfile.id);
+
+  //   console.log("followProfile", followProfile);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   return {
     address,

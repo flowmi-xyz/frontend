@@ -34,16 +34,18 @@ const NavbarConnected = ({
           <ChainButton />
 
           {authenticatedInLens && (
-            <Button
-              bg="lens"
-              borderRadius="10px"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              mr="5"
-            >
-              <Text fontWeight="600" fontSize="14px" color="lensDark">
-                @{handle}
-              </Text>
-            </Button>
+            <Link to={`/${handle}`} prefetch="intent">
+              <Button
+                bg="lens"
+                borderRadius="10px"
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                mr="5"
+              >
+                <Text fontWeight="600" fontSize="14px" color="lensDark">
+                  @{handle}
+                </Text>
+              </Button>
+            </Link>
           )}
 
           <Button
