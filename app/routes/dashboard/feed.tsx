@@ -14,6 +14,7 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import NavbarConnected from "~/components/NavbarConnected";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
+import SettingsBox from "~/components/ConfigurationBox";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -53,6 +54,10 @@ export default function Dashboard() {
         <Grid templateColumns="repeat(3, 1fr)">
           <GridItem colSpan={2}>
             <ProfileParticipation />
+          </GridItem>
+
+          <GridItem colSpan={1}>
+            <SettingsBox />
           </GridItem>
 
           <GridItem colSpan={2}>
