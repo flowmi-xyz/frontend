@@ -42,7 +42,7 @@ export default function MenuInternal() {
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
-        handle={defaultProfile.handle}
+        handle={defaultProfile?.handle}
       />
 
       <Box maxWidth="1000px" m="auto" pt="3" pb="3">
