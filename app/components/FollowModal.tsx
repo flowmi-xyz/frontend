@@ -65,17 +65,13 @@ const FollowModal = ({
       getSigner()
     );
 
+    const data = defaultAbiCoder.encode(
+      ["address", "uint256"],
+      ["0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6", 1]
+    );
+
     try {
       const GAS_LIMIT = BigNumber.from("2074000");
-
-      const data = defaultAbiCoder.encode(
-        ["uint256", "address", "address"],
-        [
-          1,
-          "0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6",
-          "0x3aeC2276326CDC8E9a8A4351c338166e67105AC3",
-        ]
-      );
 
       // const followProfile = await lensContract.follow([profileId], [0x0], {
       //   gasLimit: GAS_LIMIT,

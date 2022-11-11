@@ -1,6 +1,5 @@
 // logic components
-import { BigNumber, ethers } from "ethers";
-import { AbiCoder, defaultAbiCoder } from "ethers/lib/utils";
+import { ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -34,24 +33,19 @@ import { Step, Steps, useSteps } from "chakra-ui-steps";
 type CreateProfileProps = {
   isOpen: boolean;
   onClose: () => void;
-  followModule: string;
-  followModuleAddress: string;
-  profileId: string;
-  addressProfile: string;
+  address: string;
+  //   handle: string;
 };
 
-const SetFollowModuleModal = ({
+const WhitelistContractModal = ({
   isOpen,
   onClose,
-  followModule,
-  followModuleAddress,
-  profileId,
-  addressProfile,
-}: // profileId,
+  address,
+}: //   profileId,
 CreateProfileProps) => {
   const steps = [
-    { label: "Confirm follow module" },
-    { label: "Follow module changed" },
+    { label: "Confirm contract" },
+    { label: "Whitelisted contract succefully ✅" },
   ];
 
   const { nextStep, activeStep, reset } = useSteps({
@@ -64,42 +58,31 @@ CreateProfileProps) => {
 
   const [txHash, setTxHash] = React.useState("");
 
-  const handleConfirmSetFollowModule = async () => {
-    console.log("Handle confirm set follow module");
+  const handleConfirmSetdefaultProfile = async () => {
     setIsLoading(true);
+
     const lensContract = new ethers.Contract(
       LENS_HUB_CONTRACT_ADDRESS,
       LENS_HUB_ABI,
       getSigner()
     );
 
-    const data = defaultAbiCoder.encode(
-      ["uint256", "address", "address"],
-      [1, "0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6", addressProfile]
-    );
-
-    console.log("data: ", data);
-
     try {
-      const GAS_LIMIT = BigNumber.from("2074000");
-
-      const setFollowModule = await lensContract.setFollowModule(
-        profileId,
-        followModuleAddress,
-        data,
-        {
-          gasLimit: GAS_LIMIT,
-        }
+      const whitelistContract = await lensContract.whitelistFollowModule(
+        address,
+        true
       );
 
       nextStep();
+
       setIsLoading(false);
       setSigned(true);
 
-      const setFollowModuleTx = await setFollowModule.wait();
+      const whitelistContractTx = await whitelistContract.wait();
+
+      setTxHash(whitelistContractTx.transactionHash);
 
       nextStep();
-      setTxHash(setFollowModuleTx.transactionHash);
       setSigned(false);
     } catch (error) {
       console.log(error);
@@ -123,7 +106,7 @@ CreateProfileProps) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
-        <ModalHeader>Set follow module</ModalHeader>
+        <ModalHeader>Whitelist contract</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>
@@ -150,76 +133,24 @@ CreateProfileProps) => {
                 pl="5"
                 pr="5"
               >
-                You are going to change your follow module to for the next
-                profile # {profileId}.
+                You are going to white list the next contract:
               </Text>
 
-              <Flex pt="5" pl="5" pr="5">
+              <Flex pt="2" pl="5" pr="5">
                 <Text
                   fontWeight="600"
                   fontSize="14px"
                   color="lensDark"
-                  width="30%"
+                  width="20%"
                 >
-                  user address:
+                  address
                 </Text>
 
-                <Text
-                  fontWeight="700"
-                  fontSize="14px"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  {`${addressProfile.slice(0, 6)} ... ${addressProfile.slice(
-                    addressProfile.length - 4,
-                    addressProfile.length
+                <Text fontWeight="600" fontSize="14px" color="black">
+                  {`${address.slice(0, 6)} ... ${address.slice(
+                    address.length - 4,
+                    address.length
                   )}`}
-                </Text>
-              </Flex>
-
-              <Flex pt="5" pl="5" pr="5">
-                <Text
-                  fontWeight="600"
-                  fontSize="14px"
-                  color="lensDark"
-                  width="30%"
-                >
-                  follow Module Address
-                </Text>
-
-                <Text
-                  fontWeight="700"
-                  fontSize="14px"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  {`${followModuleAddress.slice(
-                    0,
-                    6
-                  )} ... ${followModuleAddress.slice(
-                    followModuleAddress.length - 4,
-                    followModuleAddress.length
-                  )}`}
-                </Text>
-              </Flex>
-
-              <Flex pt="5" pl="5" pr="5">
-                <Text
-                  fontWeight="600"
-                  fontSize="14px"
-                  color="lensDark"
-                  width="30%"
-                >
-                  followModule:
-                </Text>
-
-                <Text
-                  fontWeight="700"
-                  fontSize="14px"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  {followModule}
                 </Text>
               </Flex>
 
@@ -233,7 +164,7 @@ CreateProfileProps) => {
                 pl="5"
                 pr="5"
               >
-                Remember this profile is changed in the testnet (Polygon Mumbai)
+                Remember this profile is created in the testnet (Polygon Mumbai)
               </Text>
             </>
           )}
@@ -244,12 +175,13 @@ CreateProfileProps) => {
                 <Center pt="5" pl="5" pr="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
-                    Change follow module success
+                    Whitelisted successfully!
                   </Alert>
                 </Center>
 
                 <Text pt="5" pl="5" pr="5">
-                  Congratulations, you have changed your follow module to{" "}
+                  Congratulations, you have successfully whitelisted the
+                  contract
                   <Text
                     as="span"
                     fontWeight="700"
@@ -257,9 +189,12 @@ CreateProfileProps) => {
                     bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     bgClip="text"
                   >
-                    {followModule}
+                    {`${address.slice(0, 6)} ... ${address.slice(
+                      address.length - 4,
+                      address.length
+                    )}`}
                   </Text>{" "}
-                  in the Lens protocol.
+                  in the Lens HUB.
                 </Text>
               </>
             </>
@@ -330,7 +265,7 @@ CreateProfileProps) => {
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleConfirmSetFollowModule}
+                onClick={handleConfirmSetdefaultProfile}
                 disabled={isLoading}
               >
                 <Flex>
@@ -350,7 +285,7 @@ CreateProfileProps) => {
                     color="lensDark"
                     m="auto"
                   >
-                    Set follow module
+                    Whitelist contract
                   </Text>
                 </Flex>
               </Button>
@@ -399,4 +334,4 @@ CreateProfileProps) => {
   );
 };
 
-export default SetFollowModuleModal;
+export default WhitelistContractModal;

@@ -76,7 +76,7 @@ export default function SetFollowModule() {
     <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
         address={address}
-        authenticatedInLens={false}
+        authenticatedInLens={true}
         handle={defaultProfile?.handle}
       />
 
@@ -168,7 +168,7 @@ export default function SetFollowModule() {
         <SetFollowModuleModal
           isOpen={isOpen}
           onClose={onClose}
-          followModuleAddress="0xC5e27d041fcE3C5d27A4bB9c753179c9A81b792A"
+          followModuleAddress="0x0dBc8de8E16062697f965b2F2b9C9c4d43Bc4869"
           followModule={selectedFollowModule}
           profileId={defaultProfile.id}
           addressProfile={defaultProfile.ownedBy}

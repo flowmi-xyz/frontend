@@ -22,7 +22,7 @@ import {
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
-import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
+import WhitelistContractModal from "~/components/WhiteListContractModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -59,22 +59,22 @@ export default function WhitelistContract() {
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
-  const [defaultProfileSelect, setDefaultProfileSelect] = React.useState("");
-  const [defaultHandle, setDefaultHandle] = React.useState("");
-
-  const handleSetDefaultProfile = (index: number) => {
-    setDefaultProfileSelect(profiles[index].id);
-    setDefaultHandle(profiles[index].handle);
-
-    onOpen();
-  };
+  const [addressContract, setaddressContract] = React.useState("");
+  //   const [defaultHandle, setDefaultHandle] = React.useState("");
 
   const contracts = [
     {
-      name: "FlowmiFollowModule",
-      address: "0x123456789",
+      name: "FlowmiFollowModule v0.2",
+      address: "0x0dBc8de8E16062697f965b2F2b9C9c4d43Bc4869",
     },
   ];
+
+  const handleWhitelistContract = (index: number) => {
+    setaddressContract(contracts[index].address);
+    // setDefaultHandle(profiles[index].handle);
+
+    onOpen();
+  };
 
   return (
     <Box bg="#FAFAF9">
@@ -182,7 +182,7 @@ export default function WhitelistContract() {
                     bg="lens"
                     borderRadius="10px"
                     boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                    onClick={() => handleSetDefaultProfile(index)}
+                    onClick={() => handleWhitelistContract(index)}
                   >
                     <Flex>
                       <Box w="40px" h="40px">
@@ -210,11 +210,12 @@ export default function WhitelistContract() {
             );
           })}
 
-          <SetDefaultProfileModal
+          <WhitelistContractModal
             isOpen={isOpen}
             onClose={onClose}
-            profileId={defaultProfileSelect}
-            handle={defaultHandle}
+            address={addressContract}
+            // profileId={defaultProfileSelect}
+            // handle={defaultHandle}
           />
         </Box>
       </Box>
