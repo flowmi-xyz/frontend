@@ -1,6 +1,6 @@
 // logic components
 import { BigNumber, ethers } from "ethers";
-import { AbiCoder, defaultAbiCoder } from "ethers/lib/utils";
+import { AbiCoder, defaultAbiCoder, parseEther } from "ethers/lib/utils";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -30,6 +30,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -73,9 +74,11 @@ CreateProfileProps) => {
       getSigner()
     );
 
+    const DEFAULT_FOLLOW_PRICE = parseEther("0.1");
+
     const data = defaultAbiCoder.encode(
       ["uint256", "address", "address"],
-      [1, "0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6", addressProfile]
+      [DEFAULT_FOLLOW_PRICE, WMATIC_CONTRACT_ADDRESS, addressProfile]
     );
 
     console.log("data: ", data);

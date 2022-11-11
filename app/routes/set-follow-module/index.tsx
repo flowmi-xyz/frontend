@@ -168,7 +168,7 @@ export default function SetFollowModule() {
         <SetFollowModuleModal
           isOpen={isOpen}
           onClose={onClose}
-          followModuleAddress="0x29a75A393eaAfd5fa24a15E8e34F818c1D145872"
+          followModuleAddress="0xE30dACE40d33BA78cf7f40C31a96a5cfeb49944d"
           followModule={selectedFollowModule}
           profileId={defaultProfile.id}
           addressProfile={defaultProfile.ownedBy}

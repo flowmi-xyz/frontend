@@ -29,7 +29,8 @@ import {
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
-import { defaultAbiCoder } from "ethers/lib/utils";
+import { defaultAbiCoder, parseEther } from "ethers/lib/utils";
+import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 
 type FollowModalProps = {
   isOpen: boolean;
@@ -46,7 +47,7 @@ const DefiFollowModal = ({
 }: FollowModalProps) => {
   const steps = [
     { label: "Approve move tokens" },
-    { label: "Follow" },
+    { label: "Confirm Follow" },
     { label: "Follow complete 🎉" },
   ];
 
@@ -60,6 +61,43 @@ const DefiFollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
+  const DEFAULT_FOLLOW_PRICE = parseEther("0.1");
+  const MAX_UINT256 =
+    "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+
+  const handleApprove = async () => {
+    setIsLoading(true);
+
+    try {
+      const tokenContract = new ethers.Contract(
+        WMATIC_CONTRACT_ADDRESS,
+        ERC20_HUB_ABI,
+        getSigner()
+      );
+
+      const approve = await tokenContract.approve(
+        "0xE30dACE40d33BA78cf7f40C31a96a5cfeb49944d",
+        MAX_UINT256
+      );
+
+      setIsLoading(false);
+      setSigned(true);
+
+      const approveTx = await approve.wait();
+
+      console.log(" handleApprove() approveTx:", approveTx);
+
+      setSigned(false);
+
+      nextStep();
+    } catch (error) {
+      console.log(error);
+
+      setIsLoading(false);
+      setSigned(false);
+    }
+  };
+
   const handleFollow = async () => {
     setIsLoading(true);
 
@@ -71,7 +109,7 @@ const DefiFollowModal = ({
 
     const data = defaultAbiCoder.encode(
       ["address", "uint256"],
-      ["0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6", 1]
+      [WMATIC_CONTRACT_ADDRESS, DEFAULT_FOLLOW_PRICE]
     );
 
     try {
@@ -134,7 +172,7 @@ const DefiFollowModal = ({
             </Steps>
           </Box>
 
-          {activeStep === 0 && (
+          {activeStep === 0 && !signed && (
             <Box>
               <Text pt="5" pl="5" pr="5">
                 First, you have to approve our contract to move your tokens.
@@ -148,11 +186,6 @@ const DefiFollowModal = ({
                   </Text>{" "}
                   to the Aave protocol. In the Mumbai network
                 </Text>
-                {/* <Image
-                  src="../assets/logos/polygon-matic-logo.png"
-                  w="6"
-                  h="6"
-                /> */}
               </HStack>
 
               <Center pt="5" pl="5" pr="5">
@@ -174,6 +207,17 @@ const DefiFollowModal = ({
 
           {activeStep === 1 && (
             <>
+              <Center pt="5" pl="5" pr="5">
+                <Alert status="success" borderRadius={10}>
+                  <AlertIcon />
+                  Approved successfully!
+                </Alert>
+              </Center>
+
+              <Text padding="5">
+                Thanks for allowing us to move your tokens to Aave protocol 🙌
+              </Text>
+
               <Text
                 fontWeight="600"
                 fontSize="14px"
@@ -183,7 +227,7 @@ const DefiFollowModal = ({
                 pl="5"
                 pr="5"
               >
-                You are going to start following the profile{" "}
+                Now, you are going to start following the profile{" "}
                 <Text
                   as="span"
                   fontWeight="700"
@@ -328,7 +372,7 @@ const DefiFollowModal = ({
                 bg="first"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleFollow}
+                onClick={handleApprove}
                 disabled={isLoading}
               >
                 <Flex>

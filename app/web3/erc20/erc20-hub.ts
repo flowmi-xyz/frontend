@@ -1,0 +1,5 @@
+import ERC20_HUB_ABI from "./abi/erc20-contract-abi.json";
+
+const WMATIC_CONTRACT_ADDRESS = "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889";
+
+export { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS };
