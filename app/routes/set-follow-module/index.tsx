@@ -24,6 +24,7 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
+import SetFollowModuleModal from "~/components/SetFollowModule";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -60,12 +61,14 @@ export default function SetFollowModule() {
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
-  const [defaultProfileSelect, setDefaultProfileSelect] = React.useState("");
-  const [defaultHandle, setDefaultHandle] = React.useState("");
+  const [selectedFollowModule, setSelectedFollowModule] = React.useState("");
 
-  const handleSetDefaultProfile = (index: number) => {
-    setDefaultProfileSelect(profiles[index].id);
-    setDefaultHandle(profiles[index].handle);
+  const handleSelectChange = (event: any) => {
+    setSelectedFollowModule(event.target.value);
+  };
+
+  const handleSetFollowModule = () => {
+    console.log("Set follow module to: ", selectedFollowModule);
 
     onOpen();
   };
@@ -123,7 +126,11 @@ export default function SetFollowModule() {
         </Text>
 
         <Box mt="3">
-          <Select placeholder="null">
+          <Select
+            placeholder="null"
+            value={selectedFollowModule}
+            onChange={handleSelectChange}
+          >
             <option value="FlowmiFollowModule">FlowmiFollowModule</option>
           </Select>
         </Box>
@@ -134,8 +141,7 @@ export default function SetFollowModule() {
             borderRadius="10px"
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mt="5"
-
-            //   onClick={onOpen}
+            onClick={handleSetFollowModule}
             //   disabled={handle === ""}
           >
             <Flex>
@@ -160,6 +166,13 @@ export default function SetFollowModule() {
             </Flex>
           </Button>
         </Center>
+
+        <SetFollowModuleModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handle={defaultProfile?.handle}
+          profileId={defaultProfile?.id}
+        />
       </Box>
     </Box>
   );
