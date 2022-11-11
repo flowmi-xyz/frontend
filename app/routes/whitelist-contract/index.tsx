@@ -64,8 +64,8 @@ export default function WhitelistContract() {
 
   const contracts = [
     {
-      name: "FlowmiFollowModule v0.2",
-      address: "0x0dBc8de8E16062697f965b2F2b9C9c4d43Bc4869",
+      name: "FlowmiFollowModule v0.3",
+      address: "0x29a75A393eaAfd5fa24a15E8e34F818c1D145872",
     },
   ];
 

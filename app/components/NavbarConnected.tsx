@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Link } from "@remix-run/react";
 
 import { Flex, Text, Button, Box, HStack, Input, Icon } from "@chakra-ui/react";
@@ -16,6 +18,8 @@ const NavbarConnected = ({
   authenticatedInLens,
   handle,
 }: NavbarConnectedProps) => {
+  const [profileSearch, setProfileSearch] = React.useState("");
+
   const handleSearch = () => {
     console.log("search");
   };
@@ -36,21 +40,17 @@ const NavbarConnected = ({
           </Text>
         </Link>
 
-        <Box mt="20px" ml="15px" mb="18px" mr="15px">
+        <Box ml="40">
           <HStack>
             <Box width="330px">
               <Input
-                // value={value}
-                // onChange={handleChange}
+                value={profileSearch}
+                onChange={handleSearch}
                 placeholder="Find your friends"
                 borderRadius="10"
-                backgroundColor="#E3E3E4"
+                backgroundColor="white"
               />
             </Box>
-
-            <Button onClick={handleSearch}>
-              <Icon fontSize="4xl" color="gradient1" as={AiOutlineSearch} />
-            </Button>
           </HStack>
         </Box>
       </Flex>

@@ -18,6 +18,7 @@ import { transformToIpfsUrl } from "~/web3/ipfs";
 
 import FollowModal from "../FollowModal";
 import UnfollowModal from "../UnfollowModal";
+import DefiFollowModal from "../DefiFollowModal";
 
 type LensterProfileProps = {
   name: string;
@@ -179,12 +180,19 @@ const LensterProfile = ({
         </Button>
       )}
 
-      <FollowModal
+      <DefiFollowModal
         isOpen={isOpenFollow}
         onClose={onCloseFollow}
         profileId={id}
         handle={handle}
       />
+
+      {/* <FollowModal
+        isOpen={isOpenFollow}
+        onClose={onCloseFollow}
+        profileId={id}
+        handle={handle}
+      /> */}
 
       <UnfollowModal
         isOpen={isOpenUnfollow}
