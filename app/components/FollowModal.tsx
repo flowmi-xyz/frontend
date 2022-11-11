@@ -1,5 +1,5 @@
 // logic components
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -29,6 +29,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import { defaultAbiCoder } from "ethers/lib/utils";
 
 type FollowModalProps = {
   isOpen: boolean;
@@ -65,7 +66,24 @@ const FollowModal = ({
     );
 
     try {
-      const followProfile = await lensContract.follow([profileId], [0x0]);
+      const GAS_LIMIT = BigNumber.from("2074000");
+
+      const data = defaultAbiCoder.encode(
+        ["uint256", "address", "address"],
+        [
+          1,
+          "0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6",
+          "0x3aeC2276326CDC8E9a8A4351c338166e67105AC3",
+        ]
+      );
+
+      // const followProfile = await lensContract.follow([profileId], [0x0], {
+      //   gasLimit: GAS_LIMIT,
+      // });
+
+      const followProfile = await lensContract.follow([profileId], [data], {
+        gasLimit: GAS_LIMIT,
+      });
 
       nextStep();
 

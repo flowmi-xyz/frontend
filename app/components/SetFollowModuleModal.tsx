@@ -1,5 +1,6 @@
 // logic components
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
+import { AbiCoder, defaultAbiCoder } from "ethers/lib/utils";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -33,19 +34,24 @@ import { Step, Steps, useSteps } from "chakra-ui-steps";
 type CreateProfileProps = {
   isOpen: boolean;
   onClose: () => void;
+  followModule: string;
+  followModuleAddress: string;
   profileId: string;
-  handle: string;
+  addressProfile: string;
 };
 
 const SetFollowModuleModal = ({
   isOpen,
   onClose,
-  handle,
+  followModule,
+  followModuleAddress,
   profileId,
-}: CreateProfileProps) => {
+  addressProfile,
+}: // profileId,
+CreateProfileProps) => {
   const steps = [
-    { label: "Confirm default profile" },
-    { label: "Set default profile ✅" },
+    { label: "Confirm follow module" },
+    { label: "Follow module changed" },
   ];
 
   const { nextStep, activeStep, reset } = useSteps({
@@ -58,28 +64,50 @@ const SetFollowModuleModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const handleConfirmSetdefaultProfile = async () => {
+  const handleConfirmSetFollowModule = async () => {
+    console.log("Handle confirm set follow module");
     setIsLoading(true);
-
     const lensContract = new ethers.Contract(
       LENS_HUB_CONTRACT_ADDRESS,
       LENS_HUB_ABI,
       getSigner()
     );
 
+    const data = defaultAbiCoder.encode(
+      ["uint256", "address", "address"],
+      [1, "0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6", addressProfile]
+    );
+
+    console.log("data: ", data);
+
     try {
-      const setDefaultProfile = await lensContract.setDefaultProfile(profileId);
+      const GAS_LIMIT = BigNumber.from("2074000");
+
+      const setFollowModule = await lensContract.setFollowModule(
+        profileId,
+        "0xC5e27d041fcE3C5d27A4bB9c753179c9A81b792A",
+        data,
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
+
+      // const setFollowModule = await lensContract.whitelistFollowModule(
+      //   "0xC5e27d041fcE3C5d27A4bB9c753179c9A81b792A",
+      //   true,
+      //   {
+      //     gasLimit: GAS_LIMIT,
+      //   }
+      // );
 
       nextStep();
-
       setIsLoading(false);
       setSigned(true);
 
-      const setDefaultProfileTx = await setDefaultProfile.wait();
-
-      setTxHash(setDefaultProfileTx.transactionHash);
+      const setFollowModuleTx = await setFollowModule.wait();
 
       nextStep();
+      setTxHash(setFollowModuleTx.transactionHash);
       setSigned(false);
     } catch (error) {
       console.log(error);
@@ -130,7 +158,8 @@ const SetFollowModuleModal = ({
                 pl="5"
                 pr="5"
               >
-                You are going to set as a default profile the following profile:
+                You are going to change your follow module to for the next
+                profile # {profileId}.
               </Text>
 
               <Flex pt="5" pl="5" pr="5">
@@ -138,9 +167,9 @@ const SetFollowModuleModal = ({
                   fontWeight="600"
                   fontSize="14px"
                   color="lensDark"
-                  width="20%"
+                  width="30%"
                 >
-                  handle:
+                  address:
                 </Text>
 
                 <Text
@@ -149,22 +178,30 @@ const SetFollowModuleModal = ({
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
                 >
-                  @{handle}
+                  {`${addressProfile.slice(0, 6)} ... ${addressProfile.slice(
+                    addressProfile.length - 4,
+                    addressProfile.length
+                  )}`}
                 </Text>
               </Flex>
 
-              <Flex pt="2" pl="5" pr="5">
+              <Flex pt="5" pl="5" pr="5">
                 <Text
                   fontWeight="600"
                   fontSize="14px"
                   color="lensDark"
-                  width="20%"
+                  width="30%"
                 >
-                  #
+                  followModule:
                 </Text>
 
-                <Text fontWeight="600" fontSize="14px" color="black">
-                  {profileId}
+                <Text
+                  fontWeight="700"
+                  fontSize="14px"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  {followModule}
                 </Text>
               </Flex>
 
@@ -178,7 +215,7 @@ const SetFollowModuleModal = ({
                 pl="5"
                 pr="5"
               >
-                Remember this profile is created in the testnet (Polygon Mumbai)
+                Remember this profile is changed in the testnet (Polygon Mumbai)
               </Text>
             </>
           )}
@@ -189,13 +226,12 @@ const SetFollowModuleModal = ({
                 <Center pt="5" pl="5" pr="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
-                    Set default profile successfully!
+                    Change follow module success
                   </Alert>
                 </Center>
 
                 <Text pt="5" pl="5" pr="5">
-                  Congratulations, you have change to default profile to the
-                  profile{" "}
+                  Congratulations, you have changed your follow module to{" "}
                   <Text
                     as="span"
                     fontWeight="700"
@@ -203,7 +239,7 @@ const SetFollowModuleModal = ({
                     bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     bgClip="text"
                   >
-                    @{handle}
+                    {followModule}
                   </Text>{" "}
                   in the Lens protocol.
                 </Text>
@@ -276,7 +312,7 @@ const SetFollowModuleModal = ({
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleConfirmSetdefaultProfile}
+                onClick={handleConfirmSetFollowModule}
                 disabled={isLoading}
               >
                 <Flex>
@@ -296,7 +332,7 @@ const SetFollowModuleModal = ({
                     color="lensDark"
                     m="auto"
                   >
-                    Set default profile
+                    Set follow module
                   </Text>
                 </Flex>
               </Button>

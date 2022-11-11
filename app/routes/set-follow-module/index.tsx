@@ -1,6 +1,6 @@
 // BFF components
 import type { LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
 import { lensClient } from "~/web3/lens/lens-client";
 
@@ -13,7 +13,6 @@ import {
   Button,
   Center,
   Flex,
-  HStack,
   Image,
   Select,
   Text,
@@ -21,10 +20,10 @@ import {
 } from "@chakra-ui/react";
 
 // components
+import SetFollowModuleModal from "~/components/SetFollowModuleModal";
 import NavbarConnected from "~/components/NavbarConnected";
+
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
-import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
-import SetFollowModuleModal from "~/components/SetFollowModule";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -142,7 +141,6 @@ export default function SetFollowModule() {
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mt="5"
             onClick={handleSetFollowModule}
-            //   disabled={handle === ""}
           >
             <Flex>
               <Box w="40px" h="40px">
@@ -170,8 +168,10 @@ export default function SetFollowModule() {
         <SetFollowModuleModal
           isOpen={isOpen}
           onClose={onClose}
-          handle={defaultProfile?.handle}
-          profileId={defaultProfile?.id}
+          followModuleAddress="0xC5e27d041fcE3C5d27A4bB9c753179c9A81b792A"
+          followModule={selectedFollowModule}
+          profileId={defaultProfile.id}
+          addressProfile={defaultProfile.ownedBy}
         />
       </Box>
     </Box>

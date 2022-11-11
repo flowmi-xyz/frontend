@@ -51,6 +51,8 @@ export const action: ActionFunction = async ({ request }) => {
   session.set("accessToken", authResponse.authenticate.accessToken);
   session.set("refreshToken", authResponse.authenticate.refreshToken);
 
+  console.log(authResponse.authenticate.accessToken);
+
   return redirect(`/dashboard/feed`, {
     headers: {
       "Set-Cookie": await commitSession(session),
