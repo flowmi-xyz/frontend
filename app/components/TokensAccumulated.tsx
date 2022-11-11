@@ -6,7 +6,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-const TokenAccumulated = () => {
+type TokenAccumulatedProps = {
+  handle: string;
+  tokensAccumulated: number;
+};
+
+const TokenAccumulated = ({
+  handle,
+  tokensAccumulated,
+}: TokenAccumulatedProps) => {
   return (
     <>
       <Text
@@ -29,8 +37,15 @@ const TokenAccumulated = () => {
         width="300px"
       >
         <Center>
-          <CircularProgress value={40} color="third" size="150px" p="5">
-            <CircularProgressLabel>40%</CircularProgressLabel>
+          <CircularProgress
+            value={(tokensAccumulated / 10) * 100}
+            color="third"
+            size="150px"
+            p="5"
+          >
+            <CircularProgressLabel>
+              {(tokensAccumulated / 10) * 100}%
+            </CircularProgressLabel>
           </CircularProgress>
         </Center>
 
@@ -41,7 +56,7 @@ const TokenAccumulated = () => {
           lineHeight="120%"
           color="black"
         >
-          Guty has accumulated:
+          {handle} has accumulated:
         </Text>
 
         <Text
@@ -52,7 +67,7 @@ const TokenAccumulated = () => {
           bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
           bgClip="text"
         >
-          4.11 MATIC
+          {tokensAccumulated} MATIC
         </Text>
       </Box>
     </>

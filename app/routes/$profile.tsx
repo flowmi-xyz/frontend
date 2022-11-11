@@ -145,7 +145,10 @@ export default function Profile() {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <TokenAccumulated />
+            <TokenAccumulated
+              handle={pageProfile.handle}
+              tokensAccumulated={0}
+            />
           </GridItem>
         </Grid>
       </Box>
