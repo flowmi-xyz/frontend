@@ -7,17 +7,28 @@ import { getSession } from "~/bff/session";
 import { changeHeaders, lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile, GetProfile } from "~/web3/lens/graphql/generated";
 
+import { ethers } from "ethers";
+import { getSignerBack } from "~/web3/etherservice";
+import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+
 // UI components
-import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  HStack,
+  Image,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
 import AppFooter from "~/components/AppFooter";
-import { ethers } from "ethers";
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-import { getSignerBack } from "~/web3/etherservice";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/lens/social-defi";
+import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -88,6 +99,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     console.log(error);
   }
 
+  let isDefiFollowProfile = false;
+
+  if (followModuleAddress == FLOWMI_CONTRACT_ADDRESS) {
+    isDefiFollowProfile = true;
+  }
+
   return {
     address,
     accessToken,
@@ -98,6 +115,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     websiteValue,
     twitterValue,
     followModuleAddress,
+    isDefiFollowProfile,
   };
 };
 
@@ -112,6 +130,7 @@ export default function Profile() {
     websiteValue,
     twitterValue,
     followModuleAddress,
+    isDefiFollowProfile,
   } = useLoaderData();
 
   changeHeaders(accessToken);
@@ -149,10 +168,16 @@ export default function Profile() {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <TokenAccumulated
-              handle={pageProfile.handle}
-              tokensAccumulated={0}
-            />
+            {isDefiFollowProfile && (
+              <Box>
+                <FlowmiProfileInfo />
+
+                <TokenAccumulated
+                  handle={pageProfile.handle}
+                  tokensAccumulated={0}
+                />
+              </Box>
+            )}
           </GridItem>
         </Grid>
       </Box>
