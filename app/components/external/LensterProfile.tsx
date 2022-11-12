@@ -59,6 +59,12 @@ const LensterProfile = ({
   } = useDisclosure();
 
   const {
+    isOpen: isOpenDefiFollow,
+    onOpen: onOpenDefiFollow,
+    onClose: onCloseDefiFollow,
+  } = useDisclosure();
+
+  const {
     isOpen: isOpenFollow,
     onOpen: onOpenFollow,
     onClose: onCloseFollow,
@@ -140,13 +146,11 @@ const LensterProfile = ({
       {!isFollowed ? (
         followModuleAddress === FLOWMI_CONTRACT_ADDRESS ? (
           <Button
-            // bg="lens"
             bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-            // bgClip="text"
             borderRadius="10px"
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mt="5"
-            onClick={onOpenFollow}
+            onClick={onOpenDefiFollow}
           >
             <Flex>
               <Icon
@@ -219,18 +223,18 @@ const LensterProfile = ({
       )}
 
       <DefiFollowModal
+        isOpen={isOpenDefiFollow}
+        onClose={onCloseDefiFollow}
+        profileId={id}
+        handle={handle}
+      />
+
+      <FollowModal
         isOpen={isOpenFollow}
         onClose={onCloseFollow}
         profileId={id}
         handle={handle}
       />
-
-      {/* <FollowModal
-        isOpen={isOpenFollow}
-        onClose={onCloseFollow}
-        profileId={id}
-        handle={handle}
-      /> */}
 
       <UnfollowModal
         isOpen={isOpenUnfollow}
