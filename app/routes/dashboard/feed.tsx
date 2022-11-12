@@ -1,11 +1,15 @@
 // BFF components
-import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 
+import { db } from "~/bff/db.server";
 import { destroySession, getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
-import { GetDefaultProfile, Refresh } from "~/web3/lens/graphql/generated";
+import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+
+import { getSignerBack, getSignerFront } from "~/web3/etherservice";
 
 // UI components
 import { Box, Grid, GridItem } from "@chakra-ui/react";
@@ -15,8 +19,9 @@ import NavbarConnected from "~/components/NavbarConnected";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
-import { db } from "~/bff/db.server";
 import Balance from "~/components/Balance";
+import { formatEther } from "ethers/lib/utils";
+import React from "react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -77,6 +82,26 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Dashboard() {
   const { address, defaultProfile } = useLoaderData();
 
+  const [nativeBalance, setNativeBalance] = React.useState(0);
+
+  React.useEffect(() => {
+    // declare the data fetching function
+    const getBalance = async () => {
+      const signer = await getSignerFront();
+
+      const balance = await signer.getBalance();
+
+      console.log("balance", formatEther(balance));
+
+      setNativeBalance(Number(formatEther(balance)));
+    };
+
+    // call the function
+    getBalance()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
+
   return (
     <Box bg="#FAFAF9">
       <NavbarConnected
@@ -103,7 +128,7 @@ export default function Dashboard() {
             <Box>
               <HotProfiles />
 
-              <Balance />
+              <Balance nativeBalance={nativeBalance} />
             </Box>
           </GridItem>
         </Grid>
