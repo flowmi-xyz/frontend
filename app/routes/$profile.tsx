@@ -174,7 +174,7 @@ export default function Profile() {
               <Box>
                 <FlowmiProfileInfo />
 
-                <Flex>
+                <Flex pt="5">
                   <TokenAccumulated
                     handle={pageProfile.handle}
                     tokensAccumulated={0}

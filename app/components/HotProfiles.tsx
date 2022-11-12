@@ -1,29 +1,28 @@
-import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "@remix-run/react";
+import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
+
 import LensterFooter from "./external/LensterFooter";
+
+import { transformToIpfsUrl } from "~/web3/ipfs";
 
 const HotProfilesArr = [
   {
-    name: "fabri.lens",
-    handle: "fabri.lens",
-    image:
-      "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreifflpxyheb2bzqeygz7c3h3ytvpxcfobg5gl3liozawj64ph2jafu",
-    accumulatedTokens: 12,
+    handle: "pailita.test",
+    image: null,
+    accumulatedTokens: 0.0,
   },
-  {
-    name: "Cris Valdivia",
-    handle: "cristianvaldivia.lens",
-    image:
-      "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreichwq6umgahyohbekflyclq7o7y2u46jatkhwqueqfl2koortgeve",
-    accumulatedTokens: 5,
-  },
-  {
-    name: "Guty",
-    handle: "gutybv.lens",
-    image:
-      "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreidbnm4dapoitvrl52urbnzursub4jy4ncw2q4zpoptlfalruqvdau",
-    accumulatedTokens: 2,
-  },
+  // {
+  //   handle: "cristianvaldivia.lens",
+  //   image:
+  //     "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreichwq6umgahyohbekflyclq7o7y2u46jatkhwqueqfl2koortgeve",
+  //   accumulatedTokens: 5,
+  // },
+  // {
+  //   handle: "gutybv.lens",
+  //   image:
+  //     "https://img.lenster.io/tr:n-avatar,tr:di-placeholder.webp/https://lens.infura-ipfs.io/ipfs/bafkreidbnm4dapoitvrl52urbnzursub4jy4ncw2q4zpoptlfalruqvdau",
+  //   accumulatedTokens: 2,
+  // },
 ];
 
 const HotProfiles = () => {
@@ -50,43 +49,33 @@ const HotProfiles = () => {
       >
         {HotProfilesArr.map((item) => {
           return (
-            <Flex justifyContent="space-around" p="4" key={item.name}>
-              <Flex width="50%">
+            <Flex justifyContent="space-around" p="4" key={item.handle}>
+              <Box width="50%">
                 <Link to={`/${item.handle}`} prefetch="intent">
-                  <Avatar
-                    size="sm"
-                    name={item.handle}
-                    src={item.image}
-                    my="auto"
-                  />
-                </Link>
+                  <Flex>
+                    <Avatar
+                      size="sm"
+                      name={item.handle}
+                      src={transformToIpfsUrl(item.image)}
+                      my="auto"
+                    />
 
-                <Link to={`/${item.handle}`} prefetch="intent">
-                  <Box my="auto" pl="2">
-                    <Text
-                      fontWeight="600"
-                      fontSize="14px"
-                      lineHeight="120%"
-                      letterSpacing="-0.03em"
-                      color="black"
-                    >
-                      {item.name}
-                    </Text>
-
-                    <Text
-                      fontWeight="600"
-                      fontSize="12px"
-                      lineHeight="100%"
-                      letterSpacing="-0.03em"
-                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                      bgClip="text"
-                      pt="1"
-                    >
-                      @{item.handle}
-                    </Text>
-                  </Box>
+                    <Box my="auto" pl="2">
+                      <Text
+                        fontWeight="600"
+                        fontSize="12px"
+                        lineHeight="100%"
+                        letterSpacing="-0.03em"
+                        bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                        bgClip="text"
+                        pt="1"
+                      >
+                        @{item.handle}
+                      </Text>
+                    </Box>
+                  </Flex>
                 </Link>
-              </Flex>
+              </Box>
 
               <Box width="50%" my="auto">
                 <Text
