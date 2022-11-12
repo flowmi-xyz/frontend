@@ -26,6 +26,7 @@ import AppFooter from "~/components/AppFooter";
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/lens/social-defi";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 import PreviousRafles from "~/components/PreviousRafles";
+import FollowersComponent from "~/components/FollowersComponent";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -187,10 +188,14 @@ export default function Profile() {
                     tokensAccumulated={0}
                   />
 
-                  <PreviousRafles
-                    handle={pageProfile.handle}
-                    tokensAccumulated={0}
-                  />
+                  <Box>
+                    <PreviousRafles
+                      handle={pageProfile.handle}
+                      tokensAccumulated={0}
+                    />
+
+                    <FollowersComponent followers={arrayFollowers} />
+                  </Box>
                 </Flex>
               </Box>
             )}
