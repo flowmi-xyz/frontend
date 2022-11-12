@@ -9,12 +9,18 @@ import {
 type TokenAccumulatedProps = {
   handle: string;
   tokensAccumulated: number;
+  countFollowers: number;
+  goalOfFollowers: number;
 };
 
 const TokenAccumulated = ({
   handle,
   tokensAccumulated,
+  countFollowers,
+  goalOfFollowers,
 }: TokenAccumulatedProps) => {
+  console.log(countFollowers);
+  console.log(goalOfFollowers);
   return (
     <Box>
       <Text
@@ -38,13 +44,24 @@ const TokenAccumulated = ({
       >
         <Center>
           <CircularProgress
-            value={(tokensAccumulated / 1) * 100}
+            value={Number(
+              (
+                ((countFollowers % goalOfFollowers) / goalOfFollowers) *
+                100
+              ).toFixed(0)
+            )}
             color="third"
             size="150px"
             p="5"
           >
             <CircularProgressLabel>
-              {(tokensAccumulated / 1) * 100}%
+              {Number(
+                (
+                  ((countFollowers % goalOfFollowers) / goalOfFollowers) *
+                  100
+                ).toFixed(0)
+              )}
+              %
             </CircularProgressLabel>
           </CircularProgress>
         </Center>
@@ -62,12 +79,12 @@ const TokenAccumulated = ({
         <Text
           textAlign="center"
           fontWeight="700"
-          fontSize="36px"
+          fontSize="32px"
           letterSpacing="-0.03em"
           bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
           bgClip="text"
         >
-          {tokensAccumulated} WMATIC
+          {tokensAccumulated.toFixed(4)} WMATIC
         </Text>
       </Box>
     </Box>

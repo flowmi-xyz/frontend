@@ -23,7 +23,13 @@ import Balance from "~/components/Balance";
 import { formatEther } from "ethers/lib/utils";
 import React from "react";
 import { ethers } from "ethers";
-import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
+import {
+  aWMA_CONTRACT_ADDRESS,
+  ERC20_HUB_ABI,
+  WMATIC_CONTRACT_ADDRESS,
+} from "~/web3/erc20/erc20-hub";
+import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -45,7 +51,27 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  return { address, accessToken, defaultProfile };
+  const flowmiContract = new ethers.Contract(
+    FLOWMI_CONTRACT_ADDRESS,
+    FLOWMI_HUB_ABI,
+    getSignerBack()
+  );
+
+  let totalFounded = 0;
+
+  try {
+    totalFounded = await flowmiContract.getTotalFundedProfile(
+      defaultProfile.ownedBy
+    );
+
+    console.log(totalFounded);
+
+    totalFounded = Number(formatEther(totalFounded));
+  } catch (error) {
+    console.log(error);
+  }
+
+  return { address, accessToken, defaultProfile, totalFounded };
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -82,10 +108,11 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const { address, defaultProfile } = useLoaderData();
+  const { address, defaultProfile, totalFounded } = useLoaderData();
 
   const [nativeBalance, setNativeBalance] = React.useState(0);
   const [wmaticBalance, setWmaticBalance] = React.useState(0);
+  const [awmaticBalance, setAwmaticBalance] = React.useState(0);
 
   React.useEffect(() => {
     // declare the data fetching function
@@ -94,20 +121,25 @@ export default function Dashboard() {
 
       const balance = await signer.getBalance();
 
-      console.log("balance", formatEther(balance));
-
-      const tokenContract = new ethers.Contract(
+      const wmaticContract = new ethers.Contract(
         WMATIC_CONTRACT_ADDRESS,
         ERC20_HUB_ABI,
         signer
       );
 
-      const wmaticBalance = await tokenContract.balanceOf(address);
+      const wmaticBalance = await wmaticContract.balanceOf(address);
 
-      console.log("wmaticBalance", formatEther(wmaticBalance));
+      const awmaticContract = new ethers.Contract(
+        aWMA_CONTRACT_ADDRESS,
+        ERC20_HUB_ABI,
+        signer
+      );
+
+      const awmaticBalance = await awmaticContract.balanceOf(address);
 
       setNativeBalance(Number(formatEther(balance)));
       setWmaticBalance(Number(formatEther(wmaticBalance)));
+      setAwmaticBalance(Number(formatEther(awmaticBalance)));
     };
 
     // call the function
@@ -127,7 +159,7 @@ export default function Dashboard() {
       <Box maxWidth="1200px" m="auto">
         <Grid templateColumns="repeat(3, 1fr)">
           <GridItem colSpan={2}>
-            <ProfileParticipation />
+            <ProfileParticipation totalFounded={totalFounded} />
           </GridItem>
 
           <GridItem colSpan={1}>
@@ -145,6 +177,7 @@ export default function Dashboard() {
               <Balance
                 nativeBalance={nativeBalance}
                 wmaticBalance={wmaticBalance}
+                awmaticBalance={awmaticBalance}
               />
             </Box>
           </GridItem>

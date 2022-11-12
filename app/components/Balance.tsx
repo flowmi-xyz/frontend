@@ -20,9 +20,14 @@ import { MdAccountBalanceWallet } from "react-icons/md";
 type BalanceProps = {
   nativeBalance: number;
   wmaticBalance: number;
+  awmaticBalance: number;
 };
 
-const Balance = ({ nativeBalance, wmaticBalance }: BalanceProps) => {
+const Balance = ({
+  nativeBalance,
+  wmaticBalance,
+  awmaticBalance,
+}: BalanceProps) => {
   return (
     <>
       <Link to={"/internal"}>
@@ -93,6 +98,22 @@ const Balance = ({ nativeBalance, wmaticBalance }: BalanceProps) => {
                   <Td isNumeric>
                     {/* {isLoading ? <Spinner color="third" /> : tokenBalance} */}
                     {wmaticBalance?.toFixed(4)}
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <HStack>
+                      <Image
+                        src="../assets/logos/aave-aave-logo.png"
+                        w="6"
+                        h="6"
+                      />{" "}
+                      <Text fontSize={14}>aWMATIC</Text>
+                    </HStack>
+                  </Td>
+                  <Td isNumeric>
+                    {/* {isLoading ? <Spinner color="third" /> : tokenBalance} */}
+                    {awmaticBalance?.toFixed(4)}
                   </Td>
                 </Tr>
               </Tbody>

@@ -23,10 +23,11 @@ import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
 import AppFooter from "~/components/AppFooter";
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
+import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 import PreviousRafles from "~/components/PreviousRafles";
 import FollowersComponent from "~/components/FollowersComponent";
+import { formatEther } from "~/utils/formarether";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -103,7 +104,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     isDefiFollowProfile = true;
   }
 
-  // Get followers
+  // Get followers from API
   variables = {
     request: { profileId: pageProfile.id, limit: 10 },
   };
@@ -111,6 +112,60 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const followersResponse = await lensClient.request(GetFollowers, variables);
 
   const arrayFollowers = followersResponse?.followers?.items;
+
+  // Get how much pay in WMATIC
+  const flowmiContract = new ethers.Contract(
+    FLOWMI_CONTRACT_ADDRESS,
+    FLOWMI_HUB_ABI,
+    getSignerBack()
+  );
+
+  let payInWMATIC = 0;
+
+  try {
+    const priceFeed = await flowmiContract.getPriceFeed();
+
+    payInWMATIC = Number(formatEther(priceFeed));
+  } catch (error) {
+    console.log(error);
+  }
+
+  // Get how much WMATIC user has
+  let wmaticAccumulated = 0;
+
+  try {
+    const wmaticBalance = await flowmiContract.getFundsInThisRaffle(
+      pageProfile.ownedBy
+    );
+
+    wmaticAccumulated = Number(formatEther(wmaticBalance));
+  } catch (error) {
+    console.log(error);
+  }
+
+  // Get count of followers
+  let countFollowers = 0;
+
+  try {
+    countFollowers = await flowmiContract.getNumberOfFollowers(
+      pageProfile.ownedBy
+    );
+
+    countFollowers = Number(countFollowers);
+  } catch (error) {
+    console.log(error);
+  }
+
+  // Get goals of followers
+  let goalOfFollowers = 0;
+
+  try {
+    goalOfFollowers = await flowmiContract.getGoal();
+
+    goalOfFollowers = Number(goalOfFollowers);
+  } catch (error) {
+    console.log(error);
+  }
 
   return {
     address,
@@ -124,6 +179,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     followModuleAddress,
     isDefiFollowProfile,
     arrayFollowers,
+    payInWMATIC,
+    wmaticAccumulated,
+    countFollowers,
+    goalOfFollowers,
   };
 };
 
@@ -140,6 +199,10 @@ export default function Profile() {
     followModuleAddress,
     isDefiFollowProfile,
     arrayFollowers,
+    payInWMATIC,
+    wmaticAccumulated,
+    countFollowers,
+    goalOfFollowers,
   } = useLoaderData();
 
   changeHeaders(accessToken);
@@ -147,6 +210,7 @@ export default function Profile() {
   console.log(pageProfile);
   console.log(followModuleAddress);
   console.log(arrayFollowers);
+  console.log(payInWMATIC);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
@@ -174,18 +238,21 @@ export default function Profile() {
               twitter={twitterValue}
               isFollowed={pageProfile.isFollowedByMe}
               followModuleAddress={followModuleAddress}
+              amount={payInWMATIC}
             />
           </GridItem>
 
           <GridItem colSpan={2}>
             {isDefiFollowProfile && (
               <Box>
-                <FlowmiProfileInfo />
+                <FlowmiProfileInfo wmaticToPay={payInWMATIC} />
 
                 <Flex pt="5">
                   <TokenAccumulated
                     handle={pageProfile.handle}
-                    tokensAccumulated={0.1}
+                    tokensAccumulated={wmaticAccumulated}
+                    countFollowers={countFollowers}
+                    goalOfFollowers={goalOfFollowers}
                   />
 
                   <Box>

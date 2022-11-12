@@ -38,6 +38,7 @@ type FollowModalProps = {
   onClose: () => void;
   profileId: string;
   handle: string;
+  amount: number;
 };
 
 const DefiFollowModal = ({
@@ -45,6 +46,7 @@ const DefiFollowModal = ({
   onClose,
   profileId,
   handle,
+  amount,
 }: FollowModalProps) => {
   const steps = [
     { label: "Approve move tokens" },
@@ -62,7 +64,7 @@ const DefiFollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const DEFAULT_FOLLOW_PRICE = parseEther("0.1");
+  const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
   const MAX_UINT256 =
     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
@@ -179,7 +181,7 @@ const DefiFollowModal = ({
                 <Text>
                   You are going to allow us to move{" "}
                   <Text as="span" fontWeight="700" color="sixth" fontSize="16">
-                    {1} WMATIC{" "}
+                    {amount.toFixed(4)} WMATIC (0.1 USD)
                   </Text>{" "}
                   to the Aave protocol.
                 </Text>

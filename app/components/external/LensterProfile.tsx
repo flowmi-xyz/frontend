@@ -36,6 +36,7 @@ type LensterProfileProps = {
   twitter?: string;
   isFollowed: boolean;
   followModuleAddress: string;
+  amount: number;
 };
 
 const LensterProfile = ({
@@ -51,6 +52,7 @@ const LensterProfile = ({
   twitter,
   isFollowed,
   followModuleAddress,
+  amount,
 }: LensterProfileProps) => {
   const {
     isOpen: isOpenUnfollow,
@@ -227,6 +229,7 @@ const LensterProfile = ({
         onClose={onCloseDefiFollow}
         profileId={id}
         handle={handle}
+        amount={amount}
       />
 
       <FollowModal

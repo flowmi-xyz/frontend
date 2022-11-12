@@ -2,7 +2,11 @@ import { Box, Center, Flex, Text } from "@chakra-ui/react";
 
 import { WIDTH_FEED } from "~/style/theme";
 
-const ProfileParticipation = () => {
+type ProfileParticipationProps = {
+  totalFounded: number;
+};
+
+const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
   return (
     <>
       <Box m="auto" pt="3" pb="3" width={WIDTH_FEED}>
@@ -35,7 +39,7 @@ const ProfileParticipation = () => {
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
               >
-                0 WMATIC
+                {totalFounded.toFixed(2)} WMATIC
               </Text>
 
               <Text

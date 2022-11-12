@@ -1,6 +1,10 @@
 import { Box, Text } from "@chakra-ui/react";
 
-const FlowmiProfileInfo = () => {
+type FlowmiProfileInfoProps = {
+  wmaticToPay: number;
+};
+
+const FlowmiProfileInfo = ({ wmaticToPay }: FlowmiProfileInfoProps) => {
   return (
     <Box border="1px" borderColor="#E0E0E3" borderRadius="10px" p="5" mt="5">
       <Text
@@ -32,8 +36,9 @@ const FlowmiProfileInfo = () => {
         pb="2"
         textAlign="justify"
       >
-        To follow this user, you must pay 0.1 WMATIC. These WMATIC are sent to
-        Aave to generate interest
+        To follow this user, you must pay {wmaticToPay.toFixed(4)} WMATIC (0.1
+        $USD, provided by Chainlink Datafeed). These WMATIC are sent to Aave
+        (👻) to generate interest
       </Text>
 
       <Text
