@@ -21,11 +21,6 @@ const NavbarConnected = ({
   handle,
 }: NavbarConnectedProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [profileSearch, setProfileSearch] = React.useState("");
-
-  const handleSearch = () => {
-    console.log("search");
-  };
 
   return (
     <Flex

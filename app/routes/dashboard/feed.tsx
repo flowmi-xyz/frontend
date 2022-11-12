@@ -45,6 +45,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   const address = form.get("address");
   const connected = form.get("connected");
+  const intent = form.get("intent");
+  const profileToGo = form.get("profileToGo");
+
+  if (intent === "search") {
+    return redirect(`/${profileToGo}.test`);
+  }
 
   if (!address || typeof address !== "string") return null;
   if (!connected || typeof connected !== "string") return null;
@@ -60,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  return redirect(`/login`, {
+  return redirect(`/`, {
     headers: {
       "Set-Cookie": await destroySession(session),
     },

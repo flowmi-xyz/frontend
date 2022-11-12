@@ -1,3 +1,6 @@
+import { useSubmit } from "@remix-run/react";
+
+import React from "react";
 import {
   Box,
   HStack,
@@ -9,19 +12,39 @@ import {
 import { AiOutlineSearch } from "react-icons/ai";
 
 const SearchBar = () => {
+  const submit = useSubmit();
+  const [profileSearch, setProfileSearch] = React.useState("");
+
+  const handleSearch = () => {
+    const formData = new FormData();
+
+    formData.append("profileToGo", profileSearch);
+    formData.append("intent", "search");
+
+    submit(formData, {
+      action: "/dashboard/feed",
+      method: "post",
+      encType: "application/x-www-form-urlencoded",
+      replace: true,
+    });
+  };
+
+  const handleWrite = (e: any) => {
+    setProfileSearch(e.target.value);
+  };
+
   return (
     <Box ml="40">
       <HStack>
         <Box width="330px">
           <InputGroup>
             <InputLeftElement
-              pointerEvents="none"
               children={<AiOutlineSearch />}
+              onClick={handleSearch}
             />
             <Input
-              // value={profileSearch}
-              // onChange={handleSearch}
-
+              value={profileSearch}
+              onChange={handleWrite}
               placeholder="Find your friends ..."
               bg="white"
               border="1px"
