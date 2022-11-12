@@ -2,10 +2,12 @@ import React from "react";
 
 import { Link } from "@remix-run/react";
 
-import { Flex, Text, Button } from "@chakra-ui/react";
-import ChainButton from "./external/chainButton/ChainButton";
+import { Flex, Text, Button, useDisclosure } from "@chakra-ui/react";
 
+// components
 import SearchBar from "./SearchBar";
+import AccountModal from "./external/AccountModal";
+import ChainButton from "./external/chainButton/ChainButton";
 
 type NavbarConnectedProps = {
   address: string;
@@ -18,6 +20,7 @@ const NavbarConnected = ({
   authenticatedInLens,
   handle,
 }: NavbarConnectedProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [profileSearch, setProfileSearch] = React.useState("");
 
   const handleSearch = () => {
@@ -66,6 +69,7 @@ const NavbarConnected = ({
             bg="first"
             borderRadius="10px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            onClick={onOpen}
           >
             <Text fontSize="14px" color="white">
               {`${address.slice(0, 6)} ... ${address.slice(
@@ -76,6 +80,8 @@ const NavbarConnected = ({
           </Button>
         </Flex>
       </Flex>
+
+      <AccountModal isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
 };
