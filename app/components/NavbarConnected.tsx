@@ -2,10 +2,10 @@ import React from "react";
 
 import { Link } from "@remix-run/react";
 
-import { Flex, Text, Button, Box, HStack, Input, Icon } from "@chakra-ui/react";
+import { Flex, Text, Button } from "@chakra-ui/react";
 import ChainButton from "./external/chainButton/ChainButton";
 
-import { AiOutlineSearch } from "react-icons/ai";
+import SearchBar from "./SearchBar";
 
 type NavbarConnectedProps = {
   address: string;
@@ -40,19 +40,7 @@ const NavbarConnected = ({
           </Text>
         </Link>
 
-        <Box ml="40">
-          <HStack>
-            <Box width="330px">
-              <Input
-                value={profileSearch}
-                onChange={handleSearch}
-                placeholder="Find your friends"
-                borderRadius="10"
-                backgroundColor="white"
-              />
-            </Box>
-          </HStack>
-        </Box>
+        <SearchBar />
       </Flex>
 
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
