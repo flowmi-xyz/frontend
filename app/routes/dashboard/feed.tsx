@@ -22,6 +22,8 @@ import SettingsBox from "~/components/ConfigurationBox";
 import Balance from "~/components/Balance";
 import { formatEther } from "ethers/lib/utils";
 import React from "react";
+import { ethers } from "ethers";
+import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -83,6 +85,7 @@ export default function Dashboard() {
   const { address, defaultProfile } = useLoaderData();
 
   const [nativeBalance, setNativeBalance] = React.useState(0);
+  const [wmaticBalance, setWmaticBalance] = React.useState(0);
 
   React.useEffect(() => {
     // declare the data fetching function
@@ -93,7 +96,18 @@ export default function Dashboard() {
 
       console.log("balance", formatEther(balance));
 
+      const tokenContract = new ethers.Contract(
+        WMATIC_CONTRACT_ADDRESS,
+        ERC20_HUB_ABI,
+        signer
+      );
+
+      const wmaticBalance = await tokenContract.balanceOf(address);
+
+      console.log("wmaticBalance", formatEther(wmaticBalance));
+
       setNativeBalance(Number(formatEther(balance)));
+      setWmaticBalance(Number(formatEther(wmaticBalance)));
     };
 
     // call the function
@@ -128,7 +142,10 @@ export default function Dashboard() {
             <Box>
               <HotProfiles />
 
-              <Balance nativeBalance={nativeBalance} />
+              <Balance
+                nativeBalance={nativeBalance}
+                wmaticBalance={wmaticBalance}
+              />
             </Box>
           </GridItem>
         </Grid>

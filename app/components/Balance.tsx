@@ -19,9 +19,10 @@ import { MdAccountBalanceWallet } from "react-icons/md";
 
 type BalanceProps = {
   nativeBalance: number;
+  wmaticBalance: number;
 };
 
-const Balance = ({ nativeBalance }: BalanceProps) => {
+const Balance = ({ nativeBalance, wmaticBalance }: BalanceProps) => {
   return (
     <>
       <Link to={"/internal"}>
@@ -91,7 +92,7 @@ const Balance = ({ nativeBalance }: BalanceProps) => {
                   </Td>
                   <Td isNumeric>
                     {/* {isLoading ? <Spinner color="third" /> : tokenBalance} */}
-                    0
+                    {wmaticBalance?.toFixed(4)}
                   </Td>
                 </Tr>
               </Tbody>
