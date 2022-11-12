@@ -38,13 +38,13 @@ const TokenAccumulated = ({
       >
         <Center>
           <CircularProgress
-            value={(tokensAccumulated / 10) * 100}
+            value={(tokensAccumulated / 1) * 100}
             color="third"
             size="150px"
             p="5"
           >
             <CircularProgressLabel>
-              {(tokensAccumulated / 10) * 100}%
+              {(tokensAccumulated / 1) * 100}%
             </CircularProgressLabel>
           </CircularProgress>
         </Center>

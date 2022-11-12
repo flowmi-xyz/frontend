@@ -35,12 +35,12 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
               p="4"
               key={wallet.wallet.address}
             >
-              <Flex justifyContent="space-between" width="90%">
+              <Flex justifyContent="space-between" width="100%">
                 <Link
                   to={`/${wallet.wallet?.defaultProfile?.handle}`}
                   prefetch="intent"
                 >
-                  <Flex width="50%">
+                  <Flex>
                     <Avatar
                       size="sm"
                       name={wallet.wallet?.defaultProfile?.handle}
@@ -64,7 +64,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                   </Flex>
                 </Link>
 
-                <Box width="50%" my="auto">
+                <Box width="25%" my="auto">
                   <Text
                     fontWeight="700"
                     fontSize="12px"
@@ -83,7 +83,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                   </Text>
                 </Box>
 
-                <Box width="50%" my="auto">
+                <Box width="25%" my="auto">
                   <Text
                     fontWeight="700"
                     fontSize="12px"

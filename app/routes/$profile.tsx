@@ -185,7 +185,7 @@ export default function Profile() {
                 <Flex pt="5">
                   <TokenAccumulated
                     handle={pageProfile.handle}
-                    tokensAccumulated={0}
+                    tokensAccumulated={0.1}
                   />
 
                   <Box>

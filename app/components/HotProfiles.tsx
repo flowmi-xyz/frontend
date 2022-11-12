@@ -9,7 +9,7 @@ const HotProfilesArr = [
   {
     handle: "pailita.test",
     image: null,
-    accumulatedTokens: 0.0,
+    accumulatedTokens: 0.1,
   },
   // {
   //   handle: "cristianvaldivia.lens",
