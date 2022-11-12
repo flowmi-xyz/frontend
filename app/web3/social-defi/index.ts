@@ -5,6 +5,6 @@ import FLOWMI_HUB_ABI from "./abi/flowmi-contract-abi.json";
 // Polygon Mumbai
 
 // Polygon Mumbai Sandbox
-const FLOWMI_CONTRACT_ADDRESS = "0x7f1312d69fA5F5D4efC9B8931fcf395992f63e21";
+const FLOWMI_CONTRACT_ADDRESS = "0x978203B07FE05Bc3C5d14ce65946DD3119E2b54F";
 
 export { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI };

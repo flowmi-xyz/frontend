@@ -62,6 +62,9 @@ const DefiFollowModal = ({
   const [signed, setSigned] = React.useState(false);
   const [error, setError] = React.useState(false);
 
+  const [approveCompleted, setApproveCompleted] = React.useState(false);
+  const [followCompleted, setFollowCompleted] = React.useState(false);
+
   const [txHash, setTxHash] = React.useState("");
 
   const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
@@ -93,6 +96,7 @@ const DefiFollowModal = ({
       setSigned(false);
 
       nextStep();
+      setApproveCompleted(true);
     } catch (error) {
       console.log(error);
 
@@ -133,6 +137,7 @@ const DefiFollowModal = ({
 
       nextStep();
       setSigned(false);
+      setFollowCompleted(true);
     } catch (error) {
       console.log(error);
     }
@@ -204,7 +209,7 @@ const DefiFollowModal = ({
             </Box>
           )}
 
-          {activeStep === 1 && (
+          {approveCompleted && !signed && !followCompleted && (
             <>
               <Center pt="5" pl="5" pr="5">
                 <Alert status="success" borderRadius={10}>
@@ -279,7 +284,7 @@ const DefiFollowModal = ({
             </>
           )}
 
-          {activeStep == 2 && (
+          {followCompleted && (
             <>
               <>
                 <Center pt="5" pl="5" pr="5">
@@ -389,7 +394,7 @@ const DefiFollowModal = ({
             </>
           )}
 
-          {activeStep === 1 && (
+          {approveCompleted && !followCompleted && (
             <>
               <Button
                 bg="white"
@@ -413,7 +418,7 @@ const DefiFollowModal = ({
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleFollow}
-                disabled={isLoading}
+                disabled={isLoading || signed}
               >
                 <Flex>
                   <Box w="40px" h="40px">
@@ -439,7 +444,7 @@ const DefiFollowModal = ({
             </>
           )}
 
-          {activeStep === 2 && (
+          {followCompleted && (
             <>
               <Button
                 bg="white"
