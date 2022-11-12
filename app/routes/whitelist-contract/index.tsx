@@ -64,14 +64,13 @@ export default function WhitelistContract() {
 
   const contracts = [
     {
-      name: "FlowmiFollowModule v0.9",
-      address: "0x82A002E2c1Ff0D147917d92c3847417324CCaA81",
+      name: "FlowmiFollowModule v0.11",
+      address: "0x3F5a80275E2DE94Be2717487370b47a38Cc4CbfA",
     },
   ];
 
   const handleWhitelistContract = (index: number) => {
     setaddressContract(contracts[index].address);
-    // setDefaultHandle(profiles[index].handle);
 
     onOpen();
   };
