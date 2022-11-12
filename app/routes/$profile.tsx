@@ -105,12 +105,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   // Get followers
   variables = {
-    request: { profileId: defaultProfile.id, limit: 10 },
+    request: { profileId: pageProfile.id, limit: 10 },
   };
 
   const followersResponse = await lensClient.request(GetFollowers, variables);
 
-  const arrayFollowers = followersResponse.followers.items;
+  const arrayFollowers = followersResponse?.followers?.items;
 
   return {
     address,
@@ -164,7 +164,7 @@ export default function Profile() {
             <LensterProfile
               name={pageProfile.name}
               handle={pageProfile.handle}
-              id={pageProfile.id}
+              id={pageProfile?.id}
               avatar={pageProfile.picture?.original?.url}
               followers={pageProfile.stats.totalFollowers}
               following={pageProfile.stats.totalFollowing}
