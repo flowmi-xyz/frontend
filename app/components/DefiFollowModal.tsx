@@ -31,6 +31,7 @@ import {
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { defaultAbiCoder, parseEther } from "ethers/lib/utils";
 import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/lens/social-defi";
 
 type FollowModalProps = {
   isOpen: boolean;
@@ -76,7 +77,7 @@ const DefiFollowModal = ({
       );
 
       const approve = await tokenContract.approve(
-        "0x3F5a80275E2DE94Be2717487370b47a38Cc4CbfA",
+        FLOWMI_CONTRACT_ADDRESS,
         MAX_UINT256
       );
 
@@ -114,10 +115,6 @@ const DefiFollowModal = ({
 
     try {
       const GAS_LIMIT = BigNumber.from("2074000");
-
-      // const followProfile = await lensContract.follow([profileId], [0x0], {
-      //   gasLimit: GAS_LIMIT,
-      // });
 
       const followProfile = await lensContract.follow([profileId], [data], {
         gasLimit: GAS_LIMIT,
@@ -181,10 +178,10 @@ const DefiFollowModal = ({
               <HStack pt="5" pl="5" pr="5">
                 <Text>
                   You are going to allow us to move{" "}
-                  <Text as="span" fontWeight={700} color="sixth" fontSize={20}>
+                  <Text as="span" fontWeight="700" color="sixth" fontSize="16">
                     {1} WMATIC{" "}
                   </Text>{" "}
-                  to the Aave protocol. In the Mumbai network
+                  to the Aave protocol.
                 </Text>
               </HStack>
 
@@ -214,7 +211,7 @@ const DefiFollowModal = ({
                 </Alert>
               </Center>
 
-              <Text padding="5">
+              <Text pt="5" pl="5" pr="5">
                 Thanks for allowing us to move your tokens to Aave protocol 🙌
               </Text>
 
@@ -258,7 +255,7 @@ const DefiFollowModal = ({
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
                 >
-                  $1 USD
+                  1 WMATIC
                 </Text>
               </Box>
 
@@ -272,15 +269,15 @@ const DefiFollowModal = ({
                 pl="5"
                 pr="5"
               >
-                Remember that when you defi follow a profile, you will be
-                charged 1 USD in MATIC and it will be deposited in Aave
-                protocol.When the number of defi followers reaches 10, the
-                accumulated jackpot will be drawn among all the defi followers.
+                Remember that when you Defi follow a profile, you will be
+                charged 1 WMATIC and it will be deposited in Aave protocol. When
+                the number of Defi followers reaches 10, the accumulated jackpot
+                will be drawn among all the defi followers.
               </Text>
             </>
           )}
 
-          {activeStep == 2 && !signed && (
+          {activeStep == 2 && (
             <>
               <>
                 <Center pt="5" pl="5" pr="5">
@@ -373,7 +370,7 @@ const DefiFollowModal = ({
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleApprove}
-                disabled={isLoading}
+                disabled={isLoading || signed}
               >
                 <Flex>
                   <Text

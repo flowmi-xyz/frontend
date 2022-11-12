@@ -152,45 +152,6 @@ const FollowModal = ({
                   @{handle}
                 </Text>
               </Text>
-
-              <Box pt="5">
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="15px"
-                  letterSpacing="-0.03em"
-                  color="black"
-                >
-                  Social DeFi will charge a fee of
-                </Text>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="700"
-                  fontSize="36px"
-                  letterSpacing="-0.03em"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  $1 USD
-                </Text>
-              </Box>
-
-              <Text
-                textAlign="justify"
-                fontWeight="600"
-                fontSize="12px"
-                lineHeight="120%"
-                color="grayLetter"
-                pt="5"
-                pl="5"
-                pr="5"
-              >
-                Remember that when you defi follow a profile, you will be
-                charged 1 USD in MATIC and it will be deposited in Aave
-                protocol.When the number of defi followers reaches 10, the
-                accumulated jackpot will be drawn among all the defi followers.
-              </Text>
             </>
           )}
 
@@ -306,7 +267,7 @@ const FollowModal = ({
                     color="lensDark"
                     m="auto"
                   >
-                    DeFi follow
+                    Follow
                   </Text>
                 </Flex>
               </Button>

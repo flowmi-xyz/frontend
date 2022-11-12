@@ -13,7 +13,7 @@ const SettingsBox = () => {
           borderColor="lensDark"
           borderRadius="10px"
           width="420px"
-          mt="10"
+          mt="20"
           p="5"
         >
           <Flex>
@@ -61,12 +61,11 @@ const SettingsBox = () => {
             lineHeight="120%"
             letterSpacing="-0.03em"
             color="lensDark"
-            pb="1"
           >
             Set follow module
           </Text>
 
-          <Text
+          {/* <Text
             fontWeight="500"
             fontSize="15px"
             lineHeight="120%"
@@ -75,7 +74,7 @@ const SettingsBox = () => {
             pb="1"
           >
             Whitelist module
-          </Text>
+          </Text> */}
         </Box>
       </Link>
     </>
