@@ -1,10 +1,10 @@
 // logic components
 import { BigNumber, ethers } from "ethers";
-import { AbiCoder, defaultAbiCoder, parseEther } from "ethers/lib/utils";
+import { defaultAbiCoder, parseEther } from "ethers/lib/utils";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
-import { getSigner } from "~/web3/etherservice";
+import { getSignerFront } from "~/web3/etherservice";
 
 // UI components
 import React from "react";
@@ -71,7 +71,7 @@ CreateProfileProps) => {
     const lensContract = new ethers.Contract(
       LENS_HUB_CONTRACT_ADDRESS,
       LENS_HUB_ABI,
-      getSigner()
+      getSignerFront()
     );
 
     const DEFAULT_FOLLOW_PRICE = parseEther("0.1");

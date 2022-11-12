@@ -3,7 +3,7 @@ import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
-import { getSigner } from "~/web3/etherservice";
+import { getSignerFront } from "~/web3/etherservice";
 
 // UI components
 import React from "react";
@@ -62,7 +62,7 @@ const FollowModal = ({
     const lensContract = new ethers.Contract(
       LENS_HUB_CONTRACT_ADDRESS,
       LENS_HUB_ABI,
-      getSigner()
+      getSignerFront()
     );
 
     const data = defaultAbiCoder.encode(

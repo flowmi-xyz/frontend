@@ -25,7 +25,7 @@ import { ethers } from "ethers";
 
 import { createUnfollowTypedData } from "~/web3/lens/follow/unfollow";
 import { LENS_HUB_ABI } from "~/web3/lens/lens-hub";
-import { getSigner } from "~/web3/etherservice";
+import { getSignerFront } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 
@@ -66,7 +66,7 @@ const UnfollowModal = ({
     const followNFTContract = new ethers.Contract(
       typedData.domain.verifyingContract,
       LENS_HUB_ABI,
-      getSigner()
+      getSignerFront()
     );
 
     try {

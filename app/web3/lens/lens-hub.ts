@@ -15,4 +15,11 @@ const LENS_HUB_CONTRACT_ADDRESS = "0x7582177F9E536aB0b6c721e11f383C326F2Ad1D5";
 
 const LENS_API_URL = "https://api-sandbox-mumbai.lens.dev/playground";
 
-export { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS, LENS_API_URL };
+const MUMBAI_RPC_URL = "https://rpc-mumbai.maticvigil.com";
+
+export {
+  LENS_HUB_ABI,
+  LENS_HUB_CONTRACT_ADDRESS,
+  LENS_API_URL,
+  MUMBAI_RPC_URL,
+};
