@@ -163,22 +163,24 @@ export default function Dashboard() {
           </GridItem>
 
           <GridItem colSpan={1}>
-            <SettingsBox />
+            <Balance
+              nativeBalance={nativeBalance}
+              wmaticBalance={wmaticBalance}
+              awmaticBalance={awmaticBalance}
+            />
           </GridItem>
 
           <GridItem colSpan={2}>
-            <Outlet />
+            <Box>
+              <Outlet />
+            </Box>
           </GridItem>
 
           <GridItem colSpan={1}>
             <Box>
-              <HotProfiles />
+              <SettingsBox />
 
-              <Balance
-                nativeBalance={nativeBalance}
-                wmaticBalance={wmaticBalance}
-                awmaticBalance={awmaticBalance}
-              />
+              <HotProfiles />
             </Box>
           </GridItem>
         </Grid>

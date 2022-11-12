@@ -37,8 +37,8 @@ const Balance = ({
           borderColor="first"
           borderRadius="10px"
           width="420px"
-          mt="20"
           p="5"
+          mt="10"
         >
           <Flex>
             <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />

@@ -28,7 +28,7 @@ const HotProfilesArr = [
 const HotProfiles = () => {
   return (
     <>
-      <Box m="auto" pb="3" width="420px">
+      <Box m="auto" pb="3" width="420px" mt="5">
         <Text
           fontWeight="600"
           fontSize="15px"

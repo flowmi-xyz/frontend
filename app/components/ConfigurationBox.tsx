@@ -13,7 +13,7 @@ const SettingsBox = () => {
           borderColor="lensDark"
           borderRadius="10px"
           width="420px"
-          mt="20"
+          mt="5"
           p="5"
         >
           <Flex>
