@@ -16,6 +16,7 @@ import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
 import { db } from "~/bff/db.server";
+import Balance from "~/components/Balance";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -99,7 +100,11 @@ export default function Dashboard() {
           </GridItem>
 
           <GridItem colSpan={1}>
-            <HotProfiles />
+            <Box>
+              <HotProfiles />
+
+              <Balance />
+            </Box>
           </GridItem>
         </Grid>
       </Box>
