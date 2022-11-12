@@ -1,8 +1,8 @@
 // BFF components
-import type { LoaderFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 
-import { getSession } from "~/bff/session";
+import { destroySession, getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile, Refresh } from "~/web3/lens/graphql/generated";
@@ -15,6 +15,7 @@ import NavbarConnected from "~/components/NavbarConnected";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
+import { db } from "~/bff/db.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -37,6 +38,33 @@ export const loader: LoaderFunction = async ({ request }) => {
   const defaultProfile = responseProfile.defaultProfile;
 
   return { address, accessToken, defaultProfile };
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const form = await request.formData();
+
+  const address = form.get("address");
+  const connected = form.get("connected");
+
+  if (!address || typeof address !== "string") return null;
+  if (!connected || typeof connected !== "string") return null;
+
+  await db.user.update({
+    where: {
+      address,
+    },
+    data: {
+      connected: connected === "true",
+    },
+  });
+
+  const session = await getSession(request.headers.get("Cookie"));
+
+  return redirect(`/login`, {
+    headers: {
+      "Set-Cookie": await destroySession(session),
+    },
+  });
 };
 
 export default function Dashboard() {

@@ -15,35 +15,33 @@ import {
 } from "@chakra-ui/react";
 
 import { BiCopy } from "react-icons/bi";
+import { useSubmit } from "@remix-run/react";
 
-type Props = {
-  isOpen: any;
-  onClose: any;
+type AccountModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  address: string;
 };
 
-export default function AccountModal({ isOpen, onClose }: Props) {
-  //   const { adapter, isAuthenticated, setIsAuthenticated, profile, setProfile } =
-  //     useAdapter();
-
-  //   useEffect(() => {
-  //     async function getProfile() {
-  //       const profile = await adapter.getProfile();
-  //       setProfile(profile);
-  //     }
-
-  //     if (isAuthenticated) {
-  //       getProfile();
-  //     }
-  //   }, [adapter, isAuthenticated, setProfile]);
+export default function AccountModal({
+  isOpen,
+  onClose,
+  address,
+}: AccountModalProps) {
+  const submit = useSubmit();
 
   const logOut = async () => {
-    console.log("logout");
-    // await adapter.logout();
-    // setIsAuthenticated(false);
-    // setProfile({
-    //   address: "",
-    //   ens: "",
-    // } as Profile);
+    const formData = new FormData();
+
+    formData.append("address", address);
+    formData.append("connected", "false");
+
+    submit(formData, {
+      action: "/dashboard/feed",
+      method: "post",
+      encType: "application/x-www-form-urlencoded",
+      replace: true,
+    });
   };
 
   return (
@@ -87,19 +85,17 @@ export default function AccountModal({ isOpen, onClose }: Props) {
                 ml="2"
                 lineHeight="1.1"
               >
-                {/* {isAuthenticated &&
-                  `${profile?.address.slice(0, 6)}...${profile?.address.slice(
-                    profile?.address.length - 4,
-                    profile?.address.length
-                  )}`} */}
-                address
+                {`${address.slice(0, 6)}...${address.slice(
+                  address.length - 4,
+                  address.length
+                )}`}
               </Text>
             </Flex>
             <Flex alignContent="center" m={5}>
               <Button
-                // onClick={() =>
-                //   navigator.clipboard.writeText(profile?.address!.toString())
-                // }
+                onClick={() =>
+                  navigator.clipboard.writeText(address.toString())
+                }
                 variant="link"
                 color="black"
                 fontWeight="normal"

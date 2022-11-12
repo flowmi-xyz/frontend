@@ -81,7 +81,7 @@ const NavbarConnected = ({
         </Flex>
       </Flex>
 
-      <AccountModal isOpen={isOpen} onClose={onClose} />
+      <AccountModal isOpen={isOpen} onClose={onClose} address={address} />
     </Flex>
   );
 };
