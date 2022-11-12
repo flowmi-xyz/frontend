@@ -35,7 +35,7 @@ const ProfileParticipation = () => {
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
               >
-                0 MATIC
+                0 WMATIC
               </Text>
 
               <Text
