@@ -9,26 +9,25 @@ type ProfileParticipationProps = {
 const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
   return (
     <>
-      <Box m="auto" pt="3" pb="3" width={WIDTH_FEED}>
-        <Text
-          fontWeight="600"
-          fontSize="15px"
-          lineHeight="120%"
-          color="black"
-          my="auto"
-        >
-          Your participation in Social DeFi
-        </Text>
-      </Box>
-
-      <Center pb="10">
+      <Center pt="10" pb="10">
         <Box
           bg="#ECE9F7"
           border="1px"
           borderColor="#824EF0"
           borderRadius="10px"
           width={WIDTH_FEED}
+          p="5"
         >
+          <Text
+            fontWeight="600"
+            fontSize="15px"
+            lineHeight="120%"
+            color="first"
+            my="auto"
+          >
+            Your participation in Social DeFi
+          </Text>
+
           <Flex justifyContent="space-around" p="12">
             <Box>
               <Text

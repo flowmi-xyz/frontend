@@ -28,25 +28,27 @@ const HotProfilesArr = [
 const HotProfiles = () => {
   return (
     <>
-      <Box m="auto" pb="3" width="420px" mt="5">
-        <Text
-          fontWeight="600"
-          fontSize="15px"
-          lineHeight="120%"
-          color="black"
-          my="auto"
-        >
-          💰 Who to follow in Social DeFi
-        </Text>
-      </Box>
-
       <Box
         bg="white"
         border="1px"
         borderColor="#E0E0E3"
         borderRadius="10px"
         width="420px"
+        mt="5"
       >
+        <Text
+          fontWeight="600"
+          fontSize="15px"
+          lineHeight="120%"
+          color="black"
+          my="auto"
+          pt="5"
+          pl="5"
+          pr="5"
+        >
+          💰 Who to follow in Social DeFi
+        </Text>
+
         {HotProfilesArr.map((item) => {
           return (
             <Flex justifyContent="space-around" p="4" key={item.handle}>

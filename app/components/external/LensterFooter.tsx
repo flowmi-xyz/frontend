@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 
 const LensterFooter = () => {
   return (
-    <Box m="auto" pt="3" pb="3" width="420px">
+    <Box m="auto" pt="10" pb="3" width="420px">
       <Text
         fontWeight="500"
         fontSize="14px"
