@@ -80,10 +80,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getSignerBack()
   );
 
-  try {
-    const followProfile = await lensContract.getFollowModule(defaultProfile.id);
+  let followModuleAddress = "";
 
-    console.log("followProfile", followProfile);
+  try {
+    followModuleAddress = await lensContract.getFollowModule(pageProfile.id);
   } catch (error) {
     console.log(error);
   }
@@ -97,6 +97,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     ensValue,
     websiteValue,
     twitterValue,
+    followModuleAddress,
   };
 };
 
@@ -110,11 +111,13 @@ export default function Profile() {
     ensValue,
     websiteValue,
     twitterValue,
+    followModuleAddress,
   } = useLoaderData();
 
   changeHeaders(accessToken);
 
   console.log(pageProfile);
+  console.log(followModuleAddress);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
@@ -141,6 +144,7 @@ export default function Profile() {
               website={websiteValue}
               twitter={twitterValue}
               isFollowed={pageProfile.isFollowedByMe}
+              followModuleAddress={followModuleAddress}
             />
           </GridItem>
 

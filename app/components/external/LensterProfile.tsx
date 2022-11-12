@@ -13,12 +13,15 @@ import {
 import { TbHash, TbLocation } from "react-icons/tb";
 import { FaTwitter } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
+import { AiOutlineStar } from "react-icons/ai";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
 import FollowModal from "../FollowModal";
 import UnfollowModal from "../UnfollowModal";
 import DefiFollowModal from "../DefiFollowModal";
+
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/lens/social-defi";
 
 type LensterProfileProps = {
   name: string;
@@ -32,6 +35,7 @@ type LensterProfileProps = {
   website?: string;
   twitter?: string;
   isFollowed: boolean;
+  followModuleAddress: string;
 };
 
 const LensterProfile = ({
@@ -46,6 +50,7 @@ const LensterProfile = ({
   website,
   twitter,
   isFollowed,
+  followModuleAddress,
 }: LensterProfileProps) => {
   const {
     isOpen: isOpenUnfollow,
@@ -133,34 +138,67 @@ const LensterProfile = ({
       </Flex>
 
       {!isFollowed ? (
-        <Button
-          bg="lens"
-          borderRadius="10px"
-          boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-          mt="5"
-          onClick={onOpenFollow}
-        >
-          <Flex>
-            <Box w="40px" h="40px">
-              <Image
-                src="../assets/LOGO__lens_ultra small icon.png"
-                alt="lens"
-                my="-5px"
-                mx="-5px"
+        followModuleAddress === FLOWMI_CONTRACT_ADDRESS ? (
+          <Button
+            // bg="lens"
+            bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+            // bgClip="text"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            mt="5"
+            onClick={onOpenFollow}
+          >
+            <Flex>
+              <Icon
+                as={AiOutlineStar}
+                w="6"
+                h="6"
+                color="white"
+                mr="2"
+                my="auto"
               />
-            </Box>
 
-            <Text
-              fontWeight="500"
-              fontSize="18px"
-              lineHeight="21.6px"
-              color="lensDark"
-              m="auto"
-            >
-              DeFi follow
-            </Text>
-          </Flex>
-        </Button>
+              <Text
+                fontWeight="600"
+                fontSize="18px"
+                lineHeight="21.6px"
+                color="white"
+                m="auto"
+              >
+                DeFi follow
+              </Text>
+            </Flex>
+          </Button>
+        ) : (
+          <Button
+            bg="lens"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            mt="5"
+            onClick={onOpenFollow}
+          >
+            <Flex>
+              <Box w="40px" h="40px">
+                <Image
+                  src="../assets/LOGO__lens_ultra small icon.png"
+                  alt="lens"
+                  my="-5px"
+                  mx="-5px"
+                />
+              </Box>
+
+              <Text
+                fontWeight="500"
+                fontSize="18px"
+                lineHeight="21.6px"
+                color="lensDark"
+                m="auto"
+              >
+                Follow
+              </Text>
+            </Flex>
+          </Button>
+        )
       ) : (
         <Button
           bg="third"
