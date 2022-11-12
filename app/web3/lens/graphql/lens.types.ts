@@ -57,3 +57,10 @@ export type ProfileQueryRequest = {
     limit: number;
   };
 };
+
+export type FollowersRequest = {
+  request: {
+    profileId: string;
+    limit: number;
+  };
+};

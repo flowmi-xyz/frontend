@@ -5,23 +5,18 @@ import { useLoaderData } from "@remix-run/react";
 import { getSession } from "~/bff/session";
 
 import { changeHeaders, lensClient } from "~/web3/lens/lens-client";
-import { GetDefaultProfile, GetProfile } from "~/web3/lens/graphql/generated";
+import {
+  GetDefaultProfile,
+  GetFollowers,
+  GetProfile,
+} from "~/web3/lens/graphql/generated";
 
 import { ethers } from "ethers";
 import { getSignerBack } from "~/web3/etherservice";
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
 // UI components
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Image } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
@@ -107,6 +102,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     isDefiFollowProfile = true;
   }
 
+  // Get followers
+  variables = {
+    request: { profileId: defaultProfile.id, limit: 10 },
+  };
+
+  const followersResponse = await lensClient.request(GetFollowers, variables);
+
+  const arrayFollowers = followersResponse.followers.items;
+
   return {
     address,
     accessToken,
@@ -118,6 +122,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     twitterValue,
     followModuleAddress,
     isDefiFollowProfile,
+    arrayFollowers,
   };
 };
 
@@ -133,12 +138,14 @@ export default function Profile() {
     twitterValue,
     followModuleAddress,
     isDefiFollowProfile,
+    arrayFollowers,
   } = useLoaderData();
 
   changeHeaders(accessToken);
 
   console.log(pageProfile);
   console.log(followModuleAddress);
+  console.log(arrayFollowers);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
