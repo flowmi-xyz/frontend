@@ -5,7 +5,7 @@ const removeIpfsPrefix = (str: string): string => str.replace("ipfs://", "");
 const addIpfsPrefix = (str: string): string =>
   `https://lens.infura-ipfs.io/ipfs/${str}`;
 
-export const transformToIpfsUrl = (str: string): string => {
+export const transformToIpfsUrl = (str: string | null): string => {
   if (!str) {
     return "https://news.bit2me.com/wp-content/uploads/2022/06/Lens.jpeg";
   }

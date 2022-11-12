@@ -14,6 +14,7 @@ import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 // UI components
 import {
   Box,
+  Flex,
   Grid,
   GridItem,
   HStack,
@@ -29,6 +30,7 @@ import TokenAccumulated from "~/components/TokensAccumulated";
 import AppFooter from "~/components/AppFooter";
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/lens/social-defi";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
+import PreviousRafles from "~/components/PreviousRafles";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -172,10 +174,17 @@ export default function Profile() {
               <Box>
                 <FlowmiProfileInfo />
 
-                <TokenAccumulated
-                  handle={pageProfile.handle}
-                  tokensAccumulated={0}
-                />
+                <Flex>
+                  <TokenAccumulated
+                    handle={pageProfile.handle}
+                    tokensAccumulated={0}
+                  />
+
+                  <PreviousRafles
+                    handle={pageProfile.handle}
+                    tokensAccumulated={0}
+                  />
+                </Flex>
               </Box>
             )}
           </GridItem>

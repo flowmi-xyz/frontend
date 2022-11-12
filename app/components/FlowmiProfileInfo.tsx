@@ -2,14 +2,13 @@ import { Box, Text } from "@chakra-ui/react";
 
 const FlowmiProfileInfo = () => {
   return (
-    <Box border="1px" borderColor="#E0E0E3" borderRadius="10px" p="5">
+    <Box border="1px" borderColor="#E0E0E3" borderRadius="10px" p="5" mt="5">
       <Text
         fontWeight="600"
         fontSize="20px"
         lineHeight="120%"
         color="black"
         my="auto"
-        pt="3"
         pb="2"
       >
         This is a{" "}
@@ -31,6 +30,7 @@ const FlowmiProfileInfo = () => {
         my="auto"
         pt="3"
         pb="2"
+        textAlign="justify"
       >
         To follow this user, you must pay 0.1 WMATIC. These WMATIC are sent to
         Aave to generate interest
@@ -43,7 +43,7 @@ const FlowmiProfileInfo = () => {
         color="gray.600"
         my="auto"
         pt="3"
-        pb="2"
+        textAlign="justify"
       >
         When the number of DeFi followers for this user reaches 10, the total
         WMATIC that has been accumulated between all of them will be raffled

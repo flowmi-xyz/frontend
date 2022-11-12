@@ -16,7 +16,7 @@ const TokenAccumulated = ({
   tokensAccumulated,
 }: TokenAccumulatedProps) => {
   return (
-    <>
+    <Box>
       <Text
         fontWeight="600"
         fontSize="15px"
@@ -70,7 +70,7 @@ const TokenAccumulated = ({
           {tokensAccumulated} WMATIC
         </Text>
       </Box>
-    </>
+    </Box>
   );
 };
 
