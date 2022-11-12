@@ -23,7 +23,7 @@ import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
 import AppFooter from "~/components/AppFooter";
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/lens/social-defi";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 import PreviousRafles from "~/components/PreviousRafles";
 import FollowersComponent from "~/components/FollowersComponent";

@@ -24,6 +24,7 @@ import SetFollowModuleModal from "~/components/SetFollowModuleModal";
 import NavbarConnected from "~/components/NavbarConnected";
 
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -168,7 +169,7 @@ export default function SetFollowModule() {
         <SetFollowModuleModal
           isOpen={isOpen}
           onClose={onClose}
-          followModuleAddress="0x3F5a80275E2DE94Be2717487370b47a38Cc4CbfA"
+          followModuleAddress={FLOWMI_CONTRACT_ADDRESS}
           followModule={selectedFollowModule}
           profileId={defaultProfile.id}
           addressProfile={defaultProfile.ownedBy}

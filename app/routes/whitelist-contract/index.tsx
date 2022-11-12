@@ -23,6 +23,7 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import WhitelistContractModal from "~/components/WhiteListContractModal";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -64,8 +65,8 @@ export default function WhitelistContract() {
 
   const contracts = [
     {
-      name: "FlowmiFollowModule v0.11",
-      address: "0x3F5a80275E2DE94Be2717487370b47a38Cc4CbfA",
+      name: "FlowmiFollowModule v0.12",
+      address: FLOWMI_CONTRACT_ADDRESS,
     },
   ];
 
