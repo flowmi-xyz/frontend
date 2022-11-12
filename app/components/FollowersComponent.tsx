@@ -69,15 +69,36 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                     fontWeight="700"
                     fontSize="12px"
                     letterSpacing="-0.03em"
+                    textAlign="center"
+                  >
+                    {wallet.wallet.defaultProfile.stats.totalFollowers}
+                  </Text>
+                  <Text
+                    fontWeight="700"
+                    fontSize="12px"
+                    letterSpacing="-0.03em"
+                    textAlign="center"
                   >
                     followers
-                    <Text
-                      as="span"
-                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                      bgClip="text"
-                    >
-                      {wallet.wallet.defaultProfile.stats.totalFollowers}
-                    </Text>
+                  </Text>
+                </Box>
+
+                <Box width="50%" my="auto">
+                  <Text
+                    fontWeight="700"
+                    fontSize="12px"
+                    letterSpacing="-0.03em"
+                    textAlign="center"
+                  >
+                    {wallet.wallet.defaultProfile.stats.totalFollowing}
+                  </Text>
+                  <Text
+                    fontWeight="700"
+                    fontSize="12px"
+                    letterSpacing="-0.03em"
+                    textAlign="center"
+                  >
+                    following
                   </Text>
                 </Box>
               </Flex>

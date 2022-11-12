@@ -35,7 +35,7 @@ const Balance = ({ nativeBalance }: BalanceProps) => {
           p="5"
         >
           <Flex>
-            <Icon as={MdAccountBalanceWallet} color="lensDark" h="6" w="6" />
+            <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />
             <Text
               fontWeight="700"
               fontSize="18px"
