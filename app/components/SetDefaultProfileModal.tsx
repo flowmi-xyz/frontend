@@ -100,7 +100,7 @@ const SetDefaultProfileModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>Set default profile</ModalHeader>
@@ -119,7 +119,56 @@ const SetDefaultProfileModal = ({
             </Steps>
           </Box>
 
-          {activeStep == 0 && (
+          {true && (
+            <Box pt="5" pl="5" pr="5">
+              <Text>
+                You are about to set <b>{handle}</b> as your default profile.
+              </Text>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Transaction Fee
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Total gas paid
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0.02 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0.24 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Social DeFi Fee (0%)
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Platform charge
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+            </Box>
+          )}
+
+          {/* {activeStep == 0 && ( */}
+          {false && (
             <>
               <Text
                 fontWeight="600"
