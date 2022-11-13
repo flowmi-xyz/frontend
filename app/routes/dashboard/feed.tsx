@@ -115,7 +115,6 @@ export default function Dashboard() {
   const [awmaticBalance, setAwmaticBalance] = React.useState(0);
 
   React.useEffect(() => {
-    // declare the data fetching function
     const getBalance = async () => {
       const signer = await getSignerFront();
 
@@ -142,10 +141,7 @@ export default function Dashboard() {
       setAwmaticBalance(Number(formatEther(awmaticBalance)));
     };
 
-    // call the function
-    getBalance()
-      // make sure to catch any error
-      .catch(console.error);
+    getBalance().catch(console.error);
   }, []);
 
   return (

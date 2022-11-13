@@ -12,7 +12,7 @@ import {
 } from "~/web3/lens/graphql/generated";
 
 import { ethers } from "ethers";
-import { getSignerBack } from "~/web3/etherservice";
+import { getSignerBack, getSignerFront } from "~/web3/etherservice";
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
 // UI components
@@ -28,6 +28,13 @@ import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 import PreviousRafles from "~/components/PreviousRafles";
 import FollowersComponent from "~/components/FollowersComponent";
 import { formatEther } from "~/utils/formarether";
+import React from "react";
+import {
+  aWMA_CONTRACT_ADDRESS,
+  ERC20_HUB_ABI,
+  WMATIC_CONTRACT_ADDRESS,
+} from "~/web3/erc20/erc20-hub";
+import BalanceInProfile from "~/components/BalanceInProfile";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -212,6 +219,40 @@ export default function Profile() {
   console.log(arrayFollowers);
   console.log(payInWMATIC);
 
+  const [nativeBalance, setNativeBalance] = React.useState(0);
+  const [wmaticBalance, setWmaticBalance] = React.useState(0);
+  const [awmaticBalance, setAwmaticBalance] = React.useState(0);
+
+  React.useEffect(() => {
+    const getBalance = async () => {
+      const signer = await getSignerFront();
+
+      const balance = await signer.getBalance();
+
+      const wmaticContract = new ethers.Contract(
+        WMATIC_CONTRACT_ADDRESS,
+        ERC20_HUB_ABI,
+        signer
+      );
+
+      const wmaticBalance = await wmaticContract.balanceOf(address);
+
+      const awmaticContract = new ethers.Contract(
+        aWMA_CONTRACT_ADDRESS,
+        ERC20_HUB_ABI,
+        signer
+      );
+
+      const awmaticBalance = await awmaticContract.balanceOf(address);
+
+      setNativeBalance(Number(formatEther(balance)));
+      setWmaticBalance(Number(formatEther(wmaticBalance)));
+      setAwmaticBalance(Number(formatEther(awmaticBalance)));
+    };
+
+    getBalance().catch(console.error);
+  }, []);
+
   return (
     <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
@@ -220,7 +261,7 @@ export default function Profile() {
         handle={defaultProfile?.handle}
       />
 
-      <Image src="./assets/2.png" w="100%" h="320px" objectFit="cover" />
+      <Image src="./assets/2.png" w="100%" h="180px" objectFit="cover" />
 
       <Box maxWidth="1200px" m="auto">
         <Grid templateColumns="repeat(3, 1fr)">
@@ -243,6 +284,12 @@ export default function Profile() {
           </GridItem>
 
           <GridItem colSpan={2}>
+            <BalanceInProfile
+              nativeBalance={nativeBalance}
+              wmaticBalance={wmaticBalance}
+              awmaticBalance={awmaticBalance}
+            />
+
             {isDefiFollowProfile && (
               <Box>
                 <FlowmiProfileInfo wmaticToPay={payInWMATIC} />
