@@ -34,7 +34,7 @@ const FlowmiProfileInfo = ({ wmaticToPay }: FlowmiProfileInfoProps) => {
       </Text>
 
       <Text
-        fontWeight="500"
+        fontWeight="400"
         fontSize="14px"
         lineHeight="120%"
         color="black"
@@ -43,13 +43,21 @@ const FlowmiProfileInfo = ({ wmaticToPay }: FlowmiProfileInfoProps) => {
         pb="2"
         textAlign="justify"
       >
-        To follow this user, you must pay {wmaticToPay.toFixed(4)} WMATIC (0.1
-        $USD, provided by Chainlink Datafeed). These WMATIC are sent to Aave
-        (👻) to generate interest
+        To follow this user, you must pay{" "}
+        <Text
+          as="span"
+          fontWeight="700"
+          bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+          bgClip="text"
+        >
+          {wmaticToPay.toFixed(4)} WMATIC{" "}
+        </Text>{" "}
+        (0.1 $USD, provided by Chainlink Datafeed). These WMATIC are sent to
+        Aave (👻) to generate interest
       </Text>
 
       <Text
-        fontWeight="500"
+        fontWeight="400"
         fontSize="14px"
         lineHeight="120%"
         color="black"

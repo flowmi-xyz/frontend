@@ -186,7 +186,7 @@ const DefiFollowModal = ({
                 <Text>
                   You are going to allow us to move{" "}
                   <Text as="span" fontWeight="700" color="sixth" fontSize="16">
-                    {amount.toFixed(4)} WMATIC (0.1 USD)
+                    {amount.toFixed(4)} WMATIC (0.1 $USD)
                   </Text>{" "}
                   to the Aave protocol.
                 </Text>
@@ -262,14 +262,14 @@ const DefiFollowModal = ({
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
                 >
-                  1 WMATIC
+                  {amount.toFixed(4)} WMATIC
                 </Text>
               </Box>
 
               <Text
                 textAlign="justify"
-                fontWeight="600"
-                fontSize="12px"
+                fontWeight="400"
+                fontSize="14px"
                 lineHeight="120%"
                 color="grayLetter"
                 pt="5"
@@ -277,9 +277,9 @@ const DefiFollowModal = ({
                 pr="5"
               >
                 Remember that when you Defi follow a profile, you will be
-                charged 1 WMATIC and it will be deposited in Aave protocol. When
-                the number of Defi followers reaches 10, the accumulated jackpot
-                will be drawn among all the defi followers.
+                charged {amount.toFixed(4)} WMATIC and it will be deposited in
+                Aave protocol. When the number of Defi followers reaches 10, the
+                accumulated jackpot will be drawn among all the defi followers.
               </Text>
             </>
           )}
