@@ -86,7 +86,7 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
                   lineHeight="21.6px"
                   color="white"
                 >
-                  Connect your wallet
+                  Connect wallet
                 </Text>
               </Button>
             </Center>
@@ -101,6 +101,14 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
             </HStack>
 
             <HStack pr="5" pl="5">
+              <Icon as={MdVerifiedUser} margin="5" color="first" w="7" h="7" />
+
+              <Text color="grayLetter" fontSize="14">
+                Contracts verified
+              </Text>
+            </HStack>
+
+            <HStack pr="5" pl="5">
               <Icon
                 as={TbHeartHandshake}
                 margin="5"
@@ -111,14 +119,6 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
 
               <Text color="grayLetter" fontSize="14">
                 Trusted by {users} users
-              </Text>
-            </HStack>
-
-            <HStack pr="5" pl="5">
-              <Icon as={MdVerifiedUser} margin="5" color="first" w="7" h="7" />
-
-              <Text color="grayLetter" fontSize="14">
-                Contracts verified
               </Text>
             </HStack>
           </Box>
