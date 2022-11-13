@@ -100,7 +100,7 @@ const SetDefaultProfileModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="lg">
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>Set default profile</ModalHeader>
@@ -120,8 +120,8 @@ const SetDefaultProfileModal = ({
           </Box>
 
           {true && (
-            <Box pt="5" pl="5" pr="5">
-              <Text>
+            <Box mt="5" pt="5" pl="5" pr="5">
+              <Text fontWeight="500" fontSize="16" color="black">
                 You are about to set <b>{handle}</b> as your default profile.
               </Text>
 
@@ -164,6 +164,11 @@ const SetDefaultProfileModal = ({
                   </Text>
                 </Box>
               </Flex>
+
+              <Alert status="info" borderRadius={10} mt="5">
+                <AlertIcon />
+                We charge 0% fee for all transactions.
+              </Alert>
             </Box>
           )}
 
@@ -299,6 +304,28 @@ const SetDefaultProfileModal = ({
               </VStack>
             </Center>
           )}
+
+          <Flex pt="5" pl="5">
+            <Text fontWeight="700" fontSize="20px" color="grayLetter" my="auto">
+              Your balance:
+            </Text>{" "}
+            <Image
+              src="../assets/logos/polygon-matic-logo.png"
+              w="6"
+              h="6"
+              ml="2"
+              my="auto"
+            />
+            <Text
+              fontWeight="600"
+              fontSize="18px"
+              color="black"
+              ml="2"
+              my="auto"
+            >
+              0.24 MATIC
+            </Text>
+          </Flex>
         </ModalBody>
 
         <ModalFooter>
