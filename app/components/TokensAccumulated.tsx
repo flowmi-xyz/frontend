@@ -22,7 +22,15 @@ const TokenAccumulated = ({
   console.log(countFollowers);
   console.log(goalOfFollowers);
   return (
-    <Box>
+    <Box
+      bg="white"
+      border="1px"
+      borderColor="#E0E0E3"
+      borderRadius="10px"
+      width="300px"
+      m="5"
+      p="5"
+    >
       <Text
         fontWeight="600"
         fontSize="15px"
@@ -35,58 +43,50 @@ const TokenAccumulated = ({
         DeFi Followers
       </Text>
 
-      <Box
-        bg="white"
-        border="1px"
-        borderColor="#E0E0E3"
-        borderRadius="10px"
-        width="300px"
-      >
-        <Center>
-          <CircularProgress
-            value={Number(
+      <Center>
+        <CircularProgress
+          value={Number(
+            (
+              ((countFollowers % goalOfFollowers) / goalOfFollowers) *
+              100
+            ).toFixed(0)
+          )}
+          color="third"
+          size="150px"
+          p="5"
+        >
+          <CircularProgressLabel>
+            {Number(
               (
                 ((countFollowers % goalOfFollowers) / goalOfFollowers) *
                 100
               ).toFixed(0)
             )}
-            color="third"
-            size="150px"
-            p="5"
-          >
-            <CircularProgressLabel>
-              {Number(
-                (
-                  ((countFollowers % goalOfFollowers) / goalOfFollowers) *
-                  100
-                ).toFixed(0)
-              )}
-              %
-            </CircularProgressLabel>
-          </CircularProgress>
-        </Center>
+            %
+          </CircularProgressLabel>
+        </CircularProgress>
+      </Center>
 
-        <Text
-          textAlign="center"
-          fontWeight="600"
-          fontSize="15px"
-          lineHeight="120%"
-          color="black"
-        >
-          {handle} has accumulated:
-        </Text>
+      <Text
+        textAlign="center"
+        fontWeight="600"
+        fontSize="15px"
+        lineHeight="120%"
+        color="black"
+      >
+        {handle} has accumulated:
+      </Text>
 
-        <Text
-          textAlign="center"
-          fontWeight="700"
-          fontSize="32px"
-          letterSpacing="-0.03em"
-          bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-          bgClip="text"
-        >
-          {tokensAccumulated.toFixed(4)} WMATIC
-        </Text>
-      </Box>
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="32px"
+        letterSpacing="-0.03em"
+        bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+        bgClip="text"
+      >
+        {tokensAccumulated.toFixed(4)} WMATIC
+      </Text>
     </Box>
   );
 };

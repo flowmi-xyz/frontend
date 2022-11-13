@@ -254,7 +254,7 @@ export default function Profile() {
   }, []);
 
   return (
-    <Box bg="#FAFAF9" h="100vh">
+    <Box bg="#FAFAF9">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
@@ -284,17 +284,19 @@ export default function Profile() {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <BalanceInProfile
-              nativeBalance={nativeBalance}
-              wmaticBalance={wmaticBalance}
-              awmaticBalance={awmaticBalance}
-            />
-
             {isDefiFollowProfile && (
               <Box>
-                <FlowmiProfileInfo wmaticToPay={payInWMATIC} />
+                <Flex w="100%">
+                  <FlowmiProfileInfo wmaticToPay={payInWMATIC} />
 
-                <Flex pt="5">
+                  <BalanceInProfile
+                    nativeBalance={nativeBalance}
+                    wmaticBalance={wmaticBalance}
+                    awmaticBalance={awmaticBalance}
+                  />
+                </Flex>
+
+                <Flex mb="10">
                   <TokenAccumulated
                     handle={pageProfile.handle}
                     tokensAccumulated={wmaticAccumulated}
@@ -303,10 +305,10 @@ export default function Profile() {
                   />
 
                   <Box>
-                    <PreviousRafles
+                    {/* <PreviousRafles
                       handle={pageProfile.handle}
                       tokensAccumulated={0}
-                    />
+                    /> */}
 
                     <FollowersComponent followers={arrayFollowers} />
                   </Box>
@@ -316,7 +318,6 @@ export default function Profile() {
           </GridItem>
         </Grid>
       </Box>
-      <AppFooter />
     </Box>
   );
 }

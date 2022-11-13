@@ -27,8 +27,8 @@ const BalanceInProfile = ({
   awmaticBalance,
 }: BalanceInProfileProps) => {
   return (
-    <Box border="1px" borderColor="#E0E0E3" borderRadius="10px" p="5" mt="5">
-      <Flex>
+    <Box border="1px" borderColor="first" borderRadius="10px" m="5" w="50%">
+      <Flex pt="5" pl="5">
         <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />
         <Text
           fontWeight="700"
@@ -40,11 +40,11 @@ const BalanceInProfile = ({
           ml="2"
           mr="2"
         >
-          Your Balance in Polygon Mumbai
+          Your Balance in Mumbai
         </Text>
       </Flex>
 
-      <TableContainer>
+      <TableContainer borderBottomRadius="10px">
         <Table variant="striped" colorScheme="purple">
           <Thead>
             <Tr>

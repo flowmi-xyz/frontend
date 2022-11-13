@@ -6,7 +6,14 @@ type FlowmiProfileInfoProps = {
 
 const FlowmiProfileInfo = ({ wmaticToPay }: FlowmiProfileInfoProps) => {
   return (
-    <Box border="1px" borderColor="#E0E0E3" borderRadius="10px" p="5" mt="5">
+    <Box
+      border="1px"
+      borderColor="#E0E0E3"
+      borderRadius="10px"
+      p="5"
+      m="5"
+      w="50%"
+    >
       <Text
         fontWeight="600"
         fontSize="20px"
@@ -27,10 +34,10 @@ const FlowmiProfileInfo = ({ wmaticToPay }: FlowmiProfileInfoProps) => {
       </Text>
 
       <Text
-        fontWeight="600"
+        fontWeight="500"
         fontSize="14px"
         lineHeight="120%"
-        color="gray.600"
+        color="black"
         my="auto"
         pt="3"
         pb="2"
@@ -42,10 +49,10 @@ const FlowmiProfileInfo = ({ wmaticToPay }: FlowmiProfileInfoProps) => {
       </Text>
 
       <Text
-        fontWeight="600"
+        fontWeight="500"
         fontSize="14px"
         lineHeight="120%"
-        color="gray.600"
+        color="black"
         my="auto"
         pt="3"
         textAlign="justify"

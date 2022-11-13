@@ -37,10 +37,9 @@ const Balance = ({
           borderColor="first"
           borderRadius="10px"
           width="420px"
-          p="5"
           mt="10"
         >
-          <Flex>
+          <Flex p="5">
             <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />
             <Text
               fontWeight="700"
@@ -57,7 +56,7 @@ const Balance = ({
             <Image src="../assets/logos/polygon-matic-logo.png" w="6" h="6" />
           </Flex>
 
-          <TableContainer>
+          <TableContainer borderBottomRadius="10px">
             <Table variant="striped" colorScheme="purple">
               <Thead>
                 <Tr>
@@ -79,10 +78,7 @@ const Balance = ({
                       </Text>
                     </HStack>
                   </Td>
-                  <Td isNumeric>
-                    {/* {isLoading ? <Spinner color="third" /> : nativeBalance} */}
-                    {nativeBalance.toFixed(4)}
-                  </Td>
+                  <Td isNumeric>{nativeBalance.toFixed(4)}</Td>
                 </Tr>
                 <Tr>
                   <Td>
@@ -95,11 +91,9 @@ const Balance = ({
                       <Text fontSize={14}>WMATIC</Text>
                     </HStack>
                   </Td>
-                  <Td isNumeric>
-                    {/* {isLoading ? <Spinner color="third" /> : tokenBalance} */}
-                    {wmaticBalance?.toFixed(4)}
-                  </Td>
+                  <Td isNumeric>{wmaticBalance?.toFixed(4)}</Td>
                 </Tr>
+
                 <Tr>
                   <Td>
                     <HStack>
@@ -111,10 +105,7 @@ const Balance = ({
                       <Text fontSize={14}>aWMATIC</Text>
                     </HStack>
                   </Td>
-                  <Td isNumeric>
-                    {/* {isLoading ? <Spinner color="third" /> : tokenBalance} */}
-                    {awmaticBalance?.toFixed(4)}
-                  </Td>
+                  <Td isNumeric>{awmaticBalance?.toFixed(4)}</Td>
                 </Tr>
               </Tbody>
             </Table>
