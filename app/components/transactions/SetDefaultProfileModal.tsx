@@ -55,6 +55,8 @@ const SetDefaultProfileModal = ({
     { label: "Set default profile ✅" },
   ];
 
+  console.log(gasFee);
+
   const { nextStep, activeStep, reset } = useSteps({
     initialStep: 0,
   });
@@ -98,6 +100,10 @@ const SetDefaultProfileModal = ({
       nextStep();
       setSigned(false);
     } catch (error) {
+      setError(true);
+      setIsLoading(false);
+      setSigned(false);
+
       console.log(error);
     }
   };
@@ -116,7 +122,7 @@ const SetDefaultProfileModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>Set default profile</ModalHeader>
@@ -135,7 +141,7 @@ const SetDefaultProfileModal = ({
             </Steps>
           </Box>
 
-          {true && (
+          {activeStep == 0 && !signed && !error && (
             <Box mt="5" pt="5" pl="5" pr="5">
               <Text
                 fontWeight="600"
@@ -198,7 +204,7 @@ const SetDefaultProfileModal = ({
                     ${" "}
                     {(
                       gasLimitNumber *
-                      gasFee.standard.maxPriorityFee *
+                      gasFee.fast.maxPriorityFee *
                       1e-9 *
                       priceFeed *
                       10
@@ -208,7 +214,7 @@ const SetDefaultProfileModal = ({
                   <Text fontWeight="500" fontSize="14" color="gray">
                     {(
                       gasLimitNumber *
-                      gasFee.standard.maxPriorityFee *
+                      gasFee.fast.maxPriorityFee *
                       1e-9
                     ).toFixed(6)}{" "}
                     MATIC
@@ -240,75 +246,37 @@ const SetDefaultProfileModal = ({
                 <AlertIcon />
                 Social DeFi charge 0% fee for all transactions.
               </Alert>
+
+              <Flex pt="5" pl="5">
+                <Text
+                  fontWeight="700"
+                  fontSize="20px"
+                  color="grayLetter"
+                  my="auto"
+                >
+                  Your balance:
+                </Text>{" "}
+                <Image
+                  src="../assets/logos/polygon-matic-logo.png"
+                  w="5"
+                  h="5"
+                  ml="2"
+                  my="auto"
+                />
+                <Text
+                  fontWeight="600"
+                  fontSize="18px"
+                  color="black"
+                  ml="2"
+                  my="auto"
+                >
+                  {wmaticBalance.toFixed(4)} MATIC
+                </Text>
+              </Flex>
             </Box>
           )}
 
-          {/* {activeStep == 0 && ( */}
-          {false && (
-            <>
-              <Text
-                fontWeight="600"
-                fontSize="14px"
-                lineHeight="120%"
-                color="black"
-                pt="5"
-                pl="5"
-                pr="5"
-              >
-                You are going to set as a default profile the following profile:
-              </Text>
-
-              <Flex pt="5" pl="5" pr="5">
-                <Text
-                  fontWeight="600"
-                  fontSize="14px"
-                  color="lensDark"
-                  width="20%"
-                >
-                  handle:
-                </Text>
-
-                <Text
-                  fontWeight="700"
-                  fontSize="14px"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  @{handle}
-                </Text>
-              </Flex>
-
-              <Flex pt="2" pl="5" pr="5">
-                <Text
-                  fontWeight="600"
-                  fontSize="14px"
-                  color="lensDark"
-                  width="20%"
-                >
-                  #
-                </Text>
-
-                <Text fontWeight="600" fontSize="14px" color="black">
-                  {profileId}
-                </Text>
-              </Flex>
-
-              <Text
-                textAlign="justify"
-                fontWeight="600"
-                fontSize="12px"
-                lineHeight="120%"
-                color="grayLetter"
-                pt="5"
-                pl="5"
-                pr="5"
-              >
-                Remember this profile is created in the testnet (Polygon Mumbai)
-              </Text>
-            </>
-          )}
-
-          {activeStep == 2 && (
+          {activeStep == 2 && !signed && !error && (
             <>
               <>
                 <Center pt="5" pl="5" pr="5">
@@ -376,55 +344,54 @@ const SetDefaultProfileModal = ({
             </Center>
           )}
 
-          <Flex pt="5" pl="5">
-            <Text fontWeight="700" fontSize="20px" color="grayLetter" my="auto">
-              Your balance:
-            </Text>{" "}
-            <Image
-              src="../assets/logos/polygon-matic-logo.png"
-              w="5"
-              h="5"
-              ml="2"
-              my="auto"
-            />
-            <Text
-              fontWeight="600"
-              fontSize="18px"
-              color="black"
-              ml="2"
-              my="auto"
-            >
-              {wmaticBalance.toFixed(4)} MATIC
-            </Text>
-          </Flex>
+          {error && (
+            <Box p="5">
+              <Alert status="error" borderRadius={10}>
+                <AlertIcon />
+                The transaction has failed
+              </Alert>
+
+              <Text
+                fontWeight="600"
+                fontSize="14px"
+                lineHeight="120%"
+                color="black"
+                pt="5"
+              >
+                Please, try again 5 minutes later. If the problem persists,
+                contact us.
+              </Text>
+            </Box>
+          )}
         </ModalBody>
 
         <ModalFooter>
+          <Button
+            bg="white"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            mr="5"
+            onClick={handleClose}
+          >
+            <Text
+              fontWeight="500"
+              fontSize="18px"
+              lineHeight="21.6px"
+              color="first"
+            >
+              Cancel
+            </Text>
+          </Button>
+
           {activeStep === 0 && (
             <>
-              <Button
-                bg="white"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                mr="5"
-                onClick={handleClose}
-              >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="first"
-                >
-                  Cancel
-                </Text>
-              </Button>
-
               <Button
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleConfirmSetdefaultProfile}
                 disabled={isLoading}
+                hidden={error}
               >
                 <Flex>
                   <Box w="40px" h="40px">
@@ -451,40 +418,21 @@ const SetDefaultProfileModal = ({
           )}
 
           {activeStep === 2 && (
-            <>
-              <Button
-                bg="white"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                mr="5"
-                onClick={handleClose}
+            <Button
+              bg="white"
+              borderRadius="10px"
+              boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+              onClick={handleExploreTx}
+            >
+              <Text
+                fontWeight="500"
+                fontSize="18px"
+                lineHeight="21.6px"
+                color="second"
               >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="first"
-                >
-                  Close
-                </Text>
-              </Button>
-
-              <Button
-                bg="second"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleExploreTx}
-              >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="white"
-                >
-                  View on Explorer
-                </Text>
-              </Button>
-            </>
+                View on Explorer
+              </Text>
+            </Button>
           )}
         </ModalFooter>
       </ModalContent>

@@ -23,7 +23,7 @@ import {
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
-import CreateProfileModal from "~/components/CreateProfileModal";
+import CreateProfileModal from "~/components/transactions/CreateProfileModal";
 import { changeHeaders } from "~/web3/lens/lens-client";
 
 export const loader: LoaderFunction = async ({ request }) => {

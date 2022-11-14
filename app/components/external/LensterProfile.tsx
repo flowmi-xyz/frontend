@@ -17,9 +17,9 @@ import { AiOutlineStar } from "react-icons/ai";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
-import FollowModal from "../FollowModal";
+import FollowModal from "../transactions/FollowModal";
 import UnfollowModal from "../UnfollowModal";
-import DefiFollowModal from "../DefiFollowModal";
+import DefiFollowModal from "../transactions/DefiFollowModal";
 
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
 

@@ -141,7 +141,7 @@ export default function MenuInternal() {
             </Button>
           </Link>
 
-          <Link to="/whitelist-contract">
+          {/* <Link to="/whitelist-contract">
             <Button
               bg="lens"
               borderRadius="10px"
@@ -169,7 +169,7 @@ export default function MenuInternal() {
                 </Text>
               </Flex>
             </Button>
-          </Link>
+          </Link> */}
         </HStack>
       </Box>
     </Box>

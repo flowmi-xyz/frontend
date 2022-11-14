@@ -24,7 +24,7 @@ import {
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
-import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
+import SetDefaultProfileModal from "~/components/transactions/SetDefaultProfileModal";
 import { getBalanceFromAddress } from "~/web3/etherservice";
 import { formatEther } from "~/utils/formatEther";
 
@@ -96,7 +96,7 @@ export default function SetDefault() {
   };
 
   return (
-    <Box bg="#FAFAF9">
+    <Box bg="#FAFAF9" height="100vh">
       <NavbarConnected
         address={address}
         authenticatedInLens={false}

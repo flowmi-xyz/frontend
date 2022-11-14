@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import SetFollowModuleModal from "~/components/SetFollowModuleModal";
+import SetFollowModuleModal from "~/components/transactions/SetFollowModuleModal";
 import NavbarConnected from "~/components/NavbarConnected";
 
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
