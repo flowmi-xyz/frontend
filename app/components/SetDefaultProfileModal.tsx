@@ -38,6 +38,7 @@ type CreateProfileProps = {
   handle: string;
   gasFee: any;
   priceFeed: number;
+  wmaticBalance: number;
 };
 
 const SetDefaultProfileModal = ({
@@ -47,6 +48,7 @@ const SetDefaultProfileModal = ({
   profileId,
   gasFee,
   priceFeed,
+  wmaticBalance,
 }: CreateProfileProps) => {
   const steps = [
     { label: "Confirm default profile" },
@@ -380,8 +382,8 @@ const SetDefaultProfileModal = ({
             </Text>{" "}
             <Image
               src="../assets/logos/polygon-matic-logo.png"
-              w="6"
-              h="6"
+              w="5"
+              h="5"
               ml="2"
               my="auto"
             />
@@ -392,7 +394,7 @@ const SetDefaultProfileModal = ({
               ml="2"
               my="auto"
             >
-              0.24 MATIC
+              {wmaticBalance.toFixed(4)} MATIC
             </Text>
           </Flex>
         </ModalBody>

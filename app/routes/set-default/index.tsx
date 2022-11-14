@@ -6,6 +6,9 @@ import { lensClient } from "~/web3/lens/lens-client";
 
 import { getSession } from "~/bff/session";
 
+import getGasFee from "~/web3/gasfee";
+import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+
 // UI components
 import React from "react";
 import {
@@ -22,9 +25,8 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
-import getGasFee from "~/web3/gasfee";
-import { BigNumber } from "ethers";
-import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getBalanceFromAddress } from "~/web3/etherservice";
+import { formatEther } from "~/utils/formatEther";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -59,12 +61,27 @@ export const loader: LoaderFunction = async ({ request }) => {
   // Get relation MATIC/USD from price feed
   const priceFeed = await getPriceFeedFromFlowmi();
 
-  return { address, profiles, defaultProfile, gasFee, priceFeed };
+  const wmaticBalance = await getBalanceFromAddress(address);
+
+  return {
+    address,
+    profiles,
+    defaultProfile,
+    gasFee,
+    priceFeed,
+    wmaticBalance,
+  };
 };
 
 export default function SetDefault() {
-  const { address, profiles, defaultProfile, gasFee, priceFeed } =
-    useLoaderData();
+  const {
+    address,
+    profiles,
+    defaultProfile,
+    gasFee,
+    priceFeed,
+    wmaticBalance,
+  } = useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -204,6 +221,7 @@ export default function SetDefault() {
             handle={defaultHandle}
             gasFee={gasFee}
             priceFeed={priceFeed}
+            wmaticBalance={wmaticBalance}
           />
         </Box>
       </Box>

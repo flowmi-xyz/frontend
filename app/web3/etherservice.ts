@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { formatEther } from "~/utils/formatEther";
 
 import { MUMBAI_RPC_URL } from "./lens/lens-hub";
 
@@ -15,4 +16,14 @@ function getSignerBack() {
   return signer;
 }
 
-export { getSignerFront, getSignerBack };
+async function getBalanceFromAddress(address: string): Promise<Number> {
+  const provider = new ethers.providers.JsonRpcProvider(MUMBAI_RPC_URL);
+
+  const balance = await provider.getBalance(address);
+
+  const wmaticBalance = Number(formatEther(balance));
+
+  return wmaticBalance;
+}
+
+export { getSignerFront, getSignerBack, getBalanceFromAddress };
