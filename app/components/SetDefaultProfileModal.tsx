@@ -1,5 +1,5 @@
 // logic components
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Flex,
   HStack,
   Image,
@@ -67,8 +68,15 @@ const SetDefaultProfileModal = ({
       getSignerFront()
     );
 
+    const GAS_LIMIT = BigNumber.from("2074000");
+
     try {
-      const setDefaultProfile = await lensContract.setDefaultProfile(profileId);
+      const setDefaultProfile = await lensContract.setDefaultProfile(
+        profileId,
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
 
       nextStep();
 
@@ -121,9 +129,51 @@ const SetDefaultProfileModal = ({
 
           {true && (
             <Box mt="5" pt="5" pl="5" pr="5">
-              <Text fontWeight="500" fontSize="16" color="black">
-                You are about to set <b>{handle}</b> as your default profile.
+              <Text
+                fontWeight="600"
+                fontSize="14px"
+                lineHeight="120%"
+                color="black"
+              >
+                You are going to set as a default profile the following profile:
               </Text>
+
+              <Flex pt="5">
+                <Text
+                  fontWeight="600"
+                  fontSize="14px"
+                  color="lensDark"
+                  width="20%"
+                >
+                  handle:
+                </Text>
+
+                <Text
+                  fontWeight="700"
+                  fontSize="14px"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  @{handle}
+                </Text>
+              </Flex>
+
+              <Flex pt="2">
+                <Text
+                  fontWeight="600"
+                  fontSize="14px"
+                  color="lensDark"
+                  width="20%"
+                >
+                  #
+                </Text>
+
+                <Text fontWeight="600" fontSize="14px" color="lensDark">
+                  {profileId}
+                </Text>
+              </Flex>
+
+              <Divider mt="5" />
 
               <Flex mt="5" justify="space-between">
                 <Box>
@@ -167,7 +217,7 @@ const SetDefaultProfileModal = ({
 
               <Alert status="info" borderRadius={10} mt="5">
                 <AlertIcon />
-                We charge 0% fee for all transactions.
+                Social DeFi charge 0% fee for all transactions.
               </Alert>
             </Box>
           )}

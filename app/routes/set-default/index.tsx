@@ -22,6 +22,8 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
+import getGasFee from "~/web3/gasfee";
+import { BigNumber } from "ethers";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -50,11 +52,14 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  return { address, profiles, defaultProfile };
+  // get Gas fee
+  const gasFee = await getGasFee();
+
+  return { address, profiles, defaultProfile, gasFee };
 };
 
 export default function SetDefault() {
-  const { address, profiles, defaultProfile } = useLoaderData();
+  const { address, profiles, defaultProfile, gasFee } = useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -67,6 +72,10 @@ export default function SetDefault() {
 
     onOpen();
   };
+
+  const GAS_LIMIT = BigNumber.from("2074000");
+
+  console.log(2074000 * gasFee.standard.maxPriorityFee * 1e-9);
 
   return (
     <Box bg="#FAFAF9">
@@ -186,6 +195,7 @@ export default function SetDefault() {
               </Box>
             );
           })}
+
           <SetDefaultProfileModal
             isOpen={isOpen}
             onClose={onClose}
