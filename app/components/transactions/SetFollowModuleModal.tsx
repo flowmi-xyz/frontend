@@ -14,6 +14,7 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Flex,
   HStack,
   Image,
@@ -39,6 +40,9 @@ type CreateProfileProps = {
   followModuleAddress: string;
   profileId: string;
   addressProfile: string;
+  gasFee: any;
+  priceFeed: number;
+  wmaticBalance: number;
 };
 
 const SetFollowModuleModal = ({
@@ -48,8 +52,10 @@ const SetFollowModuleModal = ({
   followModuleAddress,
   profileId,
   addressProfile,
-}: // profileId,
-CreateProfileProps) => {
+  gasFee,
+  priceFeed,
+  wmaticBalance,
+}: CreateProfileProps) => {
   const steps = [
     { label: "Confirm follow module" },
     { label: "Follow module changed" },
@@ -65,8 +71,9 @@ CreateProfileProps) => {
 
   const [txHash, setTxHash] = React.useState("");
 
+  const gasLimitNumber = 50000;
+
   const handleConfirmSetFollowModule = async () => {
-    console.log("Handle confirm set follow module");
     setIsLoading(true);
     const lensContract = new ethers.Contract(
       LENS_HUB_CONTRACT_ADDRESS,
@@ -81,10 +88,8 @@ CreateProfileProps) => {
       [DEFAULT_FOLLOW_PRICE, WMATIC_CONTRACT_ADDRESS, addressProfile]
     );
 
-    console.log("data: ", data);
-
     try {
-      const GAS_LIMIT = BigNumber.from("2074000");
+      const GAS_LIMIT = BigNumber.from(gasLimitNumber);
 
       const setFollowModule = await lensContract.setFollowModule(
         profileId,
@@ -105,6 +110,10 @@ CreateProfileProps) => {
       setTxHash(setFollowModuleTx.transactionHash);
       setSigned(false);
     } catch (error) {
+      setError(true);
+      setIsLoading(false);
+      setSigned(false);
+
       console.log(error);
     }
   };
@@ -123,7 +132,7 @@ CreateProfileProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>Set follow module</ModalHeader>
@@ -187,7 +196,7 @@ CreateProfileProps) => {
                   color="lensDark"
                   width="30%"
                 >
-                  follow Module Address
+                  follow Module:
                 </Text>
 
                 <Text
@@ -226,18 +235,92 @@ CreateProfileProps) => {
                 </Text>
               </Flex>
 
-              <Text
-                textAlign="justify"
-                fontWeight="600"
-                fontSize="12px"
-                lineHeight="120%"
-                color="grayLetter"
-                pt="5"
-                pl="5"
-                pr="5"
-              >
-                Remember this profile is changed in the testnet (Polygon Mumbai)
-              </Text>
+              <Divider mt="5" />
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Transaction Fee
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Total gas paid
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    ${" "}
+                    {(
+                      gasLimitNumber *
+                      gasFee.fast.maxPriorityFee *
+                      1e-9 *
+                      priceFeed *
+                      10
+                    ).toFixed(6)}{" "}
+                    USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    {(
+                      gasLimitNumber *
+                      gasFee.fast.maxPriorityFee *
+                      1e-9
+                    ).toFixed(6)}{" "}
+                    MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Social DeFi Fee (0%)
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Platform charge
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Alert status="info" borderRadius={10} mt="5">
+                <AlertIcon />
+                Social DeFi charge 0% fee for all transactions.
+              </Alert>
+
+              <Flex pt="5" pl="5">
+                <Text
+                  fontWeight="700"
+                  fontSize="20px"
+                  color="grayLetter"
+                  my="auto"
+                >
+                  Your balance:
+                </Text>{" "}
+                <Image
+                  src="../assets/logos/polygon-matic-logo.png"
+                  w="5"
+                  h="5"
+                  ml="2"
+                  my="auto"
+                />
+                <Text
+                  fontWeight="600"
+                  fontSize="18px"
+                  color="black"
+                  ml="2"
+                  my="auto"
+                >
+                  {wmaticBalance.toFixed(4)} MATIC
+                </Text>
+              </Flex>
             </>
           )}
 

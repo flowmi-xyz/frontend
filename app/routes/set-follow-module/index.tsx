@@ -25,6 +25,9 @@ import NavbarConnected from "~/components/NavbarConnected";
 
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
+import getGasFee from "~/web3/gasfee";
+import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getBalanceFromAddress } from "~/web3/etherservice";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -53,11 +56,31 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  return { address, profiles, defaultProfile };
+  const gasFee = await getGasFee();
+
+  const priceFeed = await getPriceFeedFromFlowmi();
+
+  const wmaticBalance = await getBalanceFromAddress(address);
+
+  return {
+    address,
+    profiles,
+    defaultProfile,
+    gasFee,
+    priceFeed,
+    wmaticBalance,
+  };
 };
 
 export default function SetFollowModule() {
-  const { address, profiles, defaultProfile } = useLoaderData();
+  const {
+    address,
+    profiles,
+    defaultProfile,
+    gasFee,
+    priceFeed,
+    wmaticBalance,
+  } = useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -173,6 +196,9 @@ export default function SetFollowModule() {
           followModule={selectedFollowModule}
           profileId={defaultProfile.id}
           addressProfile={defaultProfile.ownedBy}
+          gasFee={gasFee}
+          priceFeed={priceFeed}
+          wmaticBalance={wmaticBalance}
         />
       </Box>
     </Box>
