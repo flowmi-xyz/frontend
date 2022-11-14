@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, HStack, Icon, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
 
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
@@ -22,6 +22,7 @@ type PostProps = {
   mirrors: number;
   collects: number;
   index?: number;
+  row?: any;
 };
 
 const LensterPost = ({
@@ -35,14 +36,21 @@ const LensterPost = ({
   mirrors,
   collects,
   index,
+  row,
 }: PostProps) => {
   return (
     <Box
       bg="white"
       border="1px"
-      borderBottom="0px"
+      borderBottom={index === row.length - 1 ? "1px" : "0px"}
       borderColor="#E0E0E3"
-      borderRadius={index === 0 ? "10px 10px 0 0" : "0"}
+      borderRadius={
+        index === 0
+          ? "10px 10px 0 0"
+          : index === row.length - 1
+          ? "0 0 10px 10px"
+          : "0"
+      }
       width={WIDTH_FEED}
       _hover={{ bg: "#F4F4F5" }}
     >

@@ -48,7 +48,7 @@ const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
                 letterSpacing="-0.03em"
                 color="black"
               >
-                Accumulated
+                for my followers
               </Text>
             </Box>
 

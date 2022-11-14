@@ -12,29 +12,30 @@ import {
 } from "~/web3/lens/graphql/generated";
 
 import { ethers } from "ethers";
+
 import { getSignerBack, getSignerFront } from "~/web3/etherservice";
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
 // UI components
+import React from "react";
 import { Box, Flex, Grid, GridItem, Image } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
-import AppFooter from "~/components/AppFooter";
-import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
-import PreviousRafles from "~/components/PreviousRafles";
 import FollowersComponent from "~/components/FollowersComponent";
-import { formatEther } from "~/utils/formarether";
-import React from "react";
+import BalanceInProfile from "~/components/BalanceInProfile";
+
 import {
   aWMA_CONTRACT_ADDRESS,
   ERC20_HUB_ABI,
   WMATIC_CONTRACT_ADDRESS,
 } from "~/web3/erc20/erc20-hub";
-import BalanceInProfile from "~/components/BalanceInProfile";
+
+import { formatEther } from "~/utils/formarether";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -305,11 +306,6 @@ export default function Profile() {
                   />
 
                   <Box>
-                    {/* <PreviousRafles
-                      handle={pageProfile.handle}
-                      tokensAccumulated={0}
-                    /> */}
-
                     <FollowersComponent followers={arrayFollowers} />
                   </Box>
                 </Flex>

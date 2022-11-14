@@ -28,7 +28,6 @@ import {
   ERC20_HUB_ABI,
   WMATIC_CONTRACT_ADDRESS,
 } from "~/web3/erc20/erc20-hub";
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request }) => {

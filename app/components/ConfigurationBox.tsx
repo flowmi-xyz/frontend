@@ -17,64 +17,18 @@ const SettingsBox = () => {
           p="5"
         >
           <Flex>
-            <Icon as={IoSettings} color="lensDark" h="6" w="6" />
+            <Icon as={IoSettings} color="lensDark" h="5" w="5" my="4px" />
             <Text
               fontWeight="700"
               fontSize="18px"
-              lineHeight="120%"
               letterSpacing="-0.03em"
               color="lensDark"
               pb="2"
-              ml="2"
+              ml="2 j"
             >
               Setup your Lens profile
             </Text>
           </Flex>
-
-          <Flex>
-            <Text
-              fontWeight="500"
-              fontSize="15px"
-              lineHeight="120%"
-              letterSpacing="-0.03em"
-              color="lensDark"
-              pb="1"
-            >
-              Create profiles
-            </Text>
-          </Flex>
-
-          <Text
-            fontWeight="500"
-            fontSize="15px"
-            lineHeight="120%"
-            letterSpacing="-0.03em"
-            color="lensDark"
-            pb="1"
-          >
-            Set default profile
-          </Text>
-
-          <Text
-            fontWeight="500"
-            fontSize="15px"
-            lineHeight="120%"
-            letterSpacing="-0.03em"
-            color="lensDark"
-          >
-            Set follow module
-          </Text>
-
-          {/* <Text
-            fontWeight="500"
-            fontSize="15px"
-            lineHeight="120%"
-            letterSpacing="-0.03em"
-            color="lensDark"
-            pb="1"
-          >
-            Whitelist module
-          </Text> */}
         </Box>
       </Link>
     </>

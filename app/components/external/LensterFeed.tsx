@@ -11,7 +11,7 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
   return (
     <Center>
       <Box>
-        {Posts.map((post: any, index: number) => {
+        {Posts.map((post: any, index: number, row: any) => {
           return (
             <LensterPost
               key={post.id}
@@ -25,6 +25,7 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
               mirrors={post.stats.totalAmountOfMirrors}
               collects={post.stats.totalAmountOfCollects}
               index={index}
+              row={row}
             />
           );
         })}
