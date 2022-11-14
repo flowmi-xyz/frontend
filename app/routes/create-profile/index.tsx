@@ -41,18 +41,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     handle: "TODO",
   };
 
-  const gasFee = await getGasFee();
-
-  const priceFeed = await getPriceFeedFromFlowmi();
-
   const wmaticBalance = await getBalanceFromAddress(address);
 
-  return { address, profile, accessToken, gasFee, priceFeed, wmaticBalance };
+  return { address, profile, accessToken, wmaticBalance };
 };
 
 export default function Index() {
-  const { address, accessToken, gasFee, priceFeed, wmaticBalance } =
-    useLoaderData();
+  const { address, accessToken, wmaticBalance } = useLoaderData();
 
   const [handle, setHandle] = React.useState("");
   const [profilePicture, setProfilePicture] = React.useState(null);
@@ -144,8 +139,6 @@ export default function Index() {
           isOpen={isOpen}
           onClose={onClose}
           handle={handle}
-          gasFee={gasFee}
-          priceFeed={priceFeed}
           wmaticBalance={wmaticBalance}
         />
       </Box>

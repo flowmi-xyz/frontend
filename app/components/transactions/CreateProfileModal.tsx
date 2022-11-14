@@ -25,13 +25,12 @@ import {
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { createProfileRequest } from "~/web3/lens/profile/create";
 import { pollUntilIndexed } from "~/web3/lens/indexer/has-transaction-been-indexed";
+import { Link } from "@remix-run/react";
 
 type CreateProfileProps = {
   isOpen: boolean;
   onClose: () => void;
   handle: string;
-  gasFee: any;
-  priceFeed: number;
   wmaticBalance: number;
 };
 
@@ -39,8 +38,6 @@ const CreateProfileModal = ({
   isOpen,
   onClose,
   handle,
-  gasFee,
-  priceFeed,
   wmaticBalance,
 }: CreateProfileProps) => {
   const steps = [
@@ -84,29 +81,29 @@ const CreateProfileModal = ({
 
       console.log("txHash: ", createProfileResponse.createProfile.txHash);
 
-      console.log("Create profile: poll until indexed");
+      // console.log("Create profile: poll until indexed");
       const result = await pollUntilIndexed({
         txHash: createProfileResponse.createProfile.txHash,
       });
 
       setTxHash(createProfileResponse.createProfile.txHash);
 
-      console.log("Create profile: profile has been indexed", result);
+      // console.log("Create profile: profile has been indexed", result);
 
       const logs = result.txReceipt!.logs;
 
-      console.log("Create profile: logs", logs);
+      // console.log("Create profile: logs", logs);
 
       const topicId = utils.id(
         "ProfileCreated(uint256,address,address,string,string,address,bytes,string,uint256)"
       );
-      console.log("Topicid we care about", topicId);
+      // console.log("Topicid we care about", topicId);
 
       const profileCreatedLog = logs.find((l: any) => l.topics[0] === topicId);
-      console.log("Profile created log", profileCreatedLog);
+      // console.log("Profile created log", profileCreatedLog);
 
       let profileCreatedEventLog = profileCreatedLog!.topics;
-      console.log("Profile created event logs", profileCreatedEventLog);
+      // console.log("Profile created event logs", profileCreatedEventLog);
 
       const profileId = utils.defaultAbiCoder.decode(
         ["uint256"],
@@ -122,6 +119,10 @@ const CreateProfileModal = ({
       setIsLoading(false);
       setSigned(true);
     } catch (error) {
+      setError(true);
+      setIsLoading(false);
+      setSigned(false);
+
       console.log(error);
     }
   };
@@ -301,12 +302,19 @@ const CreateProfileModal = ({
                     bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     bgClip="text"
                   >
-                    @{handle}
+                    @{handle}.test
                   </Text>{" "}
                   in the Lens protocol.
                 </Text>
 
-                <Text pt="5" pl="5" pr="5">
+                <Text
+                  fontWeight="600"
+                  fontSize="14px"
+                  color="lensDark"
+                  pt="5"
+                  pl="5"
+                  pr="5"
+                >
                   The profile id is: #{profileId}
                 </Text>
               </>
@@ -344,6 +352,26 @@ const CreateProfileModal = ({
                 </Text>
               </VStack>
             </Center>
+          )}
+
+          {error && (
+            <Box p="5">
+              <Alert status="error" borderRadius={10}>
+                <AlertIcon />
+                The transaction has failed
+              </Alert>
+
+              <Text
+                fontWeight="600"
+                fontSize="14px"
+                lineHeight="120%"
+                color="black"
+                pt="5"
+              >
+                Please, try again 5 minutes later. If the problem persists,
+                contact us.
+              </Text>
+            </Box>
           )}
         </ModalBody>
 
@@ -400,38 +428,52 @@ const CreateProfileModal = ({
 
           {activeStep === 2 && (
             <>
-              <Button
-                bg="white"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                mr="5"
-                onClick={handleClose}
-              >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="first"
+              <Link to="/set-default">
+                <Button
+                  bg="lens"
+                  borderRadius="10px"
+                  boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                  mr="5"
                 >
-                  Close
-                </Text>
-              </Button>
+                  <Flex>
+                    <Box w="40px" h="40px">
+                      <Image
+                        src="../assets/LOGO__lens_ultra small icon.png"
+                        alt="lens"
+                        my="-5px"
+                        mx="-5px"
+                      />
+                    </Box>
 
-              <Button
-                bg="second"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleExploreTx}
-              >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="white"
+                    <Text
+                      fontWeight="500"
+                      fontSize="18px"
+                      lineHeight="21.6px"
+                      color="lensDark"
+                      m="auto"
+                    >
+                      Set as default
+                    </Text>
+                  </Flex>
+                </Button>
+              </Link>
+
+              <Link to={`/${handle}.test`}>
+                <Button
+                  bg="first"
+                  borderRadius="10px"
+                  boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 >
-                  View on Explorer
-                </Text>
-              </Button>
+                  <Text
+                    fontWeight="500"
+                    fontSize="18px"
+                    lineHeight="21.6px"
+                    color="white"
+                  >
+                    Go to @{handle}.test
+                  </Text>
+                </Button>
+              </Link>
             </>
           )}
         </ModalFooter>
