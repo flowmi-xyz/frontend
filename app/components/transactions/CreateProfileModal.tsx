@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Flex,
   HStack,
   Image,
@@ -28,14 +29,19 @@ import { pollUntilIndexed } from "~/web3/lens/indexer/has-transaction-been-index
 type CreateProfileProps = {
   isOpen: boolean;
   onClose: () => void;
-  profileId: string;
   handle: string;
+  gasFee: any;
+  priceFeed: number;
+  wmaticBalance: number;
 };
 
 const CreateProfileModal = ({
   isOpen,
   onClose,
   handle,
+  gasFee,
+  priceFeed,
+  wmaticBalance,
 }: CreateProfileProps) => {
   const steps = [
     { label: "Confirm new profile" },
@@ -52,6 +58,8 @@ const CreateProfileModal = ({
 
   const [txHash, setTxHash] = React.useState("");
   const [profileId, setProfileId] = React.useState("");
+
+  const gasLimitNumber = 50000;
 
   const handleConfirmCreateProfile = async () => {
     console.log("Creating profile ...");
@@ -132,7 +140,7 @@ const CreateProfileModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>Create profile</ModalHeader>
@@ -197,6 +205,80 @@ const CreateProfileModal = ({
               >
                 Remember this profile is created in the testnet (Polygon Mumbai)
               </Text>
+
+              <Divider mt="5" />
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Transaction Fee
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Total gas paid
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Social DeFi Fee (0%)
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Platform charge
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Alert status="info" borderRadius={10} mt="5">
+                <AlertIcon />
+                Social DeFi charge 0% fee for all transactions.
+              </Alert>
+
+              <Flex pt="5" pl="5">
+                <Text
+                  fontWeight="700"
+                  fontSize="20px"
+                  color="grayLetter"
+                  my="auto"
+                >
+                  Your balance:
+                </Text>{" "}
+                <Image
+                  src="../assets/logos/polygon-matic-logo.png"
+                  w="5"
+                  h="5"
+                  ml="2"
+                  my="auto"
+                />
+                <Text
+                  fontWeight="600"
+                  fontSize="18px"
+                  color="black"
+                  ml="2"
+                  my="auto"
+                >
+                  {wmaticBalance.toFixed(4)} MATIC
+                </Text>
+              </Flex>
             </>
           )}
 

@@ -25,6 +25,9 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import CreateProfileModal from "~/components/transactions/CreateProfileModal";
 import { changeHeaders } from "~/web3/lens/lens-client";
+import getGasFee from "~/web3/gasfee";
+import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getBalanceFromAddress } from "~/web3/etherservice";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -38,11 +41,18 @@ export const loader: LoaderFunction = async ({ request }) => {
     handle: "TODO",
   };
 
-  return { address, profile, accessToken };
+  const gasFee = await getGasFee();
+
+  const priceFeed = await getPriceFeedFromFlowmi();
+
+  const wmaticBalance = await getBalanceFromAddress(address);
+
+  return { address, profile, accessToken, gasFee, priceFeed, wmaticBalance };
 };
 
 export default function Index() {
-  const { address, accessToken } = useLoaderData();
+  const { address, accessToken, gasFee, priceFeed, wmaticBalance } =
+    useLoaderData();
 
   const [handle, setHandle] = React.useState("");
   const [profilePicture, setProfilePicture] = React.useState(null);
@@ -133,8 +143,10 @@ export default function Index() {
         <CreateProfileModal
           isOpen={isOpen}
           onClose={onClose}
-          profileId={"2"}
           handle={handle}
+          gasFee={gasFee}
+          priceFeed={priceFeed}
+          wmaticBalance={wmaticBalance}
         />
       </Box>
     </Box>

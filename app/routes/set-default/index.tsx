@@ -55,10 +55,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  // Get Gas Fee
   const gasFee = await getGasFee();
 
-  // Get relation MATIC/USD from price feed
   const priceFeed = await getPriceFeedFromFlowmi();
 
   const wmaticBalance = await getBalanceFromAddress(address);
