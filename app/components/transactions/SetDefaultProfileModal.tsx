@@ -30,6 +30,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import { Link } from "react-router-dom";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -372,6 +373,7 @@ const SetDefaultProfileModal = ({
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mr="5"
             onClick={handleClose}
+            hidden={activeStep == 2}
           >
             <Text
               fontWeight="500"
@@ -383,7 +385,7 @@ const SetDefaultProfileModal = ({
             </Text>
           </Button>
 
-          {activeStep === 0 && (
+          {activeStep == 0 && (
             <>
               <Button
                 bg="lens"
@@ -417,22 +419,42 @@ const SetDefaultProfileModal = ({
             </>
           )}
 
-          {activeStep === 2 && (
-            <Button
-              bg="white"
-              borderRadius="10px"
-              boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-              onClick={handleExploreTx}
-            >
-              <Text
-                fontWeight="500"
-                fontSize="18px"
-                lineHeight="21.6px"
-                color="second"
+          {activeStep == 2 && (
+            <>
+              <Button
+                bg="white"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                onClick={handleExploreTx}
+                mr="5"
               >
-                View on Explorer
-              </Text>
-            </Button>
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="second"
+                >
+                  View on Explorer
+                </Text>
+              </Button>
+
+              <Link to={`/${handle}`}>
+                <Button
+                  bg="first"
+                  borderRadius="10px"
+                  boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                >
+                  <Text
+                    fontWeight="500"
+                    fontSize="18px"
+                    lineHeight="21.6px"
+                    color="white"
+                  >
+                    Go to @{handle}
+                  </Text>
+                </Button>
+              </Link>
+            </>
           )}
         </ModalFooter>
       </ModalContent>
