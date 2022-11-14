@@ -24,6 +24,7 @@ import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import SetDefaultProfileModal from "~/components/SetDefaultProfileModal";
 import getGasFee from "~/web3/gasfee";
 import { BigNumber } from "ethers";
+import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -52,14 +53,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  // get Gas fee
+  // Get Gas Fee
   const gasFee = await getGasFee();
 
-  return { address, profiles, defaultProfile, gasFee };
+  // Get relation MATIC/USD from price feed
+  const priceFeed = await getPriceFeedFromFlowmi();
+
+  return { address, profiles, defaultProfile, gasFee, priceFeed };
 };
 
 export default function SetDefault() {
-  const { address, profiles, defaultProfile, gasFee } = useLoaderData();
+  const { address, profiles, defaultProfile, gasFee, priceFeed } =
+    useLoaderData();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -72,10 +77,6 @@ export default function SetDefault() {
 
     onOpen();
   };
-
-  const GAS_LIMIT = BigNumber.from("2074000");
-
-  console.log(2074000 * gasFee.standard.maxPriorityFee * 1e-9);
 
   return (
     <Box bg="#FAFAF9">
@@ -201,6 +202,8 @@ export default function SetDefault() {
             onClose={onClose}
             profileId={defaultProfileSelect}
             handle={defaultHandle}
+            gasFee={gasFee}
+            priceFeed={priceFeed}
           />
         </Box>
       </Box>

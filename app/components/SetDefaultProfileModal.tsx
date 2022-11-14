@@ -36,6 +36,8 @@ type CreateProfileProps = {
   onClose: () => void;
   profileId: string;
   handle: string;
+  gasFee: any;
+  priceFeed: number;
 };
 
 const SetDefaultProfileModal = ({
@@ -43,6 +45,8 @@ const SetDefaultProfileModal = ({
   onClose,
   handle,
   profileId,
+  gasFee,
+  priceFeed,
 }: CreateProfileProps) => {
   const steps = [
     { label: "Confirm default profile" },
@@ -59,6 +63,8 @@ const SetDefaultProfileModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
+  const gasLimitNumber = 50000;
+
   const handleConfirmSetdefaultProfile = async () => {
     setIsLoading(true);
 
@@ -68,7 +74,7 @@ const SetDefaultProfileModal = ({
       getSignerFront()
     );
 
-    const GAS_LIMIT = BigNumber.from("2074000");
+    const GAS_LIMIT = BigNumber.from(gasLimitNumber);
 
     try {
       const setDefaultProfile = await lensContract.setDefaultProfile(
@@ -187,10 +193,23 @@ const SetDefaultProfileModal = ({
 
                 <Box>
                   <Text fontWeight="700" fontSize="16" color="black">
-                    $ 0.02 USD
+                    ${" "}
+                    {(
+                      gasLimitNumber *
+                      gasFee.standard.maxPriorityFee *
+                      1e-9 *
+                      priceFeed *
+                      10
+                    ).toFixed(6)}{" "}
+                    USD
                   </Text>
                   <Text fontWeight="500" fontSize="14" color="gray">
-                    0.24 MATIC
+                    {(
+                      gasLimitNumber *
+                      gasFee.standard.maxPriorityFee *
+                      1e-9
+                    ).toFixed(6)}{" "}
+                    MATIC
                   </Text>
                 </Box>
               </Flex>

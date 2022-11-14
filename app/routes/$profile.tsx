@@ -35,7 +35,7 @@ import {
   WMATIC_CONTRACT_ADDRESS,
 } from "~/web3/erc20/erc20-hub";
 
-import { formatEther } from "~/utils/formarether";
+import { formatEther } from "~/utils/formatEther";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
