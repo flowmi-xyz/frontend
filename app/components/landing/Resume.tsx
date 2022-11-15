@@ -2,7 +2,7 @@ import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 const Resume = () => {
   return (
-    <Box bg="white" p="5">
+    <Box bg="white">
       <Text
         textAlign="center"
         fontWeight="700"

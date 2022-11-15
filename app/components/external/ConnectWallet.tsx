@@ -61,11 +61,18 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
         </Text>
 
         <Center pt="2">
-          <Img
-            src="https://upload.wikimedia.org/wikipedia/en/2/24/Polygon_blockchain_logo.png"
-            h="14"
-          />
+          <Img src="./assets/logos/polygon-tipo.png" h="14" />
         </Center>
+
+        <Text
+          textAlign="center"
+          fontWeight="700"
+          fontSize="25"
+          lineHeight="30px"
+          pt="3"
+        >
+          Mumbai
+        </Text>
 
         <Center pt="50">
           <Box
