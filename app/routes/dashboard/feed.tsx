@@ -39,6 +39,7 @@ import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
 import Balance from "~/components/Balance";
 import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -84,6 +85,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const maticBalance = await getBalanceFromAddress(address);
 
+  const wmaticBalance = await getWMATICBalance(address);
+
+  const awmaticBalance = await getaWMATICBalance(address);
+
   const priceFeed = await getPriceFeedFromFlowmi();
 
   return {
@@ -92,8 +97,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     defaultProfile,
     totalFounded,
     gasFee,
-    maticBalance,
     priceFeed,
+    maticBalance,
+    wmaticBalance,
+    awmaticBalance,
   };
 };
 
@@ -140,37 +147,9 @@ export default function Dashboard() {
     gasFee,
     priceFeed,
     maticBalance,
+    wmaticBalance,
+    awmaticBalance,
   } = useLoaderData();
-
-  const [wmaticBalance, setWmaticBalance] = React.useState(0);
-  const [awmaticBalance, setAwmaticBalance] = React.useState(0);
-
-  React.useEffect(() => {
-    const getBalance = async () => {
-      const signer = await getSignerFront();
-
-      const wmaticContract = new ethers.Contract(
-        WMATIC_CONTRACT_ADDRESS,
-        ERC20_HUB_ABI,
-        signer
-      );
-
-      const wmaticBalance = await wmaticContract.balanceOf(address);
-
-      const awmaticContract = new ethers.Contract(
-        aWMA_CONTRACT_ADDRESS,
-        ERC20_HUB_ABI,
-        signer
-      );
-
-      const awmaticBalance = await awmaticContract.balanceOf(address);
-
-      setWmaticBalance(Number(formatEther(wmaticBalance)));
-      setAwmaticBalance(Number(formatEther(awmaticBalance)));
-    };
-
-    getBalance().catch(console.error);
-  }, []);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
