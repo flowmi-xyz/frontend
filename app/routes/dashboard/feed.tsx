@@ -11,7 +11,19 @@ import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
 import { getSignerBack, getSignerFront } from "~/web3/etherservice";
 
+import { ethers } from "ethers";
+import { formatEther } from "ethers/lib/utils";
+
+import {
+  aWMA_CONTRACT_ADDRESS,
+  ERC20_HUB_ABI,
+  WMATIC_CONTRACT_ADDRESS,
+} from "~/web3/erc20/erc20-hub";
+
+import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
+
 // UI components
+import React from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 
 // components
@@ -20,15 +32,6 @@ import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
 import Balance from "~/components/Balance";
-import { formatEther } from "ethers/lib/utils";
-import React from "react";
-import { ethers } from "ethers";
-import {
-  aWMA_CONTRACT_ADDRESS,
-  ERC20_HUB_ABI,
-  WMATIC_CONTRACT_ADDRESS,
-} from "~/web3/erc20/erc20-hub";
-import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session

@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  Center,
   Flex,
   HStack,
   Icon,
@@ -101,7 +103,7 @@ const Balance = ({
                         src="../assets/logos/aave-aave-logo.png"
                         w="6"
                         h="6"
-                      />{" "}
+                      />
                       <Text fontSize={14}>aWMATIC</Text>
                     </HStack>
                   </Td>
@@ -122,6 +124,19 @@ const Balance = ({
             Whitelist module
           </Text> */}
         </Box>
+
+        <Center pt="3" pb="5">
+          <Button
+            bg="fifth"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            p="3"
+          >
+            <Text fontWeight="600" fontSize="16px" color="white">
+              Claim your aWMATIC
+            </Text>
+          </Button>
+        </Center>
       </Link>
     </>
   );
