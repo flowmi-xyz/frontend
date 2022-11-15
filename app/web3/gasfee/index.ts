@@ -13,4 +13,4 @@ async function getGasFee() {
   return gasFee;
 }
 
-export default getGasFee;
+export { getGasFee };

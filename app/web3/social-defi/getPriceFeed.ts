@@ -24,4 +24,4 @@ async function getPriceFeedFromFlowmi() {
   return priceFeedMaticUSD;
 }
 
-export default getPriceFeedFromFlowmi;
+export { getPriceFeedFromFlowmi };

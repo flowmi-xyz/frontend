@@ -9,27 +9,18 @@ import { destroySession, getSession } from "~/bff/session";
 import { lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
-import {
-  getBalanceFromAddress,
-  getSignerBack,
-  getSignerFront,
-} from "~/web3/etherservice";
+import { getBalanceFromAddress, getSignerBack } from "~/web3/etherservice";
 
 import { ethers } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 
-import {
-  aWMA_CONTRACT_ADDRESS,
-  ERC20_HUB_ABI,
-  WMATIC_CONTRACT_ADDRESS,
-} from "~/web3/erc20/erc20-hub";
-
 import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
+import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
-import getGasFee from "~/web3/gasfee";
+import { getGasFee } from "~/web3/gasfee";
+import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
 
 // UI components
-import React from "react";
 import { Box, Center, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
 // components
@@ -38,10 +29,10 @@ import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
 import Balance from "~/components/Balance";
-import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
-import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const time1 = new Date();
+
   // Get address from cookie session
   const session = await getSession(request.headers.get("Cookie"));
 
@@ -76,20 +67,33 @@ export const loader: LoaderFunction = async ({ request }) => {
       defaultProfile.ownedBy
     );
 
-    console.log(totalFounded);
-
     totalFounded = Number(formatEther(totalFounded));
   } catch (error) {
     console.log(error);
   }
 
-  const maticBalance = await getBalanceFromAddress(address);
+  const [maticBalance, wmaticBalance, awmaticBalance, priceFeed] =
+    await Promise.all([
+      getBalanceFromAddress(address),
+      getWMATICBalance(address),
+      getaWMATICBalance(address),
+      getPriceFeedFromFlowmi(),
+    ]);
 
-  const wmaticBalance = await getWMATICBalance(address);
+  // const maticBalance = await getBalanceFromAddress(address);
 
-  const awmaticBalance = await getaWMATICBalance(address);
+  // const wmaticBalance = await getWMATICBalance(address);
 
-  const priceFeed = await getPriceFeedFromFlowmi();
+  // const awmaticBalance = await getaWMATICBalance(address);
+
+  // const priceFeed = await getPriceFeedFromFlowmi();
+
+  const time2 = new Date();
+
+  console.log(
+    "Time to load dashboard: ",
+    (time2.getTime() - time1.getTime()) / 1000
+  );
 
   return {
     address,

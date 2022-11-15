@@ -23,7 +23,7 @@ import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
 // UI components
 import React from "react";
-import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
@@ -33,15 +33,9 @@ import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 import FollowersComponent from "~/components/FollowersComponent";
 import BalanceInProfile from "~/components/BalanceInProfile";
 
-import {
-  aWMA_CONTRACT_ADDRESS,
-  ERC20_HUB_ABI,
-  WMATIC_CONTRACT_ADDRESS,
-} from "~/web3/erc20/erc20-hub";
-
 import { formatEther } from "~/utils/formatEther";
-import getGasFee from "~/web3/gasfee";
-import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getGasFee } from "~/web3/gasfee";
+import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
 import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
 export const loader: LoaderFunction = async ({ request, params }) => {

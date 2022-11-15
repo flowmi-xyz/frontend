@@ -25,8 +25,8 @@ import NavbarConnected from "~/components/NavbarConnected";
 
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
-import getGasFee from "~/web3/gasfee";
-import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getGasFee } from "~/web3/gasfee";
+import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
 import { getBalanceFromAddress } from "~/web3/etherservice";
 
 export const loader: LoaderFunction = async ({ request }) => {
