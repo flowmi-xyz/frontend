@@ -1,7 +1,7 @@
 // BFF components
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useTransition } from "@remix-run/react";
 
 import { db } from "~/bff/db.server";
 import { destroySession, getSession } from "~/bff/session";
@@ -30,7 +30,7 @@ import getGasFee from "~/web3/gasfee";
 
 // UI components
 import React from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
@@ -151,6 +151,8 @@ export default function Dashboard() {
     awmaticBalance,
   } = useLoaderData();
 
+  const transition = useTransition();
+
   return (
     <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
@@ -159,37 +161,55 @@ export default function Dashboard() {
         handle={defaultProfile?.handle}
       />
 
-      <Box maxWidth="1200px" m="auto">
-        <Grid templateColumns="repeat(3, 1fr)">
-          <GridItem colSpan={2}>
-            <ProfileParticipation totalFounded={totalFounded} />
-          </GridItem>
+      {transition.state === "idle" && (
+        <Box maxWidth="1200px" m="auto">
+          <Grid templateColumns="repeat(3, 1fr)">
+            <GridItem colSpan={2}>
+              <ProfileParticipation totalFounded={totalFounded} />
+            </GridItem>
 
-          <GridItem colSpan={1}>
-            <Balance
-              maticBalance={maticBalance}
-              wmaticBalance={wmaticBalance}
-              awmaticBalance={awmaticBalance}
-              gasFee={gasFee}
-              priceFeed={priceFeed}
+            <GridItem colSpan={1}>
+              <Balance
+                maticBalance={maticBalance}
+                wmaticBalance={wmaticBalance}
+                awmaticBalance={awmaticBalance}
+                gasFee={gasFee}
+                priceFeed={priceFeed}
+              />
+            </GridItem>
+
+            <GridItem colSpan={2}>
+              <Box>
+                <Outlet />
+              </Box>
+            </GridItem>
+
+            <GridItem colSpan={1}>
+              <Box>
+                <SettingsBox />
+
+                <HotProfiles />
+              </Box>
+            </GridItem>
+          </Grid>
+        </Box>
+      )}
+
+      {transition.state === "loading" && (
+        <Box p="10">
+          <Text textAlign="center" fontSize="26px" color="lensDark" mt="25px">
+            Connecting with garden ...
+          </Text>
+
+          <Center mt="10">
+            <Image
+              src="../assets/animations/Lens-Anim4_16x10.gif"
+              rounded="xl"
+              w="50%"
             />
-          </GridItem>
-
-          <GridItem colSpan={2}>
-            <Box>
-              <Outlet />
-            </Box>
-          </GridItem>
-
-          <GridItem colSpan={1}>
-            <Box>
-              <SettingsBox />
-
-              <HotProfiles />
-            </Box>
-          </GridItem>
-        </Grid>
-      </Box>
+          </Center>
+        </Box>
+      )}
     </Box>
   );
 }
