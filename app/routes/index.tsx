@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 
 // components
 import NavbarLanding from "~/components/landing/NavbarLanding";
+import SectionOne from "~/components/landing/SectionOne";
 import Resume from "~/components/landing/Resume";
 import AccumulatedProfiles from "~/components/landing/AccumulatedProfiles";
 import BuildWith from "~/components/landing/BuiltdWith";
@@ -11,6 +12,7 @@ export default function Index() {
   return (
     <Box>
       <NavbarLanding />
+      <SectionOne />
       <Resume />
       <AccumulatedProfiles />
       <BuildWith />
