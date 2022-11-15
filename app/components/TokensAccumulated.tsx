@@ -87,6 +87,29 @@ const TokenAccumulated = ({
       >
         {tokensAccumulated.toFixed(4)} WMATIC
       </Text>
+
+      <Text
+        textAlign="center"
+        fontWeight="600"
+        fontSize="15px"
+        lineHeight="120%"
+        color="black"
+        pt="5"
+      >
+        When the number of followers reaches {goalOfFollowers}, the accumulated
+        tokens will be raffled
+      </Text>
+
+      <Text
+        textAlign="center"
+        fontWeight="600"
+        fontSize="15px"
+        lineHeight="120%"
+        color="black"
+        pt="3"
+      >
+        {countFollowers % goalOfFollowers} / {goalOfFollowers} Followers
+      </Text>
     </Box>
   );
 };
