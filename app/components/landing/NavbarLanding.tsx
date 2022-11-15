@@ -13,7 +13,7 @@ const NavbarLanding = () => {
       width="100%"
     >
       <Link to="/">
-        <Text fontSize="24" lineHeight="21.6px" color="white">
+        <Text fontWeight="700" fontSize="24" lineHeight="21.6px" color="white">
           Social Defi
         </Text>
       </Link>
