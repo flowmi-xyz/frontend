@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { formatEther } from "~/utils/formatEther";
 import { getSignerBack } from "../etherservice";
 
-import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "./index";
+import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "./social-defi-hub";
 
 async function getPriceFeedFromFlowmi() {
   const flowmiContract = new ethers.Contract(

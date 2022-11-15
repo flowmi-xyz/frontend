@@ -14,7 +14,10 @@ import { getBalanceFromAddress, getSignerBack } from "~/web3/etherservice";
 import { ethers } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 
-import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
+import {
+  FLOWMI_CONTRACT_ADDRESS,
+  FLOWMI_HUB_ABI,
+} from "~/web3/social-defi/social-defi-hub";
 import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
 import { getGasFee } from "~/web3/gasfee";
@@ -29,6 +32,7 @@ import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
 import Balance from "~/components/Balance";
+import { getTotalFundedProfile } from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const time1 = new Date();
@@ -52,33 +56,21 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  const gasFee = await getGasFee();
-
-  const flowmiContract = new ethers.Contract(
-    FLOWMI_CONTRACT_ADDRESS,
-    FLOWMI_HUB_ABI,
-    getSignerBack()
-  );
-
-  let totalFounded = 0;
-
-  try {
-    totalFounded = await flowmiContract.getTotalFundedProfile(
-      defaultProfile.ownedBy
-    );
-
-    totalFounded = Number(formatEther(totalFounded));
-  } catch (error) {
-    console.log(error);
-  }
-
-  const [maticBalance, wmaticBalance, awmaticBalance, priceFeed] =
-    await Promise.all([
-      getBalanceFromAddress(address),
-      getWMATICBalance(address),
-      getaWMATICBalance(address),
-      getPriceFeedFromFlowmi(),
-    ]);
+  const [
+    totalFounded,
+    gasFee,
+    maticBalance,
+    wmaticBalance,
+    awmaticBalance,
+    priceFeed,
+  ] = await Promise.all([
+    getTotalFundedProfile(defaultProfile.ownedBy),
+    getGasFee(),
+    getBalanceFromAddress(address),
+    getWMATICBalance(address),
+    getaWMATICBalance(address),
+    getPriceFeedFromFlowmi(),
+  ]);
 
   // const maticBalance = await getBalanceFromAddress(address);
 

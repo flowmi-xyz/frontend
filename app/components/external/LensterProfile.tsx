@@ -21,7 +21,7 @@ import FollowModal from "../transactions/FollowModal";
 import UnfollowModal from "../transactions/UnfollowModal";
 import DefiFollowModal from "../transactions/DefiFollowModal";
 
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";
 
 type LensterProfileProps = {
   name: string;

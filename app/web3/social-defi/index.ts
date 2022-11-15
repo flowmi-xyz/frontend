@@ -1,10 +1,27 @@
-import FLOWMI_HUB_ABI from "./abi/flowmi-contract-abi.json";
+import { ethers } from "ethers";
+import { getSignerBack } from "../etherservice";
+import { formatEther } from "~/utils/formatEther";
 
-// Polygon Mainnet
+import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "./social-defi-hub";
 
-// Polygon Mumbai
+async function getTotalFundedProfile(address: string) {
+  const flowmiContract = new ethers.Contract(
+    FLOWMI_CONTRACT_ADDRESS,
+    FLOWMI_HUB_ABI,
+    getSignerBack()
+  );
 
-// Polygon Mumbai Sandbox
-const FLOWMI_CONTRACT_ADDRESS = "0x978203B07FE05Bc3C5d14ce65946DD3119E2b54F";
+  let totalFounded = 0;
 
-export { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI };
+  try {
+    totalFounded = await flowmiContract.getTotalFundedProfile(address);
+
+    totalFounded = Number(formatEther(totalFounded));
+  } catch (error) {
+    console.log(error);
+  }
+
+  return totalFounded;
+}
+
+export { getTotalFundedProfile };

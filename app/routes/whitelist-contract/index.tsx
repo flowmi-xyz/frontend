@@ -23,7 +23,7 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import WhitelistContractModal from "~/components/WhiteListContractModal";
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session

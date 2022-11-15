@@ -32,7 +32,7 @@ import {
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { defaultAbiCoder, parseEther } from "ethers/lib/utils";
 import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";
 
 type FollowModalProps = {
   isOpen: boolean;

@@ -19,7 +19,10 @@ import {
   getSignerFront,
 } from "~/web3/etherservice";
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
+import {
+  FLOWMI_CONTRACT_ADDRESS,
+  FLOWMI_HUB_ABI,
+} from "~/web3/social-defi/social-defi-hub";
 
 // UI components
 import React from "react";
