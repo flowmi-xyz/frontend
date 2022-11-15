@@ -24,4 +24,70 @@ async function getTotalFundedProfile(address: string) {
   return totalFounded;
 }
 
-export { getTotalFundedProfile };
+async function getFundsInThisRaffle(address: string) {
+  const flowmiContract = new ethers.Contract(
+    FLOWMI_CONTRACT_ADDRESS,
+    FLOWMI_HUB_ABI,
+    getSignerBack()
+  );
+
+  let wmaticAccumulated = 0;
+
+  try {
+    const wmaticBalance = await flowmiContract.getFundsInThisRaffle(address);
+
+    wmaticAccumulated = Number(formatEther(wmaticBalance));
+  } catch (error) {
+    console.log(error);
+  }
+
+  return wmaticAccumulated;
+}
+
+async function getGoal() {
+  const flowmiContract = new ethers.Contract(
+    FLOWMI_CONTRACT_ADDRESS,
+    FLOWMI_HUB_ABI,
+    getSignerBack()
+  );
+
+  let goalOfFollowers = 0;
+
+  try {
+    goalOfFollowers = await flowmiContract.getGoal();
+
+    goalOfFollowers = Number(goalOfFollowers);
+  } catch (error) {
+    console.log(error);
+  }
+
+  return goalOfFollowers;
+}
+
+async function getNumberOfFollowers(address: string) {
+  // Get how much pay in WMATIC
+  const flowmiContract = new ethers.Contract(
+    FLOWMI_CONTRACT_ADDRESS,
+    FLOWMI_HUB_ABI,
+    getSignerBack()
+  );
+
+  // Get count of followers
+  let countFollowers = 0;
+
+  try {
+    countFollowers = await flowmiContract.getNumberOfFollowers(address);
+
+    countFollowers = Number(countFollowers);
+  } catch (error) {
+    console.log(error);
+  }
+
+  return countFollowers;
+}
+export {
+  getTotalFundedProfile,
+  getFundsInThisRaffle,
+  getGoal,
+  getNumberOfFollowers,
+};

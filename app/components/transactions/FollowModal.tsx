@@ -31,6 +31,7 @@ import {
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { defaultAbiCoder } from "ethers/lib/utils";
+import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 
 type FollowModalProps = {
   isOpen: boolean;
@@ -63,7 +64,7 @@ const FollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumber = 250000;
+  const gasLimitNumber = 500000;
 
   const handleFollow = async () => {
     setIsLoading(true);
@@ -74,15 +75,10 @@ const FollowModal = ({
       getSignerFront()
     );
 
-    const data = defaultAbiCoder.encode(
-      ["address", "uint256"],
-      ["0xD65d229951E94a7138F47Bd9e0Faff42A7aCe0c6", 1]
-    );
-
     try {
       const GAS_LIMIT = BigNumber.from(gasLimitNumber);
 
-      const followProfile = await lensContract.follow([profileId], [data], {
+      const followProfile = await lensContract.follow([profileId], [0x0], {
         gasLimit: GAS_LIMIT,
       });
 

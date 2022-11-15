@@ -31,8 +31,13 @@ import {
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { defaultAbiCoder, parseEther } from "ethers/lib/utils";
-import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";
+import { aWMA_CONTRACT_ADDRESS, ERC20_HUB_ABI } from "~/web3/erc20/erc20-hub";
+import {
+  FLOWMI_AAVE_ABI,
+  FLOWMI_AAVE_CONTRACT_ADDRESS,
+  FLOWMI_CONTRACT_ADDRESS,
+  FLOWMI_HUB_ABI,
+} from "~/web3/social-defi/social-defi-hub";
 
 type ClaimTokensProps = {
   isOpen: boolean;
@@ -78,10 +83,10 @@ const ClaimTokens = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumberApprove = 30000;
-  const gasLimitNumberDefiFollow = 300000;
+  const gasLimitNumberApprove = 100000;
+  const gasLimitNumberClaim = 200000;
 
-  const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
+  // const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
   const MAX_UINT256 =
     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
@@ -90,7 +95,7 @@ const ClaimTokens = ({
 
     try {
       const tokenContract = new ethers.Contract(
-        WMATIC_CONTRACT_ADDRESS,
+        aWMA_CONTRACT_ADDRESS,
         ERC20_HUB_ABI,
         getSignerFront()
       );
@@ -98,7 +103,7 @@ const ClaimTokens = ({
       const GAS_LIMIT = BigNumber.from(gasLimitNumberApprove);
 
       const approve = await tokenContract.approve(
-        FLOWMI_CONTRACT_ADDRESS,
+        FLOWMI_AAVE_CONTRACT_ADDRESS,
         MAX_UINT256,
         {
           gasLimit: GAS_LIMIT,
@@ -125,26 +130,25 @@ const ClaimTokens = ({
     }
   };
 
-  const handleFollow = async () => {
+  const handleClaim = async () => {
     setIsLoading(true);
 
-    const lensContract = new ethers.Contract(
-      LENS_HUB_CONTRACT_ADDRESS,
-      LENS_HUB_ABI,
+    const flowmiAaveContract = new ethers.Contract(
+      FLOWMI_AAVE_CONTRACT_ADDRESS,
+      FLOWMI_AAVE_ABI,
       getSignerFront()
     );
 
-    const data = defaultAbiCoder.encode(
-      ["address", "uint256"],
-      [WMATIC_CONTRACT_ADDRESS, DEFAULT_FOLLOW_PRICE]
-    );
-
     try {
-      const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
+      const GAS_LIMIT = BigNumber.from(gasLimitNumberClaim);
+      console.log(parseEther(awmaticBalance.toString()));
 
-      const followProfile = await lensContract.follow([profileId], [data], {
-        gasLimit: GAS_LIMIT,
-      });
+      const followProfile = await flowmiAaveContract.redeemAToken(
+        parseEther(awmaticBalance.toString()),
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
 
       nextStep();
 
@@ -355,7 +359,7 @@ const ClaimTokens = ({
                     >
                       ${" "}
                       {(
-                        gasLimitNumberDefiFollow *
+                        gasLimitNumberClaim *
                         gasFee.standard.maxPriorityFee *
                         1e-9 *
                         priceFeed *
@@ -370,7 +374,7 @@ const ClaimTokens = ({
                       textAlign="right"
                     >
                       {(
-                        gasLimitNumberDefiFollow *
+                        gasLimitNumberClaim *
                         gasFee.standard.maxPriorityFee *
                         1e-9
                       ).toFixed(6)}{" "}
@@ -631,7 +635,8 @@ const ClaimTokens = ({
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 mr="5"
-                onClick={handleClose}
+                onClick={handleClaim}
+                disabled={isLoading || signed}
               >
                 <Text
                   fontWeight="500"

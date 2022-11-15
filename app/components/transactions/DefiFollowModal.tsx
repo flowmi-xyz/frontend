@@ -76,8 +76,8 @@ const DefiFollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumberApprove = 30000;
-  const gasLimitNumberDefiFollow = 300000;
+  const gasLimitNumberApprove = 100000;
+  const gasLimitNumberDefiFollow = 2000000;
 
   const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
   const MAX_UINT256 =

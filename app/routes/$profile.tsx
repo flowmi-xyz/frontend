@@ -40,6 +40,11 @@ import { formatEther } from "~/utils/formatEther";
 import { getGasFee } from "~/web3/gasfee";
 import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
 import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
+import {
+  getFundsInThisRaffle,
+  getGoal,
+  getNumberOfFollowers,
+} from "~/web3/social-defi";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -125,59 +130,25 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const arrayFollowers = followersResponse?.followers?.items;
 
-  // Get how much pay in WMATIC
-  const flowmiContract = new ethers.Contract(
-    FLOWMI_CONTRACT_ADDRESS,
-    FLOWMI_HUB_ABI,
-    getSignerBack()
-  );
-
-  // Get how much WMATIC user has
-  let wmaticAccumulated = 0;
-
-  try {
-    const wmaticBalance = await flowmiContract.getFundsInThisRaffle(
-      pageProfile.ownedBy
-    );
-
-    wmaticAccumulated = Number(formatEther(wmaticBalance));
-  } catch (error) {
-    console.log(error);
-  }
-
-  // Get count of followers
-  let countFollowers = 0;
-
-  try {
-    countFollowers = await flowmiContract.getNumberOfFollowers(
-      pageProfile.ownedBy
-    );
-
-    countFollowers = Number(countFollowers);
-  } catch (error) {
-    console.log(error);
-  }
-
-  // Get goals of followers
-  let goalOfFollowers = 0;
-
-  try {
-    goalOfFollowers = await flowmiContract.getGoal();
-
-    goalOfFollowers = Number(goalOfFollowers);
-  } catch (error) {
-    console.log(error);
-  }
-
-  const gasFee = await getGasFee();
-
-  const priceFeed = await getPriceFeedFromFlowmi();
-
-  const maticBalance = await getBalanceFromAddress(address);
-
-  const wmaticBalance = await getWMATICBalance(address);
-
-  const awmaticBalance = await getaWMATICBalance(address);
+  const [
+    countFollowers,
+    goalOfFollowers,
+    wmaticAccumulated,
+    gasFee,
+    maticBalance,
+    wmaticBalance,
+    awmaticBalance,
+    priceFeed,
+  ] = await Promise.all([
+    getNumberOfFollowers(pageProfile.ownedBy),
+    getGoal(),
+    getFundsInThisRaffle(pageProfile.ownedBy),
+    getGasFee(),
+    getBalanceFromAddress(address),
+    getWMATICBalance(address),
+    getaWMATICBalance(address),
+    getPriceFeedFromFlowmi(),
+  ]);
 
   return {
     address,
