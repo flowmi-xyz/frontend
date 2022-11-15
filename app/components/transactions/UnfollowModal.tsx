@@ -3,10 +3,11 @@ import React from "react";
 import {
   Alert,
   AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Center,
+  Divider,
+  Flex,
   HStack,
   Image,
   Modal,
@@ -21,7 +22,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { createUnfollowTypedData } from "~/web3/lens/follow/unfollow";
 import { LENS_HUB_ABI } from "~/web3/lens/lens-hub";
@@ -60,6 +61,8 @@ const UnfollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
+  const gasLimitNumber = 200000;
+
   const handleUnfollow = async () => {
     setIsLoading(true);
 
@@ -76,8 +79,13 @@ const UnfollowModal = ({
     );
 
     try {
+      const GAS_LIMIT = BigNumber.from(gasLimitNumber);
+
       const burnNFTFollow = await followNFTContract.burn(
-        typedData.value.tokenId
+        typedData.value.tokenId,
+        {
+          gasLimit: GAS_LIMIT,
+        }
       );
 
       nextStep();
@@ -110,7 +118,7 @@ const UnfollowModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>Unfollow</ModalHeader>
@@ -129,7 +137,7 @@ const UnfollowModal = ({
             </Steps>
           </Box>
 
-          {activeStep === 0 && (
+          {activeStep === 0 && !signed && !error && (
             <>
               <Text
                 fontWeight="600"
@@ -164,10 +172,97 @@ const UnfollowModal = ({
                 Remember that tokens deposited when making DeFi Follow will not
                 be returned.
               </Text>
+
+              <Divider mt="5" />
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Transaction Fee
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Total gas paid
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    ${" "}
+                    {(
+                      gasLimitNumber *
+                      gasFee.standard.maxPriorityFee *
+                      1e-9 *
+                      priceFeed *
+                      10
+                    ).toFixed(6)}{" "}
+                    USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    {(
+                      gasLimitNumber *
+                      gasFee.standard.maxPriorityFee *
+                      1e-9
+                    ).toFixed(6)}{" "}
+                    MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Social DeFi Fee (0%)
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Platform charge
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Alert status="info" borderRadius={10} mt="5">
+                <AlertIcon />
+                Social DeFi charge 0% fee for all transactions.
+              </Alert>
+
+              <Flex pt="5" pl="5">
+                <Text
+                  fontWeight="700"
+                  fontSize="20px"
+                  color="grayLetter"
+                  my="auto"
+                >
+                  Your balance:
+                </Text>{" "}
+                <Image
+                  src="../assets/logos/polygon-matic-logo.png"
+                  w="5"
+                  h="5"
+                  ml="2"
+                  my="auto"
+                />
+                <Text
+                  fontWeight="600"
+                  fontSize="18px"
+                  color="black"
+                  ml="2"
+                  my="auto"
+                >
+                  {wmaticBalance.toFixed(4)} MATIC
+                </Text>
+              </Flex>
             </>
           )}
 
-          {activeStep == 2 && !signed && (
+          {activeStep == 2 && !signed && !error && (
             <>
               <>
                 <Center pt="5" pl="5" pr="5">
@@ -294,7 +389,7 @@ const UnfollowModal = ({
               </Button>
 
               <Button
-                bg="second"
+                bg="white"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleExploreTx}
@@ -303,7 +398,7 @@ const UnfollowModal = ({
                   fontWeight="500"
                   fontSize="18px"
                   lineHeight="21.6px"
-                  color="white"
+                  color="third"
                 >
                   View on Explorer
                 </Text>

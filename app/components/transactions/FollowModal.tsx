@@ -63,7 +63,7 @@ const FollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumber = 200000;
+  const gasLimitNumber = 250000;
 
   const handleFollow = async () => {
     setIsLoading(true);
