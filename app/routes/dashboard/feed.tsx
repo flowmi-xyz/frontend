@@ -9,7 +9,11 @@ import { destroySession, getSession } from "~/bff/session";
 import { lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
-import { getSignerBack, getSignerFront } from "~/web3/etherservice";
+import {
+  getBalanceFromAddress,
+  getSignerBack,
+  getSignerFront,
+} from "~/web3/etherservice";
 
 import { ethers } from "ethers";
 import { formatEther } from "ethers/lib/utils";
@@ -22,6 +26,8 @@ import {
 
 import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
+import getGasFee from "~/web3/gasfee";
+
 // UI components
 import React from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
@@ -32,6 +38,7 @@ import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/ConfigurationBox";
 import Balance from "~/components/Balance";
+import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -53,6 +60,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
+  const gasFee = await getGasFee();
+
   const flowmiContract = new ethers.Contract(
     FLOWMI_CONTRACT_ADDRESS,
     FLOWMI_HUB_ABI,
@@ -73,7 +82,19 @@ export const loader: LoaderFunction = async ({ request }) => {
     console.log(error);
   }
 
-  return { address, accessToken, defaultProfile, totalFounded };
+  const maticBalance = await getBalanceFromAddress(address);
+
+  const priceFeed = await getPriceFeedFromFlowmi();
+
+  return {
+    address,
+    accessToken,
+    defaultProfile,
+    totalFounded,
+    gasFee,
+    maticBalance,
+    priceFeed,
+  };
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -110,17 +131,21 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const { address, defaultProfile, totalFounded } = useLoaderData();
+  const {
+    address,
+    defaultProfile,
+    totalFounded,
+    gasFee,
+    priceFeed,
+    maticBalance,
+  } = useLoaderData();
 
-  const [nativeBalance, setNativeBalance] = React.useState(0);
   const [wmaticBalance, setWmaticBalance] = React.useState(0);
   const [awmaticBalance, setAwmaticBalance] = React.useState(0);
 
   React.useEffect(() => {
     const getBalance = async () => {
       const signer = await getSignerFront();
-
-      const balance = await signer.getBalance();
 
       const wmaticContract = new ethers.Contract(
         WMATIC_CONTRACT_ADDRESS,
@@ -138,7 +163,6 @@ export default function Dashboard() {
 
       const awmaticBalance = await awmaticContract.balanceOf(address);
 
-      setNativeBalance(Number(formatEther(balance)));
       setWmaticBalance(Number(formatEther(wmaticBalance)));
       setAwmaticBalance(Number(formatEther(awmaticBalance)));
     };
@@ -162,9 +186,11 @@ export default function Dashboard() {
 
           <GridItem colSpan={1}>
             <Balance
-              nativeBalance={nativeBalance}
+              maticBalance={maticBalance}
               wmaticBalance={wmaticBalance}
               awmaticBalance={awmaticBalance}
+              gasFee={gasFee}
+              priceFeed={priceFeed}
             />
           </GridItem>
 
