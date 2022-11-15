@@ -3,7 +3,7 @@ import { Box, Center, Text } from "@chakra-ui/react";
 const FooterLanding = () => {
   return (
     <>
-      <Box bottom="0" position="fixed" width="100%">
+      <Box pt="10" width="100%">
         <Center>
           <Box
             width="50%"

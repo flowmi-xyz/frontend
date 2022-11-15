@@ -6,14 +6,23 @@ const SectionOne = () => {
       <Center>
         <Flex flexDirection={"column"} alignItems="center">
           <Text
-            fontSize={["40px", "55px", "55px"]}
-            lineHeight={["48px", "66px", "66px"]}
-            color="#282828"
-            marginTop={["20px", "100px", "100px"]}
             textAlign="center"
+            fontWeight="700"
+            fontSize={["40px", "55px", "45px"]}
+            lineHeight={["48px", "66px", "66px"]}
+            color="black"
+            marginTop={["20px", "100px", "50px"]}
           >
-            titulo
+            Welcome to the{" "}
+            <Text
+              as="span"
+              bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+              bgClip="text"
+            >
+              Social DeFi
+            </Text>
           </Text>
+
           <Text
             fontSize={["18px", "22px", "22px"]}
             lineHeight={["21.6px", "28.8px", "28.8ppx"]}
@@ -23,18 +32,17 @@ const SectionOne = () => {
             padding={["10px", "0px", "0px"]}
             width={["90%", "600px", "600px"]}
           >
-            subtitulo
-          </Text>
-          {/* <Button
-              bg={"primary"}
-              borderRadius={"70"}
-              width="200px"
-              marginTop={["30px", "50px", "50px"]}
+            Use web3 social network and interact with Defi protocols at the same
+            time{" "}
+            <Text
+              as="span"
+              fontWeight="700"
+              bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+              bgClip="text"
             >
-              <Text fontSize={"18"} lineHeight={"21.6px"} color="white">
-                {t("button")}
-              </Text>
-            </Button> */}
+              without realizing it
+            </Text>
+          </Text>
 
           <Image src="../assets/images/phone.png" alt="phone" />
         </Flex>
