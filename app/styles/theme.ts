@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, theme as defaultTheme } from "@chakra-ui/react";
 
 import { StepsStyleConfig } from "chakra-ui-steps";
 
@@ -52,6 +52,16 @@ const CustomSteps = {
 };
 
 export const theme = extendTheme({
+  ...defaultTheme,
+  fonts: {
+    heading: "Louis George Cafe, sans-serif",
+    body: "Louis George Cafe, sans-serif",
+    mono: "Louis George Cafe, sans-serif",
+  },
+  // fonts: {
+  //   heading: "'Raleway', sans-serif;",
+  //   body: "'Raleway', sans-serif;",
+  // },
   colors: {
     first: "#31108F",
     second: "#7A3CE3",

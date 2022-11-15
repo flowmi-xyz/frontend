@@ -7,7 +7,7 @@ import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 import { GoCommentDiscussion } from "react-icons/go";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import { VscLibrary } from "react-icons/vsc";
-import { WIDTH_FEED } from "~/style/theme";
+import { WIDTH_FEED } from "~/styles/theme";
 import { Link } from "@remix-run/react";
 
 type PostProps = {

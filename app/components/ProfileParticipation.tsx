@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 
-import { WIDTH_FEED } from "~/style/theme";
+import { WIDTH_FEED } from "~/styles/theme";
 
 type ProfileParticipationProps = {
   totalFounded: number;
