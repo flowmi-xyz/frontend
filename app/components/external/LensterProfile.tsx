@@ -39,6 +39,7 @@ type LensterProfileProps = {
   amount: number;
   gasFee: any;
   priceFeed: number;
+  maticBalance: number;
   wmaticBalance: number;
 };
 
@@ -58,6 +59,7 @@ const LensterProfile = ({
   amount,
   gasFee,
   priceFeed,
+  maticBalance,
   wmaticBalance,
 }: LensterProfileProps) => {
   const {
@@ -238,6 +240,7 @@ const LensterProfile = ({
         amount={amount}
         gasFee={gasFee}
         priceFeed={priceFeed}
+        maticBalance={maticBalance}
         wmaticBalance={wmaticBalance}
       />
 
@@ -248,7 +251,7 @@ const LensterProfile = ({
         handle={handle}
         gasFee={gasFee}
         priceFeed={priceFeed}
-        wmaticBalance={wmaticBalance}
+        maticBalance={maticBalance}
       />
 
       <UnfollowModal
@@ -258,7 +261,7 @@ const LensterProfile = ({
         handle={handle}
         gasFee={gasFee}
         priceFeed={priceFeed}
-        wmaticBalance={wmaticBalance}
+        maticBalance={maticBalance}
       />
 
       <Divider pt="3" />

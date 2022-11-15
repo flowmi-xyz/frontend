@@ -39,7 +39,7 @@ type FollowModalProps = {
   handle: string;
   gasFee: any;
   priceFeed: number;
-  wmaticBalance: number;
+  maticBalance: number;
 };
 
 const FollowModal = ({
@@ -49,7 +49,7 @@ const FollowModal = ({
   handle,
   gasFee,
   priceFeed,
-  wmaticBalance,
+  maticBalance,
 }: FollowModalProps) => {
   const steps = [{ label: "Confirm follow" }, { label: "Follow complete 🎉" }];
 
@@ -245,7 +245,7 @@ const FollowModal = ({
                   ml="2"
                   my="auto"
                 >
-                  {wmaticBalance.toFixed(4)} MATIC
+                  {maticBalance.toFixed(4)} MATIC
                 </Text>
               </Flex>
             </>

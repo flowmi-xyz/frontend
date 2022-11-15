@@ -37,7 +37,7 @@ type UnFollowModalProps = {
   handle: string;
   gasFee: any;
   priceFeed: number;
-  wmaticBalance: number;
+  maticBalance: number;
 };
 
 const UnfollowModal = ({
@@ -47,7 +47,7 @@ const UnfollowModal = ({
   handle,
   gasFee,
   priceFeed,
-  wmaticBalance,
+  maticBalance,
 }: UnFollowModalProps) => {
   const steps = [{ label: "Confirm unfollow" }, { label: "Unfollow complete" }];
 
@@ -256,7 +256,7 @@ const UnfollowModal = ({
                   ml="2"
                   my="auto"
                 >
-                  {wmaticBalance.toFixed(4)} MATIC
+                  {maticBalance.toFixed(4)} MATIC
                 </Text>
               </Flex>
             </>

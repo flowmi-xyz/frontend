@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Flex,
   HStack,
   Image,
@@ -41,6 +42,7 @@ type FollowModalProps = {
   amount: number;
   gasFee: any;
   priceFeed: number;
+  maticBalance: number;
   wmaticBalance: number;
 };
 
@@ -52,6 +54,7 @@ const DefiFollowModal = ({
   amount,
   gasFee,
   priceFeed,
+  maticBalance,
   wmaticBalance,
 }: FollowModalProps) => {
   const steps = [
@@ -73,6 +76,9 @@ const DefiFollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
+  const gasLimitNumberApprove = 30000;
+  const gasLimitNumberDefiFollow = 300000;
+
   const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
   const MAX_UINT256 =
     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
@@ -87,9 +93,14 @@ const DefiFollowModal = ({
         getSignerFront()
       );
 
+      const GAS_LIMIT = BigNumber.from(gasLimitNumberApprove);
+
       const approve = await tokenContract.approve(
         FLOWMI_CONTRACT_ADDRESS,
-        MAX_UINT256
+        MAX_UINT256,
+        {
+          gasLimit: GAS_LIMIT,
+        }
       );
 
       setIsLoading(false);
@@ -104,10 +115,11 @@ const DefiFollowModal = ({
       nextStep();
       setApproveCompleted(true);
     } catch (error) {
-      console.log(error);
-
+      setError(true);
       setIsLoading(false);
       setSigned(false);
+
+      console.log(error);
     }
   };
 
@@ -126,7 +138,7 @@ const DefiFollowModal = ({
     );
 
     try {
-      const GAS_LIMIT = BigNumber.from("2074000");
+      const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
 
       const followProfile = await lensContract.follow([profileId], [data], {
         gasLimit: GAS_LIMIT,
@@ -145,6 +157,10 @@ const DefiFollowModal = ({
       setSigned(false);
       setFollowCompleted(true);
     } catch (error) {
+      setError(true);
+      setIsLoading(false);
+      setSigned(false);
+
       console.log(error);
     }
   };
@@ -163,7 +179,7 @@ const DefiFollowModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
         <ModalHeader>DeFi Follow</ModalHeader>
@@ -183,12 +199,20 @@ const DefiFollowModal = ({
           </Box>
 
           {activeStep === 0 && !signed && (
-            <Box>
-              <Text pt="5" pl="5" pr="5">
+            // {false && (
+            <Box pt="5" pl="5" pr="5">
+              <Center>
+                <Alert status="warning" borderRadius={10}>
+                  <AlertIcon />
+                  Remember, you are going to do two transacctions.
+                </Alert>
+              </Center>
+
+              <Text pt="5">
                 First, you have to approve our contract to move your tokens.
               </Text>
 
-              <HStack pt="5" pl="5" pr="5">
+              <HStack pt="5">
                 <Text>
                   You are going to allow us to move{" "}
                   <Text as="span" fontWeight="700" color="sixth" fontSize="16">
@@ -198,109 +222,309 @@ const DefiFollowModal = ({
                 </Text>
               </HStack>
 
-              <Center pt="5" pl="5" pr="5">
-                <Alert status="warning" borderRadius={10}>
-                  <AlertIcon />
-                  Remember, you are going to do two transacctions.
-                </Alert>
-              </Center>
+              <Divider mt="5" />
 
-              <Center pt="5" pl="5" pr="5">
-                <Alert status="warning" borderRadius={10}>
-                  <AlertIcon />
-                  Remember, you are need to have some MATIC in your wallet to
-                  pay the gas fees.
-                </Alert>
-              </Center>
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Transaction Fee
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Total gas paid
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    ${" "}
+                    {(
+                      gasLimitNumberApprove *
+                      gasFee.standard.maxPriorityFee *
+                      1e-9 *
+                      priceFeed *
+                      10
+                    ).toFixed(6)}{" "}
+                    USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    {(
+                      gasLimitNumberApprove *
+                      gasFee.standard.maxPriorityFee *
+                      1e-9
+                    ).toFixed(6)}{" "}
+                    MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    Social DeFi Fee (0%)
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    Platform charge
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" color="black">
+                    $ 0 USD
+                  </Text>
+                  <Text fontWeight="500" fontSize="14" color="gray">
+                    0 MATIC
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Alert status="info" borderRadius={10} mt="5">
+                <AlertIcon />
+                Social DeFi charge 0% fee for all transactions.
+              </Alert>
+
+              <Flex pt="5" pl="5">
+                <Text
+                  fontWeight="700"
+                  fontSize="20px"
+                  color="grayLetter"
+                  my="auto"
+                >
+                  Your balance:
+                </Text>{" "}
+                <Image
+                  src="../assets/logos/polygon-matic-logo.png"
+                  w="5"
+                  h="5"
+                  ml="2"
+                  my="auto"
+                />
+                <Text
+                  fontWeight="600"
+                  fontSize="18px"
+                  color="black"
+                  ml="2"
+                  my="auto"
+                >
+                  {maticBalance.toFixed(4)} MATIC
+                </Text>
+              </Flex>
             </Box>
           )}
 
-          {approveCompleted && !signed && !followCompleted && (
+          {approveCompleted && !signed && !followCompleted && !error && (
             <>
-              <Center pt="5" pl="5" pr="5">
-                <Alert status="success" borderRadius={10}>
-                  <AlertIcon />
-                  Approved successfully!
-                </Alert>
-              </Center>
+              <Box mt="5" pt="5" pl="5" pr="5">
+                <Center>
+                  <Alert status="success" borderRadius={10}>
+                    <AlertIcon />
+                    Approved successfully!
+                  </Alert>
+                </Center>
 
-              <Text pt="5" pl="5" pr="5">
-                Thanks for allowing us to move your tokens to Aave protocol 🙌
-              </Text>
+                <Text pt="5">
+                  Thanks for allowing us to move your tokens to Aave protocol 🙌
+                </Text>
 
-              <Text
-                fontWeight="600"
-                fontSize="14px"
-                lineHeight="120%"
-                color="black"
-                pt="5"
-                pl="5"
-                pr="5"
-              >
-                Now, you are going to start following the profile{" "}
                 <Text
-                  as="span"
-                  fontWeight="700"
+                  fontWeight="600"
                   fontSize="14px"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  @{handle}
-                </Text>
-              </Text>
-
-              <Box pt="5">
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="15px"
-                  letterSpacing="-0.03em"
+                  lineHeight="120%"
                   color="black"
+                  pt="5"
                 >
-                  Social DeFi will charge a fee of
+                  Now, you are going to start following the profile{" "}
+                  <Text
+                    as="span"
+                    fontWeight="700"
+                    fontSize="14px"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                  >
+                    @{handle}
+                  </Text>
                 </Text>
 
+                <Divider mt="5" />
+
+                <Flex mt="5" justify="space-between">
+                  <Box>
+                    <Text
+                      fontWeight="700"
+                      fontSize="16"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                    >
+                      Defi Follow Fee
+                    </Text>
+                    <Text fontWeight="500" fontSize="14" color="gray">
+                      Total paid
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Text
+                      fontWeight="700"
+                      fontSize="16"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                      textAlign="right"
+                    >
+                      $ 0.1 USD
+                    </Text>
+                    <Text fontWeight="500" fontSize="14" color="gray">
+                      {amount.toFixed(4)} WMATIC
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Flex mt="5" justify="space-between">
+                  <Box>
+                    <Text fontWeight="700" fontSize="16" color="black">
+                      Transaction Fee
+                    </Text>
+                    <Text fontWeight="500" fontSize="14" color="gray">
+                      Total gas paid
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Text
+                      fontWeight="700"
+                      fontSize="16"
+                      color="black"
+                      textAlign="right"
+                    >
+                      ${" "}
+                      {(
+                        gasLimitNumberDefiFollow *
+                        gasFee.standard.maxPriorityFee *
+                        1e-9 *
+                        priceFeed *
+                        10
+                      ).toFixed(6)}{" "}
+                      USD
+                    </Text>
+                    <Text
+                      fontWeight="500"
+                      fontSize="14"
+                      color="gray"
+                      textAlign="right"
+                    >
+                      {(
+                        gasLimitNumberDefiFollow *
+                        gasFee.standard.maxPriorityFee *
+                        1e-9
+                      ).toFixed(6)}{" "}
+                      MATIC
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Flex mt="5" justify="space-between">
+                  <Box>
+                    <Text fontWeight="700" fontSize="16" color="black">
+                      Social DeFi Fee (0%)
+                    </Text>
+                    <Text fontWeight="500" fontSize="14" color="gray">
+                      Platform charge
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Text fontWeight="700" fontSize="16" color="black">
+                      $ 0 USD
+                    </Text>
+                    <Text fontWeight="500" fontSize="14" color="gray">
+                      0 MATIC
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Alert status="info" borderRadius={10} mt="5">
+                  <AlertIcon />
+                  Social DeFi charge 0% fee for all transactions.
+                </Alert>
+
+                <Flex pt="5" pl="5">
+                  <Text
+                    fontWeight="600"
+                    fontSize="14px"
+                    color="grayLetter"
+                    my="auto"
+                  >
+                    Your balance:
+                  </Text>
+
+                  <Box>
+                    <Flex pb="3">
+                      <Image
+                        src="../assets/logos/polygon-matic-logo.png"
+                        w="5"
+                        h="5"
+                        ml="2"
+                        my="auto"
+                      />
+                      <Text
+                        fontWeight="600"
+                        fontSize="14px"
+                        color="black"
+                        ml="2"
+                        my="auto"
+                      >
+                        {maticBalance.toFixed(4)} MATIC
+                      </Text>
+                    </Flex>
+
+                    <Flex>
+                      <Image
+                        src="../assets/logos/wrapped-matic-logo.png"
+                        w="5"
+                        h="5"
+                        ml="2"
+                        my="auto"
+                      />
+                      <Text
+                        fontWeight="600"
+                        fontSize="14px"
+                        color="black"
+                        ml="2"
+                        my="auto"
+                      >
+                        {wmaticBalance.toFixed(4)} WMATIC
+                      </Text>
+                    </Flex>
+                  </Box>
+                </Flex>
+
                 <Text
-                  textAlign="center"
-                  fontWeight="700"
-                  fontSize="36px"
-                  letterSpacing="-0.03em"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
+                  textAlign="justify"
+                  fontWeight="400"
+                  fontSize="14px"
+                  lineHeight="120%"
+                  color="grayLetter"
+                  pt="5"
+                  pl="5"
+                  pr="5"
                 >
-                  {amount.toFixed(4)} WMATIC
+                  Remember, your WMATIC will be locked in the Aave protocol
+                  until the number of Defi followers reaches 3, the accumulated
+                  jackpot will be drawn among all the defi followers.
                 </Text>
               </Box>
-
-              <Text
-                textAlign="justify"
-                fontWeight="400"
-                fontSize="14px"
-                lineHeight="120%"
-                color="grayLetter"
-                pt="5"
-                pl="5"
-                pr="5"
-              >
-                Remember that when you Defi follow a profile, you will be
-                charged {amount.toFixed(4)} WMATIC and it will be deposited in
-                Aave protocol. When the number of Defi followers reaches 10, the
-                accumulated jackpot will be drawn among all the defi followers.
-              </Text>
             </>
           )}
 
-          {followCompleted && (
+          {followCompleted && !error && (
             <>
               <>
-                <Center pt="5" pl="5" pr="5">
+                <Center pt="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
                     Follow successfully!
                   </Alert>
                 </Center>
 
-                <Text pt="5" pl="5" pr="5">
+                <Text pt="5">
                   Congratulations, you have just follow the profile{" "}
                   <Text
                     as="span"
@@ -355,6 +579,26 @@ const DefiFollowModal = ({
                 </Text>
               </VStack>
             </Center>
+          )}
+
+          {error && (
+            <Box p="5">
+              <Alert status="error" borderRadius={10}>
+                <AlertIcon />
+                The transaction has failed
+              </Alert>
+
+              <Text
+                fontWeight="600"
+                fontSize="14px"
+                lineHeight="120%"
+                color="black"
+                pt="5"
+              >
+                Please, try again 5 minutes later. If the problem persists,
+                contact us.
+              </Text>
+            </Box>
           )}
         </ModalBody>
 
@@ -470,7 +714,7 @@ const DefiFollowModal = ({
               </Button>
 
               <Button
-                bg="second"
+                bg="white"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleExploreTx}
@@ -479,7 +723,7 @@ const DefiFollowModal = ({
                   fontWeight="500"
                   fontSize="18px"
                   lineHeight="21.6px"
-                  color="white"
+                  color="third"
                 >
                   View on Explorer
                 </Text>

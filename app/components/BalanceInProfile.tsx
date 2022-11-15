@@ -16,13 +16,13 @@ import {
 import { MdAccountBalanceWallet } from "react-icons/md";
 
 type BalanceInProfileProps = {
-  nativeBalance: number;
+  maticBalance: number;
   wmaticBalance: number;
   awmaticBalance: number;
 };
 
 const BalanceInProfile = ({
-  nativeBalance,
+  maticBalance,
   wmaticBalance,
   awmaticBalance,
 }: BalanceInProfileProps) => {
@@ -66,7 +66,7 @@ const BalanceInProfile = ({
                   </Text>
                 </HStack>
               </Td>
-              <Td isNumeric>{nativeBalance.toFixed(4)}</Td>
+              <Td isNumeric>{maticBalance.toFixed(4)}</Td>
             </Tr>
             <Tr>
               <Td>

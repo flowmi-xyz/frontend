@@ -42,6 +42,7 @@ import {
 import { formatEther } from "~/utils/formatEther";
 import getGasFee from "~/web3/gasfee";
 import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { getWMATICBalance } from "~/web3/erc20";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -175,7 +176,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const priceFeed = await getPriceFeedFromFlowmi();
 
-  const wmaticBalance = await getBalanceFromAddress(address);
+  const maticBalance = await getBalanceFromAddress(address);
+
+  const wmaticBalance = await getWMATICBalance(address);
 
   return {
     address,
@@ -194,6 +197,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     goalOfFollowers,
     gasFee,
     priceFeed,
+    maticBalance,
     wmaticBalance,
   };
 };
@@ -216,6 +220,7 @@ export default function Profile() {
     goalOfFollowers,
     gasFee,
     priceFeed,
+    maticBalance,
     wmaticBalance,
   } = useLoaderData();
 
@@ -226,14 +231,11 @@ export default function Profile() {
   console.log(arrayFollowers);
   console.log(priceFeed);
 
-  const [nativeBalance, setNativeBalance] = React.useState(0);
   const [awmaticBalance, setAwmaticBalance] = React.useState(0);
 
   React.useEffect(() => {
     const getBalance = async () => {
       const signer = await getSignerFront();
-
-      const balance = await signer.getBalance();
 
       const awmaticContract = new ethers.Contract(
         aWMA_CONTRACT_ADDRESS,
@@ -243,7 +245,6 @@ export default function Profile() {
 
       const awmaticBalance = await awmaticContract.balanceOf(address);
 
-      setNativeBalance(Number(formatEther(balance)));
       setAwmaticBalance(Number(formatEther(awmaticBalance)));
     };
 
@@ -279,6 +280,7 @@ export default function Profile() {
               amount={priceFeed}
               gasFee={gasFee}
               priceFeed={priceFeed}
+              maticBalance={maticBalance}
               wmaticBalance={wmaticBalance}
             />
           </GridItem>
@@ -290,7 +292,7 @@ export default function Profile() {
                   <FlowmiProfileInfo wmaticToPay={priceFeed} />
 
                   <BalanceInProfile
-                    nativeBalance={nativeBalance}
+                    maticBalance={maticBalance}
                     wmaticBalance={wmaticBalance}
                     awmaticBalance={awmaticBalance}
                   />
