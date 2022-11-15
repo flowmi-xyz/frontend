@@ -81,7 +81,16 @@ const LensterProfile = ({
   } = useDisclosure();
 
   return (
-    <Box m="5" p="10" width="300px">
+    <Box
+      m="5"
+      pt="10"
+      pl="10"
+      pr="10"
+      width="300px"
+      border="1px"
+      borderColor="#E0E0E3"
+      borderRadius="10px"
+    >
       <Box p="2" borderRadius="2xl" bg="#FAFAF9">
         <Image
           src={transformToIpfsUrl(avatar as string)}
@@ -266,7 +275,7 @@ const LensterProfile = ({
 
       <Divider pt="3" />
 
-      <Flex pt="3">
+      <Flex pt="3" pb="3">
         <Icon as={TbHash} color="first" w="4" h="4" />
 
         <Text

@@ -11,7 +11,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
     <Box
       bg="white"
       border="1px"
-      borderColor="lensDark"
+      borderColor="#E0E0E3"
       borderRadius="10px"
       width="420px"
       p="5"

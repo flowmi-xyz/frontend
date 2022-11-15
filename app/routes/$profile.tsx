@@ -23,7 +23,7 @@ import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
 // UI components
 import React from "react";
-import { Box, Flex, Grid, GridItem, Image } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
@@ -42,7 +42,7 @@ import {
 import { formatEther } from "~/utils/formatEther";
 import getGasFee from "~/web3/gasfee";
 import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
-import { getWMATICBalance } from "~/web3/erc20";
+import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -180,6 +180,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const wmaticBalance = await getWMATICBalance(address);
 
+  const awmaticBalance = await getaWMATICBalance(address);
+
   return {
     address,
     accessToken,
@@ -199,6 +201,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     priceFeed,
     maticBalance,
     wmaticBalance,
+    awmaticBalance,
   };
 };
 
@@ -222,6 +225,7 @@ export default function Profile() {
     priceFeed,
     maticBalance,
     wmaticBalance,
+    awmaticBalance,
   } = useLoaderData();
 
   changeHeaders(accessToken);
@@ -231,26 +235,6 @@ export default function Profile() {
   console.log(arrayFollowers);
   console.log(priceFeed);
 
-  const [awmaticBalance, setAwmaticBalance] = React.useState(0);
-
-  React.useEffect(() => {
-    const getBalance = async () => {
-      const signer = await getSignerFront();
-
-      const awmaticContract = new ethers.Contract(
-        aWMA_CONTRACT_ADDRESS,
-        ERC20_HUB_ABI,
-        signer
-      );
-
-      const awmaticBalance = await awmaticContract.balanceOf(address);
-
-      setAwmaticBalance(Number(formatEther(awmaticBalance)));
-    };
-
-    getBalance().catch(console.error);
-  }, []);
-
   return (
     <Box bg="#FAFAF9">
       <NavbarConnected
@@ -259,11 +243,32 @@ export default function Profile() {
         handle={defaultProfile?.handle}
       />
 
-      <Image src="./assets/2.png" w="100%" h="180px" objectFit="cover" />
+      {/* <Image src="./assets/2.png" w="100%" h="180px" objectFit="cover" /> */}
+
+      <Box>
+        <Text
+          textAlign="center"
+          fontWeight="700"
+          fontSize={["40px", "55px", "45px"]}
+          lineHeight={["48px", "66px", "66px"]}
+          color="black"
+          zIndex="1"
+          my="50px"
+        >
+          Welcome to the{" "}
+          <Text
+            as="span"
+            bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+            bgClip="text"
+          >
+            Social DeFi
+          </Text>
+        </Text>
+      </Box>
 
       <Box maxWidth="1200px" m="auto">
         <Grid templateColumns="repeat(3, 1fr)">
-          <GridItem colSpan={1} mt="-170px">
+          <GridItem colSpan={1}>
             <LensterProfile
               name={pageProfile.name}
               handle={pageProfile.handle}

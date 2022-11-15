@@ -27,7 +27,7 @@ const BalanceInProfile = ({
   awmaticBalance,
 }: BalanceInProfileProps) => {
   return (
-    <Box border="1px" borderColor="first" borderRadius="10px" m="5" w="50%">
+    <Box border="1px" borderColor="#E0E0E3" borderRadius="10px" m="5" w="50%">
       <Flex pt="5" pl="5">
         <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />
         <Text
