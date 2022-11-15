@@ -255,6 +255,9 @@ export default function Profile() {
               priceFeed={priceFeed}
               maticBalance={maticBalance}
               wmaticBalance={wmaticBalance}
+              tokensAccumulated={wmaticAccumulated}
+              countFollowers={countFollowers}
+              goalOfFollowers={goalOfFollowers}
             />
           </GridItem>
 

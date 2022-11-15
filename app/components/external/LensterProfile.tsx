@@ -41,6 +41,9 @@ type LensterProfileProps = {
   priceFeed: number;
   maticBalance: number;
   wmaticBalance: number;
+  tokensAccumulated: number;
+  countFollowers: number;
+  goalOfFollowers: number;
 };
 
 const LensterProfile = ({
@@ -61,6 +64,9 @@ const LensterProfile = ({
   priceFeed,
   maticBalance,
   wmaticBalance,
+  tokensAccumulated,
+  countFollowers,
+  goalOfFollowers,
 }: LensterProfileProps) => {
   const {
     isOpen: isOpenUnfollow,
@@ -251,6 +257,9 @@ const LensterProfile = ({
         priceFeed={priceFeed}
         maticBalance={maticBalance}
         wmaticBalance={wmaticBalance}
+        tokensAccumulated={tokensAccumulated}
+        countFollowers={countFollowers}
+        goalOfFollowers={goalOfFollowers}
       />
 
       <FollowModal

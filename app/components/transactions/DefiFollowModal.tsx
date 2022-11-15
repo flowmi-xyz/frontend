@@ -44,6 +44,9 @@ type FollowModalProps = {
   priceFeed: number;
   maticBalance: number;
   wmaticBalance: number;
+  tokensAccumulated: number;
+  countFollowers: number;
+  goalOfFollowers: number;
 };
 
 const DefiFollowModal = ({
@@ -56,6 +59,9 @@ const DefiFollowModal = ({
   priceFeed,
   maticBalance,
   wmaticBalance,
+  tokensAccumulated,
+  countFollowers,
+  goalOfFollowers,
 }: FollowModalProps) => {
   const steps = [
     { label: "Approve move tokens" },
@@ -199,7 +205,6 @@ const DefiFollowModal = ({
           </Box>
 
           {activeStep === 0 && !signed && (
-            // {false && (
             <Box pt="5" pl="5" pr="5">
               <Center>
                 <Alert status="warning" borderRadius={10}>
@@ -514,10 +519,10 @@ const DefiFollowModal = ({
             </>
           )}
 
-          {followCompleted && !error && (
+          {followCompleted && !error && countFollowers % goalOfFollowers == 2 && (
             <>
-              <>
-                <Center pt="5">
+              <Box mt="5" pt="5" pl="5" pr="5">
+                <Center>
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
                     Follow successfully!
@@ -537,7 +542,69 @@ const DefiFollowModal = ({
                   </Text>{" "}
                   in the Lens protocol.
                 </Text>
-              </>
+
+                <Text pt="5">
+                  With your follow, you have activate the jackpot 🎉!!
+                </Text>
+
+                <Text
+                  textAlign="center"
+                  fontWeight="600"
+                  fontSize="15px"
+                  lineHeight="120%"
+                  color="black"
+                  pt="5"
+                >
+                  {handle} has accumulated:
+                </Text>
+
+                <Text
+                  textAlign="center"
+                  fontWeight="700"
+                  fontSize="32px"
+                  letterSpacing="-0.03em"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  {(tokensAccumulated + amount).toFixed(4)} WMATIC
+                </Text>
+
+                <Center>
+                  <Image
+                    src="../assets/animations/fireworks-firework.gif"
+                    rounded="xl"
+                    w="80%"
+                    pt="5"
+                  />
+                </Center>
+              </Box>
+            </>
+          )}
+
+          {followCompleted && !error && countFollowers % goalOfFollowers !== 2 && (
+            <>
+              <Box mt="5" pt="5" pl="5" pr="5">
+                <Center>
+                  <Alert status="success" borderRadius={10}>
+                    <AlertIcon />
+                    Follow successfully!
+                  </Alert>
+                </Center>
+
+                <Text pt="5">
+                  Congratulations, you have just follow the profile{" "}
+                  <Text
+                    as="span"
+                    fontWeight="700"
+                    fontSize="14px"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                  >
+                    @{handle}
+                  </Text>{" "}
+                  in the Lens protocol.
+                </Text>
+              </Box>
             </>
           )}
 
