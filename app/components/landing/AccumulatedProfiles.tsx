@@ -24,10 +24,7 @@ const AccumulatedProfiles = () => {
     },
   ];
   return (
-    <Box
-      height="300px"
-      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-    >
+    <Box bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)">
       <Text
         textAlign="center"
         fontWeight="700"
@@ -126,6 +123,18 @@ const AccumulatedProfiles = () => {
           })}
         </Flex>
       </Center>
+
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="14px"
+        lineHeight="100%"
+        letterSpacing="-0.03em"
+        color="white"
+        pb="5"
+      >
+        * Example values
+      </Text>
     </Box>
   );
 };
