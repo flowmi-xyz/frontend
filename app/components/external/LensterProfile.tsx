@@ -18,7 +18,7 @@ import { AiOutlineStar } from "react-icons/ai";
 import { transformToIpfsUrl } from "~/web3/ipfs";
 
 import FollowModal from "../transactions/FollowModal";
-import UnfollowModal from "../UnfollowModal";
+import UnfollowModal from "../transactions/UnfollowModal";
 import DefiFollowModal from "../transactions/DefiFollowModal";
 
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi";
@@ -37,6 +37,9 @@ type LensterProfileProps = {
   isFollowed: boolean;
   followModuleAddress: string;
   amount: number;
+  gasFee: any;
+  priceFeed: number;
+  wmaticBalance: number;
 };
 
 const LensterProfile = ({
@@ -53,6 +56,9 @@ const LensterProfile = ({
   isFollowed,
   followModuleAddress,
   amount,
+  gasFee,
+  priceFeed,
+  wmaticBalance,
 }: LensterProfileProps) => {
   const {
     isOpen: isOpenUnfollow,
@@ -230,6 +236,9 @@ const LensterProfile = ({
         profileId={id}
         handle={handle}
         amount={amount}
+        gasFee={gasFee}
+        priceFeed={priceFeed}
+        wmaticBalance={wmaticBalance}
       />
 
       <FollowModal
@@ -237,6 +246,9 @@ const LensterProfile = ({
         onClose={onCloseFollow}
         profileId={id}
         handle={handle}
+        gasFee={gasFee}
+        priceFeed={priceFeed}
+        wmaticBalance={wmaticBalance}
       />
 
       <UnfollowModal
@@ -244,6 +256,9 @@ const LensterProfile = ({
         onClose={oncloseUnfollow}
         profileId={id}
         handle={handle}
+        gasFee={gasFee}
+        priceFeed={priceFeed}
+        wmaticBalance={wmaticBalance}
       />
 
       <Divider pt="3" />

@@ -205,7 +205,7 @@ const SetDefaultProfileModal = ({
                     ${" "}
                     {(
                       gasLimitNumber *
-                      gasFee.fast.maxPriorityFee *
+                      gasFee.standard.maxPriorityFee *
                       1e-9 *
                       priceFeed *
                       10
@@ -215,7 +215,7 @@ const SetDefaultProfileModal = ({
                   <Text fontWeight="500" fontSize="14" color="gray">
                     {(
                       gasLimitNumber *
-                      gasFee.fast.maxPriorityFee *
+                      gasFee.standard.maxPriorityFee *
                       1e-9
                     ).toFixed(6)}{" "}
                     MATIC

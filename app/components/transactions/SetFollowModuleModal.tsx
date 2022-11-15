@@ -32,6 +32,7 @@ import {
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
+import { Link } from "@remix-run/react";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -71,7 +72,7 @@ const SetFollowModuleModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumber = 50000;
+  const gasLimitNumber = 200000;
 
   const handleConfirmSetFollowModule = async () => {
     setIsLoading(true);
@@ -151,7 +152,7 @@ const SetFollowModuleModal = ({
             </Steps>
           </Box>
 
-          {activeStep == 0 && (
+          {activeStep == 0 && !signed && !error && (
             <>
               <Text
                 fontWeight="600"
@@ -252,7 +253,7 @@ const SetFollowModuleModal = ({
                     ${" "}
                     {(
                       gasLimitNumber *
-                      gasFee.fast.maxPriorityFee *
+                      gasFee.standard.maxPriorityFee *
                       1e-9 *
                       priceFeed *
                       10
@@ -262,7 +263,7 @@ const SetFollowModuleModal = ({
                   <Text fontWeight="500" fontSize="14" color="gray">
                     {(
                       gasLimitNumber *
-                      gasFee.fast.maxPriorityFee *
+                      gasFee.standard.maxPriorityFee *
                       1e-9
                     ).toFixed(6)}{" "}
                     MATIC
@@ -324,7 +325,7 @@ const SetFollowModuleModal = ({
             </>
           )}
 
-          {activeStep == 2 && (
+          {activeStep == 2 && !signed && !error && (
             <>
               <>
                 <Center pt="5" pl="5" pr="5">
@@ -390,28 +391,49 @@ const SetFollowModuleModal = ({
               </VStack>
             </Center>
           )}
+
+          {error && (
+            <Box p="5">
+              <Alert status="error" borderRadius={10}>
+                <AlertIcon />
+                The transaction has failed
+              </Alert>
+
+              <Text
+                fontWeight="600"
+                fontSize="14px"
+                lineHeight="120%"
+                color="black"
+                pt="5"
+              >
+                Please, try again 5 minutes later. If the problem persists,
+                contact us.
+              </Text>
+            </Box>
+          )}
         </ModalBody>
 
         <ModalFooter>
+          <Button
+            bg="white"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+            mr="5"
+            onClick={handleClose}
+            hidden={activeStep == 2}
+          >
+            <Text
+              fontWeight="500"
+              fontSize="18px"
+              lineHeight="21.6px"
+              color="first"
+            >
+              Cancel
+            </Text>
+          </Button>
+
           {activeStep === 0 && (
             <>
-              <Button
-                bg="white"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                mr="5"
-                onClick={handleClose}
-              >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="first"
-                >
-                  Cancel
-                </Text>
-              </Button>
-
               <Button
                 bg="lens"
                 borderRadius="10px"
@@ -449,8 +471,8 @@ const SetFollowModuleModal = ({
                 bg="white"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                onClick={handleExploreTx}
                 mr="5"
-                onClick={handleClose}
               >
                 <Text
                   fontWeight="500"
@@ -458,25 +480,26 @@ const SetFollowModuleModal = ({
                   lineHeight="21.6px"
                   color="first"
                 >
-                  Close
-                </Text>
-              </Button>
-
-              <Button
-                bg="second"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleExploreTx}
-              >
-                <Text
-                  fontWeight="500"
-                  fontSize="18px"
-                  lineHeight="21.6px"
-                  color="white"
-                >
                   View on Explorer
                 </Text>
               </Button>
+
+              <Link to={"/dashboard/feed"}>
+                <Button
+                  bg="first"
+                  borderRadius="10px"
+                  boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                >
+                  <Text
+                    fontWeight="500"
+                    fontSize="18px"
+                    lineHeight="21.6px"
+                    color="white"
+                  >
+                    Go to dashboard
+                  </Text>
+                </Button>
+              </Link>
             </>
           )}
         </ModalFooter>

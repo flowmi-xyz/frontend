@@ -39,6 +39,9 @@ type FollowModalProps = {
   profileId: string;
   handle: string;
   amount: number;
+  gasFee: any;
+  priceFeed: number;
+  wmaticBalance: number;
 };
 
 const DefiFollowModal = ({
@@ -47,6 +50,9 @@ const DefiFollowModal = ({
   profileId,
   handle,
   amount,
+  gasFee,
+  priceFeed,
+  wmaticBalance,
 }: FollowModalProps) => {
   const steps = [
     { label: "Approve move tokens" },

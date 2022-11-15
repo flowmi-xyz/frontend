@@ -13,7 +13,11 @@ import {
 
 import { ethers } from "ethers";
 
-import { getSignerBack, getSignerFront } from "~/web3/etherservice";
+import {
+  getBalanceFromAddress,
+  getSignerBack,
+  getSignerFront,
+} from "~/web3/etherservice";
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 import { FLOWMI_CONTRACT_ADDRESS, FLOWMI_HUB_ABI } from "~/web3/social-defi";
 
@@ -36,6 +40,8 @@ import {
 } from "~/web3/erc20/erc20-hub";
 
 import { formatEther } from "~/utils/formatEther";
+import getGasFee from "~/web3/gasfee";
+import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -128,16 +134,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getSignerBack()
   );
 
-  let payInWMATIC = 0;
-
-  try {
-    const priceFeed = await flowmiContract.getPriceFeed();
-
-    payInWMATIC = Number(formatEther(priceFeed));
-  } catch (error) {
-    console.log(error);
-  }
-
   // Get how much WMATIC user has
   let wmaticAccumulated = 0;
 
@@ -175,6 +171,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     console.log(error);
   }
 
+  const gasFee = await getGasFee();
+
+  const priceFeed = await getPriceFeedFromFlowmi();
+
+  const wmaticBalance = await getBalanceFromAddress(address);
+
   return {
     address,
     accessToken,
@@ -187,10 +189,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     followModuleAddress,
     isDefiFollowProfile,
     arrayFollowers,
-    payInWMATIC,
     wmaticAccumulated,
     countFollowers,
     goalOfFollowers,
+    gasFee,
+    priceFeed,
+    wmaticBalance,
   };
 };
 
@@ -207,10 +211,12 @@ export default function Profile() {
     followModuleAddress,
     isDefiFollowProfile,
     arrayFollowers,
-    payInWMATIC,
     wmaticAccumulated,
     countFollowers,
     goalOfFollowers,
+    gasFee,
+    priceFeed,
+    wmaticBalance,
   } = useLoaderData();
 
   changeHeaders(accessToken);
@@ -218,10 +224,9 @@ export default function Profile() {
   console.log(pageProfile);
   console.log(followModuleAddress);
   console.log(arrayFollowers);
-  console.log(payInWMATIC);
+  console.log(priceFeed);
 
   const [nativeBalance, setNativeBalance] = React.useState(0);
-  const [wmaticBalance, setWmaticBalance] = React.useState(0);
   const [awmaticBalance, setAwmaticBalance] = React.useState(0);
 
   React.useEffect(() => {
@@ -229,14 +234,6 @@ export default function Profile() {
       const signer = await getSignerFront();
 
       const balance = await signer.getBalance();
-
-      const wmaticContract = new ethers.Contract(
-        WMATIC_CONTRACT_ADDRESS,
-        ERC20_HUB_ABI,
-        signer
-      );
-
-      const wmaticBalance = await wmaticContract.balanceOf(address);
 
       const awmaticContract = new ethers.Contract(
         aWMA_CONTRACT_ADDRESS,
@@ -247,7 +244,6 @@ export default function Profile() {
       const awmaticBalance = await awmaticContract.balanceOf(address);
 
       setNativeBalance(Number(formatEther(balance)));
-      setWmaticBalance(Number(formatEther(wmaticBalance)));
       setAwmaticBalance(Number(formatEther(awmaticBalance)));
     };
 
@@ -280,7 +276,10 @@ export default function Profile() {
               twitter={twitterValue}
               isFollowed={pageProfile.isFollowedByMe}
               followModuleAddress={followModuleAddress}
-              amount={payInWMATIC}
+              amount={priceFeed}
+              gasFee={gasFee}
+              priceFeed={priceFeed}
+              wmaticBalance={wmaticBalance}
             />
           </GridItem>
 
@@ -288,7 +287,7 @@ export default function Profile() {
             {isDefiFollowProfile && (
               <Box>
                 <Flex w="100%">
-                  <FlowmiProfileInfo wmaticToPay={payInWMATIC} />
+                  <FlowmiProfileInfo wmaticToPay={priceFeed} />
 
                   <BalanceInProfile
                     nativeBalance={nativeBalance}

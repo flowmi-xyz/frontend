@@ -34,6 +34,9 @@ type UnFollowModalProps = {
   onClose: () => void;
   profileId: string;
   handle: string;
+  gasFee: any;
+  priceFeed: number;
+  wmaticBalance: number;
 };
 
 const UnfollowModal = ({
@@ -41,6 +44,9 @@ const UnfollowModal = ({
   onClose,
   profileId,
   handle,
+  gasFee,
+  priceFeed,
+  wmaticBalance,
 }: UnFollowModalProps) => {
   const steps = [{ label: "Confirm unfollow" }, { label: "Unfollow complete" }];
 
