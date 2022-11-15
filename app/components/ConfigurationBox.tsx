@@ -24,7 +24,7 @@ const SettingsBox = () => {
               letterSpacing="-0.03em"
               color="lensDark"
               pb="2"
-              ml="2 j"
+              ml="2"
             >
               Setup your Lens profile
             </Text>

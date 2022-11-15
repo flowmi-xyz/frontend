@@ -18,12 +18,6 @@ const NavbarLanding = () => {
         </Text>
       </Link>
 
-      <Link to="/">
-        <Heading as="h1" fontSize="24" lineHeight="21.6px" color="white">
-          Social Defi
-        </Heading>
-      </Link>
-
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Flex display="flex" align="center">
           <Link to="/login">
@@ -32,7 +26,12 @@ const NavbarLanding = () => {
               borderRadius="10px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             >
-              <Heading fontSize="14" lineHeight="21.6px" color="black">
+              <Heading
+                fontWeight="700"
+                fontSize="16"
+                lineHeight="21.6px"
+                color="black"
+              >
                 Launch App
               </Heading>
             </Button>

@@ -131,6 +131,8 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
+  // TODO: charge fonts correctly
+  // reduce time of loading
   const {
     address,
     defaultProfile,
