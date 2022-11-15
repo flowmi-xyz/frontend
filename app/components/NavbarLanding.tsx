@@ -1,13 +1,6 @@
-import type { LinksFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 
-import { Flex, Text, Button } from "@chakra-ui/react";
-
-// import styles from "~/styles/index.css";
-
-// export let links: LinksFunction = () => {
-//   return [{ rel: "stylesheet", href: styles }];
-// };
+import { Flex, Text, Button, Heading } from "@chakra-ui/react";
 
 const NavbarLanding = () => {
   return (
@@ -20,9 +13,15 @@ const NavbarLanding = () => {
       width="100%"
     >
       <Link to="/">
-        <Text fontSize="20" lineHeight="21.6px" color="white">
+        <Text fontSize="24" lineHeight="21.6px" color="white">
           Social Defi
         </Text>
+      </Link>
+
+      <Link to="/">
+        <Heading as="h1" fontSize="24" lineHeight="21.6px" color="white">
+          Social Defi
+        </Heading>
       </Link>
 
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
@@ -33,14 +32,9 @@ const NavbarLanding = () => {
               borderRadius="10px"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             >
-              <Text
-                fontWeight="700"
-                fontSize="14"
-                lineHeight="120%"
-                color="black"
-              >
+              <Heading fontSize="14" lineHeight="21.6px" color="black">
                 Launch App
-              </Text>
+              </Heading>
             </Button>
           </Link>
         </Flex>

@@ -56,7 +56,6 @@ export const theme = extendTheme({
   fonts: {
     heading: "Louis George Cafe, sans-serif",
     body: "Louis George Cafe, sans-serif",
-    mono: "Louis George Cafe, sans-serif",
   },
   // fonts: {
   //   heading: "'Raleway', sans-serif;",
