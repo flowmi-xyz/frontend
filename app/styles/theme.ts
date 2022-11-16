@@ -72,6 +72,7 @@ export const theme = extendTheme({
     lens: "#BDFC5A",
     lensDark: "#00501E",
     twitter: "#1DA1F2",
+    opensea: "#3F7EDB",
   },
   components: {
     Steps: CustomSteps,
