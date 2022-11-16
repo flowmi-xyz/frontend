@@ -30,7 +30,7 @@ import { Box, Center, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 import NavbarConnected from "~/components/NavbarConnected";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
-import SettingsBox from "~/components/ConfigurationBox";
+import SettingsBox from "~/components/SettingsBox";
 import Balance from "~/components/Balance";
 import { getTotalFundedProfile } from "~/web3/social-defi";
 
@@ -159,6 +159,43 @@ export default function Dashboard() {
 
       {transition.state === "idle" && (
         <Box maxWidth="1200px" m="auto">
+          <Box pl="10">
+            <Text
+              fontWeight="700"
+              fontSize={["40px", "55px", "45px"]}
+              lineHeight={["48px", "66px", "66px"]}
+              color="black"
+              pt="50px"
+            >
+              Welcome to the{" "}
+              <Text
+                as="span"
+                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                bgClip="text"
+              >
+                Social DeFi
+              </Text>
+            </Text>
+
+            <Text
+              fontSize="22px"
+              lineHeight="28.8ppx"
+              color="grayLetter"
+              pt="5"
+            >
+              Follow some profiles to participate in a decentralized social
+              raffle and win{" "}
+              <Text
+                as="span"
+                fontWeight="700"
+                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                bgClip="text"
+              >
+                some WMATIC
+              </Text>
+            </Text>
+          </Box>
+
           <Grid templateColumns="repeat(3, 1fr)">
             <GridItem colSpan={2}>
               <ProfileParticipation totalFounded={totalFounded} />

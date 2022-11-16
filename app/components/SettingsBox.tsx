@@ -8,7 +8,7 @@ const SettingsBox = () => {
     <>
       <Link to={"/internal"}>
         <Box
-          bg="white"
+          bg="#E7FDF4"
           border="1px"
           borderColor="lensDark"
           borderRadius="10px"

@@ -28,12 +28,12 @@ const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
             Your participation in Social DeFi
           </Text>
 
-          <Flex justifyContent="space-around" p="12">
+          <Flex justifyContent="space-around" p="5">
             <Box>
               <Text
                 textAlign="center"
                 fontWeight="700"
-                fontSize="36px"
+                fontSize="28px"
                 letterSpacing="-0.03em"
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
@@ -52,11 +52,11 @@ const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
               </Text>
             </Box>
 
-            <Box>
+            {/* <Box>
               <Text
                 textAlign="center"
                 fontWeight="700"
-                fontSize="36px"
+                fontSize="28px"
                 letterSpacing="-0.03em"
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
@@ -79,7 +79,7 @@ const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
               <Text
                 textAlign="center"
                 fontWeight="700"
-                fontSize="36px"
+                fontSize="28px"
                 letterSpacing="-0.03em"
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
@@ -96,7 +96,7 @@ const ProfileParticipation = ({ totalFounded }: ProfileParticipationProps) => {
               >
                 DeFi Following
               </Text>
-            </Box>
+            </Box> */}
           </Flex>
         </Box>
       </Center>

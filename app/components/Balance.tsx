@@ -42,7 +42,7 @@ const Balance = ({
       <Box
         bg="white"
         border="1px"
-        borderColor="first"
+        borderColor="#E0E0E3"
         borderRadius="10px"
         width="420px"
         mt="10"
