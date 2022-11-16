@@ -45,6 +45,7 @@ import {
   getGoal,
   getNumberOfFollowers,
 } from "~/web3/social-defi";
+import { getFollowModule } from "~/web3/lens";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -101,36 +102,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const twitterValue = twitter[0]?.value;
 
-  const lensContract = new ethers.Contract(
-    LENS_HUB_CONTRACT_ADDRESS,
-    LENS_HUB_ABI,
-    getSignerBack()
-  );
-
-  let followModuleAddress = "";
-
-  try {
-    followModuleAddress = await lensContract.getFollowModule(pageProfile.id);
-  } catch (error) {
-    console.log(error);
-  }
-
-  let isDefiFollowProfile = false;
-
-  if (followModuleAddress == FLOWMI_CONTRACT_ADDRESS) {
-    isDefiFollowProfile = true;
-  }
-
   // Get followers from API
   variables = {
     request: { profileId: pageProfile.id, limit: 10 },
   };
 
-  const followersResponse = await lensClient.request(GetFollowers, variables);
-
-  const arrayFollowers = followersResponse?.followers?.items;
-
   const [
+    followersResponse,
+    followModuleAddress,
     countFollowers,
     goalOfFollowers,
     wmaticAccumulated,
@@ -140,6 +119,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     awmaticBalance,
     priceFeed,
   ] = await Promise.all([
+    lensClient.request(GetFollowers, variables),
+    getFollowModule(pageProfile.id),
     getNumberOfFollowers(pageProfile.ownedBy),
     getGoal(),
     getFundsInThisRaffle(pageProfile.ownedBy),
@@ -149,6 +130,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getaWMATICBalance(address),
     getPriceFeedFromFlowmi(),
   ]);
+
+  const arrayFollowers = followersResponse?.followers?.items;
+
+  let isDefiFollowProfile = false;
+
+  if (followModuleAddress == FLOWMI_CONTRACT_ADDRESS) {
+    isDefiFollowProfile = true;
+  }
 
   return {
     address,
@@ -210,8 +199,6 @@ export default function Profile() {
         authenticatedInLens={true}
         handle={defaultProfile?.handle}
       />
-
-      {/* <Image src="./assets/2.png" w="100%" h="180px" objectFit="cover" /> */}
 
       <Box>
         <Text

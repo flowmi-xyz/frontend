@@ -119,7 +119,7 @@ const LensterProfile = ({
       </Text>
       <Text
         fontWeight="700"
-        fontSize="14px"
+        fontSize="22px"
         bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
         bgClip="text"
         pt="1"

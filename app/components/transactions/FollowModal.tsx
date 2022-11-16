@@ -64,7 +64,7 @@ const FollowModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumber = 500000;
+  const gasLimitNumber = 10000000;
 
   const handleFollow = async () => {
     setIsLoading(true);
@@ -112,7 +112,7 @@ const FollowModal = ({
   };
 
   const handleExploreTx = async () => {
-    window.open(`https://polygonscan.com/tx/${txHash}`, "_blank");
+    window.open(`https://mumbai.polygonscan.com/tx/${txHash}`, "_blank");
   };
 
   return (
