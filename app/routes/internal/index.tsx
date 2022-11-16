@@ -39,23 +39,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  // Get profiles from Lens
-  const profilesVariables: any = {
-    request: { ownedBy: [address], limit: 20 },
-  };
-
-  const getProfilesResponse = await lensClient.request(
-    GetProfiles,
-    profilesVariables
-  );
-
-  const profiles = getProfilesResponse.profiles.items;
-
-  return { address, defaultProfile, profiles };
+  return { address, defaultProfile };
 };
 
 export default function MenuInternal() {
-  const { address, defaultProfile, profiles } = useLoaderData();
+  const { address, defaultProfile } = useLoaderData();
 
   return (
     <Box>
@@ -111,7 +99,10 @@ export default function MenuInternal() {
           You can view your followNFT in OpenSea
         </Text>
 
-        <ChakraLink href="https://testnets.opensea.io/es/account?tab=private">
+        <ChakraLink
+          href="https://testnets.opensea.io/es/account?tab=private"
+          isExternal
+        >
           <Button
             bg="white"
             border="1px solid #E5E5E5"

@@ -14,6 +14,7 @@ import React from "react";
 import {
   Box,
   Button,
+  Center,
   Flex,
   HStack,
   Image,
@@ -54,11 +55,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  const gasFee = await getGasFee();
-
-  const priceFeed = await getPriceFeedFromFlowmi();
-
-  const wmaticBalance = await getBalanceFromAddress(address);
+  const [gasFee, priceFeed, wmaticBalance] = await Promise.all([
+    getGasFee(),
+    getPriceFeedFromFlowmi(),
+    getBalanceFromAddress(address),
+  ]);
 
   return {
     address,
@@ -222,6 +223,25 @@ export default function SetDefault() {
           />
         </Box>
       </Box>
+
+      <Link to={`/dashboard/feed`}>
+        <Center>
+          <Button
+            bg="third"
+            borderRadius="10px"
+            boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+          >
+            <Text
+              fontWeight="500"
+              fontSize="18px"
+              lineHeight="21.6px"
+              color="white"
+            >
+              Go to dashboard
+            </Text>
+          </Button>
+        </Center>
+      </Link>
     </Box>
   );
 }

@@ -68,7 +68,7 @@ const SetDefaultProfileModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumber = 50000;
+  const gasLimitNumber = 500000;
 
   const handleConfirmSetdefaultProfile = async () => {
     setIsLoading(true);
