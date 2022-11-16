@@ -2,19 +2,15 @@ import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 const Resume = () => {
   return (
-    <Box bg="white">
-      <Text
-        textAlign="center"
-        fontWeight="700"
-        fontSize="26px"
-        lineHeight="120%"
-        color="black"
+    <Box bg="white" width="100%">
+      <Flex
+        justify="space-between"
+        maxWidth="1200px"
+        m="auto"
+        my="10"
+        direction={["column", "row", "row", "row"]}
       >
-        Just like that
-      </Text>
-
-      <Flex justify="space-between" maxWidth="1200px" m="auto" my="10">
-        <Box width="30%">
+        <Box width={["100%", "30%", "30%", "30%"]}>
           <Center>
             <Button
               bg="lens"
@@ -57,7 +53,7 @@ const Resume = () => {
           </Text>
         </Box>
 
-        <Box width="30%">
+        <Box width={["100%", "30%", "30%", "30%"]}>
           <Text
             textAlign="center"
             fontWeight="700"
@@ -70,11 +66,20 @@ const Resume = () => {
             The extra fee will be lend in Aave
           </Text>
 
-          <Image src="../assets/logos/aave-tipo.png" h="10" m="auto" />
+          <Image
+            src="../assets/logos/aave-tipo.png"
+            h="10"
+            m="auto"
+            display={["none", "block", "block", "block"]}
+          />
         </Box>
 
-        <Box width="30%">
-          <Text textAlign="center" fontSize="16px">
+        <Box width={["100%", "30%", "30%", "30%"]}>
+          <Text
+            textAlign="center"
+            fontSize="16px"
+            display={["none", "block", "block", "block"]}
+          >
             🎉
           </Text>
 

@@ -3,7 +3,7 @@ import { Box, Center, Flex, Image, Text } from "@chakra-ui/react";
 const BuildWith = () => {
   return (
     <>
-      <Box>
+      <Box width="100%">
         <Center pt="10">
           <Text
             fontWeight="700"

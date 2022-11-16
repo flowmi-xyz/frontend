@@ -10,7 +10,6 @@ const NavbarLanding = () => {
       height="65px"
       align="center"
       alignItems="center"
-      width="100%"
     >
       <Link to="/">
         <Text fontWeight="700" fontSize="24" lineHeight="21.6px" color="white">

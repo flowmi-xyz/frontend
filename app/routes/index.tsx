@@ -10,7 +10,7 @@ import FooterLanding from "~/components/landing/FooterLanding";
 
 export default function Index() {
   return (
-    <Box>
+    <Box width="100%">
       <NavbarLanding />
       <SectionOne />
       <Resume />

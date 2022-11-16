@@ -24,7 +24,10 @@ const AccumulatedProfiles = () => {
     },
   ];
   return (
-    <Box bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)">
+    <Box
+      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+      width="100%"
+    >
       <Text
         textAlign="center"
         fontWeight="700"

@@ -2,7 +2,7 @@ import { Box, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 const SectionOne = () => {
   return (
-    <Box bg="white" width="100%" zIndex="0">
+    <Box bg="white" width="100%">
       <Center>
         <Image
           src="../assets/images/blur.png"
@@ -26,15 +26,19 @@ const SectionOne = () => {
       />
 
       <Center>
-        <Flex flexDirection={"column"} alignItems="center" p="20">
+        <Flex
+          flexDirection={"column"}
+          alignItems="center"
+          pt="10"
+          pl="20"
+          pr="20"
+        >
           <Text
             textAlign="center"
             fontWeight="700"
             fontSize={["40px", "55px", "45px"]}
             lineHeight={["48px", "66px", "66px"]}
             color="black"
-            // marginTop={["20px", "100px", "100px"]}
-
             zIndex="1"
           >
             Welcome to the{" "}
@@ -53,7 +57,6 @@ const SectionOne = () => {
             color="grayLetter"
             textAlign="center"
             marginTop={"23px"}
-            padding={["10px", "0px", "0px"]}
             width={["90%", "600px", "600px"]}
             zIndex="1"
           >
