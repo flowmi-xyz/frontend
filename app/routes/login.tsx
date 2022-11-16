@@ -12,6 +12,8 @@ import { Box } from "@chakra-ui/react";
 // components
 import NavbarApp from "~/components/NavbarApp";
 import ConnectWallet from "~/components/external/ConnectWallet";
+import { useEffect } from "react";
+import { switchNetwork } from "~/web3/metamask";
 
 export const loader: LoaderFunction = async () => {
   // Get the number of connected users
@@ -96,6 +98,18 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Login() {
   const users = useLoaderData();
+
+  useEffect(() => {
+    // declare the data fetching function
+    const changeNetwork = async () => {
+      await switchNetwork();
+    };
+
+    // call the function
+    changeNetwork()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
 
   return (
     <Box>

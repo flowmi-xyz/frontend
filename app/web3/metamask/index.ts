@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { networks } from "../blockchain.types";
 
 declare global {
   interface Window {
@@ -43,4 +44,35 @@ async function signWithMetamask(text: string) {
   return signature;
 }
 
-export { loginWithMetamask, signWithMetamask };
+async function switchNetwork() {
+  checkMetamaskAvailability();
+
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: networks.maticmum.chainId }],
+    });
+  } catch (switchError: any) {
+    // This error code indicates that the chain has not been added to MetaMask.
+    if (switchError.code === 4902) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: networks.maticmum.chainId,
+              chainName: networks.maticmum.chainName,
+              rpcUrls: ["https://polygonscan.com/"],
+            },
+          ],
+        });
+      } catch (addError) {
+        console.log(addError);
+      }
+    }
+    // handle other "switch" errors
+    console.log(switchError);
+  }
+}
+
+export { loginWithMetamask, signWithMetamask, switchNetwork };

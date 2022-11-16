@@ -10,23 +10,15 @@ import authenticateInLens from "~/web3/lens/authentication/authenticate";
 import { commitSession, getSession } from "~/bff/session";
 
 // UI components
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Image,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
+import { useEffect } from "react";
+import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 
-import { signWithMetamask } from "~/web3/metamask";
+import { signWithMetamask, switchNetwork } from "~/web3/metamask";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  // Get address from cookie session
   const session = await getSession(request.headers.get("Cookie"));
 
   const address = session.get("address");
@@ -59,8 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
   session.set("accessToken", authResponse.authenticate.accessToken);
   session.set("refreshToken", authResponse.authenticate.refreshToken);
 
-  console.log(authResponse.authenticate.accessToken);
-
   return redirect(`/dashboard/feed`, {
     headers: {
       "Set-Cookie": await commitSession(session),
@@ -88,6 +78,18 @@ export default function AuthLens() {
       replace: true,
     });
   };
+
+  useEffect(() => {
+    // declare the data fetching function
+    const changeNetwork = async () => {
+      await switchNetwork();
+    };
+
+    // call the function
+    changeNetwork()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
 
   return (
     <Box bg="#FAFAF9" height="100vh">

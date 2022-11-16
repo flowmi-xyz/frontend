@@ -9,21 +9,16 @@ import { destroySession, getSession } from "~/bff/session";
 import { lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
-import { getBalanceFromAddress, getSignerBack } from "~/web3/etherservice";
+import { getBalanceFromAddress } from "~/web3/etherservice";
 
-import { ethers } from "ethers";
-import { formatEther } from "ethers/lib/utils";
-
-import {
-  FLOWMI_CONTRACT_ADDRESS,
-  FLOWMI_HUB_ABI,
-} from "~/web3/social-defi/social-defi-hub";
 import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 
 import { getGasFee } from "~/web3/gasfee";
 import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
+import { getTotalFundedProfile } from "~/web3/social-defi";
 
 // UI components
+import { useEffect } from "react";
 import { Box, Center, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
 // components
@@ -32,12 +27,10 @@ import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/SettingsBox";
 import Balance from "~/components/Balance";
-import { getTotalFundedProfile } from "~/web3/social-defi";
+
+import { switchNetwork } from "~/web3/metamask";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const time1 = new Date();
-
-  // Get address from cookie session
   const session = await getSession(request.headers.get("Cookie"));
 
   const address = session.get("address");
@@ -71,21 +64,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     getaWMATICBalance(address),
     getPriceFeedFromFlowmi(),
   ]);
-
-  // const maticBalance = await getBalanceFromAddress(address);
-
-  // const wmaticBalance = await getWMATICBalance(address);
-
-  // const awmaticBalance = await getaWMATICBalance(address);
-
-  // const priceFeed = await getPriceFeedFromFlowmi();
-
-  const time2 = new Date();
-
-  console.log(
-    "Time to load dashboard: ",
-    (time2.getTime() - time1.getTime()) / 1000
-  );
 
   return {
     address,
@@ -134,8 +112,6 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  // TODO: charge fonts correctly
-  // reduce time of loading
   const {
     address,
     defaultProfile,
@@ -148,6 +124,16 @@ export default function Dashboard() {
   } = useLoaderData();
 
   const transition = useTransition();
+
+  useEffect(() => {
+    const changeNetwork = async () => {
+      await switchNetwork();
+    };
+
+    changeNetwork()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
