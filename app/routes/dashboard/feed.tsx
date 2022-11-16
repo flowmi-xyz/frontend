@@ -57,7 +57,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     awmaticBalance,
     priceFeed,
   ] = await Promise.all([
-    getTotalFundedProfile(defaultProfile.ownedBy),
+    getTotalFundedProfile(defaultProfile?.ownedBy),
     getGasFee(),
     getBalanceFromAddress(address),
     getWMATICBalance(address),
@@ -135,6 +135,8 @@ export default function Dashboard() {
       .catch(console.error);
   }, []);
 
+  console.log(defaultProfile?.handle);
+
   return (
     <Box bg="#FAFAF9" h="100vh">
       <NavbarConnected
@@ -163,54 +165,86 @@ export default function Dashboard() {
               </Text>
             </Text>
 
-            <Text
-              fontSize="22px"
-              lineHeight="28.8ppx"
-              color="grayLetter"
-              pt="5"
-            >
-              Follow some profiles to participate in a decentralized social
-              raffle and win{" "}
+            {defaultProfile?.handle && (
               <Text
-                as="span"
-                fontWeight="700"
-                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                bgClip="text"
+                fontSize="22px"
+                lineHeight="28.8ppx"
+                color="grayLetter"
+                pt="5"
               >
-                some WMATIC
+                Follow some profiles to participate in a decentralized social
+                raffle and win{" "}
+                <Text
+                  as="span"
+                  fontWeight="700"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  some WMATIC
+                </Text>
               </Text>
-            </Text>
+            )}
+
+            {!defaultProfile?.handle && (
+              <Text
+                fontSize="22px"
+                lineHeight="28.8ppx"
+                color="grayLetter"
+                pt="5"
+              >
+                Create your first profile NFT in Lens protocol before to start
+                to use{" "}
+                <Text
+                  as="span"
+                  fontWeight="700"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  Social DeFi
+                </Text>
+              </Text>
+            )}
           </Box>
 
           <Grid templateColumns="repeat(3, 1fr)">
-            <GridItem colSpan={2}>
-              <ProfileParticipation totalFounded={totalFounded} />
-            </GridItem>
-
-            <GridItem colSpan={1}>
-              <Box>
+            {!defaultProfile?.handle && (
+              <Box pl="10">
                 <SettingsBox />
-                <Balance
-                  maticBalance={maticBalance}
-                  wmaticBalance={wmaticBalance}
-                  awmaticBalance={awmaticBalance}
-                  gasFee={gasFee}
-                  priceFeed={priceFeed}
-                />
               </Box>
-            </GridItem>
+            )}
 
-            <GridItem colSpan={2}>
-              <Box>
-                <Outlet />
-              </Box>
-            </GridItem>
+            {defaultProfile?.handle && (
+              <>
+                <GridItem colSpan={2}>
+                  <ProfileParticipation totalFounded={totalFounded} />
+                </GridItem>
 
-            <GridItem colSpan={1}>
-              <Box>
-                <HotProfiles />
-              </Box>
-            </GridItem>
+                <GridItem colSpan={1}>
+                  <Box>
+                    <SettingsBox />
+                    <Balance
+                      maticBalance={maticBalance}
+                      wmaticBalance={wmaticBalance}
+                      awmaticBalance={awmaticBalance}
+                      gasFee={gasFee}
+                      priceFeed={priceFeed}
+                    />
+                  </Box>
+                </GridItem>
+
+                <GridItem colSpan={2}>
+                  <Box>
+                    <Outlet />
+                  </Box>
+                </GridItem>
+
+                <GridItem colSpan={1}>
+                  <Box>
+                    <HotProfiles />
+                  </Box>
+                </GridItem>
+              </>
+            )}
           </Grid>
         </Box>
       )}
