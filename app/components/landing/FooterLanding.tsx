@@ -12,7 +12,12 @@ const FooterLanding = () => {
       </Center>
 
       <Center p="5">
-        <Text fontWeight="700" fontSize="18px" lineHeight="120% ">
+        <Text
+          textAlign="center"
+          fontWeight="700"
+          fontSize="18px"
+          lineHeight="120% "
+        >
           Make with love for Chainlik Hackathon Fall 2022
         </Text>
       </Center>
