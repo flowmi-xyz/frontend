@@ -9,9 +9,9 @@ const SectionOne = () => {
           alt="blur"
           zIndex="0"
           position="absolute"
-          top="50px"
-          left="10px"
-          w="20%"
+          top={["80px", "50px", "50px", "50px"]}
+          left={["0px", "20px", "20px", "20px"]}
+          w={["40%", "20%", "20%", "20%"]}
         />
       </Center>
 
@@ -21,8 +21,8 @@ const SectionOne = () => {
         zIndex="0"
         position="absolute"
         top="180px"
-        right="20px"
-        w="20%"
+        right={["0px", "20px", "20px", "20px"]}
+        w={["40%", "20%", "20%", "20%"]}
       />
 
       <Center>

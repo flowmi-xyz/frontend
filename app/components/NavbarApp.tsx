@@ -1,8 +1,27 @@
-import { Link } from "@remix-run/react";
+import { Link, useSubmit } from "@remix-run/react";
 
 import { Flex, Text, Button } from "@chakra-ui/react";
+import { loginWithMetamask } from "~/web3/metamask";
 
 const NavbarApp = () => {
+  const submit = useSubmit();
+
+  const handleLogin = async () => {
+    const address = await loginWithMetamask();
+
+    const formData = new FormData();
+
+    formData.append("address", address);
+    formData.append("connected", "true");
+
+    submit(formData, {
+      action: "/login/?index",
+      method: "post",
+      encType: "application/x-www-form-urlencoded",
+      replace: true,
+    });
+  };
+
   return (
     <Flex
       justify="space-around"
@@ -20,22 +39,21 @@ const NavbarApp = () => {
 
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Flex display="flex" align="center">
-          <Link to="/app">
-            <Button
-              bg="white"
-              borderRadius="10px"
-              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+          <Button
+            bg="white"
+            borderRadius="10px"
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            onClick={handleLogin}
+          >
+            <Text
+              fontWeight="700"
+              fontSize="14"
+              lineHeight="120%"
+              color="black"
             >
-              <Text
-                fontWeight="700"
-                fontSize="14"
-                lineHeight="120%"
-                color="black"
-              >
-                Connect your wallet
-              </Text>
-            </Button>
-          </Link>
+              Connect your wallet
+            </Text>
+          </Button>
         </Flex>
       </Flex>
     </Flex>

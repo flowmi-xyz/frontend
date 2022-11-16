@@ -44,18 +44,14 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="80vh"
-    >
+    <Box display="flex" justifyContent="center" alignItems="center">
       <Flex flexDirection="column">
         <Text
           textAlign="center"
           fontWeight="700"
           fontSize="25"
           lineHeight="30px"
+          pt={["20", "100", "100", "100"]}
         >
           Connect your wallet to
         </Text>
@@ -78,7 +74,7 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
           <Box
             borderRadius="20"
             boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
-            width="500px"
+            width={["80%", "500px", "500px", "500px"]}
           >
             <Center pt="5">
               <Button
