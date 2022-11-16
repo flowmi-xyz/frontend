@@ -11,6 +11,7 @@ import {
   Icon,
   Img,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 // icons
@@ -19,6 +20,7 @@ import { MdVerifiedUser, MdVisibility } from "react-icons/md";
 
 // methods
 import { loginWithMetamask } from "~/web3/metamask";
+import MobileConnectWalletModal from "../login/MobileConnectWalletModal";
 
 type ConnectWalletProps = {
   users: number;
@@ -26,6 +28,8 @@ type ConnectWalletProps = {
 
 const ConnectWallet = ({ users }: ConnectWalletProps) => {
   const submit = useSubmit();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleLogin = async () => {
     const address = await loginWithMetamask();
@@ -82,6 +86,24 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleLogin}
+                display={["none", "block", "block", "block"]}
+              >
+                <Text
+                  fontWeight="500"
+                  fontSize="18px"
+                  lineHeight="21.6px"
+                  color="white"
+                >
+                  Connect wallet
+                </Text>
+              </Button>
+
+              <Button
+                bg="third"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                onClick={onOpen}
+                display={["block", "none", "none", "none"]}
               >
                 <Text
                   fontWeight="500"
@@ -126,6 +148,8 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
             </HStack>
           </Box>
         </Center>
+
+        <MobileConnectWalletModal isOpen={isOpen} onClose={onClose} />
       </Flex>
     </Box>
   );
