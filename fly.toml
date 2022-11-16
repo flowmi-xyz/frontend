@@ -1,6 +1,6 @@
-# fly.toml file generated for socialdefi on 2022-11-04T00:02:28-03:00
+# fly.toml file generated for socialdefi3 on 2022-11-16T18:46:11-03:00
 
-app = "socialdefi"
+app = "socialdefi3"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
