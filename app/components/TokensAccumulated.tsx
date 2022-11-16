@@ -85,7 +85,7 @@ const TokenAccumulated = ({
         bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
         bgClip="text"
       >
-        {tokensAccumulated.toFixed(4)} WMATIC
+        {tokensAccumulated.toFixed(4)} aWMATIC
       </Text>
 
       <Text

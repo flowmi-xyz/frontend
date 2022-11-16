@@ -30,36 +30,42 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
       </Text>
       {followers.map((wallet: any) => {
         return (
-          <Flex justifyContent="space-around" p="4" key={wallet.wallet.address}>
-            <Flex justifyContent="space-between" width="100%">
-              <Link
-                to={`/${wallet.wallet?.defaultProfile?.handle}`}
-                prefetch="intent"
-              >
-                <Flex>
-                  <Avatar
-                    size="sm"
-                    name={wallet.wallet?.defaultProfile?.handle}
-                    src={transformToIpfsUrl(wallet.wallet.image)}
-                    my="auto"
+          <Flex
+            p="4"
+            key={wallet.wallet.address}
+            justifyContent="space-between"
+            width="100%"
+          >
+            <Link
+              to={`/${wallet.wallet?.defaultProfile?.handle}`}
+              prefetch="intent"
+            >
+              <Flex width="100%">
+                <Box bg="lens" borderRadius="full" w="35px" h="35px" my="auto">
+                  <Image
+                    src="../assets/LOGO__lens_ultra small icon.png"
+                    alt="lens"
+                    my="-5px"
                   />
+                </Box>
 
-                  <Box my="auto" pl="2">
-                    <Text
-                      fontWeight="600"
-                      fontSize="12px"
-                      lineHeight="100%"
-                      letterSpacing="-0.03em"
-                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                      bgClip="text"
-                      pt="1"
-                    >
-                      @{wallet.wallet?.defaultProfile?.handle}
-                    </Text>
-                  </Box>
-                </Flex>
-              </Link>
+                <Box my="auto" pl="2">
+                  <Text
+                    fontWeight="600"
+                    fontSize="12px"
+                    lineHeight="100%"
+                    letterSpacing="-0.03em"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                    pt="1"
+                  >
+                    @{wallet.wallet?.defaultProfile?.handle}
+                  </Text>
+                </Box>
+              </Flex>
+            </Link>
 
+            <Flex width="50%" justify="space-between">
               <Box width="25%" my="auto">
                 <Text
                   fontWeight="700"
@@ -98,14 +104,6 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                 </Text>
               </Box>
             </Flex>
-
-            <Box bg="lens" borderRadius="10px" w="35px" h="35px" my="auto">
-              <Image
-                src="../assets/LOGO__lens_ultra small icon.png"
-                alt="lens"
-                my="-5px"
-              />
-            </Box>
           </Flex>
         );
       })}
