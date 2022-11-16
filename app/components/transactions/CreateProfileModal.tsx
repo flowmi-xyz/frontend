@@ -136,10 +136,6 @@ const CreateProfileModal = ({
     onClose();
   };
 
-  const handleExploreTx = async () => {
-    window.open(`https://mumbai.polygonscan.com/tx/${txHash}`, "_blank");
-  };
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
@@ -161,20 +157,17 @@ const CreateProfileModal = ({
           </Box>
 
           {activeStep == 0 && (
-            <>
+            <Box pt="5" pl="5" pr="5">
               <Text
                 fontWeight="600"
                 fontSize="14px"
                 lineHeight="120%"
                 color="black"
-                pt="5"
-                pl="5"
-                pr="5"
               >
                 You are going to create the next profile:
               </Text>
 
-              <Flex pt="5" pl="5" pr="5">
+              <Flex pt="5">
                 <Text
                   fontWeight="600"
                   fontSize="14px"
@@ -200,14 +193,21 @@ const CreateProfileModal = ({
                 fontSize="12px"
                 lineHeight="120%"
                 color="grayLetter"
-                pt="5"
-                pl="5"
-                pr="5"
               >
                 Remember this profile is created in the testnet (Polygon Mumbai)
               </Text>
 
               <Divider mt="5" />
+
+              <Text
+                fontWeight="600"
+                fontSize="22px"
+                lineHeight="120%"
+                color="first"
+                mt="5"
+              >
+                This transacction is free.
+              </Text>
 
               <Flex mt="5" justify="space-between">
                 <Box>
@@ -254,7 +254,7 @@ const CreateProfileModal = ({
                 Social DeFi charge 0% fee for all transactions.
               </Alert>
 
-              <Flex pt="5" pl="5">
+              <Flex pt="5">
                 <Text
                   fontWeight="700"
                   fontSize="20px"
@@ -280,7 +280,7 @@ const CreateProfileModal = ({
                   {wmaticBalance.toFixed(4)} MATIC
                 </Text>
               </Flex>
-            </>
+            </Box>
           )}
 
           {activeStep == 2 && (

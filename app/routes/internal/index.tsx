@@ -5,7 +5,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
-import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 
 // UI components
 import {
@@ -39,11 +39,23 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const defaultProfile = responseProfile.defaultProfile;
 
-  return { address, defaultProfile };
+  // Get profiles from Lens
+  const profilesVariables: any = {
+    request: { ownedBy: [address], limit: 20 },
+  };
+
+  const getProfilesResponse = await lensClient.request(
+    GetProfiles,
+    profilesVariables
+  );
+
+  const profiles = getProfilesResponse.profiles.items;
+
+  return { address, defaultProfile, profiles };
 };
 
 export default function MenuInternal() {
-  const { address, defaultProfile } = useLoaderData();
+  const { address, defaultProfile, profiles } = useLoaderData();
 
   return (
     <Box>
