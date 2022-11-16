@@ -34,8 +34,8 @@ const HotProfiles = () => {
         mt="5"
       >
         <Text
-          fontWeight="600"
-          fontSize="15px"
+          fontWeight="500"
+          fontSize="14px"
           lineHeight="120%"
           color="black"
           my="auto"

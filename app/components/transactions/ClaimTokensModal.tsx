@@ -181,7 +181,7 @@ const ClaimTokens = ({
   };
 
   const handleExploreTx = async () => {
-    window.open(`https://polygonscan.com/tx/${txHash}`, "_blank");
+    window.open(`https://mumbai.polygonscan.com/tx/${txHash}`, "_blank");
   };
 
   return (

@@ -54,6 +54,21 @@ const LensterPost = ({
       width={WIDTH_FEED}
       _hover={{ bg: "#F4F4F5" }}
     >
+      {index === 0 && (
+        <Text
+          fontWeight="600"
+          fontSize="14px"
+          lineHeight="120%"
+          color="lensDark"
+          my="auto"
+          pt="5"
+          pl="5"
+          pr="5"
+        >
+          🪴 What is happening in the Lens Garden
+        </Text>
+      )}
+
       <HStack p="5" justifyContent="space-between">
         <Link to={`/${handle}`} prefetch="intent">
           <HStack>

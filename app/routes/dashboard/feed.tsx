@@ -165,13 +165,16 @@ export default function Dashboard() {
             </GridItem>
 
             <GridItem colSpan={1}>
-              <Balance
-                maticBalance={maticBalance}
-                wmaticBalance={wmaticBalance}
-                awmaticBalance={awmaticBalance}
-                gasFee={gasFee}
-                priceFeed={priceFeed}
-              />
+              <Box>
+                <SettingsBox />
+                <Balance
+                  maticBalance={maticBalance}
+                  wmaticBalance={wmaticBalance}
+                  awmaticBalance={awmaticBalance}
+                  gasFee={gasFee}
+                  priceFeed={priceFeed}
+                />
+              </Box>
             </GridItem>
 
             <GridItem colSpan={2}>
@@ -182,8 +185,6 @@ export default function Dashboard() {
 
             <GridItem colSpan={1}>
               <Box>
-                <SettingsBox />
-
                 <HotProfiles />
               </Box>
             </GridItem>
