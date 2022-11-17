@@ -83,10 +83,9 @@ const ClaimTokens = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  const gasLimitNumberApprove = 100000;
-  const gasLimitNumberClaim = 200000;
+  const gasLimitNumberApprove = 1000000;
+  const gasLimitNumberClaim = 1000000;
 
-  // const DEFAULT_FOLLOW_PRICE = parseEther(amount.toString());
   const MAX_UINT256 =
     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
