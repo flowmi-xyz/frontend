@@ -23,8 +23,8 @@ const BuildWith = () => {
           display={["none", "block", "block", "block"]}
         >
           <Flex justify="space-around" m="auto">
-            <Image src="../assets/logos/chainlink-tipo.jpg" h="12" my="auto" />
-            <Image src="../assets/logos/polygon-tipo-hd.png" h="12" my="auto" />
+            <Image src="../assets/logos/chainlink-tipo.png" h="12" my="auto" />
+            <Image src="../assets/logos/polygon-tipo.png" h="12" my="auto" />
           </Flex>
 
           <Flex justify="space-around" m="auto" pt="10">

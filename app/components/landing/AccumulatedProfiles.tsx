@@ -61,7 +61,12 @@ const AccumulatedProfiles = () => {
       >
         .
       </Text>
-      <Center display={["none", "block", "block", "block"]}>
+
+      <Center
+        display={["none", "block", "block", "block"]}
+        maxWidth="1200px"
+        m="auto"
+      >
         <Flex justify="space-between">
           {hotProfilesArr.map((item) => {
             return (
@@ -149,6 +154,7 @@ const AccumulatedProfiles = () => {
           })}
         </Flex>
       </Center>
+
       <Center display={["block", "none", "none", "none"]}>
         <Flex justify="space-between">
           <Box bg="white" borderRadius="10px" width="320px" m="5">
@@ -200,7 +206,7 @@ const AccumulatedProfiles = () => {
 
             <Text
               textAlign="center"
-              fontWeight="700"
+              fontWeight="600"
               fontSize="14px"
               lineHeight="100%"
               letterSpacing="-0.03em"
@@ -211,6 +217,7 @@ const AccumulatedProfiles = () => {
             >
               {hotProfilesArr[1].name} has accumulated{" "}
               <Text
+                fontWeight="700"
                 as="span"
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
