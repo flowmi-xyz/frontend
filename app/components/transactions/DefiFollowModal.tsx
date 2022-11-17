@@ -287,7 +287,7 @@ const DefiFollowModal = ({
                 Social DeFi charge 0% fee for all transactions.
               </Alert>
 
-              <Flex pt="5" pl="5">
+              <Flex>
                 <Text
                   fontWeight="700"
                   fontSize="20px"
@@ -450,7 +450,7 @@ const DefiFollowModal = ({
                   Social DeFi charge 0% fee for all transactions.
                 </Alert>
 
-                <Flex pt="5" pl="5">
+                <Flex>
                   <Text
                     fontWeight="600"
                     fontSize="14px"
@@ -508,8 +508,6 @@ const DefiFollowModal = ({
                   lineHeight="120%"
                   color="grayLetter"
                   pt="5"
-                  pl="5"
-                  pr="5"
                 >
                   Remember, your WMATIC will be locked in the Aave protocol
                   until the number of Defi followers reaches 3, the accumulated

@@ -216,13 +216,7 @@ const LensterProfile = ({
                 />
               </Box>
 
-              <Text
-                fontWeight="500"
-                fontSize="18px"
-                lineHeight="21.6px"
-                color="lensDark"
-                m="auto"
-              >
+              <Text fontWeight="700" fontSize="16px" color="lensDark" m="auto">
                 Follow
               </Text>
             </Flex>

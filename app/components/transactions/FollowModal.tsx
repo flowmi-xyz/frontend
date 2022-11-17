@@ -136,21 +136,19 @@ const FollowModal = ({
           </Box>
 
           {activeStep === 0 && (
-            <>
+            <Box pl="5" pr="5">
               <Text
-                fontWeight="600"
-                fontSize="14px"
+                fontWeight="500"
+                fontSize="18px"
                 lineHeight="120%"
                 color="black"
                 pt="5"
-                pl="5"
-                pr="5"
               >
                 You are going to start following the profile{" "}
                 <Text
                   as="span"
                   fontWeight="700"
-                  fontSize="14px"
+                  fontSize="18px"
                   bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                   bgClip="text"
                 >
@@ -218,7 +216,7 @@ const FollowModal = ({
                 Social DeFi charge 0% fee for all transactions.
               </Alert>
 
-              <Flex pt="5" pl="5">
+              <Flex pt="5">
                 <Text
                   fontWeight="700"
                   fontSize="20px"
@@ -244,7 +242,7 @@ const FollowModal = ({
                   {maticBalance.toFixed(4)} MATIC
                 </Text>
               </Flex>
-            </>
+            </Box>
           )}
 
           {activeStep == 2 && !signed && (
@@ -284,26 +282,25 @@ const FollowModal = ({
           {signed && (
             <Center>
               <VStack paddingTop="5" pl="5" pr="5">
-                <HStack>
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    Waiting transacction to be mined...
-                  </Text>
+                <Text
+                  fontWeight="700"
+                  fontSize="20px"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  Waiting transacction to be mined...
+                </Text>
 
-                  <Image
-                    src="https://feature.undp.org/beyond-bitcoin/es/assets/mbNja7QNnr/block3.gif"
-                    width="50%"
-                  />
-                </HStack>
+                <Image
+                  src="../assets/animations/blocks.gif"
+                  width="50%"
+                  pt="5"
+                />
 
                 <Text
                   textAlign="center"
                   fontWeight="500"
-                  fontSize="12px"
+                  fontSize="16px"
                   lineHeight="120%"
                   color="grayLetter"
                   pt="5"
@@ -373,9 +370,8 @@ const FollowModal = ({
                   </Box>
 
                   <Text
-                    fontWeight="500"
-                    fontSize="18px"
-                    lineHeight="21.6px"
+                    fontWeight="700"
+                    fontSize="16px"
                     color="lensDark"
                     m="auto"
                   >
