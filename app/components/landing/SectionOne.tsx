@@ -33,15 +33,27 @@ const SectionOne = () => {
           pl="20"
           pr="20"
         >
+          {" "}
           <Text
             textAlign="center"
             fontWeight="700"
-            fontSize={["40px", "55px", "45px"]}
+            fontSize="80px"
+            lineHeight="120%"
+            color="white"
+            p="30"
+            opacity="0"
+          >
+            .
+          </Text>
+          <Text
+            textAlign="center"
+            fontWeight="1200"
+            fontSize={["80px", "110px", "90px"]}
             lineHeight={["48px", "66px", "66px"]}
             color="black"
             zIndex="1"
           >
-            Welcome to the{" "}
+            Welcome to{" "}
             <Text
               as="span"
               bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
@@ -50,9 +62,19 @@ const SectionOne = () => {
               Social DeFi
             </Text>
           </Text>
-
           <Text
-            fontSize={["18px", "22px", "22px"]}
+            textAlign="center"
+            fontWeight="700"
+            fontSize="26px"
+            lineHeight="120%"
+            color="white"
+            p="45"
+            opacity="0"
+          >
+            .
+          </Text>
+          <Text
+            fontSize={["24px", "29px", "29px"]}
             lineHeight={["21.6px", "28.8px", "28.8ppx"]}
             color="grayLetter"
             textAlign="center"
@@ -71,7 +93,17 @@ const SectionOne = () => {
               without realizing it
             </Text>
           </Text>
-
+          <Text
+            textAlign="center"
+            fontWeight="700"
+            fontSize="26px"
+            lineHeight="120%"
+            color="white"
+            p="2"
+            opacity="0"
+          >
+            .
+          </Text>
           <Box
             width="80%"
             height="2px"
@@ -79,7 +111,6 @@ const SectionOne = () => {
             zIndex="1"
             marginTop="50px"
           />
-
           {/* <Image src="../assets/images/phone.png" alt="phone" zIndex="1" /> */}
         </Flex>
       </Center>

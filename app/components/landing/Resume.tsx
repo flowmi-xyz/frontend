@@ -3,6 +3,17 @@ import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 const Resume = () => {
   return (
     <Box bg="white" width="100%">
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="26px"
+        lineHeight="120%"
+        color="white"
+        p="2"
+        opacity="0"
+      >
+        .
+      </Text>
       <Flex
         justify="space-between"
         maxWidth="1200px"
@@ -42,58 +53,60 @@ const Resume = () => {
 
           <Text
             textAlign="center"
-            fontWeight="700"
+            fontWeight="200"
             fontSize="18px"
             lineHeight="21.6px"
             color="black"
             m="auto"
             p="5"
           >
-            Follow a Lens profile and pay an extra fee
+            Use your 🌿 Lens profile to follow your friends paying a fee that
+            goes to a common money pool 💰
           </Text>
+          <Text p="2">.</Text>
         </Box>
 
         <Box width={["100%", "30%", "30%", "30%"]}>
           <Text
             textAlign="center"
-            fontWeight="700"
+            fontSize="30px"
+            display={["none", "block", "block", "block"]}
+          >
+            🎉💸🎉
+          </Text>
+
+          <Text
+            textAlign="center"
+            fontWeight="200"
             fontSize="18px"
             lineHeight="21.6px"
             color="black"
             m="auto"
             p="5"
           >
-            The extra fee will be lend in Aave
+            When 3 friends follow the same profile, the accumulated fees will be
+            raffled among them!
           </Text>
+        </Box>
 
+        <Box width={["100%", "30%", "30%", "30%"]}>
           <Image
             src="../assets/logos/aave-tipo.png"
             h="10"
             m="auto"
             display={["none", "block", "block", "block"]}
           />
-        </Box>
-
-        <Box width={["100%", "30%", "30%", "30%"]}>
           <Text
             textAlign="center"
-            fontSize="16px"
-            display={["none", "block", "block", "block"]}
-          >
-            🎉
-          </Text>
-
-          <Text
-            textAlign="center"
-            fontWeight="700"
+            fontWeight="200"
             fontSize="18px"
             lineHeight="21.6px"
             color="black"
             m="auto"
             p="5"
           >
-            When 3 people follow the same profile, the accumulated fees will be
-            raffled among them
+            Get 👻 ATokens as a prize! Aave makes them earn interest while they
+            are in the Pool. Redeem them whenever you want!
           </Text>
         </Box>
       </Flex>

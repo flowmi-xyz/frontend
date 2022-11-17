@@ -35,10 +35,32 @@ const AccumulatedProfiles = () => {
         lineHeight="120%"
         color="white"
         p="5"
+        opacity="0"
       >
-        Accumulated profiles
+        .
       </Text>
 
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="46px"
+        lineHeight="180%"
+        color="white"
+        p="5"
+      >
+        🎁 Accumulated profiles 🎁
+      </Text>
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="26px"
+        lineHeight="120%"
+        color="white"
+        p="2"
+        opacity="0"
+      >
+        .
+      </Text>
       <Center display={["none", "block", "block", "block"]}>
         <Flex justify="space-between">
           {hotProfilesArr.map((item) => {
@@ -63,7 +85,7 @@ const AccumulatedProfiles = () => {
                       <Box my="auto" pl="2">
                         <Text
                           fontWeight="600"
-                          fontSize="12px"
+                          fontSize="16px"
                           lineHeight="100%"
                           letterSpacing="-0.03em"
                           color="black"
@@ -74,7 +96,7 @@ const AccumulatedProfiles = () => {
 
                         <Text
                           fontWeight="600"
-                          fontSize="12px"
+                          fontSize="16px"
                           lineHeight="100%"
                           letterSpacing="-0.03em"
                           bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
@@ -104,8 +126,8 @@ const AccumulatedProfiles = () => {
 
                 <Text
                   textAlign="center"
-                  fontWeight="700"
-                  fontSize="14px"
+                  fontWeight="400"
+                  fontSize="18px"
                   lineHeight="100%"
                   letterSpacing="-0.03em"
                   color="black"
@@ -127,8 +149,7 @@ const AccumulatedProfiles = () => {
           })}
         </Flex>
       </Center>
-
-      <Center>
+      <Center display={["block", "none", "none", "none"]}>
         <Flex justify="space-between">
           <Box bg="white" borderRadius="10px" width="320px" m="5">
             <Flex justifyContent="space-between" p="4">
@@ -200,17 +221,38 @@ const AccumulatedProfiles = () => {
           </Box>
         </Flex>
       </Center>
-
       <Text
         textAlign="center"
         fontWeight="700"
-        fontSize="14px"
+        fontSize="26px"
+        lineHeight="120%"
+        color="white"
+        p="5"
+        opacity="0"
+      >
+        .
+      </Text>
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="16px"
         lineHeight="100%"
         letterSpacing="-0.03em"
         color="white"
         pb="5"
       >
-        * Example values
+        ✨ Example values ✨
+      </Text>
+      <Text
+        textAlign="center"
+        fontWeight="700"
+        fontSize="26px"
+        lineHeight="120%"
+        color="white"
+        p="5"
+        opacity="0"
+      >
+        .
       </Text>
     </Box>
   );
