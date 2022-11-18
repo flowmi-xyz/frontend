@@ -11,7 +11,7 @@ const AppFooter = () => {
         color="grayLetter"
         pt="2"
       >
-        Make with ❤️ for Chainlink Hackathon Fall 2022
+        Made with love for Chainlink Hackathon Fall 2022
       </Text>
     </Box>
   );

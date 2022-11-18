@@ -18,7 +18,7 @@ const FooterLanding = () => {
           fontSize="18px"
           lineHeight="120% "
         >
-          Made with love for Chainlik Hackathon Fall 2022
+          Made with love for Chainlink Hackathon Fall 2022
         </Text>
       </Center>
     </Box>
