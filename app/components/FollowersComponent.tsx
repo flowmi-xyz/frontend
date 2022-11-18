@@ -66,7 +66,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
             </Link>
 
             <Flex width="50%" justify="space-between">
-              <Box width="25%" my="auto">
+              <Box width="30%" my="auto">
                 <Text
                   fontWeight="700"
                   fontSize="12px"
@@ -85,7 +85,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                 </Text>
               </Box>
 
-              <Box width="25%" my="auto">
+              <Box width="30%" my="auto">
                 <Text
                   fontWeight="700"
                   fontSize="12px"

@@ -19,8 +19,6 @@ const TokenAccumulated = ({
   countFollowers,
   goalOfFollowers,
 }: TokenAccumulatedProps) => {
-  console.log(countFollowers);
-  console.log(goalOfFollowers);
   return (
     <Box
       bg="white"

@@ -11,21 +11,19 @@ import {
   GetProfile,
 } from "~/web3/lens/graphql/generated";
 
-import { ethers } from "ethers";
-
+import { getBalanceFromAddress } from "~/web3/etherservice";
+import { getGasFee } from "~/web3/gasfee";
+import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
+import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";
+import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
 import {
-  getBalanceFromAddress,
-  getSignerBack,
-  getSignerFront,
-} from "~/web3/etherservice";
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-import {
-  FLOWMI_CONTRACT_ADDRESS,
-  FLOWMI_HUB_ABI,
-} from "~/web3/social-defi/social-defi-hub";
+  getFundsInThisRaffle,
+  getGoal,
+  getNumberOfFollowers,
+} from "~/web3/social-defi";
+import { getFollowModule } from "~/web3/lens";
 
 // UI components
-import React from "react";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 
 // components
@@ -35,17 +33,6 @@ import TokenAccumulated from "~/components/TokensAccumulated";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";
 import FollowersComponent from "~/components/FollowersComponent";
 import BalanceInProfile from "~/components/BalanceInProfile";
-
-import { formatEther } from "~/utils/formatEther";
-import { getGasFee } from "~/web3/gasfee";
-import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
-import { getaWMATICBalance, getWMATICBalance } from "~/web3/erc20";
-import {
-  getFundsInThisRaffle,
-  getGoal,
-  getNumberOfFollowers,
-} from "~/web3/social-defi";
-import { getFollowModule } from "~/web3/lens";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // Get address from cookie session
@@ -187,11 +174,6 @@ export default function Profile() {
 
   changeHeaders(accessToken);
 
-  console.log(pageProfile);
-  console.log(followModuleAddress);
-  console.log(arrayFollowers);
-  console.log(priceFeed);
-
   return (
     <Box bg="#FAFAF9">
       <NavbarConnected
@@ -210,7 +192,7 @@ export default function Profile() {
           zIndex="1"
           my="50px"
         >
-          Welcome to the{" "}
+          Welcome to{" "}
           <Text
             as="span"
             bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
