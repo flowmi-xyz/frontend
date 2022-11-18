@@ -16,6 +16,7 @@ const BuildWith = () => {
             Built with
           </Text>
         </Center>
+
         <Box
           pt="10"
           maxWidth="1200px"
@@ -34,6 +35,22 @@ const BuildWith = () => {
 
           <Center pt="10">
             <Image src="../assets/logos/metamask-tipo.png" h="12" my="auto" />
+          </Center>
+        </Box>
+
+        <Box pt="10" m="auto" display={["block", "none", "none", "none"]}>
+          <Flex justify="space-around" m="auto">
+            <Image src="../assets/logos/chainlink-tipo.png" h="12" my="auto" />
+            <Image src="../assets/logos/polygon-tipo.png" h="8" my="auto" />
+          </Flex>
+
+          <Flex justify="space-around" m="auto" pt="10">
+            <Image src="../assets/logos/lens-tipo.png" h="20" my="auto" />
+            <Image src="../assets/logos/aave-tipo.png" h="12" my="auto" />
+          </Flex>
+
+          <Center pt="10">
+            <Image src="../assets/logos/metamask-tipo.png" h="8" my="auto" />
           </Center>
         </Box>
       </Box>
