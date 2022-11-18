@@ -10,7 +10,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { MetaFunction, LinksFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 
 import { ServerStyleContext, ClientStyleContext } from "./context";
 
@@ -21,18 +21,10 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Social DeFi | Chainlink Hackathon",
   viewport: "width=device-width,initial-scale=1",
+  "og:description":
+    "Use web3 social network in a cooler way interacting with DeFi protocolos without realizing it",
+  "og:image": "./header.png",
 });
-
-// export let links: LinksFunction = () => {
-//   return [
-//     { rel: "preconnect", href: "https://fonts.googleapis.com" },
-//     { rel: "preconnect", href: "https://fonts.gstatic.com" },
-//     {
-//       rel: "stylesheet",
-//       href: "https://fonts.cdnfonts.com/css/louis-george-cafe",
-//     },
-//   ];
-// };
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -86,8 +78,6 @@ export default function App() {
     <Document>
       <ChakraProvider theme={theme}>
         <Fonts />
-        {/* <CSSReset /> */}
-
         <Outlet />
       </ChakraProvider>
     </Document>
