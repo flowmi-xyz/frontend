@@ -216,7 +216,11 @@ export default function Dashboard() {
             {defaultProfile?.handle && (
               <>
                 <GridItem colSpan={2}>
-                  <ProfileParticipation totalFounded={totalFounded} />
+                  <Box>
+                    <ProfileParticipation totalFounded={totalFounded} />
+
+                    <HotProfiles />
+                  </Box>
                 </GridItem>
 
                 <GridItem colSpan={1}>
@@ -238,11 +242,11 @@ export default function Dashboard() {
                   </Box>
                 </GridItem>
 
-                <GridItem colSpan={1}>
+                {/* <GridItem colSpan={1}>
                   <Box>
                     <HotProfiles />
                   </Box>
-                </GridItem>
+                </GridItem> */}
               </>
             )}
           </Grid>

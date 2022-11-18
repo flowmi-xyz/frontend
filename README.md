@@ -1,41 +1,26 @@
-# Welcome to Remix!
+<p align="center">
+ <a href="https://defiforpeople.github.io/frontend/"><img src="src/assets/logos/dfp.svg" width="400"></a>
+</p>
 
-- [Remix Docs](https://remix.run/docs)
+# DeFi for People
 
-## Fly Setup
+<p>
+    <img alt="Nodejs" src="https://img.shields.io/badge/-ReactJs-61DAFB?style=flat-square&logo=react&logoColor=white"/>
+    <img src="https://img.shields.io/badge/defiforpeople-v0.0.0-3A0CA3">
+</p>
 
-1. [Install `flyctl`](https://fly.io/docs/getting-started/installing-flyctl/)
+<p align="center">The <i>webapp</i> is <a href='https://defiforpeople.github.io/frontend/'>HERE</a>
 
-2. Sign up and log in to Fly
+## About this project
 
-```sh
-flyctl auth signup
-```
+This is a repository of a web application made in ReactJs for - Chainlink Spring 2022 Hackathon.
 
-3. Setup Fly. It might ask if you want to deploy, say no since you haven't built the app yet.
+The application has been developed with:
 
-```sh
-flyctl launch
-```
+- **![remix.run](https://remix.run/)**: Framework focuses on web standars and modern web app UX.
+- **reactjs**: library to create user interfaces.
+- **chakra-ui**: library to create user interfaces.
 
-## Development
+# Develop Commands
 
-From your terminal:
-
-```sh
-npm run dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
-
-## Deployment
-
-If you've followed the setup instructions already, all you need to do is run this:
-
-```sh
-npm run deploy
-```
-
-You can run `flyctl info` to get the url and ip address of your server.
-
-Check out the [fly docs](https://fly.io/docs/getting-started/node/) for more information.
+`npm run dev`: run in development mode.

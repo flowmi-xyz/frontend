@@ -32,6 +32,7 @@ import {
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { defaultAbiCoder } from "ethers/lib/utils";
 import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
+import SignedMessageTx from "./common/SignedMessage";
 
 type FollowModalProps = {
   isOpen: boolean;
@@ -279,37 +280,7 @@ const FollowModal = ({
             </HStack>
           )}
 
-          {signed && (
-            <Center>
-              <VStack paddingTop="5" pl="5" pr="5">
-                <Text
-                  fontWeight="700"
-                  fontSize="20px"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  Waiting transacction to be mined...
-                </Text>
-
-                <Image
-                  src="../assets/animations/blocks.gif"
-                  width="50%"
-                  pt="5"
-                />
-
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="16px"
-                  lineHeight="120%"
-                  color="grayLetter"
-                  pt="5"
-                >
-                  This usually takes 0-1 minutes to complete
-                </Text>
-              </VStack>
-            </Center>
-          )}
+          {signed && <SignedMessageTx />}
 
           {error && (
             <Box p="5">

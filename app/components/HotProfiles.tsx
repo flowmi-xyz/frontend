@@ -30,8 +30,10 @@ const HotProfiles = () => {
         border="1px"
         borderColor="#E0E0E3"
         borderRadius="10px"
-        width="420px"
+        // width="420px"
         mt="5"
+        ml="10"
+        mr="10"
       >
         <Text
           fontWeight="400"
@@ -95,8 +97,6 @@ const HotProfiles = () => {
           );
         })}
       </Box>
-
-      <LensterFooter />
     </>
   );
 };

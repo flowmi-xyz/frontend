@@ -19,7 +19,6 @@ import {
   ModalOverlay,
   Spinner,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 
 import { BigNumber, ethers } from "ethers";
@@ -29,6 +28,7 @@ import { LENS_HUB_ABI } from "~/web3/lens/lens-hub";
 import { getSignerFront } from "~/web3/etherservice";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import SignedMessageTx from "./common/SignedMessage";
 
 type UnFollowModalProps = {
   isOpen: boolean;
@@ -138,15 +138,12 @@ const UnfollowModal = ({
           </Box>
 
           {activeStep === 0 && !signed && !error && (
-            <>
+            <Box pt="5" pl="5" pr="5">
               <Text
                 fontWeight="600"
                 fontSize="14px"
                 lineHeight="120%"
                 color="black"
-                pt="5"
-                pl="5"
-                pr="5"
               >
                 You are going to stop following the profile{" "}
                 <Text
@@ -166,8 +163,6 @@ const UnfollowModal = ({
                 lineHeight="120%"
                 color="grayLetter"
                 pt="5"
-                pl="5"
-                pr="5"
               >
                 Remember that tokens deposited when making DeFi Follow will not
                 be returned.
@@ -233,7 +228,7 @@ const UnfollowModal = ({
                 Social DeFi charge 0% fee for all transactions.
               </Alert>
 
-              <Flex pt="5" pl="5">
+              <Flex pt="5">
                 <Text
                   fontWeight="700"
                   fontSize="20px"
@@ -259,7 +254,7 @@ const UnfollowModal = ({
                   {maticBalance.toFixed(4)} MATIC
                 </Text>
               </Flex>
-            </>
+            </Box>
           )}
 
           {activeStep == 2 && !signed && !error && (
@@ -296,38 +291,7 @@ const UnfollowModal = ({
             </HStack>
           )}
 
-          {signed && (
-            <Center>
-              <VStack paddingTop="5" pl="5" pr="5">
-                <HStack>
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    Waiting transacction to be mined...
-                  </Text>
-
-                  <Image
-                    src="https://feature.undp.org/beyond-bitcoin/es/assets/mbNja7QNnr/block3.gif"
-                    width="50%"
-                  />
-                </HStack>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="12px"
-                  lineHeight="120%"
-                  color="grayLetter"
-                  pt="5"
-                >
-                  This usually takes 0-1 minutes to complete
-                </Text>
-              </VStack>
-            </Center>
-          )}
+          {signed && <SignedMessageTx />}
         </ModalBody>
 
         <ModalFooter>

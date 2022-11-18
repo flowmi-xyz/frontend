@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 
 import { MdAccountBalanceWallet } from "react-icons/md";
+import LensterFooter from "./external/LensterFooter";
 import ClaimTokens from "./transactions/ClaimTokensModal";
 
 type BalanceProps = {
@@ -157,6 +158,8 @@ const Balance = ({
         wmaticBalance={wmaticBalance}
         awmaticBalance={awmaticBalance}
       />
+
+      <LensterFooter />
     </>
   );
 };

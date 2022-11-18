@@ -9,8 +9,8 @@ type LensterFeedProps = {
 
 const LensterFeed = ({ Posts }: LensterFeedProps) => {
   return (
-    <Center mt="-150px">
-      <Box>
+    <Center>
+      <Box mt="-100px">
         {Posts.map((post: any, index: number, row: any) => {
           return (
             <LensterPost

@@ -1,6 +1,6 @@
 // BFF components
 import type { LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useTransition } from "@remix-run/react";
 
 import { getSession } from "~/bff/session";
 
@@ -172,10 +172,14 @@ export default function Profile() {
     awmaticBalance,
   } = useLoaderData();
 
+  const transition = useTransition();
+
+  console.log(transition);
+
   changeHeaders(accessToken);
 
   return (
-    <Box bg="#FAFAF9">
+    <Box bg="#FAFAF9" height="100vh">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}
