@@ -8,6 +8,8 @@ import { getSession } from "~/bff/session";
 import React from "react";
 
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
@@ -24,10 +26,9 @@ import {
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 import CreateProfileModal from "~/components/transactions/CreateProfileModal";
-import { changeHeaders } from "~/web3/lens/lens-client";
-import getGasFee from "~/web3/gasfee";
-import getPriceFeedFromFlowmi from "~/web3/social-defi/getPriceFeed";
+import { changeHeaders, lensClient } from "~/web3/lens/lens-client";
 import { getBalanceFromAddress } from "~/web3/etherservice";
+import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -37,22 +38,28 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const accessToken = session.get("accessToken");
 
-  const profile = {
-    handle: "TODO",
+  // Get default profile from Lens
+  const variables: any = {
+    request: { ethereumAddress: address },
   };
+
+  const responseProfile = await lensClient.request(
+    GetDefaultProfile,
+    variables
+  );
+
+  const defaultProfile = responseProfile.defaultProfile;
 
   const wmaticBalance = await getBalanceFromAddress(address);
 
-  return { address, profile, accessToken, wmaticBalance };
+  return { address, defaultProfile, accessToken, wmaticBalance };
 };
 
 export default function Index() {
-  const { address, accessToken, wmaticBalance } = useLoaderData();
+  const { address, accessToken, wmaticBalance, defaultProfile } =
+    useLoaderData();
 
   const [handle, setHandle] = React.useState("");
-  const [profilePicture, setProfilePicture] = React.useState(null);
-  const [followNFT, setFollowNFT] = React.useState(null);
-  const [followModule, setFollowModule] = React.useState(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -64,14 +71,34 @@ export default function Index() {
 
   return (
     <Box>
-      <NavbarConnected address={address} authenticatedInLens={false} />
+      <NavbarConnected
+        address={address}
+        authenticatedInLens={true}
+        handle={defaultProfile?.handle}
+      />
 
-      <Box maxWidth="600px" m="auto" pt="3" pb="3">
+      <Box
+        maxWidth="600px"
+        m="auto"
+        bg="white"
+        border="1px"
+        borderColor="#E0E0E3"
+        borderRadius="10px"
+        p="5"
+        mt="5"
+        mb="5"
+      >
         <Text fontWeight="600" fontSize="36px" color="black" pb="3">
           Create profile
         </Text>
 
-        <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3">
+        <Alert status="info" borderRadius="10px">
+          <AlertIcon />
+          You only need a name for your profile. Your profile name must be more
+          than 5 characters.
+        </Alert>
+
+        <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="5">
           handle
         </Text>
         <InputGroup size="md">
@@ -83,25 +110,25 @@ export default function Index() {
           <InputRightAddon children=".test" />
         </InputGroup>
 
-        <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="10">
+        {/* <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="10">
           profile picture
         </Text>
         <InputGroup size="md">
           <Input placeholder="null" isDisabled />
-        </InputGroup>
+        </InputGroup> */}
 
-        <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="10">
+        {/* <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="10">
           follow NFT
         </Text>
-        <Select placeholder="null"></Select>
+        <Select placeholder="null"></Select> */}
 
-        <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="10">
+        {/* <Text fontWeight="400" fontSize="20px" color="lensDark" pb="3" pt="10">
           follow Module
         </Text>
         <Select placeholder="null">
           {/* <option value="null">null</option>
-          <option value="FlowmiFollowModule">FlowmiFollowModule</option> */}
-        </Select>
+          <option value="FlowmiFollowModule">FlowmiFollowModule</option> 
+        </Select> */}
 
         <Center>
           <Button
@@ -110,7 +137,7 @@ export default function Index() {
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mt="10"
             onClick={onOpen}
-            disabled={handle === ""}
+            disabled={handle === "" || handle.length < 5}
           >
             <Flex>
               <Box w="40px" h="40px">
