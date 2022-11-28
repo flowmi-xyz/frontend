@@ -28,6 +28,7 @@ import {
   Icon,
   Image,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 // components
@@ -36,6 +37,7 @@ import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
 import { BsPlusLg } from "react-icons/bs";
+import PostModal from "~/components/post/postModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -119,18 +121,11 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const {
-    address,
-    defaultProfile,
-    totalFounded,
-    gasFee,
-    priceFeed,
-    maticBalance,
-    wmaticBalance,
-    awmaticBalance,
-  } = useLoaderData();
+  const { address, defaultProfile, gasFee } = useLoaderData();
 
   const transition = useTransition();
+
+  const { onOpen, onClose, isOpen } = useDisclosure();
 
   useEffect(() => {
     const changeNetwork = async () => {
@@ -141,8 +136,6 @@ export default function Dashboard() {
       // make sure to catch any error
       .catch(console.error);
   }, []);
-
-  console.log(defaultProfile?.handle);
 
   return (
     <Box bg="#FAFAF9" h="100vh">
@@ -168,7 +161,7 @@ export default function Dashboard() {
                 bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
               >
-                Social DeFi
+                Modulens
               </Text>
             </Text>
 
@@ -260,9 +253,20 @@ export default function Dashboard() {
                   right="10"
                   rounded="full"
                   bg="third"
+                  onClick={onOpen}
                 >
                   <Icon as={BsPlusLg} color="white" h="5" w="5" />
                 </Button>
+
+                <PostModal
+                  isOpen={true}
+                  onClose={onClose}
+                  handle="cristian"
+                  profileId="1"
+                  gasFee={gasFee}
+                  priceFeed={1}
+                  wmaticBalance={1}
+                />
               </>
             )}
           </Grid>
