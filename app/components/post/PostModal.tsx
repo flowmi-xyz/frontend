@@ -47,7 +47,7 @@ type PostModalProps = {
   handle: string;
   gasFee: any;
   priceFeed: number;
-  wmaticBalance: number;
+  maticBalance: number;
 };
 
 const PostModal = ({
@@ -58,7 +58,7 @@ const PostModal = ({
   profileId,
   gasFee,
   priceFeed,
-  wmaticBalance,
+  maticBalance,
 }: PostModalProps) => {
   const steps = [
     { label: "Confirm default profile" },
@@ -253,7 +253,7 @@ const PostModal = ({
                   ml="2"
                   my="auto"
                 >
-                  {wmaticBalance.toFixed(4)} MATIC
+                  {maticBalance.toFixed(4)} MATIC
                 </Text>
               </Flex>
             </Box>

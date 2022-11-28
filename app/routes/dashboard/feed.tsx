@@ -244,7 +244,7 @@ export default function Dashboard() {
                 profileId={defaultProfile?.id}
                 gasFee={gasFee}
                 priceFeed={1}
-                wmaticBalance={1}
+                maticBalance={maticBalance}
               />
             </>
           )}
