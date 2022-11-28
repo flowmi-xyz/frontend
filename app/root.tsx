@@ -19,11 +19,11 @@ import Fonts from "./fonts";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Social DeFi | Chainlink Hackathon",
+  title: "Modulens factory",
   viewport: "width=device-width,initial-scale=1",
-  "og:description":
-    "Use web3 social network in a cooler way interacting with DeFi protocolos without realizing it",
-  "og:image": "./assets/images/header.png",
+  // "og:description":
+  //   "Use web3 social network in a cooler way interacting with DeFi protocolos without realizing it",
+  // "og:image": "./assets/images/header.png",
 });
 
 interface DocumentProps {

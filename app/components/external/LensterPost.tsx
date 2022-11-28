@@ -1,4 +1,12 @@
-import { Avatar, Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  HStack,
+  Icon,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
@@ -9,6 +17,7 @@ import { TbArrowsLeftRight } from "react-icons/tb";
 import { VscLibrary } from "react-icons/vsc";
 import { WIDTH_FEED } from "~/styles/theme";
 import { Link } from "@remix-run/react";
+import MirrorModal from "../mirror/MirrorModal";
 
 type PostProps = {
   id: string;
@@ -38,6 +47,8 @@ const LensterPost = ({
   index,
   row,
 }: PostProps) => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+
   return (
     <Box
       bg="white"
@@ -156,7 +167,7 @@ const LensterPost = ({
             </Text>
           </Flex>
 
-          <Flex>
+          <Flex onClick={onOpen}>
             <Icon as={TbArrowsLeftRight} color="fourth" w={5} h={5} />
             <Text
               fontWeight="700"
@@ -186,6 +197,15 @@ const LensterPost = ({
             </Text>
           </Flex>
         </HStack>
+
+        <MirrorModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handle="cristian"
+          address="1"
+          profileId="1"
+          maticBalance={1}
+        />
       </Box>
     </Box>
   );
