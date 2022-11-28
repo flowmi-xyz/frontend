@@ -15,7 +15,7 @@ import { FaTwitter } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineStar } from "react-icons/ai";
 
-import { transformToIpfsUrl } from "~/web3/ipfs";
+import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 import FollowModal from "../transactions/FollowModal";
 import UnfollowModal from "../transactions/UnfollowModal";

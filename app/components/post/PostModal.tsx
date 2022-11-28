@@ -37,6 +37,7 @@ import { v4 as uuid } from "uuid";
 
 import { create } from "ipfs-http-client";
 import React from "react";
+import { ipfsClient } from "~/web3/ipfs/ipfs-client";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -48,20 +49,6 @@ type PostModalProps = {
   priceFeed: number;
   wmaticBalance: number;
 };
-
-const projectId = "2IBIpH5C0JR6w3TOX5Jtp2M4fHd";
-const projectSecret = "c42d76a13145e73abecf04586f3ad207";
-const auth =
-  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
-
-const client = create({
-  host: "ipfs.infura.io",
-  port: 5001,
-  protocol: "https",
-  headers: {
-    authorization: auth,
-  },
-});
 
 const PostModal = ({
   isOpen,
@@ -106,7 +93,7 @@ const PostModal = ({
       locale: "en-US",
     };
 
-    const added = await client.add(JSON.stringify(metaData));
+    const added = await ipfsClient.add(JSON.stringify(metaData));
     const uri = `https://ipfs.infura.io/ipfs/${added.path}`;
     return uri;
   }
@@ -116,8 +103,6 @@ const PostModal = ({
     console.log(post);
 
     const contentURI = await uploadToIPFS();
-
-    // const contentURI = "";
 
     const createPostRequest = {
       request: {
@@ -137,15 +122,11 @@ const PostModal = ({
 
       const typedData = signedResult.typedData;
 
-      console.log(typedData);
-
       const signature = await signedTypeData(
         typedData.domain,
         typedData.types,
         typedData.value
       );
-
-      console.log(signature);
 
       const { v, r, s } = splitSignature(signature);
 

@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
 
-import { transformToIpfsUrl } from "~/web3/ipfs";
+import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 

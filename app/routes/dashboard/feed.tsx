@@ -24,7 +24,6 @@ import {
   Button,
   Center,
   Grid,
-  GridItem,
   Icon,
   Image,
   Text,
@@ -121,7 +120,8 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const { address, accessToken, defaultProfile, gasFee } = useLoaderData();
+  const { address, accessToken, defaultProfile, gasFee, maticBalance } =
+    useLoaderData();
 
   const transition = useTransition();
 
