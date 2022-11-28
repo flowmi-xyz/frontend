@@ -19,16 +19,23 @@ import { getTotalFundedProfile } from "~/web3/social-defi";
 
 // UI components
 import { useEffect } from "react";
-import { Box, Center, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Grid,
+  GridItem,
+  Icon,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
 // components
 import NavbarConnected from "~/components/NavbarConnected";
-import HotProfiles from "~/components/HotProfiles";
-import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/SettingsBox";
-import Balance from "~/components/Balance";
 
 import { switchNetwork } from "~/web3/metamask";
+import { BsPlusLg } from "react-icons/bs";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -215,24 +222,24 @@ export default function Dashboard() {
 
             {defaultProfile?.handle && (
               <>
-                <GridItem colSpan={2}>
+                {/* <GridItem colSpan={2}>
                   <Box>
                     <ProfileParticipation totalFounded={totalFounded} />
 
                     <HotProfiles />
                   </Box>
-                </GridItem>
+                </GridItem> */}
 
                 <GridItem colSpan={1}>
                   <Box>
                     <SettingsBox />
-                    <Balance
+                    {/* <Balance
                       maticBalance={maticBalance}
                       wmaticBalance={wmaticBalance}
                       awmaticBalance={awmaticBalance}
                       gasFee={gasFee}
                       priceFeed={priceFeed}
-                    />
+                    /> */}
                   </Box>
                 </GridItem>
 
@@ -247,6 +254,15 @@ export default function Dashboard() {
                     <HotProfiles />
                   </Box>
                 </GridItem> */}
+                <Button
+                  position="fixed"
+                  bottom="10"
+                  right="10"
+                  rounded="full"
+                  bg="third"
+                >
+                  <Icon as={BsPlusLg} color="white" h="5" w="5" />
+                </Button>
               </>
             )}
           </Grid>

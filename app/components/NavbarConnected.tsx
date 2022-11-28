@@ -25,7 +25,8 @@ const NavbarConnected = ({
   return (
     <Flex
       justify="space-around"
-      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+      bgGradient="linear(to-r, #BDFC5A, #34403A, #285238, #138A36, #BFD1E5)"
+      //
       height="65px"
       align="center"
       alignItems="center"
@@ -34,7 +35,7 @@ const NavbarConnected = ({
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Link to="/dashboard/feed">
           <Text fontWeight="700" fontSize="20" color="white">
-            Social Defi
+            Modulens
           </Text>
         </Link>
 
