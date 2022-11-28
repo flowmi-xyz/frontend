@@ -1,10 +1,9 @@
 // logic components
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
 // UI components
-import React from "react";
 import {
   Alert,
   AlertIcon,
@@ -32,10 +31,14 @@ import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { Link } from "react-router-dom";
 import { splitSignature } from "~/utils/formatEther";
 import { createPostTypedData } from "~/web3/lens/comment/post";
-import { signTypedDataWithMetamask } from "~/web3/metamask";
 import { getSignerFront, signedTypeData } from "~/web3/etherservice";
 
-type CreateProfileProps = {
+import { v4 as uuid } from "uuid";
+
+import { create } from "ipfs-http-client";
+import React from "react";
+
+type PostModalProps = {
   isOpen: boolean;
   onClose: () => void;
   address: string;
@@ -46,6 +49,20 @@ type CreateProfileProps = {
   wmaticBalance: number;
 };
 
+const projectId = "2IBIpH5C0JR6w3TOX5Jtp2M4fHd";
+const projectSecret = "c42d76a13145e73abecf04586f3ad207";
+const auth =
+  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+
+const client = create({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  headers: {
+    authorization: auth,
+  },
+});
+
 const PostModal = ({
   isOpen,
   onClose,
@@ -55,7 +72,7 @@ const PostModal = ({
   gasFee,
   priceFeed,
   wmaticBalance,
-}: CreateProfileProps) => {
+}: PostModalProps) => {
   const steps = [
     { label: "Confirm default profile" },
     { label: "Set default profile ✅" },
@@ -76,14 +93,36 @@ const PostModal = ({
 
   const gasLimitNumber = 500000;
 
+  async function uploadToIPFS() {
+    const metaData = {
+      version: "2.0.0",
+      content: post,
+      description: post,
+      name: `Post by @${handle}`,
+      external_url: `https://lenster.xyz/u/${handle}`,
+      metadata_id: uuid(),
+      mainContentFocus: "TEXT_ONLY",
+      attributes: [],
+      locale: "en-US",
+    };
+
+    const added = await client.add(JSON.stringify(metaData));
+    const uri = `https://ipfs.infura.io/ipfs/${added.path}`;
+    return uri;
+  }
+
   const handlePost = async () => {
     console.log("handlePost");
     console.log(post);
 
+    const contentURI = await uploadToIPFS();
+
+    // const contentURI = "";
+
     const createPostRequest = {
       request: {
         profileId: profileId,
-        contentURI: "https://www.google.com",
+        contentURI: contentURI,
         collectModule: {
           freeCollectModule: { followerOnly: false },
         },
@@ -115,6 +154,8 @@ const PostModal = ({
         LENS_HUB_ABI,
         getSignerFront()
       );
+
+      console.log("ok, starting ... ");
 
       const tx = await lensContract.postWithSig({
         profileId: typedData.value.profileId,

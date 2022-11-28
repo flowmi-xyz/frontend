@@ -254,7 +254,7 @@ export default function Dashboard() {
                   bottom="10"
                   right="10"
                   rounded="full"
-                  bg="third"
+                  bg="lens"
                   onClick={onOpen}
                 >
                   <Icon as={BsPlusLg} color="white" h="5" w="5" />
