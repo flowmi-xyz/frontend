@@ -259,7 +259,7 @@ export default function Dashboard() {
                 </Button>
 
                 <PostModal
-                  isOpen={true}
+                  isOpen={isOpen}
                   onClose={onClose}
                   handle="cristian"
                   profileId="1"
