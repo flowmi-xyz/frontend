@@ -28,14 +28,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
-    "uuid": "^9.0.0",
-    "remix-esbuild-override": "^3.0.4"
+    "remix-esbuild-override": "^3.0.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@remix-run/dev": "^1.7.3",
     "@remix-run/eslint-config": "^1.7.3",
-    "@types/react": "^18.0.15",
+    "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
     "eslint": "^8.23.1",

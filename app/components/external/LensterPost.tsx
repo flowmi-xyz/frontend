@@ -57,7 +57,7 @@ const LensterPost = ({
       {index === 0 && (
         <Text
           fontWeight="600"
-          fontSize="14px"
+          fontSize="22px"
           lineHeight="120%"
           color="lensDark"
           my="auto"
@@ -65,7 +65,7 @@ const LensterPost = ({
           pl="5"
           pr="5"
         >
-          🪴 What is happening in the Lens Garden
+          🪴 What is happening in the Lens garden
         </Text>
       )}
 

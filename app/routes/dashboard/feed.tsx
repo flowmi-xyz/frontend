@@ -18,7 +18,7 @@ import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
 import { getTotalFundedProfile } from "~/web3/social-defi";
 
 // UI components
-import { useEffect } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -129,7 +129,7 @@ export default function Dashboard() {
 
   changeHeaders(accessToken);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const changeNetwork = async () => {
       await switchNetwork();
     };
@@ -216,63 +216,38 @@ export default function Dashboard() {
             )}
 
             {defaultProfile?.handle && (
-              <>
-                {/* <GridItem colSpan={2}>
-                  <Box>
-                    <ProfileParticipation totalFounded={totalFounded} />
-
-                    <HotProfiles />
-                  </Box>
-                </GridItem> */}
-
-                <GridItem colSpan={1}>
-                  <Box>
-                    <SettingsBox />
-                    {/* <Balance
-                      maticBalance={maticBalance}
-                      wmaticBalance={wmaticBalance}
-                      awmaticBalance={awmaticBalance}
-                      gasFee={gasFee}
-                      priceFeed={priceFeed}
-                    /> */}
-                  </Box>
-                </GridItem>
-
-                <GridItem colSpan={2}>
-                  <Box>
-                    <Outlet />
-                  </Box>
-                </GridItem>
-
-                {/* <GridItem colSpan={1}>
-                  <Box>
-                    <HotProfiles />
-                  </Box>
-                </GridItem> */}
-                <Button
-                  position="fixed"
-                  bottom="10"
-                  right="10"
-                  rounded="full"
-                  bg="lens"
-                  onClick={onOpen}
-                >
-                  <Icon as={BsPlusLg} color="white" h="5" w="5" />
-                </Button>
-
-                <PostModal
-                  isOpen={isOpen}
-                  onClose={onClose}
-                  handle="cristian"
-                  address={address}
-                  profileId={defaultProfile?.id}
-                  gasFee={gasFee}
-                  priceFeed={1}
-                  wmaticBalance={1}
-                />
-              </>
+              <Box pl="10">
+                <SettingsBox />
+                <Outlet />
+              </Box>
             )}
           </Grid>
+
+          {defaultProfile?.handle && (
+            <>
+              <Button
+                position="fixed"
+                bottom="10"
+                right="10"
+                rounded="full"
+                bg="lens"
+                onClick={onOpen}
+              >
+                <Icon as={BsPlusLg} color="lensDark" h="3" w="3" />
+              </Button>
+
+              <PostModal
+                isOpen={isOpen}
+                onClose={onClose}
+                handle="cristian"
+                address={address}
+                profileId={defaultProfile?.id}
+                gasFee={gasFee}
+                priceFeed={1}
+                wmaticBalance={1}
+              />
+            </>
+          )}
         </Box>
       )}
 
