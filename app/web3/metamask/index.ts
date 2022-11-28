@@ -75,4 +75,25 @@ async function switchNetwork() {
   }
 }
 
-export { loginWithMetamask, signWithMetamask, switchNetwork };
+async function signTypedDataWithMetamask(typedMessage: any, address: string) {
+  checkMetamaskAvailability();
+
+  console.log(typedMessage);
+
+  try {
+    const signature = await window.ethereum.request({
+      method: "eth_signTypedData",
+      params: [[typedMessage], address],
+    });
+    return signature;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {
+  loginWithMetamask,
+  signWithMetamask,
+  switchNetwork,
+  signTypedDataWithMetamask,
+};

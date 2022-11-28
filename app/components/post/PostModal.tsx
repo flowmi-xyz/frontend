@@ -3,8 +3,6 @@ import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
-import { getSignerFront } from "~/web3/etherservice";
-
 // UI components
 import React from "react";
 import {
@@ -17,7 +15,6 @@ import {
   Flex,
   HStack,
   Image,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -33,10 +30,15 @@ import {
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { Link } from "react-router-dom";
+import { splitSignature } from "~/utils/formatEther";
+import { createPostTypedData } from "~/web3/lens/comment/post";
+import { signTypedDataWithMetamask } from "~/web3/metamask";
+import { getSignerFront, signedTypeData } from "~/web3/etherservice";
 
 type CreateProfileProps = {
   isOpen: boolean;
   onClose: () => void;
+  address: string;
   profileId: string;
   handle: string;
   gasFee: any;
@@ -48,6 +50,7 @@ const PostModal = ({
   isOpen,
   onClose,
   handle,
+  address,
   profileId,
   gasFee,
   priceFeed,
@@ -76,6 +79,64 @@ const PostModal = ({
   const handlePost = async () => {
     console.log("handlePost");
     console.log(post);
+
+    const createPostRequest = {
+      request: {
+        profileId: profileId,
+        contentURI: "https://www.google.com",
+        collectModule: {
+          freeCollectModule: { followerOnly: false },
+        },
+        referenceModule: {
+          followerOnlyReferenceModule: false,
+        },
+      },
+    };
+
+    try {
+      const signedResult = await createPostTypedData(createPostRequest);
+
+      const typedData = signedResult.typedData;
+
+      console.log(typedData);
+
+      const signature = await signedTypeData(
+        typedData.domain,
+        typedData.types,
+        typedData.value
+      );
+
+      console.log(signature);
+
+      const { v, r, s } = splitSignature(signature);
+
+      const lensContract = new ethers.Contract(
+        LENS_HUB_CONTRACT_ADDRESS,
+        LENS_HUB_ABI,
+        getSignerFront()
+      );
+
+      const tx = await lensContract.postWithSig({
+        profileId: typedData.value.profileId,
+        contentURI: typedData.value.contentURI,
+        collectModule: typedData.value.collectModule,
+        collectModuleInitData: typedData.value.collectModuleInitData,
+        referenceModule: typedData.value.referenceModule,
+        referenceModuleInitData: typedData.value.referenceModuleInitData,
+        sig: {
+          v,
+          r,
+          s,
+          deadline: typedData.value.deadline,
+        },
+      });
+
+      await tx.wait();
+      console.log("successfully created post: tx hash", tx.hash);
+    } catch (error) {
+      console.log(error);
+    }
+
     // setIsLoading(true);
 
     // const lensContract = new ethers.Contract(

@@ -6,7 +6,7 @@ import { Outlet, useLoaderData, useTransition } from "@remix-run/react";
 import { db } from "~/bff/db.server";
 import { destroySession, getSession } from "~/bff/session";
 
-import { lensClient } from "~/web3/lens/lens-client";
+import { changeHeaders, lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
 import { getBalanceFromAddress } from "~/web3/etherservice";
@@ -37,7 +37,7 @@ import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
 import { BsPlusLg } from "react-icons/bs";
-import PostModal from "~/components/post/postModal";
+import PostModal from "~/components/post/PostModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -121,11 +121,13 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const { address, defaultProfile, gasFee } = useLoaderData();
+  const { address, accessToken, defaultProfile, gasFee } = useLoaderData();
 
   const transition = useTransition();
 
   const { onOpen, onClose, isOpen } = useDisclosure();
+
+  changeHeaders(accessToken);
 
   useEffect(() => {
     const changeNetwork = async () => {
@@ -262,7 +264,8 @@ export default function Dashboard() {
                   isOpen={isOpen}
                   onClose={onClose}
                   handle="cristian"
-                  profileId="1"
+                  address={address}
+                  profileId={defaultProfile?.id}
                   gasFee={gasFee}
                   priceFeed={1}
                   wmaticBalance={1}
