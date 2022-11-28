@@ -6,7 +6,9 @@ import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 // UI components
 import {
   Alert,
+  AlertDescription,
   AlertIcon,
+  AlertTitle,
   Box,
   Button,
   Center,
@@ -60,25 +62,15 @@ const PostModal = ({
   priceFeed,
   maticBalance,
 }: PostModalProps) => {
-  const steps = [
-    { label: "Confirm default profile" },
-    { label: "Set default profile ✅" },
-  ];
-
-  console.log(gasFee);
-
-  const { nextStep, activeStep, reset } = useSteps({
-    initialStep: 0,
-  });
-
   const [post, setPost] = React.useState("");
+
   const [isLoading, setIsLoading] = React.useState(false);
+  const [firstSign, setFirstSign] = React.useState(false);
   const [signed, setSigned] = React.useState(false);
+  const [posted, setPosted] = React.useState(false);
   const [error, setError] = React.useState(false);
 
   const [txHash, setTxHash] = React.useState("");
-
-  const gasLimitNumber = 500000;
 
   async function uploadToIPFS() {
     const metaData = {
@@ -99,6 +91,7 @@ const PostModal = ({
   }
 
   const handlePost = async () => {
+    setIsLoading(true);
     console.log("handlePost");
     console.log(post);
 
@@ -120,6 +113,9 @@ const PostModal = ({
     try {
       const signedResult = await createPostTypedData(createPostRequest);
 
+      setIsLoading(false);
+      setFirstSign(true);
+
       const typedData = signedResult.typedData;
 
       const signature = await signedTypeData(
@@ -136,7 +132,7 @@ const PostModal = ({
         getSignerFront()
       );
 
-      console.log("ok, starting ... ");
+      setIsLoading(true);
 
       const tx = await lensContract.postWithSig({
         profileId: typedData.value.profileId,
@@ -153,48 +149,19 @@ const PostModal = ({
         },
       });
 
+      setIsLoading(false);
+      setSigned(true);
+
       await tx.wait();
-      console.log("successfully created post: tx hash", tx.hash);
+
+      setPosted(true);
+      setSigned(false);
+      setIsLoading(false);
+
+      setTxHash(tx.hash);
     } catch (error) {
       console.log(error);
     }
-
-    // setIsLoading(true);
-
-    // const lensContract = new ethers.Contract(
-    //   LENS_HUB_CONTRACT_ADDRESS,
-    //   LENS_HUB_ABI,
-    //   getSignerFront()
-    // );
-
-    // const GAS_LIMIT = BigNumber.from(gasLimitNumber);
-
-    // try {
-    //   const setDefaultProfile = await lensContract.setDefaultProfile(
-    //     profileId,
-    //     {
-    //       gasLimit: GAS_LIMIT,
-    //     }
-    //   );
-
-    //   nextStep();
-
-    //   setIsLoading(false);
-    //   setSigned(true);
-
-    //   const setDefaultProfileTx = await setDefaultProfile.wait();
-
-    //   setTxHash(setDefaultProfileTx.transactionHash);
-
-    //   nextStep();
-    //   setSigned(false);
-    // } catch (error) {
-    //   setError(true);
-    //   setIsLoading(false);
-    //   setSigned(false);
-
-    //   console.log(error);
-    // }
   };
 
   const handleClose = () => {
@@ -202,7 +169,6 @@ const PostModal = ({
     setSigned(false);
     setError(false);
 
-    reset();
     onClose();
   };
 
@@ -217,7 +183,7 @@ const PostModal = ({
         <ModalHeader>Create post</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {activeStep == 0 && !signed && !error && (
+          {!signed && !error && !posted && (
             <Box>
               <Textarea
                 name="post"
@@ -259,36 +225,46 @@ const PostModal = ({
             </Box>
           )}
 
-          {activeStep == 2 && !signed && !error && (
-            <>
-              <>
-                <Center pt="5" pl="5" pr="5">
-                  <Alert status="success" borderRadius={10}>
-                    <AlertIcon />
-                    Set default profile successfully!
-                  </Alert>
-                </Center>
+          {firstSign && !signed && !error && !posted && (
+            <Box>
+              <Text
+                fontWeight="500"
+                fontSize="18px"
+                lineHeight="120%"
+                color="black"
+              >
+                You need to post now
+              </Text>
+            </Box>
+          )}
 
-                <Text pt="5" pl="5" pr="5">
-                  Congratulations, you have change to default profile to the
-                  profile{" "}
-                  <Text
-                    as="span"
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    @{handle}
-                  </Text>{" "}
-                  in the Lens protocol.
-                </Text>
-              </>
+          {posted && (
+            <>
+              <Center pl="5" pr="5">
+                <Alert
+                  status="success"
+                  borderRadius={10}
+                  variant="subtle"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                >
+                  <AlertIcon boxSize="40px" />
+                  <AlertTitle mt={4} mb={1} fontSize="lg">
+                    Posted successfully!
+                  </AlertTitle>
+                  <AlertDescription maxWidth="sm">
+                    Your post has been successfully created. You can explore
+                    your publications to see it.
+                  </AlertDescription>
+                </Alert>
+              </Center>
             </>
           )}
 
           {isLoading && (
-            <HStack pt="5" pl="5" pr="5">
+            <HStack pt="5">
               <Text>Waiting for confirmation with your wallet...</Text>
               <Spinner size="md" color="third" />
             </HStack>
@@ -296,7 +272,7 @@ const PostModal = ({
 
           {signed && (
             <Center>
-              <VStack paddingTop="5" pl="5" pr="5">
+              <VStack paddingTop="5">
                 <HStack>
                   <Text
                     fontWeight="700"
@@ -355,7 +331,7 @@ const PostModal = ({
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mr="5"
             onClick={handleClose}
-            hidden={activeStep == 2}
+            // hidden={activeStep == 2}
           >
             <Text
               fontWeight="700"
@@ -367,14 +343,14 @@ const PostModal = ({
             </Text>
           </Button>
 
-          {activeStep == 0 && (
+          {!signed && !error && !posted && (
             <>
               <Button
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handlePost}
-                disabled={isLoading}
+                disabled={isLoading || !post}
                 hidden={error}
               >
                 <Flex>
@@ -401,7 +377,8 @@ const PostModal = ({
             </>
           )}
 
-          {activeStep == 2 && (
+          {/* {activeStep == 2 && ( */}
+          {false && (
             <>
               <Button
                 bg="white"

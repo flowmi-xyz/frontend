@@ -239,7 +239,7 @@ export default function Dashboard() {
               <PostModal
                 isOpen={isOpen}
                 onClose={onClose}
-                handle="cristian"
+                handle={defaultProfile?.handle}
                 address={address}
                 profileId={defaultProfile?.id}
                 gasFee={gasFee}

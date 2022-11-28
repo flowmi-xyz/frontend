@@ -142,7 +142,7 @@ const LensterPost = ({
       <Box pl="6" pb="5">
         <HStack pl="10" justifyContent="space-evenly">
           <Flex>
-            <Icon as={GoCommentDiscussion} color="first" w={6} h={6} />
+            <Icon as={GoCommentDiscussion} color="first" w={5} h={5} />
             <Text
               fontWeight="700"
               fontSize="15px"
@@ -157,7 +157,7 @@ const LensterPost = ({
           </Flex>
 
           <Flex>
-            <Icon as={TbArrowsLeftRight} color="fourth" w={6} h={6} />
+            <Icon as={TbArrowsLeftRight} color="fourth" w={5} h={5} />
             <Text
               fontWeight="700"
               fontSize="15px"
@@ -172,7 +172,7 @@ const LensterPost = ({
           </Flex>
 
           <Flex>
-            <Icon as={VscLibrary} color="third" w={6} h={6} />
+            <Icon as={VscLibrary} color="third" w={5} h={5} />
             <Text
               fontWeight="700"
               fontSize="15px"
