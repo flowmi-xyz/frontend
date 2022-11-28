@@ -1038,6 +1038,39 @@ const GetFollowers = gql`
   }
 `;
 
+const CreateMirrorTypedData = gql`
+  mutation createMirrorTypedData($request: CreateMirrorRequest!) {
+    createMirrorTypedData(request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          MirrorWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          profileIdPointed
+          pubIdPointed
+          referenceModule
+          referenceModuleData
+          referenceModuleInitData
+        }
+      }
+    }
+  }
+`;
+
 export {
   GetPing,
   GetChallengue,
@@ -1054,4 +1087,5 @@ export {
   HasTxHashBeenIndexed,
   GetProfiles,
   GetFollowers,
+  CreateMirrorTypedData,
 };

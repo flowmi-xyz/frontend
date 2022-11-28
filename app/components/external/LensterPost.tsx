@@ -32,6 +32,7 @@ type PostProps = {
   collects: number;
   index?: number;
   row?: any;
+  profileId: string;
 };
 
 const LensterPost = ({
@@ -46,6 +47,7 @@ const LensterPost = ({
   collects,
   index,
   row,
+  profileId,
 }: PostProps) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -167,7 +169,12 @@ const LensterPost = ({
             </Text>
           </Flex>
 
-          <Flex onClick={onOpen}>
+          <Flex
+            onClick={onOpen}
+            _hover={{
+              cursor: "pointer",
+            }}
+          >
             <Icon as={TbArrowsLeftRight} color="fourth" w={5} h={5} />
             <Text
               fontWeight="700"
@@ -203,8 +210,9 @@ const LensterPost = ({
           onClose={onClose}
           handle="cristian"
           address="1"
-          profileId="1"
+          profileId={profileId}
           maticBalance={1}
+          id={id}
         />
       </Box>
     </Box>

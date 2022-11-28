@@ -8,6 +8,8 @@ type LensterFeedProps = {
 };
 
 const LensterFeed = ({ Posts }: LensterFeedProps) => {
+  console.log("[LensterFeed] Posts", Posts);
+
   return (
     <Center mt="10">
       <Box>
@@ -26,6 +28,7 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
               collects={post.stats.totalAmountOfCollects}
               index={index}
               row={row}
+              profileId={post.profile.id}
             />
           );
         })}

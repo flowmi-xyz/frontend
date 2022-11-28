@@ -64,3 +64,13 @@ export type FollowersRequest = {
     limit: number;
   };
 };
+
+export type CreateMirrorRequest = {
+  request: {
+    profileId: string;
+    publicationId: string;
+    referenceModule: {
+      followerOnlyReferenceModule: boolean;
+    };
+  };
+};

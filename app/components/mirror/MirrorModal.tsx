@@ -25,21 +25,18 @@ import {
   ModalOverlay,
   Spinner,
   Text,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
 
-import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { Link } from "react-router-dom";
-import { splitSignature } from "~/utils/formatEther";
-import { createPostTypedData } from "~/web3/lens/comment/post";
+import { parseEther, splitSignature } from "~/utils/formatEther";
 import { getSignerFront, signedTypeData } from "~/web3/etherservice";
 
 import { v4 as uuid } from "uuid";
 
-import { create } from "ipfs-http-client";
 import React from "react";
 import { ipfsClient } from "~/web3/ipfs/ipfs-client";
+import { createMirrorTypedData } from "~/web3/lens/mirror/mirror";
 
 type MirrorModalProps = {
   isOpen: boolean;
@@ -47,8 +44,8 @@ type MirrorModalProps = {
   address: string;
   profileId: string;
   handle: string;
-
   maticBalance: number;
+  id: string;
 };
 
 const MirrorModal = ({
@@ -57,8 +54,8 @@ const MirrorModal = ({
   handle,
   address,
   profileId,
-
   maticBalance,
+  id,
 }: MirrorModalProps) => {
   const [post, setPost] = React.useState("");
 
@@ -70,60 +67,11 @@ const MirrorModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
-  async function uploadToIPFS() {
-    const metaData = {
-      version: "2.0.0",
-      content: post,
-      description: post,
-      name: `Post by @${handle}`,
-      external_url: `https://lenster.xyz/u/${handle}`,
-      metadata_id: uuid(),
-      mainContentFocus: "TEXT_ONLY",
-      attributes: [],
-      locale: "en-US",
-    };
-
-    const added = await ipfsClient.add(JSON.stringify(metaData));
-    const uri = `https://ipfs.infura.io/ipfs/${added.path}`;
-    return uri;
-  }
-
-  const handlePost = async () => {
+  const handleMirror = async () => {
     setIsLoading(true);
-    console.log("handlePost");
-    console.log(post);
-
-    const contentURI = await uploadToIPFS();
-
-    const createPostRequest = {
-      request: {
-        profileId: profileId,
-        contentURI: contentURI,
-        collectModule: {
-          freeCollectModule: { followerOnly: false },
-        },
-        referenceModule: {
-          followerOnlyReferenceModule: false,
-        },
-      },
-    };
+    console.log("handleMirror");
 
     try {
-      const signedResult = await createPostTypedData(createPostRequest);
-
-      setIsLoading(false);
-      setFirstSign(true);
-
-      const typedData = signedResult.typedData;
-
-      const signature = await signedTypeData(
-        typedData.domain,
-        typedData.types,
-        typedData.value
-      );
-
-      const { v, r, s } = splitSignature(signature);
-
       const lensContract = new ethers.Contract(
         LENS_HUB_CONTRACT_ADDRESS,
         LENS_HUB_ABI,
@@ -132,19 +80,13 @@ const MirrorModal = ({
 
       setIsLoading(true);
 
-      const tx = await lensContract.postWithSig({
-        profileId: typedData.value.profileId,
-        contentURI: typedData.value.contentURI,
-        collectModule: typedData.value.collectModule,
-        collectModuleInitData: typedData.value.collectModuleInitData,
-        referenceModule: typedData.value.referenceModule,
-        referenceModuleInitData: typedData.value.referenceModuleInitData,
-        sig: {
-          v,
-          r,
-          s,
-          deadline: typedData.value.deadline,
-        },
+      const tx = await lensContract.mirror({
+        profileId: profileId,
+        profileIdPointed: profileId,
+        pubIdPointed: 3,
+        referenceModuleData: [],
+        referenceModule: ethers.constants.AddressZero,
+        referenceModuleInitData: [],
       });
 
       setIsLoading(false);
@@ -155,6 +97,8 @@ const MirrorModal = ({
       setPosted(true);
       setSigned(false);
       setIsLoading(false);
+
+      console.log("mirror succefully ", tx);
 
       setTxHash(tx.hash);
     } catch (error) {
@@ -183,18 +127,18 @@ const MirrorModal = ({
         <ModalBody>
           {!signed && !error && !posted && (
             <Box>
-              <Textarea
+              {/* <Textarea
                 name="post"
                 placeholder='What"s on your mind?'
                 rows={4}
                 resize="none"
                 value={post}
                 onChange={(e) => setPost(e.target.value)}
-              />
+              /> */}
 
               <Divider mt="5" />
 
-              <Flex pt="5">
+              {/* <Flex pt="5">
                 <Text
                   fontWeight="700"
                   fontSize="20px"
@@ -219,7 +163,7 @@ const MirrorModal = ({
                 >
                   {maticBalance.toFixed(4)} MATIC
                 </Text>
-              </Flex>
+              </Flex> */}
             </Box>
           )}
 
@@ -347,8 +291,7 @@ const MirrorModal = ({
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handlePost}
-                disabled={isLoading || !post}
+                onClick={handleMirror}
                 hidden={error}
               >
                 <Flex>
@@ -368,7 +311,7 @@ const MirrorModal = ({
                     color="lensDark"
                     m="auto"
                   >
-                    Post
+                    Mirror
                   </Text>
                 </Flex>
               </Button>
