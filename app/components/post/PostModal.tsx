@@ -153,8 +153,8 @@ const PostModal = ({
       const post = await lensContract.post({
         profileId: profileId,
         contentURI: contentURI,
-        collectModule: FREE_COLLECT_MODULE_ADDRESS,
-        collectModuleInitData: dataCollect,
+        collectModule: ethers.constants.AddressZero,
+        collectModuleInitData: dataReference,
         referenceModule: ethers.constants.AddressZero,
         referenceModuleInitData: dataReference,
       });
