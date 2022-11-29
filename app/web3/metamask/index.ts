@@ -91,9 +91,20 @@ async function signTypedDataWithMetamask(typedMessage: any, address: string) {
   }
 }
 
+async function getChainId() {
+  checkMetamaskAvailability();
+
+  const chainId = await window.ethereum.request({
+    method: "eth_chainId",
+  });
+
+  return chainId;
+}
+
 export {
   loginWithMetamask,
   signWithMetamask,
   switchNetwork,
   signTypedDataWithMetamask,
+  getChainId,
 };

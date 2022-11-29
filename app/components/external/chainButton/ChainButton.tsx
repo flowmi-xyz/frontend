@@ -10,17 +10,17 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import React from "react";
 
 import type { ChainName } from "~/web3/blockchain.types";
 import { networks } from "~/web3/blockchain.types";
+import { getChainId } from "~/web3/metamask";
 
 import ConnectedNetwork from "./ConnectedNetwork";
 import LogoNetwork from "./LogoNetwork";
 
 function ChainButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const showTestnets = true;
 
   const network = {
     name: "Mumbai",
@@ -29,6 +29,17 @@ function ChainButton() {
     dev: true,
     nativeToken: "Token",
   };
+
+  React.useEffect(() => {
+    const getChain = async () => {
+      return await getChainId();
+    };
+
+    const chainId = getChain();
+    console.log("[ChainButton] chainId", chainId);
+
+    // make sure to catch any error
+  }, []);
 
   return (
     <Flex>
@@ -64,36 +75,36 @@ function ChainButton() {
 
           <Button
             leftIcon={
-              <Image src="./assets/logos/polygon-matic-logo.png" w="6" h="6" />
+              <Image src="../assets/logos/polygon-matic-logo.png" w="6" h="6" />
             }
             width="75%"
             margin="auto"
             marginBottom="3"
             justifyContent="start"
             iconSpacing="5"
-            isDisabled={network.chainName === "matic"}
+            // isDisabled={network.chainName === "matic"}
             borderRadius="10"
-            display={
-              networks.matic !== undefined && !showTestnets ? "flex" : "none"
-            }
+            // display={
+            //   networks.matic !== undefined && !showTestnets ? "flex" : "none"
+            // }
           >
             {networks.matic?.name}
           </Button>
 
           <Button
             leftIcon={
-              <Image src="./assets/logos/polygon-matic-logo.png" w="6" h="6" />
+              <Image src="../assets/logos/polygon-matic-logo.png" w="6" h="6" />
             }
             width="75%"
             margin="auto"
             marginBottom="3"
             justifyContent="start"
             iconSpacing="5"
-            isDisabled={network.chainName === "maticmum"}
+            // isDisabled={network.chainName === "maticmum"}
             borderRadius="10"
-            display={
-              networks.maticmum !== undefined && showTestnets ? "flex" : "none"
-            }
+            // display={
+            //   networks.maticmum !== undefined && showTestnets ? "flex" : "none"
+            // }
           >
             {networks.maticmum?.name}
           </Button>

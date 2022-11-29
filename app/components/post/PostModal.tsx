@@ -29,7 +29,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { Link } from "react-router-dom";
 import { splitSignature } from "~/utils/formatEther";
 import { createPostTypedData } from "~/web3/lens/comment/post";
@@ -37,9 +36,10 @@ import { getSignerFront, signedTypeData } from "~/web3/etherservice";
 
 import { v4 as uuid } from "uuid";
 
-import { create } from "ipfs-http-client";
 import React from "react";
 import { ipfsClient } from "~/web3/ipfs/ipfs-client";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -52,16 +52,42 @@ type PostModalProps = {
   maticBalance: number;
 };
 
+export const loader: LoaderFunction = async ({ context }) => {
+  const projectId = context.PROJECT_ID;
+  const projectSecret = context.API_KEY_INFURA;
+
+  console.log(process.env.PROJECT_ID);
+  console.log(process.env.NODE_ENV);
+
+  return {
+    projectId,
+    projectSecret,
+  };
+};
+
+export const action: ActionFunction = async ({ request, context }) => {
+  const projectId = context.PROJECT_ID;
+  const projectSecret = context.API_KEY_INFURA;
+
+  console.log(projectId);
+  console.log(projectSecret);
+
+  console.log(process.env.PROJECT_ID);
+  console.log(process.env.NODE_ENV);
+};
+
 const PostModal = ({
   isOpen,
   onClose,
   handle,
-  address,
   profileId,
-  gasFee,
-  priceFeed,
   maticBalance,
 }: PostModalProps) => {
+  const { projectId, projectSecret } = useLoaderData();
+
+  // console.log("projectId", projectId);
+  // console.log("projectSecret", projectSecret);
+
   const [post, setPost] = React.useState("");
 
   const [isLoading, setIsLoading] = React.useState(false);
