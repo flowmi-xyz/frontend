@@ -40,7 +40,10 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import SignedMessageTx from "../transactions/common/SignedMessage";
 import { defaultAbiCoder } from "ethers/lib/utils";
-import { REVERT_COLLECT_MODULE_ADDRESS } from "~/web3/lens/modules/contanst";
+import {
+  FREE_COLLECT_MODULE_ADDRESS,
+  REVERT_COLLECT_MODULE_ADDRESS,
+} from "~/web3/lens/modules/contanst";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -143,25 +146,18 @@ const PostModal = ({
     const dataReference: any = [];
 
     try {
-      const gasLimitNumberDefiFollow = 2000000;
+      // const gasLimitNumberDefiFollow = 2000000;
 
-      const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
+      // const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
 
-      console.log(profileId);
-
-      const post = await lensContract.post(
-        {
-          profileId: profileId,
-          contentURI: contentURI,
-          collectModule: REVERT_COLLECT_MODULE_ADDRESS,
-          collectModuleInitData: dataReference,
-          referenceModule: ethers.constants.AddressZero,
-          referenceModuleInitData: dataReference,
-        },
-        {
-          gasLimit: GAS_LIMIT,
-        }
-      );
+      const post = await lensContract.post({
+        profileId: profileId,
+        contentURI: contentURI,
+        collectModule: FREE_COLLECT_MODULE_ADDRESS,
+        collectModuleInitData: dataCollect,
+        referenceModule: ethers.constants.AddressZero,
+        referenceModuleInitData: dataReference,
+      });
 
       const postTx = await post.wait();
 
@@ -194,10 +190,9 @@ const PostModal = ({
       // setIsLoading(false);
       // setSigned(true);
       // await tx.wait();
-      // setPosted(true);
-      // setSigned(false);
-      // setIsLoading(false);
-      // setTxHash(tx.hash);
+      setPosted(true);
+      setSigned(false);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
