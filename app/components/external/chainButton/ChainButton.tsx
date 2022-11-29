@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import {
   Button,
   Flex,
@@ -7,12 +8,13 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 
-import type { ChainName } from "~/web3/blockchain.types";
+import type { ChainName, Network } from "~/web3/blockchain.types";
 import { networks } from "~/web3/blockchain.types";
 import { getChainId } from "~/web3/metamask";
 
@@ -22,23 +24,33 @@ import LogoNetwork from "./LogoNetwork";
 function ChainButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const network = {
-    name: "Mumbai",
-    chainName: "maticmum" as ChainName,
-    chainId: "string",
-    dev: true,
-    nativeToken: "Token",
-  };
+  const DEFAULT_NETWORK = networks[1];
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [chainId, setChainId] = React.useState<string>(" ");
+  const [network, setNetwork] = React.useState<Network>(DEFAULT_NETWORK);
 
   React.useEffect(() => {
+    setLoading(true);
     const getChain = async () => {
-      return await getChainId();
+      const chainId = await getChainId();
+
+      return chainId;
     };
 
-    const chainId = getChain();
-    console.log("[ChainButton] chainId", chainId);
+    getChain().then((chainId) => {
+      setChainId(chainId);
 
-    // make sure to catch any error
+      const network = networks.filter((network) => {
+        if (network.chainId === chainId) {
+          return network;
+        }
+      });
+
+      setNetwork(network[0]);
+
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -52,7 +64,11 @@ function ChainButton() {
         size="md"
         borderRadius="10"
       >
-        <ConnectedNetwork networkName={network.name} />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <ConnectedNetwork networkName={network.name} />
+        )}
       </Button>
 
       <Modal onClose={onClose} isOpen={isOpen} size="sm" isCentered>
@@ -82,13 +98,9 @@ function ChainButton() {
             marginBottom="3"
             justifyContent="start"
             iconSpacing="5"
-            // isDisabled={network.chainName === "matic"}
             borderRadius="10"
-            // display={
-            //   networks.matic !== undefined && !showTestnets ? "flex" : "none"
-            // }
           >
-            {networks.matic?.name}
+            {networks[0].name}
           </Button>
 
           <Button
@@ -100,13 +112,9 @@ function ChainButton() {
             marginBottom="3"
             justifyContent="start"
             iconSpacing="5"
-            // isDisabled={network.chainName === "maticmum"}
             borderRadius="10"
-            // display={
-            //   networks.maticmum !== undefined && showTestnets ? "flex" : "none"
-            // }
           >
-            {networks.maticmum?.name}
+            {networks[1].name}
           </Button>
 
           <Text fontSize="12" margin="auto" pt="3" pb="6">

@@ -1,4 +1,5 @@
 import { Box, Icon } from "@chakra-ui/react";
+import React from "react";
 
 import { MdRadioButtonChecked } from "react-icons/md";
 
@@ -7,7 +8,6 @@ type ConnectedNetworkProps = {
 };
 
 const ConnectedNetwork = ({ networkName }: ConnectedNetworkProps) => {
-  // TODO: check if network is connected
   const isAuthenticated = true;
 
   return (

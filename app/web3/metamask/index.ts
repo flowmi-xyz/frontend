@@ -50,7 +50,7 @@ async function switchNetwork() {
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: networks.maticmum.chainId }],
+      params: [{ chainId: networks[1].chainId }],
     });
   } catch (switchError: any) {
     // This error code indicates that the chain has not been added to MetaMask.
@@ -60,8 +60,8 @@ async function switchNetwork() {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: networks.maticmum.chainId,
-              chainName: networks.maticmum.chainName,
+              chainId: networks[1].chainId,
+              chainName: networks[1].chainName,
               rpcUrls: ["https://polygonscan.com/"],
             },
           ],
