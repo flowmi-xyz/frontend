@@ -44,13 +44,13 @@ async function signWithMetamask(text: string) {
   return signature;
 }
 
-async function switchNetwork() {
+async function switchNetwork(chainId: string = networks[1].chainId) {
   checkMetamaskAvailability();
 
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: networks[1].chainId }],
+      params: [{ chainId: chainId }],
     });
   } catch (switchError: any) {
     // This error code indicates that the chain has not been added to MetaMask.

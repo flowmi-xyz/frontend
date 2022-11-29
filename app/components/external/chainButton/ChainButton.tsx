@@ -16,7 +16,7 @@ import React from "react";
 
 import type { ChainName, Network } from "~/web3/blockchain.types";
 import { networks } from "~/web3/blockchain.types";
-import { getChainId } from "~/web3/metamask";
+import { getChainId, switchNetwork } from "~/web3/metamask";
 
 import ConnectedNetwork from "./ConnectedNetwork";
 import LogoNetwork from "./LogoNetwork";
@@ -52,6 +52,10 @@ function ChainButton() {
       setLoading(false);
     });
   }, []);
+
+  const handleNetworkChange = (chainId: string) => {
+    switchNetwork(chainId);
+  };
 
   return (
     <Flex>
@@ -99,6 +103,8 @@ function ChainButton() {
             justifyContent="start"
             iconSpacing="5"
             borderRadius="10"
+            disabled={chainId === networks[0].chainId}
+            onClick={() => handleNetworkChange(networks[0].chainId)}
           >
             {networks[0].name}
           </Button>
@@ -113,6 +119,8 @@ function ChainButton() {
             justifyContent="start"
             iconSpacing="5"
             borderRadius="10"
+            disabled={chainId === networks[1].chainId}
+            onClick={() => handleNetworkChange(networks[1].chainId)}
           >
             {networks[1].name}
           </Button>
