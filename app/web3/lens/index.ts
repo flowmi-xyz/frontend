@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { getSignerBack } from "../etherservice";
+
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "./lens-hub";
 
 async function getFollowModule(profileId: string) {

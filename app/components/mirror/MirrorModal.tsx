@@ -1,5 +1,5 @@
 // logic components
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -37,6 +37,7 @@ import { v4 as uuid } from "uuid";
 import React from "react";
 import { ipfsClient } from "~/web3/ipfs/ipfs-client";
 import { createMirrorTypedData } from "~/web3/lens/mirror/mirror";
+import { removeProfileIdPrefix } from "~/web3/lens/lent-utils";
 
 type MirrorModalProps = {
   isOpen: boolean;
@@ -80,10 +81,14 @@ const MirrorModal = ({
 
       setIsLoading(true);
 
+      const publicationId = removeProfileIdPrefix(id, profileId);
+
+      console.log("publicationId", publicationId);
+
       const tx = await lensContract.mirror({
         profileId: profileId,
         profileIdPointed: profileId,
-        pubIdPointed: 3,
+        pubIdPointed: publicationId,
         referenceModuleData: [],
         referenceModule: ethers.constants.AddressZero,
         referenceModuleInitData: [],
