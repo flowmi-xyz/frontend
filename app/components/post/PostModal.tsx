@@ -1,5 +1,5 @@
 // logic components
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 
@@ -26,13 +26,11 @@ import {
   Spinner,
   Text,
   Textarea,
-  VStack,
 } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
-import { splitSignature } from "~/utils/formatEther";
-import { createPostTypedData } from "~/web3/lens/comment/post";
-import { getSignerFront, signedTypeData } from "~/web3/etherservice";
+
+import { getSignerFront } from "~/web3/etherservice";
 
 import { v4 as uuid } from "uuid";
 
@@ -41,6 +39,8 @@ import { ipfsClient } from "~/web3/ipfs/ipfs-client";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import SignedMessageTx from "../transactions/common/SignedMessage";
+import { defaultAbiCoder } from "ethers/lib/utils";
+import { REVERT_COLLECT_MODULE_ADDRESS } from "~/web3/lens/modules/contanst";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -124,68 +124,80 @@ const PostModal = ({
 
     const contentURI = await uploadToIPFS();
 
-    const createPostRequest = {
-      request: {
-        profileId: profileId,
-        contentURI: contentURI,
-        collectModule: {
-          freeCollectModule: { followerOnly: false },
-        },
-        referenceModule: {
-          followerOnlyReferenceModule: false,
-        },
-      },
-    };
+    const lensContract = new ethers.Contract(
+      LENS_HUB_CONTRACT_ADDRESS,
+      LENS_HUB_ABI,
+      getSignerFront()
+    );
+
+    // const signedResult = await createPostTypedData(createPostRequest);
+
+    // console.log(signedResult);
+
+    // const data = defaultAbiCoder.encode(
+    //   ["address", "uint256"],
+    //   [WMATIC_CONTRACT_ADDRESS, DEFAULT_FOLLOW_PRICE]
+    // );
+
+    const dataCollect = defaultAbiCoder.encode(["bool"], [true]);
+    const dataReference: any = [];
 
     try {
-      const signedResult = await createPostTypedData(createPostRequest);
+      const gasLimitNumberDefiFollow = 2000000;
 
-      setIsLoading(false);
-      setFirstSign(true);
+      const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
 
-      const typedData = signedResult.typedData;
+      console.log(profileId);
 
-      const signature = await signedTypeData(
-        typedData.domain,
-        typedData.types,
-        typedData.value
-      );
-
-      const { v, r, s } = splitSignature(signature);
-
-      const lensContract = new ethers.Contract(
-        LENS_HUB_CONTRACT_ADDRESS,
-        LENS_HUB_ABI,
-        getSignerFront()
-      );
-
-      setIsLoading(true);
-
-      const tx = await lensContract.postWithSig({
-        profileId: typedData.value.profileId,
-        contentURI: typedData.value.contentURI,
-        collectModule: typedData.value.collectModule,
-        collectModuleInitData: typedData.value.collectModuleInitData,
-        referenceModule: typedData.value.referenceModule,
-        referenceModuleInitData: typedData.value.referenceModuleInitData,
-        sig: {
-          v,
-          r,
-          s,
-          deadline: typedData.value.deadline,
+      const post = await lensContract.post(
+        {
+          profileId: profileId,
+          contentURI: contentURI,
+          collectModule: REVERT_COLLECT_MODULE_ADDRESS,
+          collectModuleInitData: dataReference,
+          referenceModule: ethers.constants.AddressZero,
+          referenceModuleInitData: dataReference,
         },
-      });
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
 
-      setIsLoading(false);
-      setSigned(true);
+      const postTx = await post.wait();
 
-      await tx.wait();
+      setTxHash(postTx.transactionHash);
 
-      setPosted(true);
-      setSigned(false);
-      setIsLoading(false);
-
-      setTxHash(tx.hash);
+      // setIsLoading(false);
+      // setFirstSign(true);
+      // const typedData = signedResult.typedData;
+      // const signature = await signedTypeData(
+      //   typedData.domain,
+      //   typedData.types,
+      //   typedData.value
+      // );
+      // const { v, r, s } = splitSignature(signature);
+      // setIsLoading(true);
+      // const tx = await lensContract.postWithSig({
+      //   profileId: typedData.value.profileId,
+      //   contentURI: typedData.value.contentURI,
+      //   collectModule: typedData.value.collectModule,
+      //   collectModuleInitData: typedData.value.collectModuleInitData,
+      //   referenceModule: typedData.value.referenceModule,
+      //   referenceModuleInitData: typedData.value.referenceModuleInitData,
+      //   sig: {
+      //     v,
+      //     r,
+      //     s,
+      //     deadline: typedData.value.deadline,
+      //   },
+      // });
+      // setIsLoading(false);
+      // setSigned(true);
+      // await tx.wait();
+      // setPosted(true);
+      // setSigned(false);
+      // setIsLoading(false);
+      // setTxHash(tx.hash);
     } catch (error) {
       console.log(error);
     }
