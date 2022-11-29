@@ -29,6 +29,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
+import SignedMessageTx from "./common/SignedMessage";
 
 type CreateProfileProps = {
   isOpen: boolean;
@@ -68,19 +69,17 @@ CreateProfileProps) => {
     );
 
     try {
-      const whitelistContract = await lensContract.whitelistFollowModule(
-        address,
-        true
-      );
+      const whitelistReferenceModule =
+        await lensContract.whitelistReferenceModule(address, true);
 
       nextStep();
 
       setIsLoading(false);
       setSigned(true);
 
-      const whitelistContractTx = await whitelistContract.wait();
+      const whitelistReferenceModuleTx = await whitelistReferenceModule.wait();
 
-      setTxHash(whitelistContractTx.transactionHash);
+      setTxHash(whitelistReferenceModuleTx.transactionHash);
 
       nextStep();
       setSigned(false);
@@ -133,7 +132,8 @@ CreateProfileProps) => {
                 pl="5"
                 pr="5"
               >
-                You are going to white list the next contract:
+                You are going to whitelist the next contract as reference
+                module:
               </Text>
 
               <Flex pt="2" pl="5" pr="5">
@@ -164,7 +164,8 @@ CreateProfileProps) => {
                 pl="5"
                 pr="5"
               >
-                Remember this profile is created in the testnet (Polygon Mumbai)
+                Remember this contract is whitelisted in the testnet (Polygon
+                Mumbai)
               </Text>
             </>
           )}
@@ -207,38 +208,7 @@ CreateProfileProps) => {
             </HStack>
           )}
 
-          {signed && (
-            <Center>
-              <VStack paddingTop="5" pl="5" pr="5">
-                <HStack>
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    Waiting transacction to be mined...
-                  </Text>
-
-                  <Image
-                    src="https://feature.undp.org/beyond-bitcoin/es/assets/mbNja7QNnr/block3.gif"
-                    width="50%"
-                  />
-                </HStack>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="12px"
-                  lineHeight="120%"
-                  color="grayLetter"
-                  pt="5"
-                >
-                  This usually takes 0-1 minutes to complete
-                </Text>
-              </VStack>
-            </Center>
-          )}
+          {signed && <SignedMessageTx />}
         </ModalBody>
 
         <ModalFooter>
@@ -252,7 +222,7 @@ CreateProfileProps) => {
                 onClick={handleClose}
               >
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="first"
@@ -279,7 +249,7 @@ CreateProfileProps) => {
                   </Box>
 
                   <Text
-                    fontWeight="500"
+                    fontWeight="700"
                     fontSize="18px"
                     lineHeight="21.6px"
                     color="lensDark"
@@ -302,7 +272,7 @@ CreateProfileProps) => {
                 onClick={handleClose}
               >
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="first"
@@ -318,7 +288,7 @@ CreateProfileProps) => {
                 onClick={handleExploreTx}
               >
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="white"

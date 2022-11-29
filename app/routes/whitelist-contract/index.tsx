@@ -354,7 +354,7 @@ export default function WhitelistContract() {
                       </Box>
 
                       <Text
-                        fontWeight="500"
+                        fontWeight="700"
                         fontSize="18px"
                         lineHeight="21.6px"
                         color="lensDark"

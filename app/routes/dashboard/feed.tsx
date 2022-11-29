@@ -36,7 +36,10 @@ import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
 import { BsPlusLg } from "react-icons/bs";
+import { BsPiggyBank } from "react-icons/bs";
+
 import PostModal from "~/components/post/PostModal";
+import DepositModal from "~/components/transactions/DepositModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -125,7 +128,16 @@ export default function Dashboard() {
 
   const transition = useTransition();
 
-  const { onOpen, onClose, isOpen } = useDisclosure();
+  const {
+    onOpen: onOpenPost,
+    onClose: onClosePost,
+    isOpen: isOpenPost,
+  } = useDisclosure();
+  const {
+    onOpen: onOpenDeposit,
+    onClose: onCloseDeposit,
+    isOpen: isOpenDeposit,
+  } = useDisclosure();
 
   changeHeaders(accessToken);
 
@@ -231,14 +243,38 @@ export default function Dashboard() {
                 right="10"
                 rounded="full"
                 bg="lens"
-                onClick={onOpen}
+                onClick={onOpenPost}
               >
                 <Icon as={BsPlusLg} color="lensDark" h="3" w="3" />
               </Button>
 
+              <Button
+                position="fixed"
+                bottom="24"
+                right="10"
+                rounded="full"
+                bg="lens"
+                onClick={onOpenDeposit}
+              >
+                <Icon as={BsPiggyBank} color="lensDark" h="6" w="6" />
+              </Button>
+
+              <DepositModal
+                isOpen={isOpenDeposit}
+                onClose={onCloseDeposit}
+                handle={defaultProfile?.handle}
+                amount={0}
+                profileId={defaultProfile?.id}
+                gasFee={gasFee}
+                priceFeed={1}
+                maticBalance={maticBalance}
+                wmaticBalance={0}
+                awmaticBalance={0}
+              />
+
               <PostModal
-                isOpen={isOpen}
-                onClose={onClose}
+                isOpen={isOpenPost}
+                onClose={onClosePost}
                 handle={defaultProfile?.handle}
                 address={address}
                 profileId={defaultProfile?.id}

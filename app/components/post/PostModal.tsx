@@ -41,9 +41,11 @@ import { useLoaderData } from "@remix-run/react";
 import SignedMessageTx from "../transactions/common/SignedMessage";
 import { defaultAbiCoder } from "ethers/lib/utils";
 import {
+  ADS_MIRROR_MODULE_ADDRESS,
   FREE_COLLECT_MODULE_ADDRESS,
   REVERT_COLLECT_MODULE_ADDRESS,
 } from "~/web3/lens/modules/contanst";
+import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -143,21 +145,40 @@ const PostModal = ({
     // );
 
     const dataCollect = defaultAbiCoder.encode(["bool"], [true]);
-    const dataReference: any = [];
+    const dataReference = defaultAbiCoder.encode(
+      ["uint256", "uint256", "address"],
+      [10, 1, WMATIC_CONTRACT_ADDRESS]
+    );
 
     try {
       // const gasLimitNumberDefiFollow = 2000000;
 
       // const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
 
-      const post = await lensContract.post({
-        profileId: profileId,
-        contentURI: contentURI,
-        collectModule: ethers.constants.AddressZero,
-        collectModuleInitData: dataReference,
-        referenceModule: ethers.constants.AddressZero,
-        referenceModuleInitData: dataReference,
-      });
+      // const post = await lensContract.post({
+      //   profileId: profileId,
+      //   contentURI: contentURI,
+      //   collectModule: ethers.constants.AddressZero,
+      //   collectModuleInitData: dataReference,
+      //   referenceModule: ethers.constants.AddressZero,
+      //   referenceModuleInitData: dataReference,
+      // });
+
+      const GAS_LIMIT = BigNumber.from(2000000);
+
+      const post = await lensContract.post(
+        {
+          profileId: profileId,
+          contentURI: contentURI,
+          collectModule: ethers.constants.AddressZero,
+          collectModuleInitData: dataReference,
+          referenceModule: ADS_MIRROR_MODULE_ADDRESS,
+          referenceModuleInitData: dataReference,
+        },
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
 
       const postTx = await post.wait();
 
