@@ -1,9 +1,13 @@
 // logic components
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
+import { getSignerFront } from "~/web3/etherservice";
+import { removeProfileIdPrefix } from "~/web3/lens/lent-utils";
 
 // UI components
+import React from "react";
+
 import {
   Alert,
   AlertDescription,
@@ -25,19 +29,11 @@ import {
   ModalOverlay,
   Spinner,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 
 import { Link } from "react-router-dom";
-import { parseEther, splitSignature } from "~/utils/formatEther";
-import { getSignerFront, signedTypeData } from "~/web3/etherservice";
 
-import { v4 as uuid } from "uuid";
-
-import React from "react";
-import { ipfsClient } from "~/web3/ipfs/ipfs-client";
-import { createMirrorTypedData } from "~/web3/lens/mirror/mirror";
-import { removeProfileIdPrefix } from "~/web3/lens/lent-utils";
+import SignedMessageTx from "../transactions/common/SignedMessage";
 
 type MirrorModalProps = {
   isOpen: boolean;
@@ -58,8 +54,6 @@ const MirrorModal = ({
   maticBalance,
   id,
 }: MirrorModalProps) => {
-  const [post, setPost] = React.useState("");
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [firstSign, setFirstSign] = React.useState(false);
   const [signed, setSigned] = React.useState(false);
@@ -82,8 +76,6 @@ const MirrorModal = ({
       setIsLoading(true);
 
       const publicationId = removeProfileIdPrefix(id, profileId);
-
-      console.log("publicationId", publicationId);
 
       const tx = await lensContract.mirror({
         profileId: profileId,
@@ -217,38 +209,7 @@ const MirrorModal = ({
             </HStack>
           )}
 
-          {signed && (
-            <Center>
-              <VStack paddingTop="5">
-                <HStack>
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    Waiting transacction to be mined...
-                  </Text>
-
-                  <Image
-                    src="https://feature.undp.org/beyond-bitcoin/es/assets/mbNja7QNnr/block3.gif"
-                    width="50%"
-                  />
-                </HStack>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="12px"
-                  lineHeight="120%"
-                  color="grayLetter"
-                  pt="5"
-                >
-                  This usually takes 0-1 minutes to complete
-                </Text>
-              </VStack>
-            </Center>
-          )}
+          {signed && <SignedMessageTx />}
 
           {error && (
             <Box p="5">

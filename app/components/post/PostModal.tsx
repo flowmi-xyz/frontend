@@ -40,6 +40,7 @@ import React from "react";
 import { ipfsClient } from "~/web3/ipfs/ipfs-client";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import SignedMessageTx from "../transactions/common/SignedMessage";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -296,38 +297,7 @@ const PostModal = ({
             </HStack>
           )}
 
-          {signed && (
-            <Center>
-              <VStack paddingTop="5">
-                <HStack>
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    Waiting transacction to be mined...
-                  </Text>
-
-                  <Image
-                    src="https://feature.undp.org/beyond-bitcoin/es/assets/mbNja7QNnr/block3.gif"
-                    width="50%"
-                  />
-                </HStack>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="12px"
-                  lineHeight="120%"
-                  color="grayLetter"
-                  pt="5"
-                >
-                  This usually takes 0-1 minutes to complete
-                </Text>
-              </VStack>
-            </Center>
-          )}
+          {signed && <SignedMessageTx />}
 
           {error && (
             <Box p="5">

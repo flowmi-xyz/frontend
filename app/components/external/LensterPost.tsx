@@ -127,7 +127,7 @@ const LensterPost = ({
             letterSpacing="-0.03em"
             color="grayLetter"
           >
-            {calculateHoursBetweenNowAndDate(createdAt)} hours ago
+            {calculateHoursBetweenNowAndDate(createdAt)}
           </Text>
         </Box>
       </HStack>
