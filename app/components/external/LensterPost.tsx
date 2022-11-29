@@ -32,7 +32,8 @@ type PostProps = {
   collects: number;
   index?: number;
   row?: any;
-  profileId: string;
+  defaultProfile: any;
+  profileIdToMirror: string;
 };
 
 const LensterPost = ({
@@ -47,7 +48,8 @@ const LensterPost = ({
   collects,
   index,
   row,
-  profileId,
+  defaultProfile,
+  profileIdToMirror,
 }: PostProps) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -210,7 +212,8 @@ const LensterPost = ({
           onClose={onClose}
           handle="cristian"
           address="1"
-          profileId={profileId}
+          profileId={defaultProfile.id}
+          profileIdToMirror={profileIdToMirror}
           maticBalance={1}
           id={id}
         />

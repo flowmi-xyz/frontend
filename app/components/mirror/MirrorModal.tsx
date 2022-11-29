@@ -40,6 +40,7 @@ type MirrorModalProps = {
   onClose: () => void;
   address: string;
   profileId: string;
+  profileIdToMirror: string;
   handle: string;
   maticBalance: number;
   id: string;
@@ -51,6 +52,7 @@ const MirrorModal = ({
   handle,
   address,
   profileId,
+  profileIdToMirror,
   maticBalance,
   id,
 }: MirrorModalProps) => {
@@ -75,11 +77,11 @@ const MirrorModal = ({
 
       setIsLoading(true);
 
-      const publicationId = removeProfileIdPrefix(id, profileId);
+      const publicationId = removeProfileIdPrefix(id, profileIdToMirror);
 
       const tx = await lensContract.mirror({
         profileId: profileId,
-        profileIdPointed: profileId,
+        profileIdPointed: profileIdToMirror,
         pubIdPointed: publicationId,
         referenceModuleData: [],
         referenceModule: ethers.constants.AddressZero,

@@ -5,9 +5,10 @@ import LensterPost from "./LensterPost";
 
 type LensterFeedProps = {
   Posts: any;
+  defaultProfile: any;
 };
 
-const LensterFeed = ({ Posts }: LensterFeedProps) => {
+const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
   return (
     <Center mt="10">
       <Box>
@@ -26,7 +27,8 @@ const LensterFeed = ({ Posts }: LensterFeedProps) => {
               collects={post.stats.totalAmountOfCollects}
               index={index}
               row={row}
-              profileId={post.profile.id}
+              defaultProfile={defaultProfile}
+              profileIdToMirror={post.profile.id}
             />
           );
         })}
