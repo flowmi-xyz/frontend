@@ -1,5 +1,5 @@
 // logic components
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
 import { getSignerFront } from "~/web3/etherservice";
@@ -79,14 +79,21 @@ const MirrorModal = ({
 
       const publicationId = removeProfileIdPrefix(id, profileIdToMirror);
 
-      const tx = await lensContract.mirror({
-        profileId: profileId,
-        profileIdPointed: profileIdToMirror,
-        pubIdPointed: publicationId,
-        referenceModuleData: [],
-        referenceModule: ethers.constants.AddressZero,
-        referenceModuleInitData: [],
-      });
+      const GAS_LIMIT = BigNumber.from(10000000);
+
+      const tx = await lensContract.mirror(
+        {
+          profileId: profileId,
+          profileIdPointed: profileIdToMirror,
+          pubIdPointed: publicationId,
+          referenceModuleData: [],
+          referenceModule: ethers.constants.AddressZero,
+          referenceModuleInitData: [],
+        },
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
 
       setIsLoading(false);
       setSigned(true);

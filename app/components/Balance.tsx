@@ -119,17 +119,6 @@ const Balance = ({
             </Tbody>
           </Table>
         </TableContainer>
-
-        {/* <Text
-            fontWeight="500"
-            fontSize="15px"
-            lineHeight="120%"
-            letterSpacing="-0.03em"
-            color="lensDark"
-            pb="1"
-          >
-            Whitelist module
-          </Text> */}
       </Box>
 
       <Center pt="3" pb="5">
@@ -159,7 +148,7 @@ const Balance = ({
         awmaticBalance={awmaticBalance}
       />
 
-      <LensterFooter />
+      {/* <LensterFooter /> */}
     </>
   );
 };

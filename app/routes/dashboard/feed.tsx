@@ -24,6 +24,7 @@ import {
   Button,
   Center,
   Grid,
+  GridItem,
   Icon,
   Image,
   Text,
@@ -40,6 +41,7 @@ import { BsPiggyBank } from "react-icons/bs";
 
 import PostModal from "~/components/post/PostModal";
 import DepositModal from "~/components/transactions/DepositModal";
+import Balance from "~/components/Balance";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -128,8 +130,10 @@ export default function Dashboard() {
     accessToken,
     defaultProfile,
     gasFee,
+    priceFeed,
     maticBalance,
     wmaticBalance,
+    awmaticBalance,
   } = useLoaderData();
 
   const transition = useTransition();
@@ -167,79 +171,32 @@ export default function Dashboard() {
 
       {transition.state === "idle" && (
         <Box maxWidth="1200px" m="auto">
-          <Box pl="10">
-            <Text
-              fontWeight="700"
-              fontSize={["40px", "55px", "45px"]}
-              lineHeight={["48px", "66px", "66px"]}
-              color="black"
-              pt="50px"
-            >
-              Welcome to the{" "}
-              <Text
-                as="span"
-                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                bgClip="text"
-              >
-                Modulens
-              </Text>
-            </Text>
+          {!defaultProfile?.handle && (
+            <Box pl="10">
+              <SettingsBox />
+            </Box>
+          )}
 
-            {defaultProfile?.handle && (
-              <Text
-                fontSize="22px"
-                lineHeight="28.8ppx"
-                color="grayLetter"
-                pt="5"
-              >
-                Follow some profiles to participate in a decentralized social
-                raffle and win{" "}
-                <Text
-                  as="span"
-                  fontWeight="700"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  some WMATIC
-                </Text>
-              </Text>
-            )}
+          {defaultProfile?.handle && (
+            <Box>
+              <SettingsBox />
+              <Grid templateColumns="repeat(3, 1fr)">
+                <GridItem colSpan={2}>
+                  <Outlet />
+                </GridItem>
 
-            {!defaultProfile?.handle && (
-              <Text
-                fontSize="22px"
-                lineHeight="28.8ppx"
-                color="grayLetter"
-                pt="5"
-              >
-                Create your first profile NFT in Lens protocol before to start
-                to use{" "}
-                <Text
-                  as="span"
-                  fontWeight="700"
-                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                  bgClip="text"
-                >
-                  Social DeFi
-                </Text>
-              </Text>
-            )}
-          </Box>
-
-          <Grid templateColumns="repeat(3, 1fr)">
-            {!defaultProfile?.handle && (
-              <Box pl="10">
-                <SettingsBox />
-              </Box>
-            )}
-
-            {defaultProfile?.handle && (
-              <Box pl="10">
-                <SettingsBox />
-                <Outlet />
-              </Box>
-            )}
-          </Grid>
+                <GridItem colSpan={1}>
+                  <Balance
+                    maticBalance={maticBalance}
+                    wmaticBalance={wmaticBalance}
+                    awmaticBalance={awmaticBalance}
+                    gasFee={gasFee}
+                    priceFeed={priceFeed}
+                  />
+                </GridItem>
+              </Grid>
+            </Box>
+          )}
 
           {defaultProfile?.handle && (
             <>

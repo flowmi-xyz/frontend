@@ -9,9 +9,6 @@
   },
   { "inputs": [], "name": "FollowInvalid", "type": "error" },
   { "inputs": [], "name": "InitParamsInvalid", "type": "error" },
-  { "inputs": [], "name": "LensAds__FollowerAlreadyMirrored", "type": "error" },
-  { "inputs": [], "name": "LensAds__NotEnoughBudget", "type": "error" },
-  { "inputs": [], "name": "LensAds__NotSenderProfile", "type": "error" },
   { "stateMutability": "payable", "type": "fallback" },
   {
     "inputs": [],
