@@ -23,8 +23,10 @@ import {
 import NavbarConnected from "~/components/NavbarConnected";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import WhitelistContractModal from "~/components/WhiteListContractModal";
-import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";
-import { ADS_MIRROR_MODULE_ADDRESS } from "~/web3/lens/modules/contanst";
+import {
+  ADS_MIRROR_MODULE_ADDRESS,
+  FLOWMI_CONTRACT_ADDRESS,
+} from "~/web3/social-defi/social-defi-hub";
 import WhitelistReferenceModuleModal from "~/components/transactions/WhiteListReferenceModuleModal";
 
 export const loader: LoaderFunction = async ({ request }) => {

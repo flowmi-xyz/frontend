@@ -38,6 +38,7 @@ const ExplorePublications = gql`
       request: {
         sortCriteria: LATEST
         publicationTypes: [POST, COMMENT, MIRROR]
+        # publicationTypes: [POST],
         limit: 20
       }
     ) {
@@ -267,9 +268,7 @@ const ExplorePublications = gql`
       ...CollectModuleFields
     }
     referenceModule {
-      ... on FollowOnlyReferenceModuleSettings {
-        type
-      }
+      ...ReferenceModuleFields
     }
     appId
     hidden
@@ -294,9 +293,7 @@ const ExplorePublications = gql`
       ...CollectModuleFields
     }
     referenceModule {
-      ... on FollowOnlyReferenceModuleSettings {
-        type
-      }
+      ...ReferenceModuleFields
     }
     appId
     hidden
@@ -332,9 +329,7 @@ const ExplorePublications = gql`
       ...CollectModuleFields
     }
     referenceModule {
-      ... on FollowOnlyReferenceModuleSettings {
-        type
-      }
+      ...ReferenceModuleFields
     }
     appId
     hidden
@@ -372,6 +367,25 @@ const ExplorePublications = gql`
       ... on Mirror {
         ...MirrorBaseFields
       }
+    }
+  }
+
+  fragment ReferenceModuleFields on ReferenceModule {
+    ... on FollowOnlyReferenceModuleSettings {
+      type
+      contractAddress
+    }
+    ... on UnknownReferenceModuleSettings {
+      type
+      contractAddress
+      referenceModuleReturnData
+    }
+    ... on DegreesOfSeparationReferenceModuleSettings {
+      type
+      contractAddress
+      commentsRestricted
+      mirrorsRestricted
+      degreesOfSeparation
     }
   }
 `;

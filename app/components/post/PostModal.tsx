@@ -40,13 +40,10 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import SignedMessageTx from "../transactions/common/SignedMessage";
 import { defaultAbiCoder } from "ethers/lib/utils";
-import {
-  ADS_MIRROR_MODULE_ADDRESS,
-  FREE_COLLECT_MODULE_ADDRESS,
-  REVERT_COLLECT_MODULE_ADDRESS,
-} from "~/web3/lens/modules/contanst";
+import { FREE_COLLECT_MODULE_ADDRESS } from "~/web3/lens/modules/contanst";
 import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 import { parseEther } from "~/utils/formatEther";
+import { ADS_MIRROR_MODULE_ADDRESS } from "~/web3/social-defi/social-defi-hub";
 
 type PostModalProps = {
   isOpen: boolean;

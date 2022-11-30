@@ -24,22 +24,15 @@ import {
   ModalOverlay,
   Spinner,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { parseEther } from "ethers/lib/utils";
+import { ERC20_HUB_ABI, WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
 import {
-  aWMA_CONTRACT_ADDRESS,
-  ERC20_HUB_ABI,
-  WMATIC_CONTRACT_ADDRESS,
-} from "~/web3/erc20/erc20-hub";
-import {
+  ADS_MIRROR_MODULE_ADDRESS,
   ADS_REFERENCE_ABI,
-  FLOWMI_AAVE_ABI,
-  FLOWMI_AAVE_CONTRACT_ADDRESS,
 } from "~/web3/social-defi/social-defi-hub";
-import { ADS_MIRROR_MODULE_ADDRESS } from "~/web3/lens/modules/contanst";
 import SignedMessageTx from "./common/SignedMessage";
 
 type ClaimTokensProps = {
