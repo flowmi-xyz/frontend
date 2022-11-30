@@ -46,6 +46,7 @@ import {
   REVERT_COLLECT_MODULE_ADDRESS,
 } from "~/web3/lens/modules/contanst";
 import { WMATIC_CONTRACT_ADDRESS } from "~/web3/erc20/erc20-hub";
+import { parseEther } from "~/utils/formatEther";
 
 type PostModalProps = {
   isOpen: boolean;
@@ -145,9 +146,14 @@ const PostModal = ({
     // );
 
     const dataCollect = defaultAbiCoder.encode(["bool"], [true]);
+
     const dataReference = defaultAbiCoder.encode(
       ["uint256", "uint256", "address"],
-      [10, 1, WMATIC_CONTRACT_ADDRESS]
+      [
+        parseEther((0.4).toString()),
+        parseEther((0.1).toString()),
+        WMATIC_CONTRACT_ADDRESS,
+      ]
     );
 
     try {
@@ -158,8 +164,8 @@ const PostModal = ({
       // const post = await lensContract.post({
       //   profileId: profileId,
       //   contentURI: contentURI,
-      //   collectModule: ethers.constants.AddressZero,
-      //   collectModuleInitData: dataReference,
+      //   collectModule: FREE_COLLECT_MODULE_ADDRESS,
+      //   collectModuleInitData: defaultAbiCoder.encode(["bool"], [true]),
       //   referenceModule: ethers.constants.AddressZero,
       //   referenceModuleInitData: dataReference,
       // });
@@ -170,8 +176,8 @@ const PostModal = ({
         {
           profileId: profileId,
           contentURI: contentURI,
-          collectModule: ethers.constants.AddressZero,
-          collectModuleInitData: dataReference,
+          collectModule: FREE_COLLECT_MODULE_ADDRESS,
+          collectModuleInitData: dataCollect,
           referenceModule: ADS_MIRROR_MODULE_ADDRESS,
           referenceModuleInitData: dataReference,
         },

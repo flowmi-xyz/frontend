@@ -36,9 +36,9 @@ const ExplorePublications = gql`
   query ExplorePublications {
     explorePublications(
       request: {
-        sortCriteria: TOP_COMMENTED
+        sortCriteria: LATEST
         publicationTypes: [POST, COMMENT, MIRROR]
-        limit: 10
+        limit: 20
       }
     ) {
       items {

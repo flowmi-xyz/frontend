@@ -29,11 +29,18 @@ import {
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
 import { parseEther } from "ethers/lib/utils";
-import { aWMA_CONTRACT_ADDRESS, ERC20_HUB_ABI } from "~/web3/erc20/erc20-hub";
 import {
+  aWMA_CONTRACT_ADDRESS,
+  ERC20_HUB_ABI,
+  WMATIC_CONTRACT_ADDRESS,
+} from "~/web3/erc20/erc20-hub";
+import {
+  ADS_REFERENCE_ABI,
   FLOWMI_AAVE_ABI,
   FLOWMI_AAVE_CONTRACT_ADDRESS,
 } from "~/web3/social-defi/social-defi-hub";
+import { ADS_MIRROR_MODULE_ADDRESS } from "~/web3/lens/modules/contanst";
+import SignedMessageTx from "./common/SignedMessage";
 
 type ClaimTokensProps = {
   isOpen: boolean;
@@ -62,8 +69,8 @@ const DepositModal = ({
 }: ClaimTokensProps) => {
   const steps = [
     { label: "Approve move tokens" },
-    { label: "Confirm claim" },
-    { label: "Claim completed 🎉" },
+    { label: "Confirm deposit" },
+    { label: "Deposit completed 🏦" },
   ];
 
   const { nextStep, activeStep, reset } = useSteps({
@@ -90,7 +97,7 @@ const DepositModal = ({
 
     try {
       const tokenContract = new ethers.Contract(
-        aWMA_CONTRACT_ADDRESS,
+        WMATIC_CONTRACT_ADDRESS,
         ERC20_HUB_ABI,
         getSignerFront()
       );
@@ -98,7 +105,7 @@ const DepositModal = ({
       const GAS_LIMIT = BigNumber.from(gasLimitNumberApprove);
 
       const approve = await tokenContract.approve(
-        FLOWMI_AAVE_CONTRACT_ADDRESS,
+        ADS_MIRROR_MODULE_ADDRESS,
         MAX_UINT256,
         {
           gasLimit: GAS_LIMIT,
@@ -125,12 +132,12 @@ const DepositModal = ({
     }
   };
 
-  const handleClaim = async () => {
+  const handleDeposit = async () => {
     setIsLoading(true);
 
-    const flowmiAaveContract = new ethers.Contract(
-      FLOWMI_AAVE_CONTRACT_ADDRESS,
-      FLOWMI_AAVE_ABI,
+    const adsMirrorContract = new ethers.Contract(
+      ADS_MIRROR_MODULE_ADDRESS,
+      ADS_REFERENCE_ABI,
       getSignerFront()
     );
 
@@ -138,8 +145,10 @@ const DepositModal = ({
       const GAS_LIMIT = BigNumber.from(gasLimitNumberClaim);
       console.log(parseEther(awmaticBalance.toString()));
 
-      const followProfile = await flowmiAaveContract.redeemAToken(
-        parseEther(awmaticBalance.toString()),
+      const followProfile = await adsMirrorContract.fundMyGlobalBudget(
+        profileId,
+        parseEther((0.5).toString()),
+        WMATIC_CONTRACT_ADDRESS,
         {
           gasLimit: GAS_LIMIT,
         }
@@ -183,7 +192,7 @@ const DepositModal = ({
     <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
-        <ModalHeader>Claim your aTokens from Aave pool</ModalHeader>
+        <ModalHeader>Deposit tokens to vault for ads</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>
@@ -217,7 +226,8 @@ const DepositModal = ({
                 <Text>
                   You are going to allow us to move{" "}
                   <Text as="span" fontWeight="700" color="sixth" fontSize="16">
-                    {awmaticBalance.toFixed(4)} aWMATIC
+                    {/* {awmaticBalance.toFixed(4)} aWMATIC */}
+                    0.5 WMATIC
                   </Text>{" "}
                   from Aave protocol to your wallet.
                 </Text>
@@ -283,31 +293,55 @@ const DepositModal = ({
                 Social DeFi charge 0% fee for all transactions.
               </Alert>
 
-              <Flex pt="5" pl="5">
+              <Flex pt="5">
                 <Text
-                  fontWeight="700"
-                  fontSize="20px"
+                  fontWeight="600"
+                  fontSize="14px"
                   color="grayLetter"
                   my="auto"
                 >
                   Your balance:
-                </Text>{" "}
-                <Image
-                  src="../assets/logos/polygon-matic-logo.png"
-                  w="5"
-                  h="5"
-                  ml="2"
-                  my="auto"
-                />
-                <Text
-                  fontWeight="600"
-                  fontSize="18px"
-                  color="black"
-                  ml="2"
-                  my="auto"
-                >
-                  {maticBalance.toFixed(4)} MATIC
                 </Text>
+
+                <Box ml="5">
+                  <Flex pb="3">
+                    <Image
+                      src="../assets/logos/polygon-matic-logo.png"
+                      w="5"
+                      h="5"
+                      ml="2"
+                      my="auto"
+                    />
+                    <Text
+                      fontWeight="600"
+                      fontSize="14px"
+                      color="black"
+                      ml="2"
+                      my="auto"
+                    >
+                      {maticBalance.toFixed(4)} MATIC
+                    </Text>
+                  </Flex>
+
+                  <Flex pb="3">
+                    <Image
+                      src="../assets/logos/wrapped-matic-logo.png"
+                      w="5"
+                      h="5"
+                      ml="2"
+                      my="auto"
+                    />
+                    <Text
+                      fontWeight="600"
+                      fontSize="14px"
+                      color="black"
+                      ml="2"
+                      my="auto"
+                    >
+                      {wmaticBalance.toFixed(4)} WMATIC
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </Box>
           )}
@@ -330,7 +364,8 @@ const DepositModal = ({
                   color="black"
                   pt="5"
                 >
-                  Now, you are going to change your aTokens to WMATIC tokens.
+                  Now, you are going to deposit our tokens to our vault to use
+                  for ads.
                 </Text>
 
                 <Divider mt="5" />
@@ -403,7 +438,7 @@ const DepositModal = ({
                   Social DeFi charge 0% fee for all transactions.
                 </Alert>
 
-                <Flex pt="5" pl="5">
+                <Flex pt="5">
                   <Text
                     fontWeight="600"
                     fontSize="14px"
@@ -451,25 +486,6 @@ const DepositModal = ({
                         {wmaticBalance.toFixed(4)} WMATIC
                       </Text>
                     </Flex>
-
-                    <Flex>
-                      <Image
-                        src="../assets/logos/aave-aave-logo.png"
-                        w="5"
-                        h="5"
-                        ml="2"
-                        my="auto"
-                      />
-                      <Text
-                        fontWeight="600"
-                        fontSize="14px"
-                        color="black"
-                        ml="2"
-                        my="auto"
-                      >
-                        {awmaticBalance.toFixed(4)} WMATIC
-                      </Text>
-                    </Flex>
                   </Box>
                 </Flex>
               </Box>
@@ -510,38 +526,7 @@ const DepositModal = ({
             </HStack>
           )}
 
-          {signed && (
-            <Center>
-              <VStack paddingTop="5" pl="5" pr="5">
-                <HStack>
-                  <Text
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    Waiting transacction to be mined...
-                  </Text>
-
-                  <Image
-                    src="https://feature.undp.org/beyond-bitcoin/es/assets/mbNja7QNnr/block3.gif"
-                    width="50%"
-                  />
-                </HStack>
-
-                <Text
-                  textAlign="center"
-                  fontWeight="500"
-                  fontSize="12px"
-                  lineHeight="120%"
-                  color="grayLetter"
-                  pt="5"
-                >
-                  This usually takes 0-1 minutes to complete
-                </Text>
-              </VStack>
-            </Center>
-          )}
+          {signed && <SignedMessageTx />}
 
           {error && (
             <Box p="5">
@@ -630,7 +615,7 @@ const DepositModal = ({
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 mr="5"
-                onClick={handleClaim}
+                onClick={handleDeposit}
                 disabled={isLoading || signed}
               >
                 <Text

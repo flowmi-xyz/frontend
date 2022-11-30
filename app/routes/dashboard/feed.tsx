@@ -123,8 +123,14 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Dashboard() {
-  const { address, accessToken, defaultProfile, gasFee, maticBalance } =
-    useLoaderData();
+  const {
+    address,
+    accessToken,
+    defaultProfile,
+    gasFee,
+    maticBalance,
+    wmaticBalance,
+  } = useLoaderData();
 
   const transition = useTransition();
 
@@ -268,7 +274,7 @@ export default function Dashboard() {
                 gasFee={gasFee}
                 priceFeed={1}
                 maticBalance={maticBalance}
-                wmaticBalance={0}
+                wmaticBalance={wmaticBalance}
                 awmaticBalance={0}
               />
 

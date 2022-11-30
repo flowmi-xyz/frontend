@@ -1,6 +1,8 @@
 import FLOWMI_HUB_ABI from "./abi/flowmi-contract-abi.json";
 import FLOWMI_AAVE_ABI from "./abi/flowmi-aave-contract.json";
 
+import ADS_REFERENCE_ABI from "./abi/ads-reference-contract.json";
+
 // Polygon Mainnet
 
 // Polygon Mumbai
@@ -16,4 +18,5 @@ export {
   FLOWMI_AAVE_CONTRACT_ADDRESS,
   FLOWMI_HUB_ABI,
   FLOWMI_AAVE_ABI,
+  ADS_REFERENCE_ABI,
 };

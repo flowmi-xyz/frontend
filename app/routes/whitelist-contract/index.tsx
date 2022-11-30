@@ -77,14 +77,14 @@ export default function WhitelistContract() {
 
   const followModulesContract = [
     {
-      name: "FlowmiFollowModule v0.12",
+      name: "FlowmiFollowModule v0.3.1",
       address: FLOWMI_CONTRACT_ADDRESS,
     },
   ];
 
   const referenceModulesContract = [
     {
-      name: "AdsMirrorModule v0.2",
+      name: "AdsMirrorModule v0.5",
       address: ADS_MIRROR_MODULE_ADDRESS,
     },
   ];
