@@ -53,9 +53,13 @@ const CustomSteps = {
 
 export const theme = extendTheme({
   ...defaultTheme,
+  // fonts: {
+  //   heading: "Louis George Cafe, sans-serif",
+  //   body: "Louis George Cafe, sans-serif",
+  // },
   fonts: {
-    heading: "Louis George Cafe, sans-serif",
-    body: "Louis George Cafe, sans-serif",
+    heading: "Outfit, sans-serif",
+    body: "Outfit, sans-serif",
   },
   colors: {
     first: "#31108F",

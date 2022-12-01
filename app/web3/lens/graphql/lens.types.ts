@@ -17,6 +17,14 @@ export type RefreshRequest = {
   };
 };
 
+export type ExplorePublicationRequest = {
+  request: {
+    sortCriteria: "LATEST" | "TOP_COMMENTED" | "TOP_COLLECTED" | "TOP_MIRRORED";
+    publicationTypes: string[];
+    limit: number;
+  };
+};
+
 export type FollowRequest = {
   request: {
     follow: [{ profile: string }];
