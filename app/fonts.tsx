@@ -21,27 +21,27 @@ const Fonts = () => (
     @font-face {
       font-family: 'Outfit';
       font-weight: 400;
-      src: url('./assets/fonts/Outfit-Regular.woff') format('woff');
+      src: url('../assets/fonts/Outfit-Regular.woff') format('woff');
     }
     @font-face {
       font-family: 'Outfit';
       font-weight: 500;
-      src: url('./assets/fonts/Outfit-Mediumg.woff') format('woff');
+      src: url('../assets/fonts/Outfit-Medium.woff') format('woff');
     }
     @font-face {
       font-family: 'Outfit';
       font-weight: 600;
-      src: url('./assets/fonts/Outfit-SemiBold.woff') format('woff');
+      src: url('../assets/fonts/Outfit-SemiBold.woff') format('woff');
     }
     @font-face {
       font-family: 'Outfit';
       font-weight: 700;
-      src: url('./assets/fonts/Outfit-Bold.woff') format('woff');
+      src: url('../assets/fonts/Outfit-Bold.woff') format('woff');
     }
     @font-face {
       font-family: 'Outfit';
       font-weight: 800;
-      src: url('./assets/fonts/Outfit-ExtraBold.woff') format('woff');
+      src: url('../assets/fonts/Outfit-ExtraBold.woff') format('woff');
     }
   `}
   />

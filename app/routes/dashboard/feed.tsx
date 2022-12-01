@@ -162,7 +162,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <Box bg="#FAFAF9" h="100vh">
+    <Box bg="#F6F6F6">
       <NavbarConnected
         address={address}
         authenticatedInLens={true}

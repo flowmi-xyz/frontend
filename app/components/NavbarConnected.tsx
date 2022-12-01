@@ -25,8 +25,7 @@ const NavbarConnected = ({
   return (
     <Flex
       justify="space-around"
-      bgGradient="linear(to-r, #BDFC5A, #34403A, #285238, #138A36, #BFD1E5)"
-      //
+      bgGradient="linear(to-r, #FFB83F, #FF5873)"
       height="65px"
       align="center"
       alignItems="center"
