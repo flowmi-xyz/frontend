@@ -29,6 +29,7 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
             row={row}
             defaultProfile={defaultProfile}
             profileIdToMirror={post.profile.id}
+            referenceModule={post.referenceModule}
           />
         );
       })}

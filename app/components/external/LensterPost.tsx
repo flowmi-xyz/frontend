@@ -15,9 +15,12 @@ import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 import { GoCommentDiscussion } from "react-icons/go";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import { VscLibrary } from "react-icons/vsc";
+import { RiCoinsLine } from "react-icons/ri";
+
 import { WIDTH_FEED } from "~/styles/theme";
 import { Link } from "@remix-run/react";
 import MirrorModal from "../mirror/MirrorModal";
+import { ADS_MIRROR_MODULE_ADDRESS } from "~/web3/social-defi/social-defi-hub";
 
 type PostProps = {
   id: string;
@@ -34,6 +37,7 @@ type PostProps = {
   row?: any;
   defaultProfile: any;
   profileIdToMirror: string;
+  referenceModule?: any;
 };
 
 const LensterPost = ({
@@ -50,13 +54,14 @@ const LensterPost = ({
   row,
   defaultProfile,
   profileIdToMirror,
+  referenceModule,
 }: PostProps) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
   return (
     <Box
       bg="white"
-      border="1px"
+      border="2px"
       borderBottom={index === row.length - 1 ? "1px" : "0px"}
       borderColor="#E0E0E3"
       borderRadius={
@@ -171,25 +176,47 @@ const LensterPost = ({
             </Text>
           </Flex>
 
-          <Flex
-            onClick={onOpen}
-            _hover={{
-              cursor: "pointer",
-            }}
-          >
-            <Icon as={TbArrowsLeftRight} color="fourth" w={5} h={5} />
-            <Text
-              fontWeight="700"
-              fontSize="15px"
-              lineHeight="120%"
-              letterSpacing="-0.03em"
-              color="fourth"
-              my="auto"
-              pl="3"
+          {referenceModule?.contractAddress === ADS_MIRROR_MODULE_ADDRESS ? (
+            <Flex
+              onClick={onOpen}
+              _hover={{
+                cursor: "pointer",
+              }}
             >
-              {mirrors}
-            </Text>
-          </Flex>
+              <Icon as={RiCoinsLine} color="fourth" w={5} h={5} />
+              <Text
+                fontWeight="700"
+                fontSize="15px"
+                lineHeight="120%"
+                letterSpacing="-0.03em"
+                color="fourth"
+                my="auto"
+                pl="3"
+              >
+                {mirrors}
+              </Text>
+            </Flex>
+          ) : (
+            <Flex
+              onClick={onOpen}
+              _hover={{
+                cursor: "pointer",
+              }}
+            >
+              <Icon as={TbArrowsLeftRight} color="fourth" w={5} h={5} />
+              <Text
+                fontWeight="700"
+                fontSize="15px"
+                lineHeight="120%"
+                letterSpacing="-0.03em"
+                color="fourth"
+                my="auto"
+                pl="3"
+              >
+                {mirrors}
+              </Text>
+            </Flex>
+          )}
 
           <Flex>
             <Icon as={VscLibrary} color="third" w={5} h={5} />
