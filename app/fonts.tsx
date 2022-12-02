@@ -43,6 +43,14 @@ const Fonts = () => (
       font-weight: 800;
       src: url('../assets/fonts/Outfit-ExtraBold.woff') format('woff');
     }
+    @font-face {
+      font-family: 'Louis George Cafe';
+      src: url('./assets/fonts/Louis-George-Cafe.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Louis George Cafe';
+      src: url('./assets/fonts/Louis-George-Cafe.woff2') format('woff2');
+    }
   `}
   />
 );

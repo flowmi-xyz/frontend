@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Flex,
   HStack,
@@ -63,6 +64,7 @@ const LensterPost = ({
   return (
     <Box
       bg="white"
+      border="1px"
       borderBottom={index === row.length - 1 ? "1px" : "0px"}
       borderColor="#E0E0E3"
       borderRadius={
@@ -75,21 +77,6 @@ const LensterPost = ({
       width={WIDTH_FEED}
       _hover={{ bg: "#F4F4F5" }}
     >
-      {index === 0 && (
-        <Text
-          fontWeight="800"
-          fontSize="44px"
-          bgGradient="linear(to-r, #FFB83F, #FF5873)"
-          bgClip="text"
-          my="auto"
-          pt="5"
-          pl="10"
-          pr="10"
-        >
-          Feeds
-        </Text>
-      )}
-
       <HStack p="10" justifyContent="space-between">
         <Link to={`/${handle}`} prefetch="intent">
           <HStack>
@@ -98,20 +85,20 @@ const LensterPost = ({
             <Box my="auto" pl="1">
               {name ? (
                 <Text
-                  fontWeight="700"
-                  fontSize="22px"
-                  lineHeight="28px"
-                  letterSpacing="1px"
+                  fontWeight="600"
+                  fontSize="14px"
+                  lineHeight="120%"
+                  letterSpacing="-0.03em"
                   color="black"
                 >
                   {name}
                 </Text>
               ) : (
                 <Text
-                  fontWeight="700"
-                  fontSize="22px"
-                  lineHeight="28px"
-                  letterSpacing="1px"
+                  fontWeight="600"
+                  fontSize="14px"
+                  lineHeight="120%"
+                  letterSpacing="-0.03em"
                   color="black"
                 >
                   {removeLensSuffix(handle)}
@@ -120,9 +107,10 @@ const LensterPost = ({
 
               <Text
                 fontWeight="700"
-                fontSize="22px"
-                lineHeight="28px"
-                bgGradient="linear(to-r, #FFB83F, #FF5873)"
+                fontSize="12px"
+                lineHeight="100%"
+                letterSpacing="-0.03em"
+                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                 bgClip="text"
                 pt="1"
               >
@@ -134,10 +122,10 @@ const LensterPost = ({
 
         <Box>
           <Text
-            fontWeight="300"
-            fontSize="22px"
-            lineHeight="28px"
-            letterSpacing="1px"
+            fontWeight="700"
+            fontSize="11px"
+            lineHeight="120%"
+            letterSpacing="-0.03em"
             color="grayLetter"
           >
             {calculateHoursBetweenNowAndDate(createdAt)}
@@ -147,10 +135,10 @@ const LensterPost = ({
 
       <Box pl="14">
         <Text
-          fontWeight="300"
-          fontSize="22px"
-          lineHeight="28px"
-          letterSpacing="1px"
+          fontWeight="500"
+          fontSize="14px"
+          lineHeight="120%"
+          letterSpacing="-0.03em"
           color="black"
           pl="10"
           pr="10"
@@ -247,14 +235,6 @@ const LensterPost = ({
           id={id}
         />
       </Box>
-
-      <Box
-        width="80%"
-        height="2px"
-        bgGradient="linear(to-r, #FFB83F, #FF5873)"
-        opacity="0.5"
-        mx="auto"
-      />
     </Box>
   );
 };
