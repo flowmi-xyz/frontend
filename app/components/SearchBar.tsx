@@ -34,9 +34,9 @@ const SearchBar = () => {
   };
 
   return (
-    <Box ml="40">
+    <Box ml="6">
       <HStack>
-        <Box width="330px">
+        <Box width="230px">
           <InputGroup>
             <InputLeftElement
               children={<AiOutlineSearch />}
@@ -45,7 +45,7 @@ const SearchBar = () => {
             <Input
               value={profileSearch}
               onChange={handleWrite}
-              placeholder="Find your friends ..."
+              placeholder="Find your frens ..."
               bg="white"
               border="1px"
               borderColor="#E0E0E3"
