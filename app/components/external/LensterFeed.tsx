@@ -1,11 +1,8 @@
-import { useState } from "react";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { WIDTH_FEED } from "~/styles/theme";
 
 // components
 import LensterPost from "./LensterPost";
-
-import type { SortCriteria } from "~/web3/lens/graphql/lens.types";
 
 type LensterFeedProps = {
   Posts: any;
@@ -13,7 +10,7 @@ type LensterFeedProps = {
 };
 
 const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
-  const [sortCriteria, setSortCriteria] = useState<SortCriteria>("LATEST");
+  // const [sortCriteria, setSortCriteria] = useState<SortCriteria>("LATEST");
 
   return (
     <>
@@ -30,7 +27,7 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
           Publications
         </Text>
 
-        <Flex justifyContent="space-between" pt="5">
+        {/* <Flex justifyContent="space-between" pt="5">
           <Button
             bgGradient={
               sortCriteria === "LATEST"
@@ -90,7 +87,7 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
               More mirrored
             </Text>
           </Button>
-        </Flex>
+        </Flex> */}
       </Box>
 
       <Box mt="5" mb="10">
