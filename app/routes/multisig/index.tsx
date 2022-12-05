@@ -6,7 +6,7 @@ import { getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
 import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
-import { getTransactionCount } from "~/web3/multising";
+import { getTransaction, getTransactionCount } from "~/web3/multising";
 
 import { truncateAddress } from "~/web3/etherservice";
 
@@ -54,13 +54,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const transactionsCount = await getTransactionCount();
 
-  return { address, defaultProfile, transactionsCount };
+  const transaction = await getTransaction(0);
+
+  return { address, defaultProfile, transactionsCount, transaction };
 };
 
 export default function Multisig() {
-  const { address, defaultProfile, transactionsCount } = useLoaderData();
+  const { address, defaultProfile, transactionsCount, transaction } =
+    useLoaderData();
 
   console.log("transactionsCount", transactionsCount);
+  console.log("transaction", transaction);
 
   return (
     <>
