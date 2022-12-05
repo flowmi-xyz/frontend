@@ -20,7 +20,7 @@ export type RefreshRequest = {
 export type ExplorePublicationRequest = {
   request: {
     sortCriteria: "LATEST" | "TOP_COMMENTED" | "TOP_COLLECTED" | "TOP_MIRRORED";
-    publicationTypes: string[];
+    publicationTypes?: string[];
     limit: number;
   };
 };
@@ -82,3 +82,9 @@ export type CreateMirrorRequest = {
     };
   };
 };
+
+export type SortCriteria =
+  | "LATEST"
+  | "TOP_COMMENTED"
+  | "TOP_COLLECTED"
+  | "TOP_MIRRORED";

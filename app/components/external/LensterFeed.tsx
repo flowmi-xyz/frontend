@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { WIDTH_FEED } from "~/styles/theme";
 
 // components
 import LensterPost from "./LensterPost";
+
+import type { SortCriteria } from "~/web3/lens/graphql/lens.types";
 
 type LensterFeedProps = {
   Posts: any;
@@ -10,6 +13,8 @@ type LensterFeedProps = {
 };
 
 const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
+  const [sortCriteria, setSortCriteria] = useState<SortCriteria>("LATEST");
+
   return (
     <>
       <Box width={WIDTH_FEED}>
@@ -25,33 +30,65 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
           Publications
         </Text>
 
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" pt="5">
           <Button
-            bgGradient="linear(to-r, #FFB83F, #FF5873)"
-            borderRadius="40px"
+            bgGradient={
+              sortCriteria === "LATEST"
+                ? "linear(to-r, #FFB83F, #FF5873)"
+                : "none"
+            }
+            bg={sortCriteria === "LATEST" ? "null" : "backgroundFeed"}
+            borderRadius="10px"
+            onClick={() => setSortCriteria("LATEST")}
           >
-            <Text>Latest</Text>
+            <Text color={sortCriteria === "LATEST" ? "white" : "black"}>
+              Latest
+            </Text>
           </Button>
 
           <Button
-            bgGradient="linear(to-r, #FFB83F, #FF5873)"
-            borderRadius="40px"
+            bgGradient={
+              sortCriteria === "TOP_COMMENTED"
+                ? "linear(to-r, #FFB83F, #FF5873)"
+                : "none"
+            }
+            bg={sortCriteria === "TOP_COMMENTED" ? "null" : "backgroundFeed"}
+            borderRadius="10px"
+            onClick={() => setSortCriteria("TOP_COMMENTED")}
           >
-            <Text>More commented</Text>
+            <Text color={sortCriteria === "TOP_COMMENTED" ? "white" : "black"}>
+              More commented
+            </Text>
           </Button>
 
           <Button
-            bgGradient="linear(to-r, #FFB83F, #FF5873)"
-            borderRadius="40px"
+            bgGradient={
+              sortCriteria === "TOP_COLLECTED"
+                ? "linear(to-r, #FFB83F, #FF5873)"
+                : "none"
+            }
+            bg={sortCriteria === "TOP_COLLECTED" ? "null" : "backgroundFeed"}
+            borderRadius="10px"
+            onClick={() => setSortCriteria("TOP_COLLECTED")}
           >
-            <Text>More collected</Text>
+            <Text color={sortCriteria === "TOP_COLLECTED" ? "white" : "black"}>
+              More collected
+            </Text>
           </Button>
 
           <Button
-            bgGradient="linear(to-r, #FFB83F, #FF5873)"
-            borderRadius="40px"
+            bgGradient={
+              sortCriteria === "TOP_MIRRORED"
+                ? "linear(to-r, #FFB83F, #FF5873)"
+                : "none"
+            }
+            bg={sortCriteria === "TOP_MIRRORED" ? "null" : "backgroundFeed"}
+            borderRadius="10px"
+            onClick={() => setSortCriteria("TOP_MIRRORED")}
           >
-            <Text>More mirrored</Text>
+            <Text color={sortCriteria === "TOP_MIRRORED" ? "white" : "black"}>
+              More mirrored
+            </Text>
           </Button>
         </Flex>
       </Box>

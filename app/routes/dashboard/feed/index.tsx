@@ -3,10 +3,10 @@ import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { lensClient } from "~/web3/lens/lens-client";
-import {
-  ExplorePublications,
-  GetDefaultProfile,
-} from "~/web3/lens/graphql/generated";
+import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+
+import type { ExplorePublicationRequest } from "~/web3/lens/graphql/lens.types";
+import { exploreLatestPublications } from "~/web3/lens/explore/publications";
 
 // UI components
 import LensterFeed from "~/components/external/LensterFeed";
@@ -16,9 +16,17 @@ export const loader: LoaderFunction = async ({ request }) => {
   // Get feed from Lens protocol
   console.log("[dashboard/feed] Fetching feed from Lens API ...");
 
-  const responsePublications = await lensClient.request(ExplorePublications);
+  const exploreLatestVariables: ExplorePublicationRequest = {
+    request: {
+      sortCriteria: "LATEST",
+      limit: 10,
+    },
+  };
+  const latestPublications = await exploreLatestPublications(
+    exploreLatestVariables
+  );
 
-  const recentsPostsResponse = responsePublications.explorePublications;
+  const recentsPostsResponse = latestPublications;
 
   const recentPosts = recentsPostsResponse.items.filter((item: any) => {
     return item.__typename === "Post";

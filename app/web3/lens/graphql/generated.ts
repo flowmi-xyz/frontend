@@ -33,15 +33,8 @@ const Refresh = gql`
 `;
 
 const ExplorePublications = gql`
-  query ExplorePublications {
-    explorePublications(
-      request: {
-        sortCriteria: LATEST
-        publicationTypes: [POST, COMMENT, MIRROR]
-        # publicationTypes: [POST],
-        limit: 20
-      }
-    ) {
+  query ($request: ExplorePublicationRequest!) {
+    explorePublications(request: $request) {
       items {
         __typename
         ... on Post {
