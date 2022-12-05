@@ -24,6 +24,7 @@ import NavbarConnected from "~/components/NavbarConnected";
 import { Line } from "react-chartjs-2";
 import {
   CategoryScale,
+  Filler,
   LinearScale,
   LineElement,
   PointElement,
@@ -33,6 +34,7 @@ Chart.register(CategoryScale);
 Chart.register(LinearScale);
 Chart.register(PointElement);
 Chart.register(LineElement);
+Chart.register(Filler);
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -58,45 +60,43 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Metrics() {
   const { address, defaultProfile } = useLoaderData();
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Line Chart",
-      },
-    },
-  };
-
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
+    "Jan 2023",
+    "Feb 2023",
+    "Mar 2023",
+    "Apr 2023",
+    "May 2023",
+    "Jun 2023",
+    "Jul 2023",
   ];
 
   const data = {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
-        data: labels.map(() => 10 + Math.random() * 100),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "Dataset 2",
-        data: labels.map(() => 10 + Math.random() * 100),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        label: "MMR",
+        data: [10, 25, 36, 32, 33, 44, 50],
+        borderColor: "#31108F",
+        borderWidth: 4,
+        lineTension: 0.3,
+        fill: true,
+        backgroundColor: "rgba(49, 16, 143, 0.1)",
       },
     ],
+  };
+
+  const options = {
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        max: Math.max(...data.datasets[0].data) * 1.2,
+        min: 0,
+      },
+    },
   };
 
   return (
@@ -130,9 +130,21 @@ export default function Metrics() {
           </Text>
         </Box>
         <Text fontWeight="600" fontSize="36px" color="black" pt="10">
-          Ads Module
+          ADS Module (mirror to earn)
         </Text>
-        <Line options={options} data={data} />;
+
+        <Box>
+          <Text fontWeight="700" fontSize="20px" color="grayLetter">
+            MMR
+          </Text>
+          <Text fontWeight="700" fontSize="36px" color="first">
+            $134
+          </Text>
+        </Box>
+
+        <Box pt="5">
+          <Line options={options} data={data} />
+        </Box>
       </Box>
     </Box>
   );
