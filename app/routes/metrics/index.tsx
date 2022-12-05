@@ -107,16 +107,16 @@ export default function Metrics() {
         handle={defaultProfile?.handle}
       />
 
-      <Box maxWidth="1000px" m="auto" pt="3" pb="3">
+      <Box maxWidth="1000px" m="auto" pb="3">
         <Box>
           <Text
             fontWeight="700"
             fontSize={["40px", "55px", "45px"]}
             lineHeight={["48px", "66px", "66px"]}
             color="black"
-            pt="50px"
+            pt="5"
           >
-            Métricas de nuestros modulos
+            Metrics of our modules
           </Text>
 
           <Text
@@ -126,7 +126,7 @@ export default function Metrics() {
             color="grayLetter"
             pt="5"
           >
-            En esta sección podrás ver las métricas de nuestros modulos.
+            In this section you will be able to see the metrics of our modules.
           </Text>
         </Box>
         <Text fontWeight="600" fontSize="36px" color="black" pt="10">
