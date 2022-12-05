@@ -44,4 +44,14 @@ function signedTypeData(
   );
 }
 
-export { getSignerFront, getSignerBack, getBalanceFromAddress, signedTypeData };
+function truncateAddress(address: string): string {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
+
+export {
+  getSignerFront,
+  getSignerBack,
+  getBalanceFromAddress,
+  signedTypeData,
+  truncateAddress,
+};
