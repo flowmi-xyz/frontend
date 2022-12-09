@@ -6,6 +6,27 @@ const GetPing = gql`
   }
 `;
 
+const GetPublicationReferenceModule = gql`
+  query MyQuery {
+    publications(request: { profileId: "0x62", publicationTypes: POST }) {
+      items {
+        ... on Post {
+          id
+          metadata {
+            description
+          }
+          referenceModule {
+            ... on UnknownReferenceModuleSettings {
+              __typename
+              contractAddress
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const GetChallengue = gql`
   query ($request: ChallengeRequest!) {
     challenge(request: $request) {
@@ -1054,4 +1075,5 @@ export {
   HasTxHashBeenIndexed,
   GetProfiles,
   GetFollowers,
+  GetPublicationReferenceModule,
 };

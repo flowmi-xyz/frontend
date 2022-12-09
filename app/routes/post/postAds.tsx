@@ -7,7 +7,10 @@ import { db } from "~/bff/db.server";
 import { destroySession, getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
-import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
+import {
+  GetDefaultProfile,
+  GetPublicationReferenceModule,
+} from "~/web3/lens/graphql/generated";
 
 import { getBalanceFromAddress } from "~/web3/etherservice";
 
@@ -68,6 +71,19 @@ import {
 } from "~/web3/erc20";
 import { getPriceFeedFromFlowmi } from "~/web3/social-defi/getPriceFeed";
 
+import { getGlobalBudget, getPostBudget } from "~/web3/adsModule/index";
+import {
+  DAI_CONTRACT_ADDRESS,
+  TOU_CONTRACT_ADDRESS,
+  USDC_CONTRACT_ADDRESS,
+  WEth_CONTRACT_ADDRESS,
+  WMATIC_CONTRACT_ADDRESS,
+} from "~/web3/erc20/erc20-hub";
+import BalanceGlobalBudget from "~/components/BalanceGlobalBudget";
+import GetIdPublications from "~/web3/adsModule/publicationId";
+import getItemIds from "~/web3/adsModule/publicationId";
+import BalanceContract from "~/components/BalanceContract";
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
 
@@ -85,44 +101,59 @@ export const loader: LoaderFunction = async ({ request }) => {
     variables
   );
 
+  const referenceModule = await lensClient.request(
+    GetPublicationReferenceModule
+  );
+
   const defaultProfile = responseProfile.defaultProfile;
+  const results = await getItemIds(defaultProfile.id);
+
+  console.log(results);
+
   const [
     totalFounded,
-    gasFee,
+
     maticBalance,
     wmaticBalance,
-    awmaticBalance,
-    priceFeed,
     wethBalance,
     usdcBalance,
     daiBalance,
     touBalance,
+    globalBudgetWmatic,
+    globalBudgetWEth,
+    globalBudgetDai,
+    globalBudgetUsdc,
+    globalBudgetTou,
   ] = await Promise.all([
     getTotalFundedProfile(defaultProfile?.ownedBy),
-    getGasFee(),
     getBalanceFromAddress(address),
     getWMATICBalance(address),
-    getaWMATICBalance(address),
     getWEthBalance(address),
     getUSDCBalance(address),
     getDAIBalance(address),
     getTOUBalance(address),
-    getPriceFeedFromFlowmi(),
+    getGlobalBudget(defaultProfile?.id, WMATIC_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, WEth_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, DAI_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, USDC_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, TOU_CONTRACT_ADDRESS),
   ]);
   return {
     address,
     accessToken,
     defaultProfile,
     totalFounded,
-    gasFee,
-    priceFeed,
     maticBalance,
     wmaticBalance,
-    awmaticBalance,
     wethBalance,
     usdcBalance,
     daiBalance,
     touBalance,
+    globalBudgetWmatic,
+    globalBudgetWEth,
+    globalBudgetDai,
+    globalBudgetUsdc,
+    globalBudgetTou,
   };
 };
 
@@ -173,12 +204,15 @@ export default function Dashboard() {
     usdcBalance,
     daiBalance,
     touBalance,
+    globalBudgetWmatic,
+    globalBudgetWEth,
+    globalBudgetDai,
+    globalBudgetUsdc,
+    globalBudgetTou,
   } = useLoaderData();
 
   const [postNormal, setPostNormal] = React.useState(false);
   const [postAds, setPostAds] = React.useState(true);
-
-  const transition = useTransition();
 
   const activePostNormal = () => {
     setPostAds(false);
@@ -416,6 +450,14 @@ export default function Dashboard() {
               daiBalance={daiBalance}
               touBalance={touBalance}
             />
+            <BalanceGlobalBudget
+              globalBudgetWmatic={globalBudgetWmatic}
+              globalBudgetWEth={globalBudgetWEth}
+              globalBudgetDai={globalBudgetDai}
+              globalBudgetUsdc={globalBudgetUsdc}
+              globalBudgetTou={globalBudgetTou}
+            />
+            {/* <BalanceContract /> */}
           </Box>
         </Box>
       </Flex>
