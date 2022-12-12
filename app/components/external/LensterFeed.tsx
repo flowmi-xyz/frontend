@@ -18,11 +18,12 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
         <Text
           fontWeight="800"
           fontSize="44px"
-          bgGradient="linear(to-r, #FFB83F , #FF5873 20% )"
+          bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
           bgClip="text"
           my="auto"
           pt="5"
           pr="10"
+          width="-webkit-fit-content"
         >
           Publications
         </Text>
