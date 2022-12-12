@@ -2,7 +2,18 @@ import React from "react";
 
 import { Link } from "@remix-run/react";
 
-import { Flex, Text, Button, useDisclosure } from "@chakra-ui/react";
+import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons"; // icons
+import {
+  Flex,
+  Text,
+  Button,
+  useDisclosure,
+  useColorMode,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
 
 // components
 import SearchBar from "./SearchBar";
@@ -21,11 +32,12 @@ const NavbarConnected = ({
   handle,
 }: NavbarConnectedProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
       justify="space-around"
-      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+      bgGradient="linear(to-r, #FF5873 40%, #FFB83F )"
       height="65px"
       align="center"
       alignItems="center"
@@ -33,19 +45,75 @@ const NavbarConnected = ({
     >
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Link to="/dashboard/feed">
-          <Text fontWeight="700" fontSize="20" color="white">
-            Modulens
+          <Text fontWeight="700" fontSize="40" color="white">
+            🫠
           </Text>
         </Link>
-
-        <SearchBar />
+        <Flex>
+          <SearchBar />
+        </Flex>
       </Flex>
 
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Flex display="flex" align="center">
-          <ChainButton />
+          <Link to="./">
+            {" "}
+            <Text color="white" fontWeight="700" fontSize="lg" mr={3}>
+              Feed
+            </Text>
+          </Link>
+          <Link to="./">
+            {" "}
+            <Text color="white" fontWeight="700" fontSize="lg" mx={3}>
+              Post
+            </Text>
+          </Link>
+          <Link to="./">
+            {" "}
+            <Text color="white" fontWeight="700" fontSize="lg" mx={3}>
+              Stats
+            </Text>
+          </Link>
+          <Link to="./">
+            {" "}
+            <Text color="white" fontWeight="700" fontSize="lg" mx={3}>
+              Profile
+            </Text>
+          </Link>
+        </Flex>
+      </Flex>
 
-          {authenticatedInLens && (
+      <Flex flexDirection="row" alignItems="center" justifyContent="center">
+        <Flex display="flex" align="center">
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon color="lensDark" />}
+            >
+              <Text fontWeight="600" fontSize="14px" color="lensDark">
+                @{handle}
+              </Text>
+            </MenuButton>
+            <MenuList>
+              <MenuItem as={Text}>
+                {" "}
+                <ChainButton />{" "}
+              </MenuItem>
+              {/* <MenuItem></MenuItem> */}
+              <MenuItem as={Link} to={`/${handle}`} prefetch="intent">
+                My profile
+              </MenuItem>
+              <MenuItem as={Text} onClick={onOpen}>
+                My wallet
+              </MenuItem>
+              <MenuItem as={Text} onClick={toggleColorMode}>
+                Change color mode{" "}
+                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              </MenuItem>
+            </MenuList>
+          </Menu>
+
+          {/* {authenticatedInLens && (
             <Link to={`/${handle}`} prefetch="intent">
               <Button
                 bg="lens"
@@ -58,8 +126,8 @@ const NavbarConnected = ({
                 </Text>
               </Button>
             </Link>
-          )}
-
+          )} */}
+          {/* 
           <Button
             bg="first"
             borderRadius="10px"
@@ -72,7 +140,7 @@ const NavbarConnected = ({
                 address.length
               )}`}
             </Text>
-          </Button>
+          </Button> */}
         </Flex>
       </Flex>
 
