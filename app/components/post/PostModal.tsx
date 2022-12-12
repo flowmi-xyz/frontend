@@ -56,30 +56,6 @@ type PostModalProps = {
   maticBalance: number;
 };
 
-export const loader: LoaderFunction = async ({ context }) => {
-  const projectId = context.PROJECT_ID;
-  const projectSecret = context.API_KEY_INFURA;
-
-  console.log(process.env.PROJECT_ID);
-  console.log(process.env.NODE_ENV);
-
-  return {
-    projectId,
-    projectSecret,
-  };
-};
-
-export const action: ActionFunction = async ({ request, context }) => {
-  const projectId = context.PROJECT_ID;
-  const projectSecret = context.API_KEY_INFURA;
-
-  console.log(projectId);
-  console.log(projectSecret);
-
-  console.log(process.env.PROJECT_ID);
-  console.log(process.env.NODE_ENV);
-};
-
 const PostModal = ({
   isOpen,
   onClose,
@@ -87,11 +63,6 @@ const PostModal = ({
   profileId,
   maticBalance,
 }: PostModalProps) => {
-  const { projectId, projectSecret } = useLoaderData();
-
-  // console.log("projectId", projectId);
-  // console.log("projectSecret", projectSecret);
-
   const [post, setPost] = React.useState("");
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -122,8 +93,6 @@ const PostModal = ({
 
   const handlePost = async () => {
     setIsLoading(true);
-    console.log("handlePost");
-    console.log(post);
 
     const contentURI = await uploadToIPFS();
 
@@ -132,17 +101,6 @@ const PostModal = ({
       LENS_HUB_ABI,
       getSignerFront()
     );
-
-    // const signedResult = await createPostTypedData(createPostRequest);
-
-    // console.log(signedResult);
-
-    // const data = defaultAbiCoder.encode(
-    //   ["address", "uint256"],
-    //   [WMATIC_CONTRACT_ADDRESS, DEFAULT_FOLLOW_PRICE]
-    // );
-
-    const dataCollect = defaultAbiCoder.encode(["bool"], [true]);
 
     const dataReference = defaultAbiCoder.encode(
       ["uint256", "uint256", "address"],
@@ -154,66 +112,38 @@ const PostModal = ({
     );
 
     try {
-      // const gasLimitNumberDefiFollow = 2000000;
+      const post = await lensContract.post({
+        profileId: profileId,
+        contentURI: contentURI,
+        collectModule: FREE_COLLECT_MODULE_ADDRESS,
+        collectModuleInitData: defaultAbiCoder.encode(["bool"], [true]),
+        referenceModule: ethers.constants.AddressZero,
+        referenceModuleInitData: dataReference,
+      });
 
-      // const GAS_LIMIT = BigNumber.from(gasLimitNumberDefiFollow);
+      setIsLoading(false);
+      setSigned(true);
 
-      // const post = await lensContract.post({
-      //   profileId: profileId,
-      //   contentURI: contentURI,
-      //   collectModule: FREE_COLLECT_MODULE_ADDRESS,
-      //   collectModuleInitData: defaultAbiCoder.encode(["bool"], [true]),
-      //   referenceModule: ethers.constants.AddressZero,
-      //   referenceModuleInitData: dataReference,
-      // });
+      // const GAS_LIMIT = BigNumber.from(2000000);
 
-      const GAS_LIMIT = BigNumber.from(2000000);
-
-      const post = await lensContract.post(
-        {
-          profileId: profileId,
-          contentURI: contentURI,
-          collectModule: FREE_COLLECT_MODULE_ADDRESS,
-          collectModuleInitData: dataCollect,
-          referenceModule: ADS_MIRROR_MODULE_ADDRESS,
-          referenceModuleInitData: dataReference,
-        },
-        {
-          gasLimit: GAS_LIMIT,
-        }
-      );
+      // const post = await lensContract.post(
+      //   {
+      //     profileId: profileId,
+      //     contentURI: contentURI,
+      //     collectModule: FREE_COLLECT_MODULE_ADDRESS,
+      //     collectModuleInitData: dataCollect,
+      //     referenceModule: ADS_MIRROR_MODULE_ADDRESS,
+      //     referenceModuleInitData: dataReference,
+      //   },
+      //   {
+      //     gasLimit: GAS_LIMIT,
+      //   }
+      // );
 
       const postTx = await post.wait();
 
       setTxHash(postTx.transactionHash);
 
-      // setIsLoading(false);
-      // setFirstSign(true);
-      // const typedData = signedResult.typedData;
-      // const signature = await signedTypeData(
-      //   typedData.domain,
-      //   typedData.types,
-      //   typedData.value
-      // );
-      // const { v, r, s } = splitSignature(signature);
-      // setIsLoading(true);
-      // const tx = await lensContract.postWithSig({
-      //   profileId: typedData.value.profileId,
-      //   contentURI: typedData.value.contentURI,
-      //   collectModule: typedData.value.collectModule,
-      //   collectModuleInitData: typedData.value.collectModuleInitData,
-      //   referenceModule: typedData.value.referenceModule,
-      //   referenceModuleInitData: typedData.value.referenceModuleInitData,
-      //   sig: {
-      //     v,
-      //     r,
-      //     s,
-      //     deadline: typedData.value.deadline,
-      //   },
-      // });
-      // setIsLoading(false);
-      // setSigned(true);
-      // await tx.wait();
       setPosted(true);
       setSigned(false);
       setIsLoading(false);
@@ -358,7 +288,7 @@ const PostModal = ({
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mr="5"
             onClick={handleClose}
-            // hidden={activeStep == 2}
+            hidden={posted}
           >
             <Text
               fontWeight="700"

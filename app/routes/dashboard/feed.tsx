@@ -163,11 +163,7 @@ export default function Dashboard() {
 
   return (
     <Box bg="backgroundFeed">
-      <NavbarConnected
-        address={address}
-        authenticatedInLens={true}
-        handle={defaultProfile?.handle}
-      />
+      <NavbarConnected address={address} handle={defaultProfile?.handle} />
 
       {transition.state === "idle" && (
         <Box maxWidth="1200px" m="auto">
@@ -211,30 +207,6 @@ export default function Dashboard() {
                 <Icon as={BsPlusLg} color="lensDark" h="3" w="3" />
               </Button>
 
-              <Button
-                position="fixed"
-                bottom="24"
-                right="10"
-                rounded="full"
-                bg="lens"
-                onClick={onOpenDeposit}
-              >
-                <Icon as={BsPiggyBank} color="lensDark" h="6" w="6" />
-              </Button>
-
-              <DepositModal
-                isOpen={isOpenDeposit}
-                onClose={onCloseDeposit}
-                handle={defaultProfile?.handle}
-                amount={0}
-                profileId={defaultProfile?.id}
-                gasFee={gasFee}
-                priceFeed={1}
-                maticBalance={maticBalance}
-                wmaticBalance={wmaticBalance}
-                awmaticBalance={0}
-              />
-
               <PostModal
                 isOpen={isOpenPost}
                 onClose={onClosePost}
@@ -245,6 +217,30 @@ export default function Dashboard() {
                 priceFeed={1}
                 maticBalance={maticBalance}
               />
+
+              {/* <Button
+                position="fixed"
+                bottom="24"
+                right="10"
+                rounded="full"
+                bg="lens"
+                onClick={onOpenDeposit}
+              >
+                <Icon as={BsPiggyBank} color="lensDark" h="6" w="6" />
+              </Button> */}
+
+              {/* <DepositModal
+                isOpen={isOpenDeposit}
+                onClose={onCloseDeposit}
+                handle={defaultProfile?.handle}
+                amount={0}
+                profileId={defaultProfile?.id}
+                gasFee={gasFee}
+                priceFeed={1}
+                maticBalance={maticBalance}
+                wmaticBalance={wmaticBalance}
+                awmaticBalance={0}
+              /> */}
             </>
           )}
         </Box>
