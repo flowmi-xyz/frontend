@@ -166,7 +166,7 @@ export default function Dashboard() {
       <NavbarConnected address={address} handle={defaultProfile?.handle} />
 
       {transition.state === "idle" && (
-        <Box maxWidth="1200px" m="auto">
+        <Box maxWidth={["90%", "1200px", "1200px", "1200px"]} m="auto">
           {!defaultProfile?.handle && (
             <Box pl="10">
               <SettingsBox />
@@ -174,28 +174,29 @@ export default function Dashboard() {
           )}
 
           {defaultProfile?.handle && (
-            <Box>
-              <SettingsBox />
-              <Grid templateColumns="repeat(3, 1fr)">
-                <GridItem colSpan={2}>
-                  <Outlet />
-                </GridItem>
-
-                <GridItem colSpan={1}>
-                  <Balance
-                    maticBalance={maticBalance}
-                    wmaticBalance={wmaticBalance}
-                    awmaticBalance={awmaticBalance}
-                    gasFee={gasFee}
-                    priceFeed={priceFeed}
-                  />
-                </GridItem>
-              </Grid>
-            </Box>
-          )}
-
-          {defaultProfile?.handle && (
             <>
+              <Box>
+                <SettingsBox />
+                <Grid templateColumns="repeat(3, 1fr)">
+                  <GridItem colSpan={[3, 2, 2, 2]}>
+                    <Outlet />
+                  </GridItem>
+
+                  <GridItem
+                    colSpan={1}
+                    display={["none", "block", "block", "block"]}
+                  >
+                    <Balance
+                      maticBalance={maticBalance}
+                      wmaticBalance={wmaticBalance}
+                      awmaticBalance={awmaticBalance}
+                      gasFee={gasFee}
+                      priceFeed={priceFeed}
+                    />
+                  </GridItem>
+                </Grid>
+              </Box>
+
               <Button
                 position="fixed"
                 bottom="10"

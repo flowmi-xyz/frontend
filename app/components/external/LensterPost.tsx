@@ -74,10 +74,9 @@ const LensterPost = ({
           ? "0 0 10px 10px"
           : "0"
       }
-      width={WIDTH_FEED}
       _hover={{ bg: "#F4F4F5" }}
     >
-      <HStack p="10" justifyContent="space-between">
+      <HStack p={["5", "10", "10", "10"]} justifyContent="space-between">
         <Link to={`/${handle}`} prefetch="intent">
           <HStack>
             <Avatar size="md" src={transformToIpfsUrl(profileImage!)} />
@@ -133,7 +132,7 @@ const LensterPost = ({
         </Box>
       </HStack>
 
-      <Box pl="14">
+      <Box pl={["10", "14", "14", "14"]}>
         <Text
           fontWeight="500"
           fontSize="14px"
@@ -149,7 +148,7 @@ const LensterPost = ({
         </Text>
       </Box>
 
-      <Box pl="6" pb="5">
+      <Box pb="5">
         <HStack pl="10" justifyContent="space-evenly">
           <Flex>
             <Icon as={GoCommentDiscussion} color="first" w={5} h={5} />

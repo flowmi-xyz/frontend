@@ -14,7 +14,7 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
 
   return (
     <>
-      <Box width={WIDTH_FEED}>
+      <Box width={["100%", WIDTH_FEED, WIDTH_FEED, WIDTH_FEED]}>
         <Text
           fontWeight="800"
           fontSize="44px"
@@ -91,9 +91,8 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
         </Flex> */}
       </Box>
 
-      <Box mt="5" mb="10">
+      <Box mt="5" mb="10" width={["100%", WIDTH_FEED, WIDTH_FEED, WIDTH_FEED]}>
         {Posts.map((post: any, index: number, row: any) => {
-          console.log(post);
           return (
             <LensterPost
               key={post.id}
