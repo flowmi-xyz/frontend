@@ -86,7 +86,6 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleLogin}
-                display={["none", "block", "block", "block"]}
               >
                 <Text
                   fontWeight="500"
@@ -98,7 +97,7 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
                 </Text>
               </Button>
 
-              <Button
+              {/* <Button
                 bg="third"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
@@ -113,7 +112,7 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
                 >
                   Connect wallet
                 </Text>
-              </Button>
+              </Button> */}
             </Center>
 
             <HStack pt="5" pr="5" pl="5">
@@ -149,7 +148,7 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
           </Box>
         </Center>
 
-        <MobileConnectWalletModal isOpen={isOpen} onClose={onClose} />
+        {/* <MobileConnectWalletModal isOpen={isOpen} onClose={onClose} /> */}
       </Flex>
     </Box>
   );

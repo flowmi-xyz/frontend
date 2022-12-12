@@ -42,6 +42,7 @@ import { BsPiggyBank } from "react-icons/bs";
 import PostModal from "~/components/post/PostModal";
 import DepositModal from "~/components/transactions/DepositModal";
 import Balance from "~/components/Balance";
+import LoadingFeed from "~/components/feed/LoadingFeed";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -162,10 +163,11 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <Box bg="backgroundFeed">
+    <Box bg="backgroundFeed" height={["100vh", "100vh", "100vh", "100vh"]}>
       <NavbarConnected address={address} handle={defaultProfile?.handle} />
 
-      {transition.state === "idle" && (
+      {/* {transition.state === "idle" && ( */}
+      {false && (
         <Box maxWidth={["90%", "1200px", "1200px", "1200px"]} m="auto">
           {!defaultProfile?.handle && (
             <Box pl="10">
@@ -247,21 +249,8 @@ export default function Dashboard() {
         </Box>
       )}
 
-      {transition.state === "loading" && (
-        <Box p="10">
-          <Text textAlign="center" fontSize="26px" color="lensDark" mt="25px">
-            Connecting with garden ...
-          </Text>
-
-          <Center mt="10">
-            <Image
-              src="../assets/animations/Lens-Anim4_16x10.gif"
-              rounded="xl"
-              w="50%"
-            />
-          </Center>
-        </Box>
-      )}
+      {/* {transition.state === "loading" &&  */}
+      {true && <LoadingFeed />}
     </Box>
   );
 }
