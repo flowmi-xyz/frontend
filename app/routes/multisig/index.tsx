@@ -32,7 +32,7 @@ import {
 // components
 import NavbarConnected from "~/components/NavbarConnected";
 
-import { BsCircle, BsCheckCircleFill, BsXCircle } from "react-icons/bs";
+import MultisigStatus from "~/components/multisig/StatusComponent";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -219,7 +219,7 @@ export default function Multisig() {
         <Box pt="10">
           <Text
             fontWeight="700"
-            fontSize="24px"
+            fontSize="30px"
             lineHeight="120%"
             letterSpacing="-0.03em"
             color="black"
@@ -228,7 +228,7 @@ export default function Multisig() {
             Transactions
           </Text>
 
-          <TableContainer borderBottomRadius="10px">
+          <TableContainer pt="5">
             <Table colorScheme="gray">
               <Thead>
                 <Tr>
@@ -243,12 +243,8 @@ export default function Multisig() {
 
               <Tbody>
                 <Tr>
-                  <Td>1</Td>
-                  <Td>
-                    {truncateAddress(
-                      "0x3aeC2276326CDC8E9a8A4351c338166e67105AC3"
-                    )}
-                  </Td>
+                  <Td>{transaction.id}</Td>
+                  <Td>{truncateAddress(transaction.to)}</Td>
 
                   <Td>
                     <HStack>
@@ -262,22 +258,12 @@ export default function Multisig() {
                       </Text>
                     </HStack>
                   </Td>
-                  <Td isNumeric>1</Td>
+                  <Td isNumeric>{transaction.value.toFixed(4)}</Td>
 
                   <Td>
-                    <HStack>
-                      <Box width="50%" bg="white"></Box>
-                      <Flex justify="space-around" width="50%">
-                        <Icon as={BsCircle} color="gray" h="6" w="6" />
-                        <Icon
-                          as={BsCheckCircleFill}
-                          color="green"
-                          h="6"
-                          w="6"
-                        />
-                        <Icon as={BsXCircle} color="red" h="6" w="6" />
-                      </Flex>
-                    </HStack>
+                    <MultisigStatus
+                      numberOfConfirmations={transaction.numConfirmations}
+                    />
                   </Td>
                 </Tr>
               </Tbody>
