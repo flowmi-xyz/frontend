@@ -19,8 +19,12 @@ import { TbHeartHandshake } from "react-icons/tb";
 import { MdVerifiedUser, MdVisibility } from "react-icons/md";
 
 // methods
-import { loginWithMetamask } from "~/web3/metamask";
-import MobileConnectWalletModal from "../login/MobileConnectWalletModal";
+// import { loginWithMetamask } from "~/web3/metamask";
+// import MobileConnectWalletModal from "../login/MobileConnectWalletModal";
+
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
+import { subscribeToEvents } from "~/web3/walletConnect";
 
 type ConnectWalletProps = {
   users: number;
@@ -31,20 +35,62 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleLogin = async () => {
-    const address = await loginWithMetamask();
+  // const handleLogin = async () => {
+  //   const address = await loginWithMetamask();
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    formData.append("address", address);
-    formData.append("connected", "true");
+  //   formData.append("address", address);
+  //   formData.append("connected", "true");
 
-    submit(formData, {
-      action: "/login/?index",
-      method: "post",
-      encType: "application/x-www-form-urlencoded",
-      replace: true,
+  //   submit(formData, {
+  //     action: "/login/?index",
+  //     method: "post",
+  //     encType: "application/x-www-form-urlencoded",
+  //     replace: true,
+  //   });
+  // };
+  const handleLoginWalletConnect = async () => {
+    console.log(
+      "[browser][handleLoginWalletConnect] Waiting connection with walletConnect ..."
+    );
+
+    // bridge url
+    const bridge = "https://bridge.walletconnect.org";
+
+    // create new connector
+    const connector: WalletConnect = new WalletConnect({
+      bridge, // Required
+      qrcodeModal: QRCodeModal,
     });
+
+    // check if already connected
+    if (!connector.connected) {
+      console.log("[browser][handleLoginWalletConnect] Creating session ...");
+      // create new session
+      await connector.createSession();
+    } else {
+      console.log("[browser][handleLoginWalletConnect] connector:", connector);
+
+      const address = connector.accounts[0];
+
+      console.log("[browser][handleLoginWalletConnect] address:", address);
+
+      const formData = new FormData();
+
+      formData.append("address", address);
+      formData.append("connected", "true");
+
+      submit(formData, {
+        action: "/login/?index",
+        method: "post",
+        encType: "application/x-www-form-urlencoded",
+        replace: true,
+      });
+    }
+
+    // subscribe to events and submit form
+    subscribeToEvents(connector, submit);
   };
 
   return (
@@ -85,7 +131,7 @@ const ConnectWallet = ({ users }: ConnectWalletProps) => {
                 bg="third"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleLogin}
+                onClick={handleLoginWalletConnect}
               >
                 <Text
                   fontWeight="500"
