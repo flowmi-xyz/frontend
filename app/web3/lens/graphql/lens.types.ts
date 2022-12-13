@@ -17,6 +17,14 @@ export type RefreshRequest = {
   };
 };
 
+export type ExplorePublicationRequest = {
+  request: {
+    sortCriteria: "LATEST" | "TOP_COMMENTED" | "TOP_COLLECTED" | "TOP_MIRRORED";
+    publicationTypes?: string[];
+    limit: number;
+  };
+};
+
 export type FollowRequest = {
   request: {
     follow: [{ profile: string }];
@@ -64,3 +72,19 @@ export type FollowersRequest = {
     limit: number;
   };
 };
+
+export type CreateMirrorRequest = {
+  request: {
+    profileId: string;
+    publicationId: string;
+    referenceModule: {
+      followerOnlyReferenceModule: boolean;
+    };
+  };
+};
+
+export type SortCriteria =
+  | "LATEST"
+  | "TOP_COMMENTED"
+  | "TOP_COLLECTED"
+  | "TOP_MIRRORED";

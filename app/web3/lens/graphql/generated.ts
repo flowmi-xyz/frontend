@@ -54,14 +54,8 @@ const Refresh = gql`
 `;
 
 const ExplorePublications = gql`
-  query ExplorePublications {
-    explorePublications(
-      request: {
-        sortCriteria: TOP_COMMENTED
-        publicationTypes: [POST, COMMENT, MIRROR]
-        limit: 10
-      }
-    ) {
+  query ($request: ExplorePublicationRequest!) {
+    explorePublications(request: $request) {
       items {
         __typename
         ... on Post {
@@ -288,9 +282,7 @@ const ExplorePublications = gql`
       ...CollectModuleFields
     }
     referenceModule {
-      ... on FollowOnlyReferenceModuleSettings {
-        type
-      }
+      ...ReferenceModuleFields
     }
     appId
     hidden
@@ -315,9 +307,7 @@ const ExplorePublications = gql`
       ...CollectModuleFields
     }
     referenceModule {
-      ... on FollowOnlyReferenceModuleSettings {
-        type
-      }
+      ...ReferenceModuleFields
     }
     appId
     hidden
@@ -353,9 +343,7 @@ const ExplorePublications = gql`
       ...CollectModuleFields
     }
     referenceModule {
-      ... on FollowOnlyReferenceModuleSettings {
-        type
-      }
+      ...ReferenceModuleFields
     }
     appId
     hidden
@@ -393,6 +381,25 @@ const ExplorePublications = gql`
       ... on Mirror {
         ...MirrorBaseFields
       }
+    }
+  }
+
+  fragment ReferenceModuleFields on ReferenceModule {
+    ... on FollowOnlyReferenceModuleSettings {
+      type
+      contractAddress
+    }
+    ... on UnknownReferenceModuleSettings {
+      type
+      contractAddress
+      referenceModuleReturnData
+    }
+    ... on DegreesOfSeparationReferenceModuleSettings {
+      type
+      contractAddress
+      commentsRestricted
+      mirrorsRestricted
+      degreesOfSeparation
     }
   }
 `;
@@ -1059,6 +1066,39 @@ const GetFollowers = gql`
   }
 `;
 
+const CreateMirrorTypedData = gql`
+  mutation createMirrorTypedData($request: CreateMirrorRequest!) {
+    createMirrorTypedData(request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          MirrorWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          profileIdPointed
+          pubIdPointed
+          referenceModule
+          referenceModuleData
+          referenceModuleInitData
+        }
+      }
+    }
+  }
+`;
+
 export {
   GetPing,
   GetChallengue,
@@ -1075,5 +1115,6 @@ export {
   HasTxHashBeenIndexed,
   GetProfiles,
   GetFollowers,
+  CreateMirrorTypedData,
   GetPublicationReferenceModule,
 };

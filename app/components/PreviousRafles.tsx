@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Link } from "@remix-run/react";
-import { transformToIpfsUrl } from "~/web3/ipfs";
+import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 type TokenAccumulatedProps = {
   handle: string;

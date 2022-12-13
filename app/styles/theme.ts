@@ -57,6 +57,10 @@ export const theme = extendTheme({
     heading: "Louis George Cafe, sans-serif",
     body: "Louis George Cafe, sans-serif",
   },
+  // fonts: {
+  //   heading: "Outfit, sans-serif",
+  //   body: "Outfit, sans-serif",
+  // },
   colors: {
     first: "#31108F",
     second: "#7A3CE3",
@@ -69,6 +73,7 @@ export const theme = extendTheme({
     lensDark: "#00501E",
     twitter: "#1DA1F2",
     opensea: "#3F7EDB",
+    backgroundFeed: "#FAFAF9",
   },
   components: {
     Steps: CustomSteps,

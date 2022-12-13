@@ -43,7 +43,12 @@ export default function AccountModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      size={["xs", "md", "md", "md"]}
+    >
       <ModalOverlay />
       <ModalContent
         boxShadow="0px 0px 10px rgba(0, 0, 0, 0.25)"

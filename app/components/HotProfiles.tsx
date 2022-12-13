@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 
 import LensterFooter from "./external/LensterFooter";
 
-import { transformToIpfsUrl } from "~/web3/ipfs";
+import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 const HotProfilesArr = [
   {

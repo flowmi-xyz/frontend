@@ -49,13 +49,12 @@ import { MdPostAdd, MdAdsClick } from "react-icons/md";
 // import { IoDiceOutline } from "react-icons/io";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
-import { transformToIpfsUrl } from "~/web3/ipfs";
 import { EditIcon } from "@chakra-ui/icons";
 import CoinSelect from "~/components/CoinSelect";
 import BalanceWallet from "~/components/BalanceWallet";
@@ -83,6 +82,7 @@ import BalanceGlobalBudget from "~/components/BalanceGlobalBudget";
 import GetIdPublications from "~/web3/adsModule/publicationId";
 import getItemIds from "~/web3/adsModule/publicationId";
 import BalanceContract from "~/components/BalanceContract";
+import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));

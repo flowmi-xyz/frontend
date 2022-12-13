@@ -16,28 +16,23 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import SearchBar from "./SearchBar";
-import AccountModal from "./external/AccountModal";
-import ChainButton from "./external/chainButton/ChainButton";
+import SearchBar from "../SearchBar";
+import AccountModal from "../external/AccountModal";
+import ChainButton from "../external/chainButton/ChainButton";
 
 type NavbarConnectedProps = {
   address: string;
-  authenticatedInLens: boolean;
   handle?: string;
 };
 
-const NavbarConnected = ({
-  address,
-  authenticatedInLens,
-  handle,
-}: NavbarConnectedProps) => {
+const NavbarConnectedDesktop = ({ address, handle }: NavbarConnectedProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
       justify="space-around"
-      bgGradient="linear(to-r, #FF5873 40%, #FFB83F )"
+      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
       height="65px"
       align="center"
       alignItems="center"
@@ -45,8 +40,8 @@ const NavbarConnected = ({
     >
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Link to="/dashboard/feed">
-          <Text fontWeight="700" fontSize="40" color="white">
-            🫠
+          <Text fontWeight="700" fontSize="20" color="white">
+            Modulens
           </Text>
         </Link>
         <Flex>
@@ -149,4 +144,4 @@ const NavbarConnected = ({
   );
 };
 
-export default NavbarConnected;
+export default NavbarConnectedDesktop;

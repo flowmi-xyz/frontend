@@ -1,8 +1,6 @@
 // logic components
 import { BigNumber, ethers } from "ethers";
 
-import { LENS_HUB_ABI, LENS_HUB_CONTRACT_ADDRESS } from "~/web3/lens/lens-hub";
-
 import { getSignerFront } from "~/web3/etherservice";
 
 // UI components
@@ -30,13 +28,11 @@ import {
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
-import { defaultAbiCoder, parseEther } from "ethers/lib/utils";
+import { parseEther } from "ethers/lib/utils";
 import { aWMA_CONTRACT_ADDRESS, ERC20_HUB_ABI } from "~/web3/erc20/erc20-hub";
 import {
   FLOWMI_AAVE_ABI,
   FLOWMI_AAVE_CONTRACT_ADDRESS,
-  FLOWMI_CONTRACT_ADDRESS,
-  FLOWMI_HUB_ABI,
 } from "~/web3/social-defi/social-defi-hub";
 
 type ClaimTokensProps = {
