@@ -43,25 +43,6 @@ const NavbarApp = () => {
             bg="white"
             borderRadius="10px"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            onClick={handleLogin}
-            display={["none", "block", "block", "block"]}
-          >
-            <Text
-              fontWeight="700"
-              fontSize="14"
-              lineHeight="120%"
-              color="black"
-            >
-              Connect your wallet
-            </Text>
-          </Button>
-
-          <Button
-            bg="white"
-            borderRadius="10px"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            display={["block", "none", "none", "none"]}
-            disabled
           >
             <Text
               fontWeight="700"

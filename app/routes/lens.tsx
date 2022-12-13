@@ -18,6 +18,13 @@ import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 
 import { signWithMetamask, switchNetwork } from "~/web3/metamask";
 
+import LoadingFeed from "~/components/feed/LoadingFeed";
+import WalletConnect from "@walletconnect/client";
+
+import { personalSignMessage } from "~/web3/walletConnect";
+import QRCodeModal from "@walletconnect/qrcode-modal";
+import NavbarApp from "~/components/NavbarApp";
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
 
@@ -65,6 +72,36 @@ export default function AuthLens() {
   const transition = useTransition();
 
   const handleSignChallengeText = async () => {
+    // bridge url
+    const bridge = "https://bridge.walletconnect.org";
+
+    // create new connector
+    const connector: WalletConnect = new WalletConnect({
+      bridge, // Required
+      qrcodeModal: QRCodeModal,
+    });
+
+    const formatedResult = await personalSignMessage(
+      connector,
+      address,
+      challengeText
+    );
+
+    // const signature = await signWithMetamask(challengeText);
+
+    const formData = new FormData();
+
+    formData.append("signature", formatedResult?.signature);
+
+    submit(formData, {
+      action: "/lens/?index",
+      method: "post",
+      encType: "application/x-www-form-urlencoded",
+      replace: true,
+    });
+  };
+
+  const handleSignChallengeTextDesktop = async () => {
     const signature = await signWithMetamask(challengeText);
 
     const formData = new FormData();
@@ -93,15 +130,14 @@ export default function AuthLens() {
 
   return (
     <Box bg="#FAFAF9" height="100vh">
-      <NavbarConnected address={address} authenticatedInLens={false} />
+      <NavbarApp />
 
       {transition.state === "idle" && (
-        // {false && (
         <Center mt="50">
           <Box
             borderRadius="20"
             boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
-            width="500px"
+            width={["80%", "500px", "500px", "500px"]}
           >
             <Text
               fontWeight="700"
@@ -136,7 +172,37 @@ export default function AuthLens() {
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                onClick={handleSignChallengeTextDesktop}
+                display={["none", "block", "block", "block"]}
+              >
+                <Flex>
+                  <Box w="40px" h="40px">
+                    <Image
+                      src="../assets/LOGO__lens_ultra small icon.png"
+                      alt="lens"
+                      my="-5px"
+                      mx="-5px"
+                    />
+                  </Box>
+
+                  <Text
+                    fontWeight="700"
+                    fontSize="18px"
+                    lineHeight="21.6px"
+                    color="lensDark"
+                    m="auto"
+                  >
+                    Sign in with Lens
+                  </Text>
+                </Flex>
+              </Button>
+
+              <Button
+                bg="lens"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handleSignChallengeText}
+                display={["block", "none", "none", "none"]}
               >
                 <Flex>
                   <Box w="40px" h="40px">
@@ -164,22 +230,7 @@ export default function AuthLens() {
         </Center>
       )}
 
-      {/* {true && ( */}
-      {transition.state === "loading" && (
-        <Box p="10">
-          <Text textAlign="center" fontSize="26px" color="lensDark" mt="25px">
-            Connecting with garden ...
-          </Text>
-
-          <Center mt="10">
-            <Image
-              src="../assets/animations/Lens-Anim4_16x10.gif"
-              rounded="xl"
-              w="50%"
-            />
-          </Center>
-        </Box>
-      )}
+      {transition.state === "loading" && <LoadingFeed />}
     </Box>
   );
 }

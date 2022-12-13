@@ -24,6 +24,7 @@ import { MdVerifiedUser, MdVisibility } from "react-icons/md";
 
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
+
 import { subscribeToEvents } from "~/web3/walletConnect";
 
 type ConnectWalletProps = {
