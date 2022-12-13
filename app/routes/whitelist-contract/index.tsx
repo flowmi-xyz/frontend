@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import WhitelistContractModal from "~/components/WhiteListContractModal";
 import {

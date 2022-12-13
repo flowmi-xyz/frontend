@@ -21,7 +21,7 @@ import {
 
 // components
 import SetFollowModuleModal from "~/components/transactions/SetFollowModuleModal";
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 
 import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
 import { FLOWMI_CONTRACT_ADDRESS } from "~/web3/social-defi/social-defi-hub";

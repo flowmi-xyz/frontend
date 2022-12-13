@@ -49,7 +49,7 @@ import { MdPostAdd, MdAdsClick } from "react-icons/md";
 // import { IoDiceOutline } from "react-icons/io";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 import HotProfiles from "~/components/HotProfiles";
 import ProfileParticipation from "~/components/ProfileParticipation";
 import SettingsBox from "~/components/SettingsBox";

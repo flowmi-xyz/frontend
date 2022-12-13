@@ -16,16 +16,16 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import SearchBar from "./SearchBar";
-import AccountModal from "./external/AccountModal";
-import ChainButton from "./external/chainButton/ChainButton";
+import SearchBar from "../SearchBar";
+import AccountModal from "../external/AccountModal";
+import ChainButton from "../external/chainButton/ChainButton";
 
 type NavbarConnectedProps = {
   address: string;
   handle?: string;
 };
 
-const NavbarConnected = ({ address, handle }: NavbarConnectedProps) => {
+const NavbarConnectedDesktop = ({ address, handle }: NavbarConnectedProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -144,4 +144,4 @@ const NavbarConnected = ({ address, handle }: NavbarConnectedProps) => {
   );
 };
 
-export default NavbarConnected;
+export default NavbarConnectedDesktop;

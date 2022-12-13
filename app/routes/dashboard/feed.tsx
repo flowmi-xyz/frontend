@@ -32,7 +32,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnected";
 import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
@@ -166,8 +166,7 @@ export default function Dashboard() {
     <Box bg="backgroundFeed" height={["100vh", "100vh", "100vh", "100vh"]}>
       <NavbarConnected address={address} handle={defaultProfile?.handle} />
 
-      {/* {transition.state === "idle" && ( */}
-      {false && (
+      {transition.state === "idle" && (
         <Box maxWidth={["90%", "1200px", "1200px", "1200px"]} m="auto">
           {!defaultProfile?.handle && (
             <Box pl="10">
@@ -249,8 +248,7 @@ export default function Dashboard() {
         </Box>
       )}
 
-      {/* {transition.state === "loading" &&  */}
-      {true && <LoadingFeed />}
+      {transition.state === "loading" && <LoadingFeed />}
     </Box>
   );
 }

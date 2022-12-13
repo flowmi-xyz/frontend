@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session

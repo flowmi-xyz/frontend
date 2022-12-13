@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 
 import { signWithMetamask, switchNetwork } from "~/web3/metamask";
 

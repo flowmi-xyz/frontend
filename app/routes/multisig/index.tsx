@@ -30,7 +30,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 
 import MultisigStatus from "~/components/multisig/StatusComponent";
 
