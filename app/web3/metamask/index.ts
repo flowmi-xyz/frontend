@@ -44,13 +44,13 @@ async function signWithMetamask(text: string) {
   return signature;
 }
 
-async function switchNetwork() {
+async function switchNetwork(chainId: string = networks[1].chainId) {
   checkMetamaskAvailability();
 
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: networks.maticmum.chainId }],
+      params: [{ chainId: chainId }],
     });
   } catch (switchError: any) {
     // This error code indicates that the chain has not been added to MetaMask.
@@ -60,8 +60,8 @@ async function switchNetwork() {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: networks.maticmum.chainId,
-              chainName: networks.maticmum.chainName,
+              chainId: networks[1].chainId,
+              chainName: networks[1].chainName,
               rpcUrls: ["https://polygonscan.com/"],
             },
           ],
@@ -75,4 +75,36 @@ async function switchNetwork() {
   }
 }
 
-export { loginWithMetamask, signWithMetamask, switchNetwork };
+async function signTypedDataWithMetamask(typedMessage: any, address: string) {
+  checkMetamaskAvailability();
+
+  console.log(typedMessage);
+
+  try {
+    const signature = await window.ethereum.request({
+      method: "eth_signTypedData",
+      params: [[typedMessage], address],
+    });
+    return signature;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getChainId() {
+  checkMetamaskAvailability();
+
+  const chainId = await window.ethereum.request({
+    method: "eth_chainId",
+  });
+
+  return chainId;
+}
+
+export {
+  loginWithMetamask,
+  signWithMetamask,
+  switchNetwork,
+  signTypedDataWithMetamask,
+  getChainId,
+};

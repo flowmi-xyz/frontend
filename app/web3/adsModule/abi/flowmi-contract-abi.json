@@ -1,0 +1,199 @@
+[{
+    "inputs": [{
+        "internalType": "address",
+        "name": "hub",
+        "type": "address"
+    }, {
+        "internalType": "address",
+        "name": "moduleGlobals",
+        "type": "address"
+    }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+}, {
+    "inputs": [],
+    "name": "FollowInvalid",
+    "type": "error"
+}, {
+    "inputs": [],
+    "name": "InitParamsInvalid",
+    "type": "error"
+}, {
+    "stateMutability": "payable",
+    "type": "fallback"
+}, {
+    "inputs": [],
+    "name": "HUB",
+    "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [],
+    "name": "MODULE_GLOBALS",
+    "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "profileId",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "globalBudget",
+        "type": "uint256"
+    }, {
+        "internalType": "address",
+        "name": "_currency",
+        "type": "address"
+    }],
+    "name": "fundMyGlobalBudget",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "address",
+        "name": "_currency",
+        "type": "address"
+    }, {
+        "internalType": "uint256",
+        "name": "_profileId",
+        "type": "uint256"
+    }],
+    "name": "getGlobalBudget",
+    "outputs": [{
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "_pubId",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "_profileId",
+        "type": "uint256"
+    }],
+    "name": "getMirrorCount",
+    "outputs": [{
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "_pubId",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "_profileId",
+        "type": "uint256"
+    }],
+    "name": "getPostBudget",
+    "outputs": [{
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+    }],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "profileId",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "pubId",
+        "type": "uint256"
+    }, {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+    }],
+    "name": "initializeReferenceModule",
+    "outputs": [{
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+    }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "profileId",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "profileIdPointed",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "pubIdPointed",
+        "type": "uint256"
+    }, {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+    }],
+    "name": "processComment",
+    "outputs": [],
+    "stateMutability": "view",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "uint256",
+        "name": "profileId",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "profileIdPointed",
+        "type": "uint256"
+    }, {
+        "internalType": "uint256",
+        "name": "pubIdPointed",
+        "type": "uint256"
+    }, {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+    }],
+    "name": "processMirror",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "inputs": [{
+        "internalType": "address",
+        "name": "_currency",
+        "type": "address"
+    }, {
+        "internalType": "uint256",
+        "name": "_profileId",
+        "type": "uint256"
+    }],
+    "name": "withdrawBudget",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "stateMutability": "payable",
+    "type": "receive"
+}]

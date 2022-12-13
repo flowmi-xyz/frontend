@@ -1,6 +1,6 @@
 // Here define networks for project. Used in ChainButton component
-export const networks: { [name: string]: Network } = {
-  matic: {
+export const networks: Network[] = [
+  {
     name: "Polygon",
     chainName: "matic",
     chainId: "0x89",
@@ -12,7 +12,7 @@ export const networks: { [name: string]: Network } = {
       isNative: true,
     },
   },
-  maticmum: {
+  {
     name: "Mumbai",
     chainName: "maticmum",
     chainId: "0x13881",
@@ -24,7 +24,7 @@ export const networks: { [name: string]: Network } = {
       isNative: true,
     },
   },
-};
+];
 
 export type TokenSymbol = "matic" | "WMATIC";
 

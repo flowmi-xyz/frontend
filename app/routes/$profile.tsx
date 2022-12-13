@@ -27,7 +27,7 @@ import { getFollowModule } from "~/web3/lens";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 import LensterProfile from "~/components/external/LensterProfile";
 import TokenAccumulated from "~/components/TokensAccumulated";
 import FlowmiProfileInfo from "~/components/FlowmiProfileInfo";

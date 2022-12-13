@@ -15,6 +15,7 @@ const SettingsBox = () => {
           width="420px"
           mt="10"
           p="5"
+          display={["none", "block", "block", "block"]}
         >
           <Flex>
             <Icon as={IoSettings} color="lensDark" h="5" w="5" my="4px" />

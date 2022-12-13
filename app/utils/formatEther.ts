@@ -1,4 +1,5 @@
 import type { BigNumber, BigNumberish } from "ethers";
+import { utils } from "ethers";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 
 export const sleep = (ms: number) =>
@@ -10,4 +11,8 @@ export function formatEther(wei: BigNumberish): string {
 
 export function parseEther(ether: string): BigNumber {
   return parseUnits(ether, 18);
+}
+
+export function splitSignature(signature: string) {
+  return utils.splitSignature(signature);
 }

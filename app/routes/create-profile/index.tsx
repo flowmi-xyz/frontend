@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 import CreateProfileModal from "~/components/transactions/CreateProfileModal";
 import { changeHeaders, lensClient } from "~/web3/lens/lens-client";
 import { getBalanceFromAddress } from "~/web3/etherservice";

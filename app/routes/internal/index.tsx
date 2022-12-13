@@ -5,7 +5,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/bff/session";
 
 import { lensClient } from "~/web3/lens/lens-client";
-import { GetDefaultProfile, GetProfiles } from "~/web3/lens/graphql/generated";
+import { GetDefaultProfile } from "~/web3/lens/graphql/generated";
 
 // UI components
 import {
@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/NavbarConnected";
+import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Get address from cookie session
@@ -146,7 +146,7 @@ export default function MenuInternal() {
                 </Box>
 
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="lensDark"
@@ -176,7 +176,7 @@ export default function MenuInternal() {
                 </Box>
 
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="lensDark"
@@ -206,7 +206,7 @@ export default function MenuInternal() {
                 </Box>
 
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="lensDark"
@@ -218,7 +218,7 @@ export default function MenuInternal() {
             </Button>
           </Link>
 
-          {/* <Link to="/whitelist-contract">
+          <Link to="/whitelist-contract">
             <Button
               bg="lens"
               borderRadius="10px"
@@ -236,7 +236,7 @@ export default function MenuInternal() {
                 </Box>
 
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="18px"
                   lineHeight="21.6px"
                   color="lensDark"
@@ -246,7 +246,7 @@ export default function MenuInternal() {
                 </Text>
               </Flex>
             </Button>
-          </Link> */}
+          </Link>
         </HStack>
       </Box>
     </Box>

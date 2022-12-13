@@ -1,14 +1,29 @@
-import { Avatar, Box, Flex, HStack, Icon, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  HStack,
+  Icon,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 
-import { transformToIpfsUrl } from "~/web3/ipfs";
+import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 import { calculateHoursBetweenNowAndDate } from "~/utils/time";
 
 import { GoCommentDiscussion } from "react-icons/go";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import { VscLibrary } from "react-icons/vsc";
+import { RiCoinsLine } from "react-icons/ri";
+
 import { WIDTH_FEED } from "~/styles/theme";
 import { Link } from "@remix-run/react";
+import MirrorModal from "../mirror/MirrorModal";
+import { ADS_MIRROR_MODULE_ADDRESS } from "~/web3/social-defi/social-defi-hub";
+import { removeLensSuffix } from "~/utils/text";
 
 type PostProps = {
   id: string;
@@ -23,6 +38,9 @@ type PostProps = {
   collects: number;
   index?: number;
   row?: any;
+  defaultProfile: any;
+  profileIdToMirror: string;
+  referenceModule?: any;
 };
 
 const LensterPost = ({
@@ -37,7 +55,12 @@ const LensterPost = ({
   collects,
   index,
   row,
+  defaultProfile,
+  profileIdToMirror,
+  referenceModule,
 }: PostProps) => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+
   return (
     <Box
       bg="white"
@@ -51,45 +74,35 @@ const LensterPost = ({
           ? "0 0 10px 10px"
           : "0"
       }
-      width={WIDTH_FEED}
       _hover={{ bg: "#F4F4F5" }}
     >
-      {index === 0 && (
-        <Text
-          fontWeight="600"
-          fontSize="14px"
-          lineHeight="120%"
-          color="lensDark"
-          my="auto"
-          pt="5"
-          pl="5"
-          pr="5"
-        >
-          🪴 What is happening in the Lens Garden
-        </Text>
-      )}
-
-      <HStack p="5" justifyContent="space-between">
+      <HStack p={["5", "10", "10", "10"]} justifyContent="space-between">
         <Link to={`/${handle}`} prefetch="intent">
           <HStack>
-            {profileImage && (
-              <Avatar
-                size="sm"
-                name="nader"
-                src={transformToIpfsUrl(profileImage)}
-              />
-            )}
+            <Avatar size="md" src={transformToIpfsUrl(profileImage!)} />
 
             <Box my="auto" pl="1">
-              <Text
-                fontWeight="600"
-                fontSize="14px"
-                lineHeight="120%"
-                letterSpacing="-0.03em"
-                color="black"
-              >
-                {name}
-              </Text>
+              {name ? (
+                <Text
+                  fontWeight="600"
+                  fontSize="14px"
+                  lineHeight="120%"
+                  letterSpacing="-0.03em"
+                  color="black"
+                >
+                  {name}
+                </Text>
+              ) : (
+                <Text
+                  fontWeight="600"
+                  fontSize="14px"
+                  lineHeight="120%"
+                  letterSpacing="-0.03em"
+                  color="black"
+                >
+                  {removeLensSuffix(handle)}
+                </Text>
+              )}
 
               <Text
                 fontWeight="700"
@@ -114,12 +127,12 @@ const LensterPost = ({
             letterSpacing="-0.03em"
             color="grayLetter"
           >
-            {calculateHoursBetweenNowAndDate(createdAt)} hours ago
+            {calculateHoursBetweenNowAndDate(createdAt)}
           </Text>
         </Box>
       </HStack>
 
-      <Box pl="6">
+      <Box pl={["10", "14", "14", "14"]}>
         <Text
           fontWeight="500"
           fontSize="14px"
@@ -133,16 +146,12 @@ const LensterPost = ({
         >
           {content}
         </Text>
-
-        {/* <Box pl="10" pt="3" pb="3" width="70%">
-          <Image src="../assets/test1.png" borderRadius="lg" />
-        </Box> */}
       </Box>
 
-      <Box pl="6" pb="5">
+      <Box pb="5">
         <HStack pl="10" justifyContent="space-evenly">
           <Flex>
-            <Icon as={GoCommentDiscussion} color="first" w={6} h={6} />
+            <Icon as={GoCommentDiscussion} color="first" w={5} h={5} />
             <Text
               fontWeight="700"
               fontSize="15px"
@@ -156,23 +165,50 @@ const LensterPost = ({
             </Text>
           </Flex>
 
-          <Flex>
-            <Icon as={TbArrowsLeftRight} color="fourth" w={6} h={6} />
-            <Text
-              fontWeight="700"
-              fontSize="15px"
-              lineHeight="120%"
-              letterSpacing="-0.03em"
-              color="fourth"
-              my="auto"
-              pl="3"
+          {referenceModule?.contractAddress === ADS_MIRROR_MODULE_ADDRESS ? (
+            <Flex
+              onClick={onOpen}
+              _hover={{
+                cursor: "pointer",
+              }}
             >
-              {mirrors}
-            </Text>
-          </Flex>
+              <Icon as={RiCoinsLine} color="fifth" w={6} h={6} />
+              <Text
+                fontWeight="700"
+                fontSize="15px"
+                lineHeight="120%"
+                letterSpacing="-0.03em"
+                color="fifth"
+                my="auto"
+                pl="3"
+              >
+                {mirrors}
+              </Text>
+            </Flex>
+          ) : (
+            <Flex
+              onClick={onOpen}
+              _hover={{
+                cursor: "pointer",
+              }}
+            >
+              <Icon as={TbArrowsLeftRight} color="second" w={5} h={5} />
+              <Text
+                fontWeight="700"
+                fontSize="15px"
+                lineHeight="120%"
+                letterSpacing="-0.03em"
+                color="second"
+                my="auto"
+                pl="3"
+              >
+                {mirrors}
+              </Text>
+            </Flex>
+          )}
 
           <Flex>
-            <Icon as={VscLibrary} color="third" w={6} h={6} />
+            <Icon as={VscLibrary} color="third" w={5} h={5} />
             <Text
               fontWeight="700"
               fontSize="15px"
@@ -186,6 +222,17 @@ const LensterPost = ({
             </Text>
           </Flex>
         </HStack>
+
+        <MirrorModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handle="cristian"
+          address="1"
+          profileId={defaultProfile.id}
+          profileIdToMirror={profileIdToMirror}
+          maticBalance={1}
+          id={id}
+        />
       </Box>
     </Box>
   );

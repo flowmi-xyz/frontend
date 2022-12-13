@@ -15,4 +15,5 @@ model User {
   connected Boolean @default(false)
   ensName String @default("")
   balance String @default("0")
+  lenshandle String @default("")
 }
