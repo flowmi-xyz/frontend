@@ -71,7 +71,11 @@ export default function AuthLens() {
   const submit = useSubmit();
   const transition = useTransition();
 
-  const handleSignChallengeText = async () => {
+  const handleSignChallengeTextMobile = async () => {
+    console.log(
+      "[browser][handleLoginWalletConnect] Waiting sign text challengue with walletConnect ..."
+    );
+
     // bridge url
     const bridge = "https://bridge.walletconnect.org";
 
@@ -87,8 +91,6 @@ export default function AuthLens() {
       challengeText
     );
 
-    // const signature = await signWithMetamask(challengeText);
-
     const formData = new FormData();
 
     formData.append("signature", formatedResult?.signature);
@@ -101,22 +103,25 @@ export default function AuthLens() {
     });
   };
 
-  const handleSignChallengeTextDesktop = async () => {
-    const signature = await signWithMetamask(challengeText);
+  // const handleSignChallengeTextDesktop = async () => {
+  //   const signature = await signWithMetamask(challengeText);
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    formData.append("signature", signature);
+  //   formData.append("signature", signature);
 
-    submit(formData, {
-      action: "/lens/?index",
-      method: "post",
-      encType: "application/x-www-form-urlencoded",
-      replace: true,
-    });
-  };
+  //   submit(formData, {
+  //     action: "/lens/?index",
+  //     method: "post",
+  //     encType: "application/x-www-form-urlencoded",
+  //     replace: true,
+  //   });
+  // };
 
   useEffect(() => {
+    // if (window.innerWidth < 768) {
+    // console.log("mobile and ipad");
+    // }
     // declare the data fetching function
     const changeNetwork = async () => {
       await switchNetwork();
@@ -172,37 +177,7 @@ export default function AuthLens() {
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleSignChallengeTextDesktop}
-                display={["none", "block", "block", "block"]}
-              >
-                <Flex>
-                  <Box w="40px" h="40px">
-                    <Image
-                      src="../assets/LOGO__lens_ultra small icon.png"
-                      alt="lens"
-                      my="-5px"
-                      mx="-5px"
-                    />
-                  </Box>
-
-                  <Text
-                    fontWeight="700"
-                    fontSize="18px"
-                    lineHeight="21.6px"
-                    color="lensDark"
-                    m="auto"
-                  >
-                    Sign in with Lens
-                  </Text>
-                </Flex>
-              </Button>
-
-              <Button
-                bg="lens"
-                borderRadius="10px"
-                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleSignChallengeText}
-                display={["block", "none", "none", "none"]}
+                onClick={handleSignChallengeTextMobile}
               >
                 <Flex>
                   <Box w="40px" h="40px">
