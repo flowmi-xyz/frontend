@@ -41,6 +41,7 @@ import {
   Tbody,
   Td,
   Text,
+  Textarea,
   Th,
   Thead,
   Tr,
@@ -250,6 +251,12 @@ export default function Dashboard() {
   const [postNormal, setPostNormal] = React.useState(false);
   const [postAds, setPostAds] = React.useState(true);
 
+  const [content, setContent] = React.useState(" ");
+
+  const [reward, setReward] = React.useState(" ");
+
+  const [replys, setReplys] = React.useState("1");
+
   const activePostNormal = () => {
     setPostAds(false);
     setPostNormal(true);
@@ -268,8 +275,6 @@ export default function Dashboard() {
       // make sure to catch any error
       .catch(console.error);
   }, []);
-
-  console.log(defaultProfile);
 
   return (
     <Box bg="backgroundFeed" h="100vh">
@@ -336,6 +341,7 @@ export default function Dashboard() {
                       defaultProfile?.picture?.original?.url
                     )}
                   />
+
                   <InputGroup mx={5}>
                     <InputLeftElement
                       pointerEvents="none"
@@ -400,13 +406,16 @@ export default function Dashboard() {
                       defaultProfile?.picture?.original?.url
                     )}
                   />
-                  <InputGroup mx={5}>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<EditIcon color="gray.500" />}
-                    />
-                    <Input type="tel" placeholder="What’s happening?" />
-                  </InputGroup>
+
+                  <Textarea
+                    mx={5}
+                    name="post"
+                    placeholder='What"s on your mind?'
+                    rows={4}
+                    resize="none"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
 
                   <Button
                     leftIcon={<EditIcon />}
@@ -431,6 +440,9 @@ export default function Dashboard() {
                   gasFee={gasFee}
                   priceFeed={1}
                   maticBalance={maticBalance}
+                  reward={Number(reward)}
+                  numbersOfReplys={Number(replys)}
+                  content={content}
                 />
 
                 <Flex flexDirection="row" pt="5" pl="14">
@@ -439,19 +451,23 @@ export default function Dashboard() {
 
                     <HStack mt="8px">
                       <Image
-                        src="../assets/logos/polygon-matic-logo.png"
+                        src="../assets/logos/wrapped-matic-logo.png"
                         w="6"
                         h="6"
                       />
                       <Text fontSize={14} paddingLeft={2}>
-                        MATIC
+                        WMATIC
                       </Text>
                     </HStack>
                   </Box>
 
                   <Box pl="10">
                     <Text fontWeight={600}>Reward</Text>
-                    <NumberInput defaultValue={0.1} w={32}>
+                    <NumberInput
+                      w={32}
+                      value={reward}
+                      onChange={(e) => setReward(e)}
+                    >
                       <NumberInputField />
                       <NumberInputStepper>
                         <NumberIncrementStepper />
@@ -462,7 +478,11 @@ export default function Dashboard() {
 
                   <Box pl="10">
                     <Text fontWeight={600}>Numbers of reply</Text>
-                    <NumberInput defaultValue={1} w={32}>
+                    <NumberInput
+                      w={32}
+                      value={replys}
+                      onChange={(e) => setReplys(e)}
+                    >
                       <NumberInputField />
                       <NumberInputStepper>
                         <NumberIncrementStepper />

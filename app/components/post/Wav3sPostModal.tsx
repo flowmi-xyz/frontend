@@ -48,10 +48,13 @@ type PostModalProps = {
   onClose: () => void;
   address: string;
   profileId: string;
+  content: string;
   handle: string;
   gasFee: any;
   priceFeed: number;
   maticBalance: number;
+  reward: number;
+  numbersOfReplys: number;
 };
 
 const Wav3sPostModal = ({
@@ -60,9 +63,10 @@ const Wav3sPostModal = ({
   handle,
   profileId,
   maticBalance,
+  content,
+  reward,
+  numbersOfReplys,
 }: PostModalProps) => {
-  const [post, setPost] = React.useState("");
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [firstSign, setFirstSign] = React.useState(false);
   const [signed, setSigned] = React.useState(false);
@@ -74,8 +78,8 @@ const Wav3sPostModal = ({
   async function uploadToIPFS() {
     const metaData = {
       version: "2.0.0",
-      content: post,
-      description: post,
+      content: content,
+      description: content,
       name: `Post by @${handle}`,
       external_url: `https://lenster.xyz/u/${handle}`,
       metadata_id: uuid(),
@@ -103,40 +107,31 @@ const Wav3sPostModal = ({
     const dataReference = defaultAbiCoder.encode(
       ["uint256", "uint256", "address"],
       [
-        parseEther((0.4).toString()),
-        parseEther((0.1).toString()),
+        parseEther((reward * numbersOfReplys).toString()),
+        parseEther(reward.toString()),
         WMATIC_CONTRACT_ADDRESS,
       ]
     );
 
     try {
-      const post = await lensContract.post({
-        profileId: profileId,
-        contentURI: contentURI,
-        collectModule: FREE_COLLECT_MODULE_ADDRESS,
-        collectModuleInitData: defaultAbiCoder.encode(["bool"], [true]),
-        referenceModule: ethers.constants.AddressZero,
-        referenceModuleInitData: dataReference,
-      });
+      const GAS_LIMIT = BigNumber.from(2000000);
+
+      const post = await lensContract.post(
+        {
+          profileId: profileId,
+          contentURI: contentURI,
+          collectModule: FREE_COLLECT_MODULE_ADDRESS,
+          collectModuleInitData: defaultAbiCoder.encode(["bool"], [true]),
+          referenceModule: ADS_MIRROR_MODULE_ADDRESS,
+          referenceModuleInitData: dataReference,
+        },
+        {
+          gasLimit: GAS_LIMIT,
+        }
+      );
 
       setIsLoading(false);
       setSigned(true);
-
-      // const GAS_LIMIT = BigNumber.from(2000000);
-
-      // const post = await lensContract.post(
-      //   {
-      //     profileId: profileId,
-      //     contentURI: contentURI,
-      //     collectModule: FREE_COLLECT_MODULE_ADDRESS,
-      //     collectModuleInitData: dataCollect,
-      //     referenceModule: ADS_MIRROR_MODULE_ADDRESS,
-      //     referenceModuleInitData: dataReference,
-      //   },
-      //   {
-      //     gasLimit: GAS_LIMIT,
-      //   }
-      // );
 
       const postTx = await post.wait();
 
@@ -171,14 +166,64 @@ const Wav3sPostModal = ({
         <ModalBody>
           {!signed && !error && !posted && (
             <Box>
-              <Textarea
-                name="post"
-                placeholder='What"s on your mind?'
-                rows={4}
-                resize="none"
-                value={post}
-                onChange={(e) => setPost(e.target.value)}
-              />
+              <Text fontWeight="700" fontSize="18">
+                Content
+              </Text>
+
+              <Text>{content}</Text>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16">
+                    Reward
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" textAlign="right">
+                    {reward} WMATIC per user
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text fontWeight="700" fontSize="16">
+                    Numbers of mirror
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text fontWeight="700" fontSize="16" textAlign="right">
+                    {numbersOfReplys}
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Flex mt="5" justify="space-between">
+                <Box>
+                  <Text
+                    fontWeight="700"
+                    fontSize="16"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                  >
+                    Total
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text
+                    fontWeight="700"
+                    fontSize="16"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                    bgClip="text"
+                    textAlign="right"
+                  >
+                    {reward * numbersOfReplys} WMATIC
+                  </Text>
+                </Box>
+              </Flex>
 
               <Divider mt="5" />
 
@@ -305,7 +350,7 @@ const Wav3sPostModal = ({
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
                 onClick={handlePost}
-                disabled={isLoading || !post}
+                disabled={isLoading || !content}
                 hidden={error}
               >
                 <Flex>
