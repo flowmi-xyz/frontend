@@ -50,9 +50,6 @@ import { MdPostAdd, MdAdsClick } from "react-icons/md";
 
 // components
 import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
-import HotProfiles from "~/components/HotProfiles";
-import ProfileParticipation from "~/components/ProfileParticipation";
-import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
 import { EditIcon } from "@chakra-ui/icons";
@@ -78,10 +75,9 @@ import {
   WEth_CONTRACT_ADDRESS,
   WMATIC_CONTRACT_ADDRESS,
 } from "~/web3/erc20/erc20-hub";
+
 import BalanceGlobalBudget from "~/components/BalanceGlobalBudget";
-import GetIdPublications from "~/web3/adsModule/publicationId";
 import getItemIds from "~/web3/adsModule/publicationId";
-import BalanceContract from "~/components/BalanceContract";
 import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -106,54 +102,55 @@ export const loader: LoaderFunction = async ({ request }) => {
   );
 
   const defaultProfile = responseProfile.defaultProfile;
+
   const results = await getItemIds(defaultProfile.id);
 
   console.log(results);
 
-  const [
-    totalFounded,
+  // const [
+  //   totalFounded,
+  //   maticBalance,
+  //   wmaticBalance,
+  //   wethBalance,
+  //   usdcBalance,
+  //   daiBalance,
+  //   touBalance,
+  //   globalBudgetWmatic,
+  //   globalBudgetWEth,
+  //   globalBudgetDai,
+  //   globalBudgetUsdc,
+  //   globalBudgetTou,
+  // ] = await Promise.all([
+  //   getTotalFundedProfile(defaultProfile?.ownedBy),
+  //   getBalanceFromAddress(address),
+  //   getWMATICBalance(address),
+  //   getWEthBalance(address),
+  //   getUSDCBalance(address),
+  //   getDAIBalance(address),
+  //   getTOUBalance(address),
+  //   getGlobalBudget(defaultProfile?.id, WMATIC_CONTRACT_ADDRESS),
+  //   getGlobalBudget(defaultProfile?.id, WEth_CONTRACT_ADDRESS),
+  //   getGlobalBudget(defaultProfile?.id, DAI_CONTRACT_ADDRESS),
+  //   getGlobalBudget(defaultProfile?.id, USDC_CONTRACT_ADDRESS),
+  //   getGlobalBudget(defaultProfile?.id, TOU_CONTRACT_ADDRESS),
+  // ]);
 
-    maticBalance,
-    wmaticBalance,
-    wethBalance,
-    usdcBalance,
-    daiBalance,
-    touBalance,
-    globalBudgetWmatic,
-    globalBudgetWEth,
-    globalBudgetDai,
-    globalBudgetUsdc,
-    globalBudgetTou,
-  ] = await Promise.all([
-    getTotalFundedProfile(defaultProfile?.ownedBy),
-    getBalanceFromAddress(address),
-    getWMATICBalance(address),
-    getWEthBalance(address),
-    getUSDCBalance(address),
-    getDAIBalance(address),
-    getTOUBalance(address),
-    getGlobalBudget(defaultProfile?.id, WMATIC_CONTRACT_ADDRESS),
-    getGlobalBudget(defaultProfile?.id, WEth_CONTRACT_ADDRESS),
-    getGlobalBudget(defaultProfile?.id, DAI_CONTRACT_ADDRESS),
-    getGlobalBudget(defaultProfile?.id, USDC_CONTRACT_ADDRESS),
-    getGlobalBudget(defaultProfile?.id, TOU_CONTRACT_ADDRESS),
-  ]);
   return {
     address,
     accessToken,
     defaultProfile,
-    totalFounded,
-    maticBalance,
-    wmaticBalance,
-    wethBalance,
-    usdcBalance,
-    daiBalance,
-    touBalance,
-    globalBudgetWmatic,
-    globalBudgetWEth,
-    globalBudgetDai,
-    globalBudgetUsdc,
-    globalBudgetTou,
+    // totalFounded,
+    // maticBalance,
+    // wmaticBalance,
+    // wethBalance,
+    // usdcBalance,
+    // daiBalance,
+    // touBalance,
+    // globalBudgetWmatic,
+    // globalBudgetWEth,
+    // globalBudgetDai,
+    // globalBudgetUsdc,
+    // globalBudgetTou,
   };
 };
 
@@ -194,7 +191,6 @@ export default function Dashboard() {
   const {
     address,
     defaultProfile,
-    totalFounded,
     gasFee,
     priceFeed,
     maticBalance,
@@ -236,21 +232,26 @@ export default function Dashboard() {
   console.log(defaultProfile);
 
   return (
-    <Box bg="#FAFAF9" h="100vh">
-      <NavbarConnected
-        address={address}
-        authenticatedInLens={true}
-        handle={defaultProfile?.handle}
-      />
+    <Box bg="backgroundFeed" h="100vh">
+      <NavbarConnected address={address} handle={defaultProfile?.handle} />
 
       <Flex flexDirection="row">
-        <Box bg="white" ml="40px" mt="7" w="50%" pb="32">
-          <Box pt={8} pl={8}>
+        <Box
+          bg="white"
+          ml="40px"
+          mt="7"
+          w="50%"
+          border="1px"
+          borderColor="#E0E0E3"
+          borderRadius="10px"
+        >
+          <Box pt="8" pl="8" pb="8">
             <Text
-              fontSize="3xl"
-              fontWeight="900"
-              bgGradient="linear(to-r, #FFB83F , #FF5873 20% )"
+              fontSize="4xl"
+              fontWeight="700"
+              bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
               bgClip="text"
+              width="-webkit-fit-content"
             >
               Welcome{" "}
               {`${
@@ -268,15 +269,16 @@ export default function Dashboard() {
                 <Flex flexDirection="row" pt="5">
                   <Button
                     leftIcon={<MdPostAdd />}
-                    bgGradient="linear(to-r, #FFB83F , #FF5873 80% )"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     variant="solid"
                     color="white"
-                    borderRadius="20px"
+                    borderRadius="12px"
                     mr="5px"
                     onClick={activePostNormal}
                   >
                     Post
                   </Button>
+
                   <Button
                     leftIcon={<MdAdsClick />}
                     colorScheme="black"
@@ -299,16 +301,16 @@ export default function Dashboard() {
                       pointerEvents="none"
                       children={<EditIcon color="gray.500" />}
                     />
-                    <Input type="tel" placeholder="Whay’s happening?" />
+                    <Input type="tel" placeholder="What’s happening?" />
                   </InputGroup>
+
                   <Button
                     leftIcon={<EditIcon />}
-                    // colorScheme="teal"
-                    bgGradient="linear(to-r, #FFB83F , #FF5873 60% )"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     variant="solid"
                     color="white"
                     mr={20}
-                    borderRadius="15px"
+                    borderRadius="12px"
                     w={36}
                   >
                     Post
@@ -332,23 +334,25 @@ export default function Dashboard() {
                   </Button>
                   <Button
                     leftIcon={<MdAdsClick />}
-                    bgGradient="linear(to-r, #FFB83F , #FF5873 80% )"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     variant="solid"
                     color="white"
-                    borderRadius="20px"
+                    borderRadius="12px"
                     mr="5px"
                     onClick={activePostAds}
                   >
                     Ads P2P
                   </Button>
                 </Flex>
-                <Box pt={3} pr="20px" w="80%">
+
+                <Box pt="6" pr="20px" w="80%">
                   <Text fontSize="md">
                     Create a p2p Ads and for each person who shares and helps
                     you reach more public, you will have to pay an amount
                     designated by you
                   </Text>
                 </Box>
+
                 <Flex flexDirection="row" pt="7">
                   <Avatar
                     size="md"
@@ -361,21 +365,22 @@ export default function Dashboard() {
                       pointerEvents="none"
                       children={<EditIcon color="gray.500" />}
                     />
-                    <Input type="tel" placeholder="Whay’s happening?" />
+                    <Input type="tel" placeholder="What’s happening?" />
                   </InputGroup>
+
                   <Button
                     leftIcon={<EditIcon />}
-                    // colorScheme="teal"
-                    bgGradient="linear(to-r, #FFB83F , #FF5873 60% )"
+                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     variant="solid"
                     color="white"
                     mr={20}
-                    borderRadius="15px"
+                    borderRadius="12px"
                     w={36}
                   >
                     Post
                   </Button>
                 </Flex>
+
                 <Flex flexDirection="row" pt="5" pl="10">
                   <Box>
                     <Text align="center" fontWeight={600}>
@@ -389,6 +394,7 @@ export default function Dashboard() {
                       </NumberInputStepper>
                     </NumberInput>
                   </Box>
+
                   <Box pl={3}>
                     <Text align="center" fontWeight={600}>
                       Coins
@@ -403,6 +409,7 @@ export default function Dashboard() {
                       <option value="option3">???</option>
                     </Select>
                   </Box>
+
                   <Box pl={20}>
                     <Text align="center" fontWeight={600}>
                       Numbers of reply
@@ -420,26 +427,39 @@ export default function Dashboard() {
             )}
           </Box>
         </Box>
-        <Box bg="white" ml="70px" mt="7" w="35%" pb="32">
+
+        <Box
+          bg="white"
+          ml="70px"
+          mt="7"
+          w="35%"
+          pb="32"
+          border="1px"
+          borderColor="#E0E0E3"
+          borderRadius="10px"
+        >
           <Box pt={8} pl={8}>
             <Text
               fontSize="3xl"
               fontWeight="900"
-              bgGradient="linear(to-r, #FFB83F , #FF5873 20% )"
+              bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
               bgClip="text"
+              width="-webkit-fit-content"
             >
-              Balance{" "}
+              Balance
             </Text>
+
             <Text fontSize="lg" fontWeight="bold" pt={6}>
               Contract balance
             </Text>
+
             <Link href="https://app.uniswap.org/#/swap" isExternal>
               <Text fontSize="sm" color="#8B5CF6" fontWeight={400}>
                 Need WMatic? lets swap 🦄
               </Text>
             </Link>
 
-            <BalanceWallet
+            {/* <BalanceWallet
               maticBalance={maticBalance}
               wmaticBalance={wmaticBalance}
               awmaticBalance={awmaticBalance}
@@ -449,14 +469,15 @@ export default function Dashboard() {
               usdcBalance={usdcBalance}
               daiBalance={daiBalance}
               touBalance={touBalance}
-            />
-            <BalanceGlobalBudget
+            /> */}
+
+            {/* <BalanceGlobalBudget
               globalBudgetWmatic={globalBudgetWmatic}
               globalBudgetWEth={globalBudgetWEth}
               globalBudgetDai={globalBudgetDai}
               globalBudgetUsdc={globalBudgetUsdc}
               globalBudgetTou={globalBudgetTou}
-            />
+            /> */}
             {/* <BalanceContract /> */}
           </Box>
         </Box>

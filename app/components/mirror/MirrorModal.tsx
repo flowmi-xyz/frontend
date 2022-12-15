@@ -200,12 +200,8 @@ const MirrorModal = ({
                 >
                   <AlertIcon boxSize="40px" />
                   <AlertTitle mt={4} mb={1} fontSize="lg">
-                    Posted successfully!
+                    Mirrored successfully!
                   </AlertTitle>
-                  <AlertDescription maxWidth="sm">
-                    Your post has been successfully created. You can explore
-                    your publications to see it.
-                  </AlertDescription>
                 </Alert>
               </Center>
             </>
@@ -248,7 +244,6 @@ const MirrorModal = ({
             boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
             mr="5"
             onClick={handleClose}
-            // hidden={activeStep == 2}
           >
             <Text
               fontWeight="700"

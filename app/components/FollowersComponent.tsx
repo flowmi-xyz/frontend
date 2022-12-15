@@ -1,6 +1,6 @@
-import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "@remix-run/react";
-import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
+
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
 type TokenAccumulatedProps = {
   followers: any;
@@ -32,12 +32,12 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
         return (
           <Flex
             p="4"
-            key={wallet.wallet.address}
+            key={wallet?.wallet?.address}
             justifyContent="space-between"
             width="100%"
           >
             <Link
-              to={`/${wallet.wallet?.defaultProfile?.handle}`}
+              to={`/${wallet?.wallet?.defaultProfile?.handle}`}
               prefetch="intent"
             >
               <Flex width="100%">
@@ -59,7 +59,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                     bgClip="text"
                     pt="1"
                   >
-                    @{wallet.wallet?.defaultProfile?.handle}
+                    @{wallet?.wallet?.defaultProfile?.handle}
                   </Text>
                 </Box>
               </Flex>
@@ -73,7 +73,7 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                   letterSpacing="-0.03em"
                   textAlign="center"
                 >
-                  {wallet.wallet.defaultProfile.stats.totalFollowers}
+                  {wallet?.wallet?.defaultProfile?.stats?.totalFollowers}
                 </Text>
                 <Text
                   fontWeight="700"
@@ -92,8 +92,9 @@ const FollowersComponent = ({ followers }: TokenAccumulatedProps) => {
                   letterSpacing="-0.03em"
                   textAlign="center"
                 >
-                  {wallet.wallet.defaultProfile.stats.totalFollowing}
+                  {wallet?.wallet?.defaultProfile?.stats?.totalFollowing}
                 </Text>
+
                 <Text
                   fontWeight="700"
                   fontSize="12px"

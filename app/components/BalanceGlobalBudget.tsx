@@ -1,7 +1,5 @@
 import {
-  Button,
   Box,
-  Center,
   Flex,
   HStack,
   Icon,
@@ -14,14 +12,12 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { MdAccountBalanceWallet } from "react-icons/md";
 
 type BalanceProps = {
   globalBudgetWmatic: number;
-
   globalBudgetWEth: number;
   globalBudgetDai: number;
   globalBudgetUsdc: number;

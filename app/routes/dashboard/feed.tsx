@@ -22,12 +22,9 @@ import React from "react";
 import {
   Box,
   Button,
-  Center,
   Grid,
   GridItem,
   Icon,
-  Image,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -37,10 +34,8 @@ import SettingsBox from "~/components/SettingsBox";
 
 import { switchNetwork } from "~/web3/metamask";
 import { BsPlusLg } from "react-icons/bs";
-import { BsPiggyBank } from "react-icons/bs";
 
 import PostModal from "~/components/post/PostModal";
-import DepositModal from "~/components/transactions/DepositModal";
 import Balance from "~/components/Balance";
 import LoadingFeed from "~/components/feed/LoadingFeed";
 
@@ -163,7 +158,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <Box bg="backgroundFeed" height={["100vh", "100vh", "100vh", "100vh"]}>
+    <Box bg="backgroundFeed">
       <NavbarConnected address={address} handle={defaultProfile?.handle} />
 
       {transition.state === "idle" && (

@@ -29,12 +29,13 @@ async function getItemIds(profileId: string): Promise<string[]> {
       publicationTypes: ["POST"],
     },
   };
+
   const response = await lensClient.request(query, variables);
   console.log(response);
   const items = response.publications.items;
   const filteredItems = items.filter(
     (item: { referenceModule: { contractAddress: string } }) =>
-      item.referenceModule.contractAddress ===
+      item?.referenceModule?.contractAddress ===
       "0x7867F85CF1553cAfF31cf67EBA1369C9Ff109E26"
   );
   const itemIds = filteredItems.map((item: { id: string }) =>

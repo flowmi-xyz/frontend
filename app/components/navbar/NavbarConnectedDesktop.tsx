@@ -52,25 +52,21 @@ const NavbarConnectedDesktop = ({ address, handle }: NavbarConnectedProps) => {
       <Flex flexDirection="row" alignItems="center" justifyContent="center">
         <Flex display="flex" align="center">
           <Link to="./">
-            {" "}
             <Text color="white" fontWeight="700" fontSize="lg" mr={3}>
               Feed
             </Text>
           </Link>
-          <Link to="./">
-            {" "}
+          <Link to="../../post">
             <Text color="white" fontWeight="700" fontSize="lg" mx={3}>
               Post
             </Text>
           </Link>
           <Link to="./">
-            {" "}
             <Text color="white" fontWeight="700" fontSize="lg" mx={3}>
               Stats
             </Text>
           </Link>
           <Link to="./">
-            {" "}
             <Text color="white" fontWeight="700" fontSize="lg" mx={3}>
               Profile
             </Text>
@@ -91,7 +87,6 @@ const NavbarConnectedDesktop = ({ address, handle }: NavbarConnectedProps) => {
             </MenuButton>
             <MenuList>
               <MenuItem as={Text}>
-                {" "}
                 <ChainButton />{" "}
               </MenuItem>
               {/* <MenuItem></MenuItem> */}

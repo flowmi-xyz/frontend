@@ -14,16 +14,16 @@ import { useEffect } from "react";
 import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
 
 // components
-import NavbarConnected from "~/components/navbar/NavbarConnectedDesktop";
+import NavbarApp from "~/components/NavbarApp";
+import LoadingFeed from "~/components/feed/LoadingFeed";
 
+// ui functions
 import { signWithMetamask, switchNetwork } from "~/web3/metamask";
 
-import LoadingFeed from "~/components/feed/LoadingFeed";
 import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 
 import { personalSignMessage } from "~/web3/walletConnect";
-import QRCodeModal from "@walletconnect/qrcode-modal";
-import NavbarApp from "~/components/NavbarApp";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -71,44 +71,29 @@ export default function AuthLens() {
   const submit = useSubmit();
   const transition = useTransition();
 
-  const handleSignChallengeTextMobile = async () => {
-    console.log(
-      "[browser][handleLoginWalletConnect] Waiting sign text challengue with walletConnect ..."
-    );
+  // const handleSignChallengeTextWalletConnect= async () => {
+  //   console.log(
+  //     "[browser][handleLoginWalletConnect] Waiting sign text challengue with walletConnect ..."
+  //   );
 
-    // bridge url
-    const bridge = "https://bridge.walletconnect.org";
+  //   // bridge url
+  //   const bridge = "https://bridge.walletconnect.org";
 
-    // create new connector
-    const connector: WalletConnect = new WalletConnect({
-      bridge, // Required
-      qrcodeModal: QRCodeModal,
-    });
+  //   // create new connector
+  //   const connector: WalletConnect = new WalletConnect({
+  //     bridge, // Required
+  //     qrcodeModal: QRCodeModal,
+  //   });
 
-    const formatedResult = await personalSignMessage(
-      connector,
-      address,
-      challengeText
-    );
-
-    const formData = new FormData();
-
-    formData.append("signature", formatedResult?.signature);
-
-    submit(formData, {
-      action: "/lens/?index",
-      method: "post",
-      encType: "application/x-www-form-urlencoded",
-      replace: true,
-    });
-  };
-
-  // const handleSignChallengeTextDesktop = async () => {
-  //   const signature = await signWithMetamask(challengeText);
+  //   const formatedResult = await personalSignMessage(
+  //     connector,
+  //     address,
+  //     challengeText
+  //   );
 
   //   const formData = new FormData();
 
-  //   formData.append("signature", signature);
+  //   formData.append("signature", formatedResult?.signature);
 
   //   submit(formData, {
   //     action: "/lens/?index",
@@ -117,6 +102,21 @@ export default function AuthLens() {
   //     replace: true,
   //   });
   // };
+
+  const handleSignChallengeTextMetamask = async () => {
+    const signature = await signWithMetamask(challengeText);
+
+    const formData = new FormData();
+
+    formData.append("signature", signature);
+
+    submit(formData, {
+      action: "/lens/?index",
+      method: "post",
+      encType: "application/x-www-form-urlencoded",
+      replace: true,
+    });
+  };
 
   useEffect(() => {
     // if (window.innerWidth < 768) {
@@ -177,7 +177,7 @@ export default function AuthLens() {
                 bg="lens"
                 borderRadius="10px"
                 boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
-                onClick={handleSignChallengeTextMobile}
+                onClick={handleSignChallengeTextMetamask}
               >
                 <Flex>
                   <Box w="40px" h="40px">
