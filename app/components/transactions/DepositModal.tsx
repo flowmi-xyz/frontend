@@ -623,39 +623,41 @@ const DepositModal = ({
               </Box>
             </>
           )}
-          {followCompleted && !error && (
-            <>
-              <>
-                <Center pt="5">
-                  <Alert status="success" borderRadius={10}>
-                    <AlertIcon />
-                    Deposit successfully!
-                  </Alert>
-                </Center>
 
-                <Text pt="5">
-                  Congratulations, you have successfully deposit your{" "}
-                  <Text
-                    as="span"
-                    fontWeight="700"
-                    fontSize="14px"
-                    bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                    bgClip="text"
-                  >
-                    {amountT.toFixed(4)}
-                  </Text>{" "}
-                  WMATIC
-                </Text>
-              </>
-            </>
+          {followCompleted && !error && (
+            <Box pt="5" pl="5" pr="5">
+              <Center pt="5">
+                <Alert status="success" borderRadius={10}>
+                  <AlertIcon />
+                  Deposit successfully!
+                </Alert>
+              </Center>
+
+              <Text pt="5">
+                Congratulations, you have successfully deposit your{" "}
+                <Text
+                  as="span"
+                  fontWeight="700"
+                  fontSize="14px"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                >
+                  {amountT.toFixed(4)}
+                </Text>{" "}
+                WMATIC
+              </Text>
+            </Box>
           )}
+
           {isLoading && (
             <HStack pt="5" pl="5" pr="5">
               <Text>Waiting for confirmation with your wallet...</Text>
               <Spinner size="md" color="third" />
             </HStack>
           )}
+
           {signed && <SignedMessageTx />}
+
           {error && (
             <Box p="5">
               <Alert status="error" borderRadius={10}>

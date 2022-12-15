@@ -24,6 +24,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  HStack,
   Image,
   Input,
   InputGroup,
@@ -81,6 +82,7 @@ import BalanceGlobalBudget from "~/components/BalanceGlobalBudget";
 import getItemIds from "~/web3/adsModule/publicationId";
 import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
 import DepositModal from "~/components/transactions/DepositModal";
+import Wav3sPostModal from "~/components/post/Wav3sPostModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -239,6 +241,11 @@ export default function Dashboard() {
   } = useLoaderData();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenPost,
+    onOpen: onOpenPost,
+    onClose: onClosePost,
+  } = useDisclosure();
 
   const [postNormal, setPostNormal] = React.useState(false);
   const [postAds, setPostAds] = React.useState(true);
@@ -409,17 +416,42 @@ export default function Dashboard() {
                     mr={20}
                     borderRadius="12px"
                     w={36}
+                    onClick={onOpenPost}
                   >
                     Post
                   </Button>
                 </Flex>
 
-                <Flex flexDirection="row" pt="5" pl="10">
-                  <Box>
-                    <Text align="center" fontWeight={600}>
-                      Incentivo
-                    </Text>
-                    <NumberInput defaultValue={1} w={32}>
+                <Wav3sPostModal
+                  isOpen={isOpenPost}
+                  onClose={onClosePost}
+                  handle={defaultProfile?.handle}
+                  address={address}
+                  profileId={defaultProfile?.id}
+                  gasFee={gasFee}
+                  priceFeed={1}
+                  maticBalance={maticBalance}
+                />
+
+                <Flex flexDirection="row" pt="5" pl="14">
+                  <Box pl={3}>
+                    <Text fontWeight={600}>Coin</Text>
+
+                    <HStack mt="8px">
+                      <Image
+                        src="../assets/logos/polygon-matic-logo.png"
+                        w="6"
+                        h="6"
+                      />
+                      <Text fontSize={14} paddingLeft={2}>
+                        MATIC
+                      </Text>
+                    </HStack>
+                  </Box>
+
+                  <Box pl="10">
+                    <Text fontWeight={600}>Reward</Text>
+                    <NumberInput defaultValue={0.1} w={32}>
                       <NumberInputField />
                       <NumberInputStepper>
                         <NumberIncrementStepper />
@@ -428,26 +460,9 @@ export default function Dashboard() {
                     </NumberInput>
                   </Box>
 
-                  <Box pl={3}>
-                    <Text align="center" fontWeight={600}>
-                      Coins
-                    </Text>
-
-                    <Select placeholder="WMatic">
-                      <option value="option1">
-                        <MdPostAdd />
-                        <Text>Hla</Text>
-                      </option>
-                      <option value="option2">??</option>
-                      <option value="option3">???</option>
-                    </Select>
-                  </Box>
-
-                  <Box pl={20}>
-                    <Text align="center" fontWeight={600}>
-                      Numbers of reply
-                    </Text>
-                    <NumberInput defaultValue={1} w={40}>
+                  <Box pl="10">
+                    <Text fontWeight={600}>Numbers of reply</Text>
+                    <NumberInput defaultValue={1} w={32}>
                       <NumberInputField />
                       <NumberInputStepper>
                         <NumberIncrementStepper />
