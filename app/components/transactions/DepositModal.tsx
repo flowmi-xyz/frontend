@@ -15,6 +15,9 @@ import {
   Flex,
   HStack,
   Image,
+  Input,
+  InputGroup,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -22,8 +25,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
   Spinner,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import { Step, Steps, useSteps } from "chakra-ui-steps";
@@ -34,6 +43,7 @@ import {
   ADS_REFERENCE_ABI,
 } from "~/web3/social-defi/social-defi-hub";
 import SignedMessageTx from "./common/SignedMessage";
+import { GiReceiveMoney } from "react-icons/gi";
 
 type ClaimTokensProps = {
   isOpen: boolean;
@@ -79,8 +89,12 @@ const DepositModal = ({
 
   const [txHash, setTxHash] = React.useState("");
 
+  const [showTooltip, setShowTooltip] = React.useState(false);
+
+  const [amountT, setAmountT] = React.useState(0);
+
   const gasLimitNumberApprove = 1000000;
-  const gasLimitNumberClaim = 1000000;
+  const gasLimitNumberDeposit = 1000000;
 
   const MAX_UINT256 =
     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
@@ -135,12 +149,12 @@ const DepositModal = ({
     );
 
     try {
-      const GAS_LIMIT = BigNumber.from(gasLimitNumberClaim);
+      const GAS_LIMIT = BigNumber.from(gasLimitNumberDeposit);
       console.log(parseEther(awmaticBalance.toString()));
 
       const followProfile = await adsMirrorContract.fundMyGlobalBudget(
         profileId,
-        parseEther((0.5).toString()),
+        parseEther(amountT.toString()),
         WMATIC_CONTRACT_ADDRESS,
         {
           gasLimit: GAS_LIMIT,
@@ -185,7 +199,7 @@ const DepositModal = ({
     <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
       <ModalOverlay />
       <ModalContent borderRadius={20}>
-        <ModalHeader>Deposit tokens to vault for ads</ModalHeader>
+        <ModalHeader>Deposit tokens to vault</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>
@@ -201,8 +215,8 @@ const DepositModal = ({
             </Steps>
           </Box>
 
+          {/* {false && ( */}
           {activeStep === 0 && !signed && (
-            // {false && (
             <Box pt="5" pl="5" pr="5">
               <Center>
                 <Alert status="warning" borderRadius={10}>
@@ -215,14 +229,114 @@ const DepositModal = ({
                 First, you have to approve our contract to move your tokens.
               </Text>
 
-              <HStack pt="5">
+              <Box mt="10">
+                <Center>
+                  <HStack width={"300px"} justifyContent="space-between">
+                    <Text>Deposit:</Text>
+                    <HStack justifyContent="end">
+                      <Image
+                        src="../assets/logos/wrapped-matic-logo.png"
+                        w="5"
+                        h="5"
+                        ml="2"
+                        my="auto"
+                      />{" "}
+                      <Text fontSize={14} fontWeight={700}>
+                        WMATIC
+                      </Text>
+                    </HStack>
+                  </HStack>
+                </Center>
+
+                <Center paddingTop={"0"}>
+                  <InputGroup
+                    boxShadow={"0px 4px 14px rgba(0, 0, 0, 0.1)"}
+                    borderRadius={"8px"}
+                    height={"50px"}
+                    width={"300px"}
+                  >
+                    <Input
+                      type="number"
+                      border={"0"}
+                      focusBorderColor="white"
+                      value={amountT}
+                      onChange={(event: any) => setAmountT(event.target.value)}
+                      margin={"auto"}
+                      size={"lg"}
+                    />
+                    <InputRightElement
+                      width="30"
+                      paddingRight={"5px"}
+                      paddingTop={2}
+                    >
+                      <Button
+                        height="24px"
+                        border="2px"
+                        borderColor="first"
+                        borderRadius="53px"
+                        onClick={() =>
+                          setAmountT(Number(wmaticBalance.toFixed(4)))
+                        }
+                      >
+                        <Text
+                          fontWeight="700"
+                          fontSize="14px"
+                          lineHeight="16.8px"
+                          color="first"
+                        >
+                          Max
+                        </Text>
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                </Center>
+
+                <Center paddingTop={"3"}>
+                  <Slider
+                    id="slider"
+                    defaultValue={5}
+                    min={0}
+                    max={100}
+                    value={(amountT / wmaticBalance) * 100}
+                    onChange={(v) =>
+                      setAmountT(Number((v * (wmaticBalance / 100)).toFixed(4)))
+                    }
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                    width={"300px"}
+                  >
+                    <SliderMark value={25} mt="1" ml="-2.5" fontSize="sm">
+                      25%
+                    </SliderMark>
+                    <SliderMark value={50} mt="1" ml="-2.5" fontSize="sm">
+                      50%
+                    </SliderMark>
+                    <SliderMark value={75} mt="1" ml="-2.5" fontSize="sm">
+                      75%
+                    </SliderMark>
+                    <SliderMark value={100} mt="1" ml="-2.5" fontSize="sm">
+                      100%
+                    </SliderMark>
+                    <SliderTrack bg={"gray"}>
+                      <SliderFilledTrack bg={"primary"} />
+                    </SliderTrack>
+                    <Tooltip
+                      hasArrow
+                      bg="primary"
+                      color="white"
+                      placement="top"
+                      isOpen={showTooltip}
+                      label={`${(amount / wmaticBalance) * 100}%`}
+                    >
+                      <SliderThumb />
+                    </Tooltip>
+                  </Slider>
+                </Center>
+              </Box>
+
+              <HStack pt="10">
                 <Text>
-                  You are going to allow us to move{" "}
-                  <Text as="span" fontWeight="700" color="sixth" fontSize="16">
-                    {/* {awmaticBalance.toFixed(4)} aWMATIC */}
-                    0.5 WMATIC
-                  </Text>{" "}
-                  from Aave protocol to your wallet.
+                  You are going to allow us to move your tokens to the vault.
                 </Text>
               </HStack>
 
@@ -365,6 +479,31 @@ const DepositModal = ({
 
                 <Flex mt="5" justify="space-between">
                   <Box>
+                    <Text
+                      fontWeight="700"
+                      fontSize="16"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                    >
+                      Deposit
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Text
+                      fontWeight="700"
+                      fontSize="16"
+                      bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                      bgClip="text"
+                      textAlign="right"
+                    >
+                      {amountT} WMATIC
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Flex mt="5" justify="space-between">
+                  <Box>
                     <Text fontWeight="700" fontSize="16" color="black">
                       Transaction Fee
                     </Text>
@@ -382,7 +521,7 @@ const DepositModal = ({
                     >
                       ${" "}
                       {(
-                        gasLimitNumberClaim *
+                        gasLimitNumberDeposit *
                         gasFee.standard.maxPriorityFee *
                         1e-9 *
                         priceFeed *
@@ -397,7 +536,7 @@ const DepositModal = ({
                       textAlign="right"
                     >
                       {(
-                        gasLimitNumberClaim *
+                        gasLimitNumberDeposit *
                         gasFee.standard.maxPriorityFee *
                         1e-9
                       ).toFixed(6)}{" "}
@@ -484,19 +623,18 @@ const DepositModal = ({
               </Box>
             </>
           )}
-
           {followCompleted && !error && (
             <>
               <>
                 <Center pt="5">
                   <Alert status="success" borderRadius={10}>
                     <AlertIcon />
-                    Claim successfully!
+                    Deposit successfully!
                   </Alert>
                 </Center>
 
                 <Text pt="5">
-                  Congratulations, you have successfully claimed your{" "}
+                  Congratulations, you have successfully deposit your{" "}
                   <Text
                     as="span"
                     fontWeight="700"
@@ -504,23 +642,20 @@ const DepositModal = ({
                     bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
                     bgClip="text"
                   >
-                    @{awmaticBalance.toFixed(4)}
+                    {amountT.toFixed(4)}
                   </Text>{" "}
                   WMATIC
                 </Text>
               </>
             </>
           )}
-
           {isLoading && (
             <HStack pt="5" pl="5" pr="5">
               <Text>Waiting for confirmation with your wallet...</Text>
               <Spinner size="md" color="third" />
             </HStack>
           )}
-
           {signed && <SignedMessageTx />}
-
           {error && (
             <Box p="5">
               <Alert status="error" borderRadius={10}>
@@ -617,7 +752,7 @@ const DepositModal = ({
                   lineHeight="21.6px"
                   color="white"
                 >
-                  Claim
+                  Deposit
                 </Text>
               </Button>
             </>
