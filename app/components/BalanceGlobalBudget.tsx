@@ -33,32 +33,28 @@ const BalanceGlobalBudget = ({
 }: BalanceProps) => {
   return (
     <>
-      <Box
-        bg="white"
-        border="1px"
-        borderColor="#E0E0E3"
-        borderRadius="10px"
-        width="420px"
-        mt="10"
-      >
-        <Flex p="5">
-          <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />
+      <Box bg="white" pt="20">
+        <Flex>
+          <Icon
+            as={MdAccountBalanceWallet}
+            color="first"
+            h="6"
+            w="6"
+            my="auto"
+          />
           <Text
             fontWeight="700"
             fontSize="18px"
-            lineHeight="120%"
             letterSpacing="-0.03em"
             color="first"
-            pb="2"
-            ml="2"
-            mr="2"
+            pl="1"
           >
-            Your Global Budget
+            Your global budget
           </Text>
         </Flex>
 
-        <TableContainer borderBottomRadius="10px">
-          <Table variant="striped" colorScheme="purple">
+        <TableContainer>
+          <Table>
             <Thead>
               <Tr>
                 <Th>Assets</Th>
@@ -74,8 +70,8 @@ const BalanceGlobalBudget = ({
                       <HStack>
                         <Image
                           src="../assets/logos/wrapped-matic-logo.png"
-                          w="6"
-                          h="6"
+                          w="5"
+                          h="5"
                         />{" "}
                         <Text fontSize={14}>WMATIC</Text>
                       </HStack>
@@ -108,8 +104,8 @@ const BalanceGlobalBudget = ({
                 <>
                   <Tr>
                     <Td>
-                      <HStack ml={-2}>
-                        <Image src="../assets/logos/usdc.png" w="10" h="10" />
+                      <HStack>
+                        <Image src="../assets/logos/usdc.png" w="6" h="6" />
                         <Text fontSize={14}>USDC</Text>
                       </HStack>
                     </Td>
@@ -124,8 +120,8 @@ const BalanceGlobalBudget = ({
                 <>
                   <Tr>
                     <Td>
-                      <HStack ml={-2}>
-                        <Image src="../assets/logos/weth.png" w="10" h="10" />
+                      <HStack>
+                        <Image src="../assets/logos/weth.png" w="6" h="6" />
                         <Text fontSize={14}>WETH</Text>
                       </HStack>
                     </Td>
@@ -141,11 +137,11 @@ const BalanceGlobalBudget = ({
                 <>
                   <Tr>
                     <Td>
-                      <HStack ml={-2}>
+                      <HStack>
                         <Image
                           src="../assets/logos/toucanprotocol.png"
-                          w="10"
-                          h="10"
+                          w="6"
+                          h="6"
                         />
                         <Text fontSize={14}>Toucan Protocol</Text>
                       </HStack>

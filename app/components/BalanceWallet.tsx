@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  Center,
   Flex,
   HStack,
   Icon,
@@ -46,15 +44,8 @@ const BalanceWallet = ({
 
   return (
     <>
-      <Box
-        bg="white"
-        border="1px"
-        borderColor="#E0E0E3"
-        borderRadius="10px"
-        width="420px"
-        mt="10"
-      >
-        <Flex p="5">
+      <Box bg="white" mt="10">
+        <Flex>
           <Icon as={MdAccountBalanceWallet} color="first" h="6" w="6" />
           <Text
             fontWeight="700"
@@ -71,8 +62,8 @@ const BalanceWallet = ({
           <Image src="../assets/logos/polygon-matic-logo.png" w="6" h="6" />
         </Flex>
 
-        <TableContainer borderBottomRadius="10px">
-          <Table variant="striped" colorScheme="purple">
+        <TableContainer>
+          <Table>
             <Thead>
               <Tr>
                 <Th>Assets</Th>

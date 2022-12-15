@@ -43,6 +43,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { MdPostAdd, MdAdsClick } from "react-icons/md";
@@ -79,6 +80,7 @@ import {
 import BalanceGlobalBudget from "~/components/BalanceGlobalBudget";
 import getItemIds from "~/web3/adsModule/publicationId";
 import { transformToIpfsUrl } from "~/web3/ipfs/ipfs";
+import DepositModal from "~/components/transactions/DepositModal";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -106,6 +108,34 @@ export const loader: LoaderFunction = async ({ request }) => {
   const results = await getItemIds(defaultProfile.id);
 
   console.log(results);
+
+  const [
+    maticBalance,
+    wmaticBalance,
+    wethBalance,
+    usdcBalance,
+    daiBalance,
+    touBalance,
+    gasFee,
+    globalBudgetWmatic,
+    globalBudgetWEth,
+    globalBudgetDai,
+    globalBudgetUsdc,
+    globalBudgetTou,
+  ] = await Promise.all([
+    getBalanceFromAddress(address),
+    getWMATICBalance(address),
+    getWEthBalance(address),
+    getUSDCBalance(address),
+    getDAIBalance(address),
+    getTOUBalance(address),
+    getGasFee(),
+    getGlobalBudget(defaultProfile?.id, WMATIC_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, WEth_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, DAI_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, USDC_CONTRACT_ADDRESS),
+    getGlobalBudget(defaultProfile?.id, TOU_CONTRACT_ADDRESS),
+  ]);
 
   // const [
   //   totalFounded,
@@ -140,17 +170,18 @@ export const loader: LoaderFunction = async ({ request }) => {
     accessToken,
     defaultProfile,
     // totalFounded,
-    // maticBalance,
-    // wmaticBalance,
-    // wethBalance,
-    // usdcBalance,
-    // daiBalance,
-    // touBalance,
-    // globalBudgetWmatic,
-    // globalBudgetWEth,
-    // globalBudgetDai,
-    // globalBudgetUsdc,
-    // globalBudgetTou,
+    maticBalance,
+    wmaticBalance,
+    wethBalance,
+    usdcBalance,
+    daiBalance,
+    touBalance,
+    gasFee,
+    globalBudgetWmatic,
+    globalBudgetWEth,
+    globalBudgetDai,
+    globalBudgetUsdc,
+    globalBudgetTou,
   };
 };
 
@@ -206,6 +237,8 @@ export default function Dashboard() {
     globalBudgetUsdc,
     globalBudgetTou,
   } = useLoaderData();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [postNormal, setPostNormal] = React.useState(false);
   const [postAds, setPostAds] = React.useState(true);
@@ -438,10 +471,10 @@ export default function Dashboard() {
           borderColor="#E0E0E3"
           borderRadius="10px"
         >
-          <Box pt={8} pl={8}>
+          <Box pt="8" pl="8" pr="8">
             <Text
-              fontSize="3xl"
-              fontWeight="900"
+              fontSize="4xl"
+              fontWeight="700"
               bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
               bgClip="text"
               width="-webkit-fit-content"
@@ -459,7 +492,7 @@ export default function Dashboard() {
               </Text>
             </Link>
 
-            {/* <BalanceWallet
+            <BalanceWallet
               maticBalance={maticBalance}
               wmaticBalance={wmaticBalance}
               awmaticBalance={awmaticBalance}
@@ -469,16 +502,42 @@ export default function Dashboard() {
               usdcBalance={usdcBalance}
               daiBalance={daiBalance}
               touBalance={touBalance}
-            /> */}
+            />
 
-            {/* <BalanceGlobalBudget
+            <BalanceGlobalBudget
               globalBudgetWmatic={globalBudgetWmatic}
               globalBudgetWEth={globalBudgetWEth}
               globalBudgetDai={globalBudgetDai}
               globalBudgetUsdc={globalBudgetUsdc}
               globalBudgetTou={globalBudgetTou}
-            /> */}
-            {/* <BalanceContract /> */}
+            />
+
+            <Center pt="3" pb="5">
+              <Button
+                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                borderRadius="10px"
+                boxShadow="0px 2px 3px rgba(0, 0, 0, 0.15)"
+                p="3"
+                onClick={onOpen}
+              >
+                <Text fontWeight="600" fontSize="16px" color="white">
+                  Deposit
+                </Text>
+              </Button>
+            </Center>
+
+            <DepositModal
+              isOpen={isOpen}
+              onClose={onClose}
+              handle={defaultProfile?.handle}
+              amount={0}
+              profileId={defaultProfile?.id}
+              gasFee={gasFee}
+              priceFeed={1}
+              maticBalance={maticBalance}
+              wmaticBalance={wmaticBalance}
+              awmaticBalance={0}
+            />
           </Box>
         </Box>
       </Flex>
