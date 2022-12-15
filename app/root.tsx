@@ -19,7 +19,7 @@ import Fonts from "./fonts";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Modulens factory",
+  title: "Wav3s | Reach the entire web 3 with your publications",
   viewport: "width=device-width,initial-scale=1",
   // "og:description":
   //   "Use web3 social network in a cooler way interacting with DeFi protocolos without realizing it",

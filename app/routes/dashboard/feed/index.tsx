@@ -28,9 +28,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const recentsPostsResponse = latestPublications;
 
+  console.log(recentsPostsResponse.items);
+
   const recentPosts = recentsPostsResponse.items.filter((item: any) => {
-    return item.__typename === "Post";
+    return item.__typename === "Post" || item._typename !== "Mirror";
   });
+
+  console.log(recentPosts);
 
   const session = await getSession(request.headers.get("Cookie"));
 

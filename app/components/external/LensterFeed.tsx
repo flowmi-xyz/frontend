@@ -12,6 +12,8 @@ type LensterFeedProps = {
 const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
   // const [sortCriteria, setSortCriteria] = useState<SortCriteria>("LATEST");
 
+  console.log(Posts);
+
   return (
     <>
       <Box width={["100%", WIDTH_FEED, WIDTH_FEED, WIDTH_FEED]}>
@@ -110,6 +112,8 @@ const LensterFeed = ({ Posts, defaultProfile }: LensterFeedProps) => {
               defaultProfile={defaultProfile}
               profileIdToMirror={post.profile.id}
               referenceModule={post.referenceModule}
+              type={post.__typename}
+              mirrorOf={post.mirrorOf}
             />
           );
         })}

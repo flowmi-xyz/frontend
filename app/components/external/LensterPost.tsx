@@ -41,6 +41,8 @@ type PostProps = {
   defaultProfile: any;
   profileIdToMirror: string;
   referenceModule?: any;
+  type: string;
+  mirrorOf?: any;
 };
 
 const LensterPost = ({
@@ -58,6 +60,8 @@ const LensterPost = ({
   defaultProfile,
   profileIdToMirror,
   referenceModule,
+  type,
+  mirrorOf,
 }: PostProps) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
@@ -76,48 +80,130 @@ const LensterPost = ({
       }
       _hover={{ bg: "#F4F4F5" }}
     >
-      <HStack p={["5", "10", "10", "10"]} justifyContent="space-between">
-        <Link to={`/${handle}`} prefetch="intent">
-          <HStack>
-            <Avatar size="md" src={transformToIpfsUrl(profileImage!)} />
+      {type === "Mirror" && (
+        <Flex>
+          <Icon
+            as={TbArrowsLeftRight}
+            color="black"
+            w={8}
+            h={8}
+            pt="3"
+            ml="5"
+          />
 
-            <Box my="auto" pl="1">
-              {name ? (
-                <Text
-                  fontWeight="600"
-                  fontSize="14px"
-                  lineHeight="120%"
-                  letterSpacing="-0.03em"
-                  color="black"
-                >
-                  {name}
-                </Text>
-              ) : (
-                <Text
-                  fontWeight="600"
-                  fontSize="14px"
-                  lineHeight="120%"
-                  letterSpacing="-0.03em"
-                  color="black"
-                >
-                  {removeLensSuffix(handle)}
-                </Text>
-              )}
+          <Text
+            fontWeight="600"
+            fontSize="14px"
+            lineHeight="120%"
+            letterSpacing="-0.03em"
+            color="black"
+            pt="3"
+          >
+            <Text
+              as="span"
+              bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+              bgClip="text"
+            >
+              @{removeLensSuffix(handle)}{" "}
+            </Text>{" "}
+            mirrored this post
+          </Text>
+        </Flex>
+      )}
 
-              <Text
-                fontWeight="700"
-                fontSize="12px"
-                lineHeight="100%"
-                letterSpacing="-0.03em"
-                bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
-                bgClip="text"
-                pt="1"
-              >
-                @{handle}
-              </Text>
-            </Box>
-          </HStack>
-        </Link>
+      <HStack
+        pt={["5", "5", "5", "5"]}
+        pl="5"
+        pr="5"
+        justifyContent="space-between"
+      >
+        {type === "Post" && (
+          <Link to={`/${handle}`} prefetch="intent">
+            <HStack>
+              <Avatar size="md" src={transformToIpfsUrl(profileImage!)} />
+
+              <Box my="auto" pl="1">
+                {name ? (
+                  <Text
+                    fontWeight="600"
+                    fontSize="14px"
+                    lineHeight="120%"
+                    letterSpacing="-0.03em"
+                    color="black"
+                  >
+                    {name}
+                  </Text>
+                ) : (
+                  <Text
+                    fontWeight="600"
+                    fontSize="14px"
+                    lineHeight="120%"
+                    letterSpacing="-0.03em"
+                    color="black"
+                  >
+                    {removeLensSuffix(handle)}
+                  </Text>
+                )}
+
+                <Text
+                  fontWeight="700"
+                  fontSize="12px"
+                  lineHeight="100%"
+                  letterSpacing="-0.03em"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                  pt="1"
+                >
+                  @{handle}
+                </Text>
+              </Box>
+            </HStack>
+          </Link>
+        )}
+
+        {type === "Mirror" && (
+          <Link to={`/${handle}`} prefetch="intent">
+            <HStack>
+              <Avatar size="md" src={transformToIpfsUrl(profileImage!)} />
+
+              <Box my="auto" pl="1">
+                {mirrorOf?.profile?.name ? (
+                  <Text
+                    fontWeight="600"
+                    fontSize="14px"
+                    lineHeight="120%"
+                    letterSpacing="-0.03em"
+                    color="black"
+                  >
+                    {mirrorOf?.profile?.name}
+                  </Text>
+                ) : (
+                  <Text
+                    fontWeight="600"
+                    fontSize="14px"
+                    lineHeight="120%"
+                    letterSpacing="-0.03em"
+                    color="black"
+                  >
+                    {removeLensSuffix(mirrorOf?.profile?.handle)}
+                  </Text>
+                )}
+
+                <Text
+                  fontWeight="700"
+                  fontSize="12px"
+                  lineHeight="100%"
+                  letterSpacing="-0.03em"
+                  bgGradient="linear(to-r, #31108F, #7A3CE3, #E53C79, #E8622C, #F5C144)"
+                  bgClip="text"
+                  pt="1"
+                >
+                  @{mirrorOf?.profile?.handle}
+                </Text>
+              </Box>
+            </HStack>
+          </Link>
+        )}
 
         <Box>
           <Text

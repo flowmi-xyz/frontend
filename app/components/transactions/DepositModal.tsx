@@ -497,7 +497,21 @@ const DepositModal = ({
                       bgClip="text"
                       textAlign="right"
                     >
-                      {amountT} WMATIC
+                      {amountT * 0.97} WMATIC
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Flex mt="5" justify="space-between">
+                  <Box>
+                    <Text fontWeight="700" fontSize="16">
+                      Frontend Fee (1.5%)
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Text fontWeight="700" fontSize="16" textAlign="right">
+                      {amountT * 0.015} WMATIC
                     </Text>
                   </Box>
                 </Flex>
@@ -505,7 +519,24 @@ const DepositModal = ({
                 <Flex mt="5" justify="space-between">
                   <Box>
                     <Text fontWeight="700" fontSize="16" color="black">
-                      Transaction Fee
+                      Post with reward fee (1.5%)
+                    </Text>
+                    <Text fontWeight="500" fontSize="14" color="gray">
+                      Platform charge
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Text fontWeight="700" fontSize="16" color="black">
+                      {amountT * 0.015} WMATIC
+                    </Text>
+                  </Box>
+                </Flex>
+
+                <Flex mt="5" justify="space-between">
+                  <Box>
+                    <Text fontWeight="700" fontSize="16" color="black">
+                      Transaction fee
                     </Text>
                     <Text fontWeight="500" fontSize="14" color="gray">
                       Total gas paid
@@ -544,31 +575,6 @@ const DepositModal = ({
                     </Text>
                   </Box>
                 </Flex>
-
-                <Flex mt="5" justify="space-between">
-                  <Box>
-                    <Text fontWeight="700" fontSize="16" color="black">
-                      Social DeFi Fee (0%)
-                    </Text>
-                    <Text fontWeight="500" fontSize="14" color="gray">
-                      Platform charge
-                    </Text>
-                  </Box>
-
-                  <Box>
-                    <Text fontWeight="700" fontSize="16" color="black">
-                      $ 0 USD
-                    </Text>
-                    <Text fontWeight="500" fontSize="14" color="gray">
-                      0 MATIC
-                    </Text>
-                  </Box>
-                </Flex>
-
-                <Alert status="info" borderRadius={10} mt="5">
-                  <AlertIcon />
-                  Social DeFi charge 0% fee for all transactions.
-                </Alert>
 
                 <Flex pt="5">
                   <Text
